@@ -8,8 +8,7 @@
 
 import os
 
-
-fish_base_ver = '1.0.3'
+fish_base_ver = '1.0.4'
 
 
 # 返回fish_base 版本号,

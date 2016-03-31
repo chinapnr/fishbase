@@ -1,0 +1,2 @@
+def printa():
+    print('a')

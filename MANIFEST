@@ -2,3 +2,4 @@
 README.txt
 setup.py
 fish_base/__init__.py
+fish_base/fish_common.py
