@@ -9,7 +9,7 @@
 import os
 
 
-fish_base_ver = '1.0.0'
+fish_base_ver = '1.0.3'
 
 
 # 返回fish_base 版本号,
@@ -19,8 +19,8 @@ def get_fish_base_ver():
 
 
 # md5 函数
-# 2015.5.27. create by david.yi
-# 2015.6.6. edit, 转移到这里，作为基本工具函数
+# 2015.5.27 create by david.yi
+# 2015.6.6 edit, 转移到这里，作为基本工具函数
 # 输入: s: str 字符串
 # 输出: 经过md5计算的值
 def get_md5(s):
@@ -32,7 +32,7 @@ def get_md5(s):
 
 
 # 提示用户输入指定解释信息的字段名称
-# 2015.6.7. create by david.yi
+# 2015.6.7  create by david.yi
 # 输入: info: 要显示的字段解释，field_default：默认的字段名称
 # 输出: 字段名称
 def input_field(info, field_default):
@@ -49,7 +49,7 @@ def input_field(info, field_default):
 
 
 # 对象序列化
-# 2015.6.14. edit by david.yi
+# 2015.6.14  edit by david.yi
 # 输入: info: 要显示的字段解释，field_default：默认的字段名称
 # 输出: 字段名称
 def serialize_instance(obj):
