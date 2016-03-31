@@ -2,9 +2,9 @@ from distutils.core import setup
 
 setup(
     name='fish_base',
-    version='1.0.0',
+    version='1.0.2',
     packages=['fish_base'],
-    url='http://chuangyiji.com',
+    url='https://github.com/chinapnr/fish_base',
     license='',
     author='david.yi',
     author_email='wingfish@gmail.com',
