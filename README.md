@@ -14,7 +14,8 @@ functions list:
 
 举例:
 
-
+<p>
+'''python
     def cf_cache_demo():
 
         # 申明配置文件
@@ -29,7 +30,7 @@ functions list:
         # 从 conf 获得参数 args 的设置
         temp_s = test_cache.get_cf_cache(cf, 'get_args', 'args')
         print(temp_s)
-
+</p>
 
 get_md5(s)
 
