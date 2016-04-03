@@ -14,22 +14,22 @@ functions list:
 
 举例:
 
-'''python
-def cf_cache_demo():
 
-    # 申明配置文件
-    cf = configparser.ConfigParser()
+    def cf_cache_demo():
     
-    # 读入测试用的 conf 文件
-    cf.read('test_conf.ini')
-    
-    # 申明 conf 文件使用的 cache
-    test_cache = FishCache()
-    
-    # 从 conf 获得参数 args 的设置
-    temp_s = test_cache.get_cf_cache(cf, 'get_args', 'args')
-    print(temp_s)
-'''    
+        # 申明配置文件
+        cf = configparser.ConfigParser()
+        
+        # 读入测试用的 conf 文件
+        cf.read('test_conf.ini')
+        
+        # 申明 conf 文件使用的 cache
+        test_cache = FishCache()
+        
+        # 从 conf 获得参数 args 的设置
+        temp_s = test_cache.get_cf_cache(cf, 'get_args', 'args')
+        print(temp_s)
+  
 
 get_md5(s)
 
