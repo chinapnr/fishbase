@@ -6,11 +6,12 @@
 # 2015.8.1 加入 auto_add_file_ext() ablist_minus() format_list_on_head()
 # 2016.2.22 修改名称为 fish_base.py, 继续作为 e2at 项目的底层支持
 # 2016.4.1 edit fish_base directory to common
+# 2016.4.3 edit begin update to version v1.0.5
 
 
 from .fish_common import *
 
-fish_base_ver = '1.0.4'
+fish_base_ver = '1.0.5'
 
 
 # 返回fish_base 版本号,
@@ -63,21 +64,6 @@ def format_list_on_head(list_source, list_head):
         l1 = []
 
     return l2
-
-
-# r2c1 v1.0.1 #12089
-# 通过conf文件。eg ini，读取值，通过字典缓存来提高读取速度
-class FpyCache:
-    __cache = {}
-
-    def get_cache(self, cf, section, key):
-        # 生成 key，用于 dict
-        temp_key = section + '_' + key
-
-        if not (temp_key in self.__cache):
-            self.__cache[temp_key] = cf[section][key]
-
-        return self.__cache[temp_key]
 
 # for test on local machine
 # 1 setup sdist

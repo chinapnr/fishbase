@@ -1,5 +1,5 @@
 # 2016.4.1 create fish_common.py by david.yi
-
+# 2016.4.3 edit FishCache class, and edit get_cf_cache
 
 import os
 
@@ -25,6 +25,22 @@ def serialize_instance(obj):
     d = {'__classname__': type(obj).__name__}
     d.update(vars(obj))
     return d
+
+
+# r2c1 v1.0.1 #12089
+# 2016.4.3 edit class and function name
+# 通过conf文件。eg ini，读取值，通过字典缓存来提高读取速度
+class FishCache:
+    __cache = {}
+
+    def get_cf_cache(self, cf, section, key):
+        # 生成 key，用于 dict
+        temp_key = section + '_' + key
+
+        if not (temp_key in self.__cache):
+            self.__cache[temp_key] = cf[section][key]
+
+        return self.__cache[temp_key]
 
 
 # 判断文件名是否没有输入后缀，加上后缀
