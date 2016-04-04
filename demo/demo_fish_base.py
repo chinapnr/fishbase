@@ -4,6 +4,7 @@ import fish_base
 from fish_base import FishCache
 
 import configparser
+import time
 
 
 # 2016.4.3 create cf cache demo
@@ -19,7 +20,27 @@ def cf_cache_demo():
     test_cache = FishCache()
 
     # 从 conf 获得参数 args 的设置
-    temp_s = test_cache.get_cf_cache(cf, 'get_args', 'args')
+
+    # way 1, use fish_cf_cache
+    start_time = time.time()
+
+    for i in range(100000):
+        temp_s = test_cache.get_cf_cache(cf, 'get_args', 'args')
+
+    end_time = time.time()
+
+    print('cost time:', end_time - start_time, 'use fish_cf_cache ')
+
+    # way 2, use common conf way
+    start_time = time.time()
+
+    for i in range(100000):
+        temp_s = cf['get_args']['args']
+
+    end_time = time.time()
+
+    print('cost time:', end_time - start_time, 'use common conf way')
+
     print(temp_s)
 
 # main
