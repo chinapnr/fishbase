@@ -19,20 +19,20 @@ Thanks!
 
 ```python
 
-    def cf_cache_demo():
+def cf_cache_demo():
+
+    # 申明配置文件
+    cf = configparser.ConfigParser()
     
-        # 申明配置文件
-        cf = configparser.ConfigParser()
-        
-        # 读入测试用的 conf 文件
-        cf.read('test_conf.ini')
-        
-        # 申明 conf 文件使用的 cache
-        test_cache = FishCache()
-        
-        # 从 conf 获得参数 args 的设置
-        temp_s = test_cache.get_cf_cache(cf, 'get_args', 'args')
-        print(temp_s)
+    # 读入测试用的 conf 文件
+    cf.read('test_conf.ini')
+    
+    # 申明 conf 文件使用的 cache
+    test_cache = FishCache()
+    
+    # 从 conf 获得参数 args 的设置
+    temp_s = test_cache.get_cf_cache(cf, 'get_args', 'args')
+    print(temp_s)
 ``` 
 
 举例2:
@@ -40,28 +40,33 @@ Thanks!
 我们通过循环 10 万次, 来比较一下读取速度, 第一种是通过 fish_cf_cache 缓存模式, 第二种是通过标准的方式, 
 我们可以看到速度相差了 15 倍左右, 因此适用于对于配置文件有大量读取的场景.
 
+```bash
+ cost time: 0.05010986328125 use fish_cf_cache 
+ cost time: 0.8643078804016113 use common conf way
+```
+
 ```python
-    # way 1, use fish_cf_cache
-    start_time = time.time()
+ # way 1, use fish_cf_cache
+ start_time = time.time()
 
-    for i in range(100000):
-        temp_s = test_cache.get_cf_cache(cf, 'get_args', 'args')
+ for i in range(100000):
+     temp_s = test_cache.get_cf_cache(cf, 'get_args', 'args')
 
-    end_time = time.time()
+ end_time = time.time()
 
-    print('cost time:', end_time - start_time, 'use fish_cf_cache ')
+ print('cost time:', end_time - start_time, 'use fish_cf_cache ')
 
-    # way 2, use common conf way
-    start_time = time.time()
+ # way 2, use common conf way
+ start_time = time.time()
 
-    for i in range(100000):
-        temp_s = cf['get_args']['args']
+ for i in range(100000):
+     temp_s = cf['get_args']['args']
 
-    end_time = time.time()
+ end_time = time.time()
 
-    print('cost time:', end_time - start_time, 'use common conf way')
+ print('cost time:', end_time - start_time, 'use common conf way')
 
-    print(temp_s)
+ print(temp_s)
 ```
 
 get_md5(s)
