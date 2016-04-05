@@ -17,6 +17,7 @@ Thanks!
 
 举例1:
 
+```python
 
     def cf_cache_demo():
     
@@ -32,13 +33,14 @@ Thanks!
         # 从 conf 获得参数 args 的设置
         temp_s = test_cache.get_cf_cache(cf, 'get_args', 'args')
         print(temp_s)
-  
+``` 
+
 举例2:
 
 我们通过循环 10 万次, 来比较一下读取速度, 第一种是通过 fish_cf_cache 缓存模式, 第二种是通过标准的方式, 
 我们可以看到速度相差了 15 倍左右, 因此适用于对于配置文件有大量读取的场景.
 
-
+```python
     # way 1, use fish_cf_cache
     start_time = time.time()
 
@@ -60,6 +62,7 @@ Thanks!
     print('cost time:', end_time - start_time, 'use common conf way')
 
     print(temp_s)
+```
 
 get_md5(s)
 
