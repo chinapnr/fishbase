@@ -1,5 +1,6 @@
 # 2016.4.1 create fish_common.py by david.yi
 # 2016.4.3 edit FishCache class, and edit get_cf_cache
+# 2016.4.7 v1.0.6, add get_long_filename_with_sub_dir()
 
 import os
 
@@ -41,6 +42,18 @@ class FishCache:
             self.__cache[temp_key] = cf[section][key]
 
         return self.__cache[temp_key]
+
+
+# 2016.4.7 create by david.yi add in v1.0.6
+# 生成当前路径下一级路径某文件的完整文件名
+# Generate long filename base the current sub directory and filename
+def get_long_filename_with_sub_dir(sub_dir, filename):
+
+    flag = True
+
+    cur_dir = os.path.split(os.path.realpath(__file__))[0]
+    long_filename = os.path.join(cur_dir, sub_dir, filename)
+    return flag, long_filename
 
 
 # 判断文件名是否没有输入后缀，加上后缀

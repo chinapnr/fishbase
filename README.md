@@ -1,6 +1,8 @@
 # fish_base
 
-It's my first python package, and mostly for test. Not suggest for download.
+It's my first python package, and mostly for test. 
+
+pre-alpha version v1.0.x
 
 Thanks!
 
@@ -68,6 +70,25 @@ def cf_cache_demo():
 
  print(temp_s)
 ```
+
+### get_long_filename_with_sub_dir(sub_dir, filename)
+
+输入: 子路径名称, 子路径下的文件名称
+输出: 标志(目前总是为 True), 完整的长文件名
+
+生成当前路径下一级路径某文件的完整文件名
+
+类似下面的结构:
+
+\aaa.py
+\bbb\ccc.conf
+
+在 aaa.py 中使用
+
+get_long_filename_with_sub_dir('bbb', 'ccc.conf')
+
+会得到 C:....\bbb\ccc.conf
+
 
 get_md5(s)
 

@@ -11,7 +11,7 @@
 
 from .fish_common import *
 
-fish_base_ver = '1.0.5'
+fish_base_ver = '1.0.6'
 
 
 # 返回fish_base 版本号,

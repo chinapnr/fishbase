@@ -2,6 +2,7 @@
 
 import fish_base
 from fish_base import FishCache
+from fish_base import get_long_filename_with_sub_dir
 
 import configparser
 import time
@@ -49,3 +50,5 @@ if __name__ == '__main__':
     print(fish_base.get_md5('Hello World'))
 
     cf_cache_demo()
+
+    print(get_long_filename_with_sub_dir('test_sub_dir', 'test_file.txt'))
