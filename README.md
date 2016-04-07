@@ -1,15 +1,9 @@
 # fish_base
 
-It's my first python package, and mostly for test. 
-
-pre-alpha version v1.0.x
-
-Thanks!
-
-这是我在学习 python 过程中积累的一个函数库, 希望对 python 的初学者等有所帮助. 代码写得很一般, 我会继续努力.
+这是我在学习 python 过程中积累的一个函数库, 希望对 python 的初学者等有所帮助. 代码写得很一般, 目前只考虑实用为主.
  python 是一门很棒的编程语言, 还有很多东西要学习.
 
-类和函数列表, functions list:
+类和函数列表:
 
 ## class FishCache
 
@@ -97,6 +91,14 @@ serialize_instance(obj)
 auto_add_file_ext(short_filename, ext)
 
 check_kind_path_file(kind_name, file_name)
+
+------
+
+It's my first python package, and mostly for test. 
+
+Pre-alpha version v1.0.x
+
+Thanks!
 
 I will add more notes and optimized the code in the future.
 
