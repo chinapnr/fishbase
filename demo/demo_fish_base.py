@@ -25,6 +25,9 @@ def cf_cache_demo():
     # way 1, use fish_cf_cache
     start_time = time.time()
 
+    # 记录读取的键值
+    temp_s = ''
+
     for i in range(100000):
         temp_s = test_cache.get_cf_cache(cf, 'get_args', 'args')
 
