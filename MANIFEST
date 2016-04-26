@@ -6,3 +6,4 @@ demo/test_conf.ini
 demo/test_sub_dir/test_file.txt
 fish_base/__init__.py
 fish_base/fish_common.py
+fish_base/fish_date.py

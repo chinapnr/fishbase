@@ -51,8 +51,14 @@ def cf_cache_demo():
 
 # 2016.4.26
 def month_range_demo():
+
     temple_tuple = fish_date.get_date_range('last month')
-    return temple_tuple
+    print(temple_tuple[0])
+    print(temple_tuple[1])
+
+    temple_tuple = fish_date.get_date_range('this month')
+    print(temple_tuple[0])
+    print(temple_tuple[1])
 
 # main
 if __name__ == '__main__':
@@ -63,6 +69,6 @@ if __name__ == '__main__':
 
     print(get_long_filename_with_sub_dir('test_sub_dir', 'test_file.txt'))
 
-    print(month_range_demo()[0])
-    print(month_range_demo()[1])
+    month_range_demo()
+
 
