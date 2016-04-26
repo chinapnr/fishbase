@@ -3,6 +3,7 @@
 import fish_base
 from fish_base import FishCache
 from fish_base import get_long_filename_with_sub_dir
+from fish_base import fish_date
 
 import configparser
 import time
@@ -47,11 +48,21 @@ def cf_cache_demo():
 
     print(temp_s)
 
+
+# 2016.4.26
+def month_range_demo():
+    temple_tuple = fish_date.get_date_range('last month')
+    return temple_tuple
+
 # main
 if __name__ == '__main__':
 
     print(fish_base.get_md5('Hello World'))
 
-    cf_cache_demo()
+    # cf_cache_demo()
 
     print(get_long_filename_with_sub_dir('test_sub_dir', 'test_file.txt'))
+
+    print(month_range_demo()[0])
+    print(month_range_demo()[1])
+

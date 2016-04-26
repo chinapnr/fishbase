@@ -7,11 +7,12 @@
 # 2016.2.22 修改名称为 fish_base.py, 继续作为 e2at 项目的底层支持
 # 2016.4.1 edit fish_base directory to common
 # 2016.4.3 edit begin update to version v1.0.5
+# 2016.4.26 start v1.0.8 add date functions
 
 
 from .fish_common import *
 
-fish_base_ver = '1.0.6'
+fish_base_ver = '1.0.8'
 
 
 # 返回fish_base 版本号,
