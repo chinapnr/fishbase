@@ -1,6 +1,7 @@
 from numpy import *
 import jieba
 
+from fish_base import get_long_filename_with_sub_dir_module
 
 class ClassNaiveBayes:
 
@@ -22,18 +23,37 @@ class ClassNaiveBayes:
     p1_v = 0
     p_ab = 0
 
+    stopwords_list = []
+
+    # 2016.5.18
+    # 读入停用词
+    def read_stopwords(self):
+
+        self.stopwords_list = []
+
+        # 获得停用词文件的本地文件
+        filename = get_long_filename_with_sub_dir_module('bayes', 'stopwords.txt')[1]
+
+        with open(filename, 'r') as f:
+            for line in f:
+                self.stopwords_list.append(line.rstrip())
+
+        print(self.stopwords_list)
+
     # 2016.5.16
     # 创建单词集合
     # 输入 data_list: 数据列表内容, 两维list
     # 输出 单维list
-    @staticmethod
-    def create_word_list(data_list):
+    def create_word_list(self, data_list):
         # create empty set
         word_set = set([])
         for document in data_list:
             # union of the two sets
             word_set = word_set | set(document)
-        return list(word_set)
+        word_list = list(word_set)
+        word_list = [x for x in word_list if x not in self.stopwords_list]
+        print('word list count:', len(word_list))
+        return word_list
 
     # 2016.5.16
     # 将单词 list 转换为向量
@@ -135,7 +155,7 @@ class ClassNaiveBayes:
         train_txt0 = []
         with open(filename, 'r') as f:
             for line in f:
-                train_txt0.append(line)
+                train_txt0.append(line.rstrip())
 
         for item in train_txt0:
             s = list(jieba.cut(item))
@@ -159,7 +179,7 @@ class ClassNaiveBayes:
                 # 获得人工设定的类别
                 pre_class_list.append(line[0:1])
                 # 获得需要测试的文本
-                test_doc_list.append(line[2:])
+                test_doc_list.append(line[2:].rstrip())
 
         # 测试文本的长度
         test_doc_count = len(test_doc_list)

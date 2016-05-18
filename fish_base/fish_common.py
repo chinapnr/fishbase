@@ -4,6 +4,7 @@
 
 import os
 import sys
+import inspect
 
 
 # md5 函数
@@ -54,6 +55,16 @@ def get_long_filename_with_sub_dir(sub_dir, filename):
 
     cur_dir = os.path.dirname(os.path.realpath(sys.argv[0]))
     long_filename = os.path.join(cur_dir, sub_dir, filename)
+    return flag, long_filename
+
+
+# 2016.5.18
+def get_long_filename_with_sub_dir_module(sub_dir, filename):
+
+    flag = True
+
+    cur_module_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    long_filename = os.path.join(cur_module_dir, sub_dir, filename)
     return flag, long_filename
 
 

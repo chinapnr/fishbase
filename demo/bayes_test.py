@@ -16,7 +16,11 @@ nb.train_doc_sent_vec = []
 
 # for Chinese
 
+# 初始化分词
 nb.init_cut_word()
+
+# 读入停用词
+nb.read_stopwords()
 
 nb.open_train_doc_ch('train_bayes/good.txt', 0)
 nb.open_train_doc_ch('train_bayes/bad.txt', 1)
@@ -48,3 +52,13 @@ else:
 #         print('classified as bad ')
 #
 #     print()
+
+# 2016.5.18
+# {'01': 1, '10': 5, '00': 7, '11': 3}
+# (0.875, 0.375)
+#
+#
+# 2016.5.18 增加去除停用词,一般意义
+# {'11': 4, '00': 8, '10': 4, '01': 0}
+# (1.0, 0.5)
+
