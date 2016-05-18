@@ -1,5 +1,5 @@
 from fish_base import bayes
-# import jieba
+import jieba
 
 nb = bayes.ClassNaiveBayes()
 
@@ -25,6 +25,17 @@ nb.train()
 print(nb.p0_v, nb.p1_v, nb.p_ab)
 
 print(nb.test_nb('train_bayes/test.txt'))
+
+# 指定测试
+print()
+test_s = '这个手机很好,我很喜欢'
+print(test_s)
+test_list = list(jieba.cut(test_s))
+p = nb.run_nb(test_list)
+if p == 0:
+    print('classified as good ')
+else:
+    print('classified as bad ')
 
 # while 1:
 #     test_s = input('input comment:')

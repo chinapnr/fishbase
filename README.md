@@ -5,6 +5,27 @@
 
 类和函数列表:
 
+## class bayes.ClassNaiveBayes
+
+一个朴素贝叶斯分类算法实现, 参照"机器学习实战"一书中的朴素贝叶斯算法为蓝本进行修改, 增加支持训练文本和测试文本, 支持基于 jieba 中文分词.
+将继续完善中文处理方面, 对于停用词和中文标点等的优化. 之后包装成 web 接口, 供其他应用简单调用即可完成基本的中文文本分类.
+
+对于训练后的文本倾向性分类, 只要简单的几行代码即可完成.
+
+```python
+
+test_s = '这个手机很好,我很喜欢'
+print(test_s)
+test_list = list(jieba.cut(test_s))
+p = nb.run_nb(test_list)
+if p == 0:
+    print('classified as good ')
+else:
+    print('classified as bad ')
+```    
+
+------
+
 ## class FishCache
 
 ### get_cf_cache(self, cf, section, key)
@@ -64,6 +85,8 @@ def cf_cache_demo():
 
  print(temp_s)
 ```
+
+------
 
 ### get_long_filename_with_sub_dir(sub_dir, filename)
 
