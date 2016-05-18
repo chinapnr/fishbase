@@ -24,6 +24,8 @@ else:
     print('classified as bad ')
 ```    
 
+具体使用方法可以参考这里: <a href="http://chuangyiji.com/archives/1095">使用 python 基于朴素贝叶斯进行文本分类学习笔记</a>
+
 ------
 
 ## class FishCache
