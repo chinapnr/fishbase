@@ -11,6 +11,7 @@
 
 
 from .fish_common import *
+from .bayes import *
 
 fish_base_ver = '1.0.8'
 
@@ -23,31 +24,19 @@ def get_fish_base_ver():
 
 # 提示用户输入指定解释信息的字段名称
 # 2015.6.7  create by david.yi
-# 输入: info: 要显示的字段解释，field_default：默认的字段名称
+# 输入: info0: 要显示的字段解释，field_default：默认的字段名称
 # 输出: 字段名称
-def input_field(info, field_default):
-    field = input('Please input the ' + info +
+def input_field(info0, field_default):
+    field = input('Please input the ' + info0 +
                   ' field name (return for use default ' +
                   field_default + '): ')
 
     if len(field) <= 0:
         field = field_default
 
-    print('The ' + info + ' field: ' + field + '\n')
+    print('The ' + info0 + ' field: ' + field + '\n')
 
     return field
-
-
-# 列表A-B计算， A: 1 2 3 4 5 B: 1 2 7 结果为 1 2
-# create 2015.8.1 by david.yi
-def ablist_minus(list_a, list_b):
-    list_temp = []
-    for i in range(len(list_a)):
-        for j in range(len(list_b)):
-            if list_a[i] == list_b[j]:
-                list_temp.append(list_a[i])
-
-    return list_temp
 
 
 # 将列表按照列标头进行筛选
@@ -66,8 +55,3 @@ def format_list_on_head(list_source, list_head):
 
     return l2
 
-# for test on local machine
-# 1 setup sdist
-# 2 pip install fish_base-1.0.4.tar.gz
-# 3 run /tests/code
-# for upload to pypi: python setup.py sdist upload

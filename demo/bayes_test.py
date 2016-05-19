@@ -1,6 +1,7 @@
 from fish_base import bayes
 import jieba
 
+
 nb = bayes.ClassNaiveBayes()
 
 nb.train()
