@@ -3,6 +3,7 @@ import jieba
 
 from fish_base import get_long_filename_with_sub_dir_module
 
+
 class ClassNaiveBayes:
 
     # 训练 list, 默认内容, 原书中的内容
@@ -40,7 +41,13 @@ class ClassNaiveBayes:
 
         print(self.stopwords_list)
 
-    # 2016.5.16
+    # 2016.5.19
+    def word_optimize(self, l):
+        # 停用词过滤
+        temp_word_list = [x for x in l if x not in self.stopwords_list]
+        return temp_word_list
+
+    # 2016.5.16 5.19
     # 创建单词集合
     # 输入 data_list: 数据列表内容, 两维list
     # 输出 单维list
@@ -51,8 +58,9 @@ class ClassNaiveBayes:
             # union of the two sets
             word_set = word_set | set(document)
         word_list = list(word_set)
-        word_list = [x for x in word_list if x not in self.stopwords_list]
-        print('word list count:', len(word_list))
+        # 词汇处理
+        word_list = self.word_optimize(word_list)
+        # print('word list count:', len(word_list))
         return word_list
 
     # 2016.5.16
@@ -187,6 +195,9 @@ class ClassNaiveBayes:
         for i, item in enumerate(test_doc_list):
 
             s = list(jieba.cut(item))
+
+            # 对输入单词进行优化处理
+            s = self.word_optimize(s)
 
             # 获得程序分类结果
             computer_class = self.run_nb(s)
