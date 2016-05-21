@@ -8,7 +8,7 @@ setup(
     license='MIT',
     author='david.yi',
     author_email='wingfish@gmail.com',
-    description='some useful functions for python',
+    description='some useful functions for python, include naive bayes for text classify',
 
     packages=['fish_base', 'fish_base.bayes'],
     package_data={'': ['stopwords.txt']},
@@ -31,7 +31,7 @@ setup(
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
         'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5.1'
+        'Programming Language :: Python :: 3.5'
     ]
 
 )
