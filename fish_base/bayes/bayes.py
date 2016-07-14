@@ -6,24 +6,27 @@ from fish_base import get_long_filename_with_sub_dir_module
 
 class ClassNaiveBayes:
 
-    # 训练 list, 默认内容, 原书中的内容
+    # 训练 list, 默认内容
     train_doc_list = [['my', 'dog', 'has', 'flea', 'problems', 'help', 'please'],
                       ['maybe', 'not', 'take', 'him', 'to', 'dog', 'park', 'stupid'],
                       ['my', 'dalmation', 'is', 'so', 'cute', 'I', 'love', 'him'],
                       ['stop', 'posting', 'stupid', 'worthless', 'garbage'],
                       ['mr', 'licks', 'ate', 'my', 'steak', 'how', 'to', 'stop', 'him'],
                       ['quit', 'buying', 'worthless', 'dog', 'food', 'stupid']]
-    # 倾向性向量, 0:正面 1:负面
+    # 定义默认的分类类别
     train_doc_sent_vec = [0, 1, 0, 1, 0, 1]
 
     # 单词列表集合
     word_list = []
 
-    # 正面和负面概率, 先验概率
+    # 类比的概率
     p0_v = 0
     p1_v = 0
+
+    # 先验概率
     p_ab = 0
 
+    # 初始化停用词列表
     stopwords_list = []
 
     # 2016.5.18

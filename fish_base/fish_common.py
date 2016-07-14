@@ -46,8 +46,8 @@ class FishCache:
         return self.__cache[temp_key]
 
 
-# 2016.4.7 create by david.yi add in v1.0.6, v1.0.7
 # 生成当前路径下一级路径某文件的完整文件名
+# 2016.4.7 create by david.yi add in v1.0.6, v1.0.7
 # Generate long filename base the current sub directory and filename
 def get_long_filename_with_sub_dir(sub_dir, filename):
 
@@ -58,6 +58,7 @@ def get_long_filename_with_sub_dir(sub_dir, filename):
     return flag, long_filename
 
 
+# 生成使用模块时的下一级路径某文件的完成文件名
 # 2016.5.18
 def get_long_filename_with_sub_dir_module(sub_dir, filename):
 
