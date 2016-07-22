@@ -24,7 +24,7 @@ class ClassNaiveBayes:
     p1_v = 0
 
     # 先验概率
-    p_ab = 0
+    p_ab = 0 
 
     # 初始化停用词列表
     stopwords_list = []
