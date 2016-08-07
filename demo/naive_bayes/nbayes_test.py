@@ -1,8 +1,8 @@
-from fish_base import bayes
+from fish_base import naive_bayes
 import jieba
 
 
-nb = bayes.ClassNaiveBayes()
+nb = naive_bayes.ClassNaiveBayes()
 
 nb.train()
 

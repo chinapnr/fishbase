@@ -24,7 +24,7 @@ class ClassNaiveBayes:
     p1_v = 0
 
     # 先验概率
-    p_ab = 0 
+    p_ab = 0
 
     # 初始化停用词列表
     stopwords_list = []
@@ -36,7 +36,7 @@ class ClassNaiveBayes:
         self.stopwords_list = []
 
         # 获得停用词文件的本地文件
-        filename = get_long_filename_with_sub_dir_module('bayes', 'stopwords.txt')[1]
+        filename = get_long_filename_with_sub_dir_module('naive_bayes', 'stopwords.txt')[1]
 
         with open(filename, 'r') as f:
             for line in f:
