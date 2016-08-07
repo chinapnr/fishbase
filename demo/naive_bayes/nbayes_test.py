@@ -2,15 +2,15 @@ from fish_base import naive_bayes
 import jieba
 
 
-nb = naive_bayes.ClassNaiveBayes()
+nb = naive_bayes.NaiveBayes()
 
 nb.train()
 
 test_list = ['love', 'my', 'dalmation']
-print(test_list, 'classified as: ', nb.run_nb(test_list))
+print(test_list, 'classified as: ', nb.run(test_list))
 
 test_list = ['stupid', 'garbage']
-print(test_list, 'classified as: ', nb.run_nb(test_list))
+print(test_list, 'classified as: ', nb.run(test_list))
 
 nb.train_doc_list = []
 nb.train_doc_sent_vec = []
@@ -21,7 +21,7 @@ nb.train_doc_sent_vec = []
 nb.init_cut_word()
 
 # 读入停用词
-nb.read_stopwords()
+nb.load_stopword()
 
 nb.open_train_doc_ch('train_bayes/good.txt', 0)
 nb.open_train_doc_ch('train_bayes/bad.txt', 1)
@@ -29,14 +29,14 @@ nb.open_train_doc_ch('train_bayes/bad.txt', 1)
 nb.train()
 print(nb.p0_v, nb.p1_v, nb.p_ab)
 
-print(nb.test_nb('train_bayes/test.txt'))
+print(nb.test('train_bayes/test.txt'))
 
 # 指定测试
 print()
 test_s = '这个手机很好,我很喜欢'
 print(test_s)
 test_list = list(jieba.cut(test_s))
-p = nb.run_nb(test_list)
+p = nb.run(test_list)
 if p == 0:
     print('classified as good ')
 else:

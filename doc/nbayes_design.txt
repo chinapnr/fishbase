@@ -7,19 +7,21 @@ last update: 2016.8.7
 4 将两类分类修改为数组方式
 5 验证上述分类修改数组方式,在类别=2的情况下是否正确
 
-删除, 默认的英文材料,必须通过文本材料来进行训练
-修改, ClassNaiveBayes 修改为 NaiveBayes, 去除不必要前缀
-修改, NaiveBayes 中的方法 run_nb 修改为 run
-修改, bayes.py 文件名修改为 naive_bayes.py, 修改数据模型方法
-修改, read_stopwords 方法修改为 load_stopword
-修改, word_optimize 方法修改为 remove_stopword
-修改, words_to_vec 方法修改为 word_to_vec
-修改, train_nb0 方法修改为 train0
-修改, classify_nb 方法修改为 classify
-修改, word_list, 也就是基础词集合, 包含训练时候得到的分词结果, 以及 p0_v, p1_v, p_ab, 能够独立保存在一个 hd5文件中
-增加,训练时候需要加入 pro_id, job_id, 项目号和作业号
+#1, 删除, 默认的英文材料,必须通过文本材料来进行训练
+#2, 修改, ClassNaiveBayes 修改为 NaiveBayes, 去除不必要前缀. ok
+#3, 修改, NaiveBayes 中的方法 run_nb 修改为 run. ok
+#4, 修改, bayes.py 文件名修改为 naive_bayes.py, 修改数据模型方法. ok
+#5, 修改, read_stopwords 方法修改为 load_stopword. ok
+#6, 修改, word_optimize 方法修改为 remove_stopword. ok
+#7, 修改, words_to_vec 方法修改为 word_to_vec. ok
+#8, 修改, train_nb0 方法修改为 train0. ok
+#9, 修改, classify_nb 方法修改为 classify. ok
+#10, 修改, test_nb 方法修改为 test. ok
+
+#11, 增加, load_stopword() 要增加如果读入不到 stopword 文件的处理.
 
 
-----
+#50, 修改, word_list, 也就是基础词集合, 包含训练时候得到的分词结果, 以及 p0_v, p1_v, p_ab, 能够独立保存在一个 hd5文件中
+#51, 增加,训练时候需要加入 pro_id, job_id, 项目号和作业号
 
-#1 对于 naive_bayes 的命名统一, 需要的地方用全程, 部分地方用 nbayes, 修改所有相关文件名. 测试通过.
+
