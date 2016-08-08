@@ -11,7 +11,7 @@
 
 
 from .fish_common import *
-from .bayes import *
+from .naive_bayes import *
 
 fish_base_ver = '1.0.8'
 

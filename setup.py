@@ -10,7 +10,7 @@ setup(
     author_email='wingfish@gmail.com',
     description='some useful functions for python, include naive bayes for text classify',
 
-    packages=['fish_base', 'fish_base.bayes'],
+    packages=['fish_base', 'fish_base.naive_bayes'],
     package_data={'': ['stopwords.txt']},
 
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers

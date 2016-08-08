@@ -1,10 +1,12 @@
+# 2016.8.7 修改方法名称, 统一化
+
 from numpy import *
 import jieba
 
 from fish_base import get_long_filename_with_sub_dir_module
 
 
-class ClassNaiveBayes:
+class NaiveBayes:
 
     # 训练 list, 默认内容
     train_doc_list = [['my', 'dog', 'has', 'flea', 'problems', 'help', 'please'],
@@ -27,27 +29,28 @@ class ClassNaiveBayes:
     p_ab = 0
 
     # 初始化停用词列表
-    stopwords_list = []
+    stopword_list = []
 
-    # 2016.5.18
+    # 2016.5.18 8.7
     # 读入停用词
-    def read_stopwords(self):
+    def load_stopword(self):
 
-        self.stopwords_list = []
+        self.stopword_list = []
 
         # 获得停用词文件的本地文件
-        filename = get_long_filename_with_sub_dir_module('bayes', 'stopwords.txt')[1]
+        filename = get_long_filename_with_sub_dir_module('naive_bayes', 'stopwords.txt')[1]
 
         with open(filename, 'r') as f:
             for line in f:
-                self.stopwords_list.append(line.rstrip())
+                self.stopword_list.append(line.rstrip())
 
-        print(self.stopwords_list)
+        print(self.stopword_list)
 
-    # 2016.5.19
-    def word_optimize(self, l):
+    # 2016.5.19 8.7
+    # 去除停用词
+    def remove_stopword(self, l):
         # 停用词过滤
-        temp_word_list = [x for x in l if x not in self.stopwords_list]
+        temp_word_list = [x for x in l if x not in self.stopword_list]
         return temp_word_list
 
     # 2016.5.16 5.19
@@ -62,7 +65,7 @@ class ClassNaiveBayes:
             word_set = word_set | set(document)
         word_list = list(word_set)
         # 词汇处理
-        word_list = self.word_optimize(word_list)
+        word_list = self.remove_stopword(word_list)
         # print('word list count:', len(word_list))
         return word_list
 
@@ -71,7 +74,7 @@ class ClassNaiveBayes:
     # 输入 word_list: 单词列表 new_word_list: 需要向量化的单词列表
     # 输出 vec: 生成的向量数组
     @staticmethod
-    def words_to_vec(word_list, new_word_list):
+    def word_to_vec(word_list, new_word_list):
         vec = [0] * len(word_list)
         for word in new_word_list:
             if word in word_list:
@@ -86,7 +89,7 @@ class ClassNaiveBayes:
     # 输入 train_matrix: 训练举证 train_category: 正反向量列表
     # 输出 p0_v, p1_v:正面反面概率, p_ab:先验概率
     @staticmethod
-    def train_nb0(train_matrix, train_category):
+    def train0(train_matrix, train_category):
 
         num_train_docs = len(train_matrix)
         num_words = len(train_matrix[0])
@@ -115,7 +118,7 @@ class ClassNaiveBayes:
     # 输入 向量, 正面反面概率,事件概率
     # 输出 正面或者反面
     @staticmethod
-    def classify_nb(vec, p0_vec, p1_vec, p_class1):
+    def classify(vec, p0_vec, p1_vec, p_class1):
         # element-wise mult
         p0 = sum(vec * p0_vec) + log(1.0 - p_class1)
         p1 = sum(vec * p1_vec) + log(p_class1)
@@ -137,22 +140,22 @@ class ClassNaiveBayes:
         # 根据训练文档进行循环
         for post_in_doc in self.train_doc_list:
             # 构建训练矩阵, 将单词列表转化为向量
-            train_matrix.append(self.words_to_vec(self.word_list, post_in_doc))
+            train_matrix.append(self.word_to_vec(self.word_list, post_in_doc))
 
         # 根据训练矩阵和情感分析向量进行训练,得到
-        self.p0_v, self.p1_v, self.p_ab = self.train_nb0(array(train_matrix), array(self.train_doc_sent_vec))
+        self.p0_v, self.p1_v, self.p_ab = self.train0(array(train_matrix), array(self.train_doc_sent_vec))
 
     # 2016.5.16
     # 根据输入内容测试 Naive Bayes 模型
     # 输入 test_word_list: 需要测试的单词 list
     # 输出 0 or 1, 表示正面或者反面
-    def run_nb(self, word_list):
+    def run(self, word_list):
 
         # 对输入的内容转化为向量
-        this_post_vec = array(self.words_to_vec(self.word_list, word_list))
+        this_post_vec = array(self.word_to_vec(self.word_list, word_list))
 
         # 返回分类的值
-        return self.classify_nb(this_post_vec, self.p0_v, self.p1_v, self.p_ab)
+        return self.classify(this_post_vec, self.p0_v, self.p1_v, self.p_ab)
 
     # 2016.5.18
     @staticmethod
@@ -176,7 +179,7 @@ class ClassNaiveBayes:
     # 2016.5.18
     # 根据测试样本来测试分类的准确率
     # 输出 人工正确/机器判断正确 人工错误/机器判断错误 的两个百分比
-    def test_nb(self, filename):
+    def test(self, filename):
 
         test_doc_list = []
         pre_class_list = []
@@ -200,10 +203,10 @@ class ClassNaiveBayes:
             s = list(jieba.cut(item))
 
             # 对输入单词进行优化处理
-            s = self.word_optimize(s)
+            s = self.remove_stopword(s)
 
             # 获得程序分类结果
-            computer_class = self.run_nb(s)
+            computer_class = self.run(s)
             # 获得人工设定的分类结果
             pre_class = pre_class_list[i]
 
