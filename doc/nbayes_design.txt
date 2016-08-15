@@ -18,8 +18,9 @@ last update: 2016.8.7
 #9, 修改, classify_nb 方法修改为 classify. ok
 #10, 修改, test_nb 方法修改为 test. ok
 
-#11, 增加, load_stopword() 要增加如果读入不到 stopword 文件的处理.
-
+#11, 增加, nb.load_stopword() 要增加如果读入不到 stopword 文件的异常处理.
+#12, 增加, nb.open_train_doc_ch() 要增加如果读不到文件的异常处理.
+#13, 增加, 所有打开文件地方加入强制编码utf8, 适应windows 环境打开文件. ok
 
 #50, 修改, word_list, 也就是基础词集合, 包含训练时候得到的分词结果, 以及 p0_v, p1_v, p_ab, 能够独立保存在一个 hd5文件中
 #51, 增加,训练时候需要加入 pro_id, job_id, 项目号和作业号

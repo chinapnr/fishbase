@@ -40,7 +40,7 @@ class NaiveBayes:
         # 获得停用词文件的本地文件
         filename = get_long_filename_with_sub_dir_module('naive_bayes', 'stopwords.txt')[1]
 
-        with open(filename, 'r') as f:
+        with open(filename, 'r', encoding='utf8') as f:
             for line in f:
                 self.stopword_list.append(line.rstrip())
 
@@ -60,11 +60,12 @@ class NaiveBayes:
     def create_word_list(self, data_list):
         # create empty set
         word_set = set([])
+
         for document in data_list:
             # union of the two sets
             word_set = word_set | set(document)
         word_list = list(word_set)
-        # 词汇处理
+        # 停用词处理
         word_list = self.remove_stopword(word_list)
         # print('word list count:', len(word_list))
         return word_list
@@ -101,6 +102,7 @@ class NaiveBayes:
 
         p0_d = 2.0
         p1_d = 2.0
+
         for i in range(num_train_docs):
             if train_category[i] == 1:
                 p1_num += train_matrix[i]
@@ -158,6 +160,7 @@ class NaiveBayes:
         return self.classify(this_post_vec, self.p0_v, self.p1_v, self.p_ab)
 
     # 2016.5.18
+    # 初始化结巴中文分词
     @staticmethod
     def init_cut_word():
         jieba.initialize()
@@ -166,11 +169,15 @@ class NaiveBayes:
     # 打开训练文档, 将内容增加到内部变量
     def open_train_doc_ch(self, filename, class_mark):
 
+        # 训练文本列表
         train_txt0 = []
-        with open(filename, 'r') as f:
+
+        # 打开文件
+        with open(filename, 'r', encoding='utf8') as f:
             for line in f:
                 train_txt0.append(line.rstrip())
 
+        # 读入一行，进行分词，然后构成一个二维列表
         for item in train_txt0:
             s = list(jieba.cut(item))
             self.train_doc_list.append(s)
@@ -188,7 +195,7 @@ class NaiveBayes:
         test_result_dict = {'11': 0, '10': 0, '00': 0, '01': 0}
 
         # 打开测试文本
-        with open(filename, 'r') as f:
+        with open(filename, 'r', encoding='utf8') as f:
             for line in f:
                 # 获得人工设定的类别
                 pre_class_list.append(line[0:1])
