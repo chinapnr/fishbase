@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='fish_base',
-    version='1.0.8',
+    version='1.0.9',
 
     url='https://github.com/chinapnr/fish_base',
     license='MIT',
