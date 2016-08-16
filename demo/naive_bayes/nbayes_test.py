@@ -12,10 +12,12 @@ print(test_list, 'classified as: ', nb.run(test_list))
 test_list = ['stupid', 'garbage']
 print(test_list, 'classified as: ', nb.run(test_list))
 
-nb.train_doc_list = []
-nb.train_doc_sent_vec = []
 
 # for Chinese
+
+# 初始化系统变量
+nb.train_doc_list = []
+nb.train_doc_sent_vec = []
 
 # 初始化分词
 nb.init_cut_word()
@@ -23,9 +25,13 @@ nb.init_cut_word()
 # 读入停用词
 nb.load_stopword()
 
+# 打开中文训练文档
 nb.open_train_doc_ch('train_bayes/good.txt', 0)
 nb.open_train_doc_ch('train_bayes/bad.txt', 1)
 
+print(nb.train_doc_list)
+
+# 训练
 nb.train()
 print(nb.p0_v, nb.p1_v, nb.p_ab)
 
