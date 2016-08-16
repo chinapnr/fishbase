@@ -1,4 +1,5 @@
 # 2016.8.7 修改方法名称, 统一化
+# 2016.8.16 完善程序结构, 增强健壮性
 
 from numpy import *
 import jieba
@@ -31,20 +32,32 @@ class NaiveBayes:
     # 初始化停用词列表
     stopword_list = []
 
-    # 2016.5.18 8.7
+    # 2016.5.18 8.7 8.16
     # 读入停用词
     def load_stopword(self):
 
         self.stopword_list = []
 
         # 获得停用词文件的本地文件
-        filename = get_long_filename_with_sub_dir_module('naive_bayes', 'stopwords.txt')[1]
+        result = get_long_filename_with_sub_dir_module('naive_bayes', 'stopwords.txt')[1]
 
-        with open(filename, 'r') as f:
-            for line in f:
-                self.stopword_list.append(line.rstrip())
+        # 文件存在
+        if result[0]:
+            filename = result[1]
 
-        print(self.stopword_list)
+            # 打开文件
+            try:
+                with open(filename, 'r') as f:
+                    for line in f:
+                        self.stopword_list.append(line.rstrip())
+
+                print(self.stopword_list)
+
+            # 打开文件错误处理
+            except IOError as err:
+                print('File Error:' + str(err))
+        else:
+            return False
 
     # 2016.5.19 8.7
     # 去除停用词

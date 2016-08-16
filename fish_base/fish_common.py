@@ -55,22 +55,28 @@ def get_long_filename_with_sub_dir(sub_dir, filename):
 
     cur_dir = os.path.dirname(os.path.realpath(sys.argv[0]))
     long_filename = os.path.join(cur_dir, sub_dir, filename)
+
     return flag, long_filename
 
 
-# 生成使用模块时的下一级路径某文件的完成文件名
 # 2016.5.18
+# 生成使用模块时的下一级路径某文件的完整文件名
+# 输入: 子目录, 文件名
+# 输出: 文件是否存在标志, 完整文件名
 def get_long_filename_with_sub_dir_module(sub_dir, filename):
-
-    flag = True
 
     cur_module_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
     long_filename = os.path.join(cur_module_dir, sub_dir, filename)
-    return flag, long_filename
+
+    # 检查是否存在文件名
+    if os.path.exists(long_filename):
+        return True, long_filename
+    else:
+        return False, long_filename
 
 
-# 判断文件名是否没有输入后缀，加上后缀
 # create 2015.8.1. by david.yi
+# 判断文件名是否没有输入后缀，加上后缀
 def auto_add_file_ext(short_filename, ext):
 
     temp_filename = short_filename
