@@ -112,8 +112,11 @@ class NaiveBayes:
         p0_num = ones(num_words)
         p1_num = ones(num_words)
 
+        # 分母初始化为 2
         p0_d = 2.0
         p1_d = 2.0
+
+        # 词的向量相加
         for i in range(num_train_docs):
             if train_category[i] == 1:
                 p1_num += train_matrix[i]
@@ -122,8 +125,10 @@ class NaiveBayes:
                 p0_num += train_matrix[i]
                 p0_d += sum(train_matrix[i])
 
-        p1_v = log(p1_num / p1_d)
+        # 对数化, 避免太多很小的数字相乘
         p0_v = log(p0_num / p0_d)
+        p1_v = log(p1_num / p1_d)
+
         return p0_v, p1_v, p_ab
 
     # 2016.5.16
