@@ -8,12 +8,14 @@
 # 2016.4.1 edit fish_base directory to common
 # 2016.4.3 edit begin update to version v1.0.5
 # 2016.4.26 start v1.0.8 add date functions
+# 2016.10.4 start v1.0.9
 
 
 from .fish_common import *
+from .fish_date import *
 from .naive_bayes import *
 
-fish_base_ver = '1.0.8'
+fish_base_ver = '1.0.9'
 
 
 # 返回fish_base 版本号,

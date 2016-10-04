@@ -1,0 +1,7 @@
+fish_common 特性列表
+
+last update: 2016.10.4
+
+v1.0.9
+
+#19001, 增加, check_sub_path_create() 检查当前路径下的某个子路径是否存在, 不存在则创建, ok

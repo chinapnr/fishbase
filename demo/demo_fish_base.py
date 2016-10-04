@@ -1,9 +1,7 @@
 # 2016.4.3 add demo code for conf cache
+# 2016.10.4 add demo code for fish_common check_sub_path_create()
 
-import fish_base
-from fish_base import FishCache
-from fish_base import get_long_filename_with_sub_dir
-from fish_base import fish_date
+from fish_base import *
 
 import configparser
 import time
@@ -63,11 +61,15 @@ def month_range_demo():
 # main
 if __name__ == '__main__':
 
-    print(fish_base.get_md5('Hello World'))
+    print(get_md5('Hello World'))
 
     # cf_cache_demo()
 
+    # fish_base get_long_filename_with_sub_dir() demo
     print(get_long_filename_with_sub_dir('test_sub_dir', 'test_file.txt'))
+
+    # fish_base check_sub_path_create() demo
+    print(check_sub_path_create('auto_create'))
 
     month_range_demo()
 
