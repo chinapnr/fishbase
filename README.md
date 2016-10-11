@@ -1,23 +1,34 @@
-# fish_base
+# fish_base 简介
 
-这是我在学习 python 过程中积累的一个函数库, 希望对 python 的初学者等有所帮助. 代码写得很一般, 目前只考虑实用为主.
- python 是一门很棒的编程语言, 还有很多东西要学习.
+这是我在学习 python 过程中积累的一个函数库，是一个大杂烩，主要用于自己学习，希望对 python 的初学者等有所帮助。代码写得很一般，在不断积累和学习中。
+
+
+python 是一门很棒的编程语言，学了一年，发现有越来越多的东西要学习。
+
+
+
+---
+
+
 
 类和函数列表:
 
-## class bayes.ClassNaiveBayes
+## 机器学习相关
 
-一个朴素贝叶斯分类算法实现, 参照"机器学习实战"一书中的朴素贝叶斯算法为蓝本进行了大量修改, 增加支持训练文本和测试文本, 支持基于 jieba 中文分词. 对于机器学习算法有兴趣的朋友可以参考。
-通过训练文档, 即可完成基本的中文文本分类, 支持测试文档来验证正确率, 支持停用词功能.
+###  class bayes.ClassNaiveBayes 
 
-目前只支持二元分类.
+一个朴素贝叶斯分类算法实现，参照"机器学习实战"一书中的朴素贝叶斯算法为蓝本进行了大量修改，增加支持训练文本和测试文本， 支持基于 jieba 中文分词。对于机器学习算法有兴趣的朋友可以参考。
 
-对于训练后的文本倾向性分类, 只要简单的几行代码即可完成. 
+通过训练文档，，即可完成基本的中文文本分类，支持测试文档来验证正确率，支持停用词功能。
+
+目前只支持二元分类。
+
+对于训练后的文本倾向性分类，只要简单的几行代码即可完成。
 
 
 ```python
 
-test_s = '这个手机很好,我很喜欢'
+test_s = '这个手机很好，我很喜欢'
 print(test_s)
 test_list = list(jieba.cut(test_s))
 p = nb.run_nb(test_list)
@@ -25,17 +36,21 @@ if p == 0:
     print('classified as good ')
 else:
     print('classified as bad ')
-```    
+```
 
 具体使用方法可以参考这里: <a href="http://chuangyiji.com/archives/1095">使用 python 基于朴素贝叶斯进行文本分类学习笔记</a>
 
 ------
 
-## class FishCache
 
-### get_cf_cache(self, cf, section, key)
 
-读取 conf 文件类型(ini 文件类型)的缓存功能,不需要每次从文件中读取,第二次访问从内存字典中读取,以提高速度
+## 提高性能
+
+### class FishCache
+
+### get_cf_cache(self， cf， section， key)
+
+读取 conf 文件类型(ini 文件类型)的缓存功能，不需要每次从文件中读取，第二次访问从内存字典中读取，以提高速度。
 
 举例1:
 
@@ -53,14 +68,14 @@ def cf_cache_demo():
     test_cache = FishCache()
     
     # 从 conf 获得参数 args 的设置
-    temp_s = test_cache.get_cf_cache(cf, 'get_args', 'args')
+    temp_s = test_cache.get_cf_cache(cf， 'get_args'， 'args')
     print(temp_s)
-``` 
+```
 
 举例2:
 
-我们通过循环 10 万次, 来比较一下读取速度, 第一种是通过 fish_cf_cache 缓存模式, 第二种是通过标准的方式, 
-我们可以看到速度相差了 15 倍左右, 因此适用于对于配置文件有大量读取的场景.
+我们通过循环 10 万次， 来比较一下读取速度， 第一种是通过 fish_cf_cache 缓存模式， 第二种是通过标准的方式。
+我们可以看到速度相差了 15 倍左右， 因此适用于对于配置文件有大量读取的场景.
 
 ```bash
  cost time: 0.05010986328125 use fish_cf_cache 
@@ -68,17 +83,17 @@ def cf_cache_demo():
 ```
 
 ```python
- # way 1, use fish_cf_cache
+ # way 1， use fish_cf_cache
  start_time = time.time()
 
  for i in range(100000):
-     temp_s = test_cache.get_cf_cache(cf, 'get_args', 'args')
+     temp_s = test_cache.get_cf_cache(cf， 'get_args'， 'args')
 
  end_time = time.time()
 
- print('cost time:', end_time - start_time, 'use fish_cf_cache ')
+ print('cost time:'， end_time - start_time， 'use fish_cf_cache ')
 
- # way 2, use common conf way
+ # way 2， use common conf way
  start_time = time.time()
 
  for i in range(100000):
@@ -86,41 +101,44 @@ def cf_cache_demo():
 
  end_time = time.time()
 
- print('cost time:', end_time - start_time, 'use common conf way')
+ print('cost time:'， end_time - start_time， 'use common conf way')
 
  print(temp_s)
 ```
 
-------
+---
 
-### get_long_filename_with_sub_dir(sub_dir, filename)
+
+
+## 路径文件处理增强
+
+### get_long_filename_with_sub_dir(sub_dir， filename)
 
 功能：生成当前路径下一级路径某文件的完整文件名<br>
 
-输入: 子路径名称, 子路径下的文件名称<br>
-输出: 标志(目前总是为 True), 完整的长文件名
+输入：子路径名称， 子路径下的文件名称<br>
+输出：标志(目前总是为 True)， 完整的长文件名
 
     类似下面的结构:
-    
+
     \aaa.py
     \bbb\ccc.conf
-    
-    在 aaa.py 中使用
-    
-    get_long_filename_with_sub_dir('bbb', 'ccc.conf')
-    
-    会得到 C:....\bbb\ccc.conf
 
+在 aaa.py 中使用 `get_long_filename_with_sub_dir('bbb'， 'ccc.conf')` 可以得到 ccc.conf 这个文件完整的带路径的文件名： C:....\bbb\ccc.conf
 
-get_md5(s)
+### get_md5(s)
 
-serialize_instance(obj)
+### serialize_instance(obj)
 
-auto_add_file_ext(short_filename, ext)
+### auto_add_file_ext(short_filename， ext)
 
-check_kind_path_file(kind_name, file_name)
+### check_kind_path_file(kind_name， file_name)
 
-------
+---
+
+2016.10.11 学习使用 Typora 来编辑 md 文件，很有趣的体验。
+
+---
 
 It's my first python package, and mostly for test. 
 
