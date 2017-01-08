@@ -9,9 +9,11 @@
 # 2016.4.3 edit begin update to version v1.0.5
 # 2016.4.26 start v1.0.8 add date functions
 # 2016.10.4 start v1.0.9
+# 2017.1.8 v1.0.9, add fish_file.py
 
 
 from .fish_common import *
+from .fish_file import *
 from .fish_date import *
 from .naive_bayes import *
 

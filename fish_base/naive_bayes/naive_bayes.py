@@ -4,7 +4,7 @@
 from numpy import *
 import jieba
 
-from fish_base import get_long_filename_with_sub_dir_module
+from fish_base.fish_file import get_abs_filename_with_sub_path_module
 
 
 class NaiveBayes:
@@ -39,7 +39,7 @@ class NaiveBayes:
         self.stopword_list = []
 
         # 获得停用词文件的本地文件
-        result = get_long_filename_with_sub_dir_module('naive_bayes', 'stopwords.txt')[1]
+        result = get_abs_filename_with_sub_path_module('naive_bayes', 'stopwords.txt')[1]
 
         # 文件存在
         if result[0]:
