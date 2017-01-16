@@ -76,20 +76,20 @@ def check_kind_path_file(kind_name, file_name):
 def check_sub_path_create(sub_path_name):
     # 获得当前路径
     cur_path = os.path.abspath('')
-    print('cur absolute path:', cur_path)
+    # print('cur absolute path:', cur_path)
 
     # 生成 带有 sub_path_name 的路径
     path = os.path.join(cur_path, sub_path_name)
-    print('check path:', path)
+    # print('check path:', path)
 
     # 判断是否存在带有 sub_path_name 路径
     if os.path.exists(path):
-        print('path exists')
+        # print('path exists')
         # 返回 True, 路径存在
         return True
     else:
         # print('log path not exists')
         os.makedirs(path)
         # 返回 False: 路径不存在  True: 路径已经创建
-        print('create sub path')
+        # print('create sub path')
         return False, True
