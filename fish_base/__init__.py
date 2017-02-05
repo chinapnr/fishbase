@@ -15,7 +15,6 @@
 from .fish_common import *
 from .fish_file import *
 from .fish_date import *
-from .naive_bayes import *
 
 fish_base_ver = '1.0.9'
 
@@ -58,4 +57,3 @@ def format_list_on_head(list_source, list_head):
         l1 = []
 
     return l2
-
