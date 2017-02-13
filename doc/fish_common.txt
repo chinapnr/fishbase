@@ -11,3 +11,5 @@ v1.0.9
 #19005, 修改，long_filename 都修改为 abd_filename, ok
 
 2017.1.8 通过 r2c1 unittest
+
+#19006, 增加，在 fish_common中增加 check_platform() 通过调用os.platform来获得当前操作系统名称

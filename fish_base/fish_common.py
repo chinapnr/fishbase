@@ -2,7 +2,21 @@
 # 2016.4.3 edit FishCache class, and edit get_cf_cache
 # 2016.4.7 v1.0.6, v1.0.7  add get_long_filename_with_sub_dir()
 # 2016.10.4 v1.0.9 add #19001 check_sub_path_create()
-# 2017.1.8 v1.0.9 #19003, remove file related functions to fish_fils.py
+# 2017.1.8 v1.0.9 #19003, remove file related functions to fish_file.py
+import sys
+
+
+# 2017.2.13 #19006
+# 通过调用os.platform来获得当前操作系统名称
+def check_platform():
+    if sys.platform == 'win32':
+        return 'win32'
+    elif sys.platform == 'darwin':
+        return 'macos'
+    elif sys.platform == 'linux':
+        return 'linux'
+    else:
+        return sys.platform
 
 
 # md5 函数
