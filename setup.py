@@ -8,10 +8,12 @@ setup(
     license='MIT',
     author='david.yi',
     author_email='wingfish@gmail.com',
-    description='some useful functions for python, include naive bayes for text classify',
+    description='some useful functions for python',
 
-    packages=['fish_base', 'fish_base.naive_bayes'],
-    package_data={'': ['stopwords.txt']},
+    packages=['fish_base'],
+
+    # packages=['fish_base', 'fish_base.naive_bayes'],
+    # package_data={'': ['stopwords.txt']},
 
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
