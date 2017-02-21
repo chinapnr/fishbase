@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='fish_base',
-    version='1.0.9',
+    version='1.0.10',
 
     url='https://github.com/chinapnr/fish_base',
     license='MIT',
@@ -33,7 +33,8 @@ setup(
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
         'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5'
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
     ]
 
 )
