@@ -8,7 +8,7 @@ setup(
     license='MIT',
     author='david.yi',
     author_email='wingfish@gmail.com',
-    description='some useful functions for python, include naive bayes for text classify',
+    description='some useful functions for python',
 
     packages=['fish_base'],
 
