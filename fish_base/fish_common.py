@@ -4,6 +4,7 @@
 # 2016.10.4 v1.0.9 add #19001 check_sub_path_create()
 # 2017.1.8 v1.0.9 #19003, remove file related functions to fish_file.py
 import sys
+import uuid
 
 
 # 2017.2.13 #19006
@@ -41,32 +42,27 @@ def serialize_instance(obj):
     d.update(vars(obj))
     return d
 
-#!/usr/bin/env python
-# encoding: utf-8
 
-import time
-import random
-
-
-# 功能：获取整个请求的响应流水号，由10位时间戳和4位随机数拼接而成
+# 功能：获取带时间戳的流水号
+# 2017.2.22, #19006, create by David.Yi
 # 输入参数：无
-# 输出参数：resp_id 响应流水号（string)
-def get_resp_id():
-    random_var = str(random.randint(1000, 9999))
-    time_stamp_var = str(int(time.time()))
-    resp_id = ''.join([time_stamp_var, random_var])
-    return resp_id
+# 输出参数：流水号（string)
+def get_time_uuid():
+    # Generate a UUID from a host ID, sequence number, and the current time.
+    # If node is not given, getnode() is used to obtain the hardware address.
+    # If clock_seq is given, it is used as the sequence number; otherwise a random 14-bit sequence number is chosen.
+    return str(uuid.uuid1())
 
 
-# 功能：判断参数列表是否存在不合法的参数，如果存在None或空字符串或空格字符串，则返回True；否则返回False
-# 输入参数：param是参数列表或元组
-# 输出参数：True or False
-def exist_param_illegal(param):
-    for i in param:
+# 功能：判断参数列表是否存在不合法的参数，如果存在None或空字符串或空格字符串，则返回True, 否则返回False
+# 2017.2.22 #19007, edit by David.Yi
+# 输入参数：source 是参数列表或元组
+# 输出参数：True : 有元素为 None，或空； False：没有元素为 None 或空
+def if_any_elements_is_space(source):
+    for i in source:
         if not (i and str(i).strip()):
             return True
     return False
-
 
 
 # r2c1 v1.0.1 #12089

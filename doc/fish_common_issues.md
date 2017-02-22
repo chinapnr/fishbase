@@ -1,8 +1,16 @@
 fish_common 特性列表
 
-last update: 2017.1.8
+last update: 2017.2.22
 
-v1.0.9
+####v1.0.10
+
+* 19006，增加，get_time_uuid(), 获得带时间戳的流水号；
+* 19007，增加，if_any_elements_is_space(),判断参数列表是否存在不合法的参数，如果存在None或空字符串或空格字符串，
+    则返回True, 否则返回False；
+    
+---
+
+####v1.0.9
 
 * 19001, 增加，check_sub_path_create() 检查当前路径下的某个子路径是否存在, 不存在则创建；ok
 * 19002, 修改，get_long_filename_with_sub_dir() 修改为 get_abs_filename_with_sub_path()；ok
