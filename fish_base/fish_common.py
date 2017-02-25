@@ -5,6 +5,7 @@
 # 2017.1.8 v1.0.9 #19003, remove file related functions to fish_file.py
 import sys
 import uuid
+import configparser
 
 
 # 2017.2.13 #19006
@@ -44,7 +45,7 @@ def serialize_instance(obj):
 
 
 # 功能：获取带时间戳的流水号
-# 2017.2.22, #19006, create by David.Yi
+# 2017.2.22, create by David.Yi, #19006,
 # 输入参数：无
 # 输出参数：流水号（string)
 def get_time_uuid():
@@ -55,7 +56,7 @@ def get_time_uuid():
 
 
 # 功能：判断参数列表是否存在不合法的参数，如果存在None或空字符串或空格字符串，则返回True, 否则返回False
-# 2017.2.22 #19007, edit by David.Yi
+# 2017.2.22 edit by David.Yi, #19007
 # 输入参数：source 是参数列表或元组
 # 输出参数：True : 有元素为 None，或空； False：没有元素为 None 或空
 def if_any_elements_is_space(source):
@@ -63,6 +64,23 @@ def if_any_elements_is_space(source):
         if not (i and str(i).strip()):
             return True
     return False
+
+
+# 2017.2.23 create by David.Yi, #19008
+# 读入配置文件，返回根据配置文件内容生成的字典类型变量
+# 输入： conf 文件长文件名
+def conf_as_dict(conf_filename):
+
+    cf = configparser.ConfigParser()
+
+    cf.read(conf_filename)
+
+    d = dict(cf._sections)
+    for k in d:
+        d[k] = dict(cf._defaults, **d[k])
+        d[k].pop('__name__', None)
+
+    return d
 
 
 # r2c1 v1.0.1 #12089
