@@ -4,6 +4,8 @@
 # 2016.10.4 v1.0.9 add #19001 check_sub_path_create()
 # 2017.1.8 v1.0.9 #19003, remove file related functions to fish_file.py
 import sys
+import uuid
+import configparser
 
 
 # 2017.2.13 #19006
@@ -39,6 +41,45 @@ def get_md5(s):
 def serialize_instance(obj):
     d = {'__classname__': type(obj).__name__}
     d.update(vars(obj))
+    return d
+
+
+# 功能：获取带时间戳的流水号
+# 2017.2.22, create by David.Yi, #19006,
+# 输入参数：无
+# 输出参数：流水号（string)
+def get_time_uuid():
+    # Generate a UUID from a host ID, sequence number, and the current time.
+    # If node is not given, getnode() is used to obtain the hardware address.
+    # If clock_seq is given, it is used as the sequence number; otherwise a random 14-bit sequence number is chosen.
+    return str(uuid.uuid1())
+
+
+# 功能：判断参数列表是否存在不合法的参数，如果存在None或空字符串或空格字符串，则返回True, 否则返回False
+# 2017.2.22 edit by David.Yi, #19007
+# 输入参数：source 是参数列表或元组
+# 输出参数：True : 有元素为 None，或空； False：没有元素为 None 或空
+def if_any_elements_is_space(source):
+    for i in source:
+        if not (i and str(i).strip()):
+            return True
+    return False
+
+
+# 2017.2.23 create by David.Yi, #19008
+# 读入配置文件，返回根据配置文件内容生成的字典类型变量
+# 输入： conf 文件长文件名
+def conf_as_dict(conf_filename):
+
+    cf = configparser.ConfigParser()
+
+    cf.read(conf_filename)
+
+    d = dict(cf._sections)
+    for k in d:
+        d[k] = dict(cf._defaults, **d[k])
+        d[k].pop('__name__', None)
+
     return d
 
 

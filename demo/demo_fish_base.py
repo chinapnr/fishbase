@@ -1,5 +1,6 @@
 # 2016.4.3 add demo code for conf cache
 # 2016.10.4 add demo code for fish_common check_sub_path_create()
+# 2017.2.21 test functions need update in the days
 
 from fish_base import *
 
@@ -65,8 +66,8 @@ if __name__ == '__main__':
 
     # cf_cache_demo()
 
-    # fish_base get_long_filename_with_sub_dir() demo
-    print(get_long_filename_with_sub_dir('test_sub_dir', 'test_file.txt'))
+    # fish_base get_abs_filename_with_sub_path() demo
+    print(get_abs_filename_with_sub_path('test_sub_dir', 'test_file.txt'))
 
     # fish_base check_sub_path_create() demo
     print(check_sub_path_create('auto_create'))
