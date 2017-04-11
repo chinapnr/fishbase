@@ -100,23 +100,23 @@ class FishCache:
         return self.__cache[temp_key]
 
 
-# 2017.3.30 create by Leo
+# 11001 2017.3.30 create by Leo
 # 功能：监测list或者元素是否含有特殊字符
-# 输入：输入参数：source 是参数列表或元组
+# 输入：source 是参数列表或元组
 # 输出：True：不包含特殊字符；False：包含特殊字符
 def if_any_elements_is_special(source):
 
     for i in source:
 
-        if not re.match('^[a-zA-Z0-9]+$', i):
+        if not re.match('^[a-zA-Z0-9_,-.|]+$', i):
             return False
 
     return True
 
 
-# 2017.3.30 create by Leo
+# 11003 2017.3.30 create by Leo
 # 功能：监测list或者元素是否只包含数字
-# 输入：输入参数：source 是参数列表或元组
+# 输入：source 是参数列表或元组
 # 输出：True：只包含数字；False：不只包含数字
 def if_any_elements_is_number(source):
 
@@ -128,9 +128,9 @@ def if_any_elements_is_number(source):
     return True
 
 
-# 2017.3.30 create by Leo
+# 11004 2017.3.30 create by Leo
 # 功能：监测list或者元素是否只包含英文
-# 输入：输入参数：source 是参数列表或元组
+# 输入：source 是参数列表或元组
 # 输出：True：只包含英文；False：不只包含英文
 def if_any_elements_is_letter(source):
 
