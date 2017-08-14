@@ -6,3 +6,4 @@ fish_base/__pycache__/__init__.cpython-35.pyc
 fish_base/__pycache__/fish_common.cpython-35.pyc
 fish_base/__pycache__/fish_date.cpython-35.pyc
 fish_base/__pycache__/fish_file.cpython-35.pyc
+test/log

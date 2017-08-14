@@ -15,8 +15,9 @@
 from .fish_common import *
 from .fish_file import *
 from .fish_date import *
+from .logger import *
 
-fish_base_ver = '1.0.9'
+fish_base_ver = '1.0.10'
 
 
 # 返回fish_base 版本号,
