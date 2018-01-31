@@ -1,4 +1,5 @@
 # 2017.1.8 v1.0.9 #19003, remove file related functions to fish_fils.py
+# 2018.1.31 v1.0.10,  change fish_file to file, short the lib name
 
 import os
 import sys
@@ -14,14 +15,19 @@ import inspect
 # abs_filename: 指定 filename 的包含路径的长文件名
 # 2016.4.7 v1.0.6, v1.0.7, create by david.yi
 # 2017.1.8 v1.0.9 #19002, edit the function name
+# 2018.1.30 v1.0.10 代码优化
 def get_abs_filename_with_sub_path(sub_path, filename):
 
     flag = True
 
-    cur_dir = os.path.dirname(os.path.realpath(sys.argv[0]))
-    abs_filename = os.path.join(cur_dir, sub_path, filename)
+    try:
+        cur_dir = os.path.dirname(os.path.realpath(sys.argv[0]))
+        abs_filename = os.path.join(cur_dir, sub_path, filename)
 
-    return flag, abs_filename
+        return flag, abs_filename
+    except:
+        flag = False
+        return flag
 
 
 # 2016.5.18
