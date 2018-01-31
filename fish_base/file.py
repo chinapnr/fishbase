@@ -11,23 +11,23 @@ import inspect
 # sub_path: 下一级的某路径名称
 # filename: 下一级路径的某个文件名
 # 输出:
-# flag: 操作正常返回 True，否则返回 False
+# flag: 如果文件存在，返回 True，文件不存在，返回 False
 # abs_filename: 指定 filename 的包含路径的长文件名
 # 2016.4.7 v1.0.6, v1.0.7, create by david.yi
 # 2017.1.8 v1.0.9 #19002, edit the function name
-# 2018.1.30 v1.0.10 代码优化
+# 2018.1.30 1.31 v1.0.10 代码优化
 def get_abs_filename_with_sub_path(sub_path, filename):
 
-    flag = True
-
     try:
-        cur_dir = os.path.dirname(os.path.realpath(sys.argv[0]))
+        cur_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
         abs_filename = os.path.join(cur_dir, sub_path, filename)
+
+        flag = os.path.isfile(abs_filename)
 
         return flag, abs_filename
     except:
         flag = False
-        return flag
+        return flag, None
 
 
 # 2016.5.18
