@@ -1,14 +1,15 @@
 fish_common 特性列表
 
-last update: 2017.2.22
+last update: 2018.2.1 
 
 ####v1.0.10
 
 * 19006，增加，get_time_uuid(), 获得带时间戳的流水号；ok
-* 19007，增加，if_any_elements_is_space(),判断参数列表是否存在不合法的参数，如果存在None或空字符串或空格字符串，
+* 19007，增加，if_any_elements_is_space(),判断参数列表是否存在不合法的参数，如果存在 None 或空字符串或空格字符串，
     则返回True, 否则返回False；ok
 * 19008，common，增加 conf_as_dict(),读入配置文件，返回根据配置文件内容生成的字典类型变量; 
-    
+* 11001，整体结构和开发方法调整；
+ 
 ---
 
 ####v1.0.9

@@ -2,26 +2,15 @@ import csv
 
 
 # 读取csv 文件，返回列表
-def csv_reader(file_path, delimiter=','):
+# 输入：
+# csv_filename: csv 文件的长文件名  deli: csv 文件分隔符
+# 输出：
+# 转换后的 list
+# ---
+# 2018.2.1. edit by David Yi
+def csv_file_to_list(csv_filename, deli=','):
 
-    with open(file_path) as csv_file:
-        csv_list = csv.reader(csv_file, delimiter=delimiter)
-        row = []
-        for line in csv_list:
-            if line:
-                try:
-                    if line[0][0] != '#':
-                        row.append(line)
-                except IndexError:
-                    row.append(line)
-            else:
-                break  
-    return row
-
-
-def csv_reader2(file_path, delimiter=','):
-
-    with open(file_path) as csv_file:
-        csv_list = list(csv.reader(csv_file, delimiter=delimiter))
+    with open(csv_filename) as csv_file:
+        csv_list = list(csv.reader(csv_file, delimiter=deli))
 
     return csv_list
