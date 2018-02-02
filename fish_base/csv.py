@@ -7,7 +7,7 @@ import csv
 # 输出：
 # 转换后的 list
 # ---
-# 2018.2.1. edit by David Yi
+# 2018.2.1. edit by David Yi, #11002
 def csv_file_to_list(csv_filename, deli=','):
 
     with open(csv_filename) as csv_file:

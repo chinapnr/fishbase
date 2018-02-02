@@ -2,6 +2,8 @@ from fish_base.file import *
 from fish_base.csv import *
 
 
+# csv 相关 demo
+# 2018.2.1 create by David Yi
 def test_csv():
     csv_filename = get_abs_filename_with_sub_path('csv', 'test_csv.csv')[1]
     print(csv_filename)

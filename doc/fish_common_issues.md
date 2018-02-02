@@ -9,6 +9,7 @@ last update: 2018.2.1
     则返回True, 否则返回False；ok
 * 19008，common，增加 conf_as_dict(),读入配置文件，返回根据配置文件内容生成的字典类型变量; 
 * 11001，整体结构和开发方法调整；
+* 11002, 增加 csv 功能模块，增加函数 csv_file_to_list(); ok
  
 ---
 
