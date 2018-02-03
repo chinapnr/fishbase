@@ -12,6 +12,9 @@ last update: 2018.2.1
 * 11002, 增加 csv 功能模块，增加函数 csv_file_to_list(); ok
 * 11003, fish_file 模块修改为 file，目前向下兼容保留 fish_file; ok
 * 11004, file 模块的 get_abs_filename_with_sub_path() 修改；ok
+* 11005, fish_date 模块修改为 date, demo/demo_date.py 演示用法；ok
+* 11006, 安装包的安装程序 setup.py 中 setup.py 引入源的修改；ok
+* 11007, pip 安装时候支持自动安装 python-dateutil 包; ok
  
 ---
 

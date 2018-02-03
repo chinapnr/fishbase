@@ -1,8 +1,10 @@
-from distutils.core import setup
+# from distutils.core import setup
+from setuptools import setup
 
 setup(
     name='fish_base',
     version='1.0.10',
+    install_requires=['python-dateutil'],
 
     url='https://github.com/chinapnr/fish_base',
     license='MIT',
