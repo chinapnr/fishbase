@@ -4,6 +4,7 @@
 from fish_base.fish_common import *
 import unittest
 
+
 class test_if_any_elements_is_space(unittest.TestCase):
 
     def setUp(self):
@@ -29,6 +30,7 @@ class test_if_any_elements_is_space(unittest.TestCase):
         with self.assertRaises(TypeError):
             if_any_elements_is_space(self.not_string)
 
+
 class test_if_any_elements_is_special(unittest.TestCase):
 
     def setUp(self):
@@ -45,6 +47,7 @@ class test_if_any_elements_is_special(unittest.TestCase):
     def test_not_string(self):
         with self.assertRaises(TypeError):
             if_any_elements_is_space(self.not_string)
+
 
 class test_if_any_elements_is_number(unittest.TestCase):
 
@@ -63,6 +66,7 @@ class test_if_any_elements_is_number(unittest.TestCase):
         with self.assertRaises(TypeError):
             if_any_elements_is_number(self.not_string)
 
+
 class test_if_any_elements_is_letter(unittest.TestCase):
 
     def setUp(self):
@@ -79,6 +83,7 @@ class test_if_any_elements_is_letter(unittest.TestCase):
     def test_not_string(self):
         with self.assertRaises(TypeError):
             if_any_elements_is_letter(self.not_string)
+
 
 if __name__ == '__main__':
     unittest.main()

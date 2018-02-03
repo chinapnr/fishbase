@@ -1,7 +1,7 @@
 import csv
 
 
-# 读取csv 文件，返回列表
+# 将 指定的 csv 文件转换为 list 返回
 # 输入：
 # csv_filename: csv 文件的长文件名  deli: csv 文件分隔符
 # 输出：

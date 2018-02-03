@@ -10,6 +10,8 @@ last update: 2018.2.1
 * 19008，common，增加 conf_as_dict(),读入配置文件，返回根据配置文件内容生成的字典类型变量; 
 * 11001，整体结构和开发方法调整；
 * 11002, 增加 csv 功能模块，增加函数 csv_file_to_list(); ok
+* 11003, fish_file 模块修改为 file，目前向下兼容保留 fish_file; ok
+* 11004, file 模块的 get_abs_filename_with_sub_path() 修改；ok
  
 ---
 
@@ -24,3 +26,9 @@ last update: 2018.2.1
 2017.1.8 通过 r2c1 unittest
 
 * 19006, 增加，在 fish_common中增加 check_platform() 通过调用os.platform来获得当前操作系统名称; ok
+
+---
+
+包的编译上传等
+
+* Run setup.py Task, chose sdist. The .tar.gz or .zip will appear under \dist path

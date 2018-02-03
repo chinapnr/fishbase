@@ -16,7 +16,7 @@ import inspect
 # ---
 # 2016.4.7 v1.0.6, v1.0.7, create by david.yi
 # 2017.1.8 v1.0.9 #19002, edit the function name
-# 2018.1.30 1.31 v1.0.10 代码优化
+# 2018.1.30 1.31 v1.0.10 代码优化 #11004
 def get_abs_filename_with_sub_path(sub_path, filename):
 
     try:
@@ -26,7 +26,9 @@ def get_abs_filename_with_sub_path(sub_path, filename):
         flag = os.path.isfile(abs_filename)
 
         return flag, abs_filename
+
     except:
+
         flag = False
         return flag, None
 
