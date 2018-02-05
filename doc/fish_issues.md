@@ -15,6 +15,7 @@ last update: 2018.2.1
 * 11005, fish_date 模块修改为 date, demo/demo_date.py 演示用法；ok
 * 11006, 安装包的安装程序 setup.py 中 setup.py 引入源的修改；ok
 * 11007, pip 安装时候支持自动安装 python-dateutil 包; ok
+* 11008, check_platform() 归入到 system 包
  
 ---
 
@@ -25,10 +26,6 @@ last update: 2018.2.1
 * 19003, 修改，所有文件相关操作，转移到独立 py 文件; ok
 * 19004, 修改，get_long_filename_with_sub_dir_module() 修改为 get_abs_filename_with_sub_path_module(); ok
 * 19005, 修改，long_filename 都修改为 abd_filename; ok
-
-2017.1.8 通过 r2c1 unittest
-
-* 19006, 增加，在 fish_common中增加 check_platform() 通过调用os.platform来获得当前操作系统名称; ok
 
 ---
 
