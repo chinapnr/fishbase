@@ -16,6 +16,7 @@ last update: 2018.2.1
 * 11006, 安装包的安装程序 setup.py 中 setup.py 引入源的修改；ok
 * 11007, pip 安装时候支持自动安装 python-dateutil 包; ok
 * 11008, check_platform() 归入到 system 包
+* 11009, csv, csv_file_to_list() 函数增加过滤空行功能；ok
  
 ---
 

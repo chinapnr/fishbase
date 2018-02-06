@@ -21,6 +21,9 @@ logger.setLevel(logging.INFO)
 logger.addHandler(_sh)
 
 
+# 设置日志记录
+# 输入参数: local_file 日志文件名
+# 2018.2.6 edit by David Yi
 def set_log_file(local_file=None):
 
     global LOG_FILE
