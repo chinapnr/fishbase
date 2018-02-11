@@ -67,7 +67,7 @@ def if_any_elements_is_space(source):
     return False
 
 
-# 读入配置文件，返回根据配置文件内容生成的字典类型变量
+# 读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
 # 输入： conf 文件长文件名
 # 输出： 字典变量
 # 2017.2.23 create by David.Yi, #19008

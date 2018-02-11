@@ -20,7 +20,9 @@ last update: 2018.2.1
 * 11010, logger, log 相关代码优化简化; ok 
 * 11011, demo, 将原来 test 下的 test log 程序移动到 demo 路径下; ok
 * 11012, common, 原来 fish_common 保存为 common. demo 程序也修改为 demo_common; ok
- 
+* 11013, demo, common.conf_as_dict() 的 demo 例子完善；
+* 11014, common.conf_as_dict() 增加返回内容，字典长度；
+
 ---
 
 ####v1.0.9

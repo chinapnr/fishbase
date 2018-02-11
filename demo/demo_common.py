@@ -43,11 +43,13 @@ if __name__ == '__main__':
     result = if_any_elements_is_space(test_illegal_list)
     print(result)
 
+    print('--- conf_as_dict demo---')
     # 定义配置文件名
     conf_filename = 'test_conf.ini'
     # 读取配置文件
     result = conf_as_dict(conf_filename)
     print(result)
+    print('---')
 
     # 初始化类
     FishCache_test = FishCache()
