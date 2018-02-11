@@ -15,8 +15,8 @@ import inspect
 # abs_filename: 指定 filename 的包含路径的长文件名
 # ---
 # 2016.4.7 v1.0.6, v1.0.7, create by david.yi
-# 2017.1.8 v1.0.9 #19002, edit the function name
-# 2018.1.30 1.31 v1.0.10 代码优化 #11004
+# 2017.1.8 v1.0.9 edit the function name, #19002
+# 2018.1.30 1.31 v1.0.10 代码优化, #11004
 def get_abs_filename_with_sub_path(sub_path, filename):
 
     try:
@@ -33,11 +33,11 @@ def get_abs_filename_with_sub_path(sub_path, filename):
         return flag, None
 
 
-# 2016.5.18
 # 生成使用模块时的下一级路径某文件的完整文件名
 # 输入: 子目录, 文件名
 # 输出: 文件是否存在标志, 完整文件名
-# 2017.1.8 v1.0.9 #19004, edit the function name
+# 2016.5.18 create by David Yi
+# 2017.1.8 v1.0.9 edit the function name, #19004
 def get_abs_filename_with_sub_path_module(sub_path, filename):
 
     cur_module_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -50,8 +50,8 @@ def get_abs_filename_with_sub_path_module(sub_path, filename):
         return False, abs_filename
 
 
-# create 2015.8.1. by david.yi
 # 判断文件名是否没有输入后缀，加上后缀
+# create 2015.8.1. by david.yi
 def auto_add_file_ext(short_filename, ext):
 
     temp_filename = short_filename

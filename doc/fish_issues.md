@@ -17,6 +17,9 @@ last update: 2018.2.1
 * 11007, pip 安装时候支持自动安装 python-dateutil 包; ok
 * 11008, check_platform() 归入到 system 包
 * 11009, csv, csv_file_to_list() 函数增加过滤空行功能；ok
+* 11010, logger, log 相关代码优化简化; ok 
+* 11011, demo, 将原来 test 下的 test log 程序移动到 demo 路径下; ok
+* 11012, common, 原来 fish_common 保存为 common. demo 程序也修改为 demo_common; ok
  
 ---
 

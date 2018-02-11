@@ -1,7 +1,8 @@
-# demo_common 单元测试
+# fish_base.common demo
 # 2017.3.15 create by Leo
+# 2018.2.11 edit by David Yi
 
-from fish_base.fish_common import *
+from fish_base.common import *
 
 if __name__ == '__main__':
 
@@ -31,11 +32,10 @@ if __name__ == '__main__':
     print(result)
 
     # 定义需要判断的列表
-    #合法列表
+    # 合法列表
     test_legitimate_list = ['Hello World', 1]
-    #非法列表
+    # 非法列表
     test_illegal_list = ['Hello World', None]
-
 
     # 判断列表是否有非法参数
     result = if_any_elements_is_space(test_legitimate_list)
@@ -54,4 +54,3 @@ if __name__ == '__main__':
     # 从config文件读取值
     result = FishCache_test.get_cf_cache(result, 'show_opt', 'short_opt')
     print(result)
-    

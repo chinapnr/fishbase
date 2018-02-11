@@ -7,34 +7,27 @@ import logging
 from logging.handlers import TimedRotatingFileHandler
 
 
-LOG_FILE = 'default.log'
-
-_formatter = logging.Formatter(
-    '%(asctime)s %(levelname)s %(threadName)s[%(thread)d] %(filename)s[line:%(lineno)d] %(message)s')
-
-_sh = logging.StreamHandler()
-_sh.setLevel(logging.WARNING)
-_sh.setFormatter(_formatter)
-
 logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-logger.addHandler(_sh)
 
 
 # 设置日志记录
 # 输入参数: local_file 日志文件名
 # 2018.2.6 edit by David Yi
+# 2018.2.11 log 相关代码优化简化; #11010
 def set_log_file(local_file=None):
 
-    global LOG_FILE
+    default_log_file = 'default.log'
+
+    _formatter = logging.Formatter(
+        '%(asctime)s %(levelname)s %(threadName)s[%(thread)d] %(filename)s[line:%(lineno)d] %(message)s')
 
     if local_file is not None:
-        LOG_FILE = local_file
+        default_log_file = local_file
 
     # time rotating file handler
-    _tfh = TimedRotatingFileHandler(LOG_FILE, when="midnight")
+    _tfh = TimedRotatingFileHandler(default_log_file, when="midnight")
     _tfh.setLevel(logging.INFO)
     _tfh.setFormatter(_formatter)
 
-    # logger.addHandler(_fh)
+    logger.setLevel(logging.INFO)
     logger.addHandler(_tfh)

@@ -9,5 +9,7 @@ log_abs_filename = get_abs_filename_with_sub_path('log', 'fish_test.log')[1]
 set_log_file(log_abs_filename)
 
 logger.info('test fish base log')
+logger.warn('test fish base log')
+logger.error('test fish base log')
 
 print('log ok')
