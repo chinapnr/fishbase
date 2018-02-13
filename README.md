@@ -60,4 +60,62 @@
     if __name__ == '__main__':
         test_csv()
 
+### common 模块
 
+#### def conf_as_dict(conf_filename)
+
+功能：读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
+
+输入： conf 文件长文件名
+输出： 字典变量, flag: 是否操作成功 d: config 文件内容 count: 字典 key 的数量
+
+代码举例：
+
+    def demo_common_config():
+        print('--- conf_as_dict demo---')
+        # 定义配置文件名
+        conf_filename = 'test_conf.ini'
+        # 读取配置文件
+    
+        ds = conf_as_dict(conf_filename)
+        # 显示是否成功，所有 dict 的内容，dict 的 key 数量
+        print('flag:', ds[0])
+        print('dict:', ds[1])
+        print('length:', ds[2])
+    
+        d = ds[1]
+    
+        # 显示一个 section 下的所有内容
+        print('section show_opt:', d['show_opt'])
+        # 显示一个 section 下面的 key 的 value 内容
+        print('section show_opt, key short_opt:', d['show_opt']['short_opt'])
+    
+        # 读取一个复杂的section，先读出 key 中的 count 内容，再遍历每个 key 的 value
+        i = int(d['get_extra_rules']['erule_count'])
+        print('section get_extra_rules, key erule_count:', i)
+        for j in range(i):
+            print('section get_extra_rules, key erule_type:', d['get_extra_rules']['erule_'+str(j)])
+        print('---')
+
+### logger 模块
+
+#### def set_log_file(local_file=None)
+
+功能：设置日志记录，按照每天一个文件，记录包括 info 以及以上级别的内容
+
+输入： local_file 日志文件名
+
+代码举例：
+
+    from fish_base.logger import *
+    from fish_base.file import *
+    
+    log_abs_filename = get_abs_filename_with_sub_path('log', 'fish_test.log')[1]
+    
+    set_log_file(log_abs_filename)
+    
+    logger.info('test fish base log')
+    logger.warn('test fish base log')
+    logger.error('test fish base log')
+    
+    print('log ok')

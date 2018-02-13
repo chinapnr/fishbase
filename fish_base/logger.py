@@ -10,8 +10,8 @@ from logging.handlers import TimedRotatingFileHandler
 logger = logging.getLogger()
 
 
-# 设置日志记录
-# 输入参数: local_file 日志文件名
+# 设置日志记录，按照每天一个文件，记录包括 info 以及以上级别的内容
+# 输入: local_file 日志文件名
 # 2018.2.6 edit by David Yi
 # 2018.2.11 log 相关代码优化简化; #11010
 def set_log_file(local_file=None):
