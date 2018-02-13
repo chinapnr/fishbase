@@ -22,6 +22,7 @@ last update: 2018.2.1
 * 11012, common, 原来 fish_common 保存为 common. demo 程序也修改为 demo_common; ok
 * 11013, demo, common.conf_as_dict() 的 demo 例子完善；ok
 * 11014, common.conf_as_dict() 增加返回内容，字典长度；ok
+* 11015, common 增加 class SingleTon，单例的基础类；ok
 
 ---
 

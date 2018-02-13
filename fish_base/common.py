@@ -9,6 +9,18 @@ import configparser
 import re
 
 
+# 单例基础类
+# 2018.2.13 create by David Yi, #11015
+class SingleTon(object):
+    _state = {}
+
+    def __new__(cls, *args, **kwargs):
+        ob = super(SingleTon, cls).__new__(cls)
+        # 类维护所有实例的共享属性
+        ob.__dict__ = cls._state
+        return ob
+
+
 # 通过调用os.platform来获得当前操作系统名称
 # 2017.2.13 create by David Yi, #19006
 def check_platform():
