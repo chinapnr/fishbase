@@ -1,5 +1,6 @@
 LICENSE.txt
 MANIFEST.in
+README.md
 setup.py
 demo/demo_common.py
 demo/demo_csv.py
