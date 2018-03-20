@@ -1,0 +1,10 @@
+2018-02-11 16:34:06,080 INFO MainThread[140736060695360] demo_logger.py[line:11] test fish base log
+2018-02-11 16:38:42,157 INFO MainThread[140736060695360] demo_logger.py[line:11] test fish base log
+2018-02-11 16:38:42,157 WARNING MainThread[140736060695360] demo_logger.py[line:12] test fish base log
+2018-02-11 16:38:42,157 ERROR MainThread[140736060695360] demo_logger.py[line:13] test fish base log
+2018-02-11 16:47:31,262 INFO MainThread[140736060695360] demo_logger.py[line:11] test fish base log
+2018-02-11 16:47:31,262 WARNING MainThread[140736060695360] demo_logger.py[line:12] test fish base log
+2018-02-11 16:47:31,262 ERROR MainThread[140736060695360] demo_logger.py[line:13] test fish base log
+2018-02-11 16:49:00,047 INFO MainThread[140736060695360] demo_logger.py[line:11] test fish base log
+2018-02-11 16:49:00,047 WARNING MainThread[140736060695360] demo_logger.py[line:12] test fish base log
+2018-02-11 16:49:00,047 ERROR MainThread[140736060695360] demo_logger.py[line:13] test fish base log

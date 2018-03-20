@@ -6,4 +6,8 @@ fish_base/__pycache__/__init__.cpython-35.pyc
 fish_base/__pycache__/fish_common.cpython-35.pyc
 fish_base/__pycache__/fish_date.cpython-35.pyc
 fish_base/__pycache__/fish_file.cpython-35.pyc
+<<<<<<< HEAD
+=======
+test/log
+>>>>>>> 1a649f6bc4e5e2764d5828516da5ce51f2a79ee9
 demo/log

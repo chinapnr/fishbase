@@ -48,17 +48,6 @@ def cf_cache_demo():
     print(temp_s)
 
 
-# 2016.4.26
-def month_range_demo():
-
-    temple_tuple = fish_date.get_date_range('last month')
-    print(temple_tuple[0])
-    print(temple_tuple[1])
-
-    temple_tuple = fish_date.get_date_range('this month')
-    print(temple_tuple[0])
-    print(temple_tuple[1])
-
 # main
 if __name__ == '__main__':
 
@@ -72,6 +61,5 @@ if __name__ == '__main__':
     # fish_base check_sub_path_create() demo
     print(check_sub_path_create('auto_create'))
 
-    month_range_demo()
 
 

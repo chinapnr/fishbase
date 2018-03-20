@@ -2,10 +2,24 @@
 # 2016.4.3 edit FishCache class, and edit get_cf_cache
 # 2016.4.7 v1.0.6, v1.0.7  add get_long_filename_with_sub_dir()
 # 2016.10.4 v1.0.9 add #19001 check_sub_path_create()
-
-import os
+# 2017.1.8 v1.0.9 #19003, remove file related functions to fish_file.py
 import sys
-import inspect
+import uuid
+import configparser
+import re
+
+
+# 2017.2.13 #19006
+# 通过调用os.platform来获得当前操作系统名称
+def check_platform():
+    if sys.platform == 'win32':
+        return 'win32'
+    elif sys.platform == 'darwin':
+        return 'macos'
+    elif sys.platform == 'linux':
+        return 'linux'
+    else:
+        return sys.platform
 
 
 # md5 函数
@@ -31,6 +45,45 @@ def serialize_instance(obj):
     return d
 
 
+# 功能：获取带时间戳的流水号
+# 2017.2.22, create by David.Yi, #19006,
+# 输入参数：无
+# 输出参数：流水号（string)
+def get_time_uuid():
+    # Generate a UUID from a host ID, sequence number, and the current time.
+    # If node is not given, getnode() is used to obtain the hardware address.
+    # If clock_seq is given, it is used as the sequence number; otherwise a random 14-bit sequence number is chosen.
+    return str(uuid.uuid1())
+
+
+# 功能：判断参数列表是否存在不合法的参数，如果存在None或空字符串或空格字符串，则返回True, 否则返回False
+# 2017.2.22 edit by David.Yi, #19007
+# 输入参数：source 是参数列表或元组
+# 输出参数：True : 有元素为 None，或空； False：没有元素为 None 或空
+def if_any_elements_is_space(source):
+    for i in source:
+        if not (i and str(i).strip()):
+            return True
+    return False
+
+
+# 2017.2.23 create by David.Yi, #19008
+# 读入配置文件，返回根据配置文件内容生成的字典类型变量
+# 输入： conf 文件长文件名
+def conf_as_dict(conf_filename):
+
+    cf = configparser.ConfigParser()
+
+    cf.read(conf_filename)
+
+    d = dict(cf._sections)
+    for k in d:
+        d[k] = dict(cf._defaults, **d[k])
+        d[k].pop('__name__', None)
+
+    return d
+
+
 # r2c1 v1.0.1 #12089
 # 2016.4.3 edit class and function name
 # 通过conf文件。eg ini，读取值，通过字典缓存来提高读取速度
@@ -47,82 +100,41 @@ class FishCache:
         return self.__cache[temp_key]
 
 
-# 生成当前路径下一级路径某文件的完整文件名
-# 2016.4.7 create by david.yi add in v1.0.6, v1.0.7
-# Generate long filename base the current sub directory and filename
-def get_long_filename_with_sub_dir(sub_dir, filename):
+# 2017.3.30 create by Leo #11001
+# 功能：监测list或者元素是否含有特殊字符
+# 输入：source 是参数列表或元组
+# 输出：True：不包含特殊字符；False：包含特殊字符
+def if_any_elements_is_special(source):
 
-    flag = True
+    if not re.match('^[a-zA-Z0-9_,-.|]+$', "".join(source)):
+            return False
 
-    cur_dir = os.path.dirname(os.path.realpath(sys.argv[0]))
-    long_filename = os.path.join(cur_dir, sub_dir, filename)
-
-    return flag, long_filename
-
-
-# 2016.5.18
-# 生成使用模块时的下一级路径某文件的完整文件名
-# 输入: 子目录, 文件名
-# 输出: 文件是否存在标志, 完整文件名
-def get_long_filename_with_sub_dir_module(sub_dir, filename):
-
-    cur_module_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-    long_filename = os.path.join(cur_module_dir, sub_dir, filename)
-
-    # 检查是否存在文件名
-    if os.path.exists(long_filename):
-        return True, long_filename
-    else:
-        return False, long_filename
+    return True
 
 
-# create 2015.8.1. by david.yi
-# 判断文件名是否没有输入后缀，加上后缀
-def auto_add_file_ext(short_filename, ext):
+# 2017.3.30 create by Leo #11003
+# 功能：监测list或者元素是否只包含数字
+# 输入：source 是参数列表或元组
+# 输出：True：只包含数字；False：不只包含数字
+def if_any_elements_is_number(source):
 
-    temp_filename = short_filename
-    if os.path.splitext(temp_filename)[1] == '':
-        temp_filename += ext
+    for i in source:
 
-    return temp_filename
+        if not i.isdigit():
+            return False
 
-
-# 检查指定类型的文件名是否在指定的路径下, 主要用户检查 conf 路径下的配置文件等
-# 2016.2.22 create by david.yi , e2at v1.0.0 #10005
-def check_kind_path_file(kind_name, file_name):
-
-    # 文件路径
-    kind_path = os.path.join(os.path.abspath(''), kind_name)
-
-    # 完整文件名，包含路径
-    long_filename = os.path.join(kind_path, file_name)
-
-    # 文件如果不存在，返回错误信息
-    if not os.path.isfile(long_filename):
-        return False
-    else:
-        return True, long_filename
+    return True
 
 
-# v1.0.9 #19001 检查当前路径下的某个子路径是否存在, 不存在则创建
-# 2016.10.4 by david.yi
-def check_sub_path_create(sub_path_name):
-    # 获得当前路径
-    cur_path = os.path.abspath('')
-    print('cur absolute path:', cur_path)
+# 2017.3.30 create by Leo #11004
+# 功能：监测list或者元素是否只包含英文
+# 输入：source 是参数列表或元组
+# 输出：True：只包含英文；False：不只包含英文
+def if_any_elements_is_letter(source):
 
-    # 生成 带有 sub_path_name 的路径
-    path = os.path.join(cur_path, sub_path_name)
-    print('check path:', path)
+    for i in source:
 
-    # 判断是否存在带有 sub_path_name 路径
-    if os.path.exists(path):
-        print('path exists')
-        # 返回 True, 路径存在
-        return True
-    else:
-        # print('log path not exists')
-        os.makedirs(path)
-        # 返回 False: 路径不存在  True: 路径已经创建
-        print('create sub path')
-        return False, True
+        if not i.isalpha():
+            return False
+
+    return True

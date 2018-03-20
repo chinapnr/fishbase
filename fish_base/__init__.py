@@ -10,50 +10,22 @@
 # 2016.4.26 start v1.0.8 add date functions
 # 2016.10.4 start v1.0.9
 # 2017.1.8 v1.0.9, add fish_file.py
+# 2018.1.1 v1.0.10, delete old functions
 
 
+from .common import *
+from .csv import *
+from .date import *
+from .file import *
 from .fish_common import *
-from .fish_file import *
 from .fish_date import *
+from .fish_file import *
+from .logger import *
 
-fish_base_ver = '1.0.9'
+fish_base_ver = '1.0.10'
 
 
 # 返回fish_base 版本号,
 # 2016.2.22 create by david.yi, e2at v1.0.0 #10006
 def get_fish_base_ver():
     return fish_base_ver
-
-
-# 提示用户输入指定解释信息的字段名称
-# 2015.6.7  create by david.yi
-# 输入: info0: 要显示的字段解释，field_default：默认的字段名称
-# 输出: 字段名称
-def input_field(info0, field_default):
-    field = input('Please input the ' + info0 +
-                  ' field name (return for use default ' +
-                  field_default + '): ')
-
-    if len(field) <= 0:
-        field = field_default
-
-    print('The ' + info0 + ' field: ' + field + '\n')
-
-    return field
-
-
-# 将列表按照列标头进行筛选
-# create 2015.8.1. by david.yi
-def format_list_on_head(list_source, list_head):
-    # 整理 list 数据
-    l1 = []  # 单行数据
-    l2 = []  # 整体数据
-
-    # 整理要输出的具体list内容
-    for i in range(len(list_source)):
-        for j in range(len(list_head)):
-            l1.append(list_source[i][list_head[j]])
-        l2.append(l1)
-        l1 = []
-
-    return l2
