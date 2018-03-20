@@ -1,7 +1,6 @@
 LICENSE.txt
 MANIFEST.in
 setup.py
-demo/.DS_Store
 demo/demo_common.py
 demo/demo_csv.py
 demo/demo_date.py
@@ -12,6 +11,7 @@ demo/test_conf.ini
 demo/csv/test_csv.csv
 demo/log/blank.txt
 demo/log/fish_test.log
+demo/log/fish_test.log.2018-02-03
 demo/test_sub_dir/test_file.txt
 fish_base/__init__.py
 fish_base/common.py
