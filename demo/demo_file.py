@@ -1,17 +1,26 @@
 # demo_file 单元测试
 # 2017.3.11 create by Leo
 
-from fish_base.fish_file import *
+from fish_base.file import *
+
+
+# 2018.1.31 测试 get_abs_filename_with_sub_path()
+def test_file_path():
+
+    print('get_abs_filename_with_sub_path')
+    # 定义子路径名称
+    path_name = 'test_sub_dir'
+    # 定义文件名称
+    filename = 'test_file.txt'
+    # 生成当前路径下一级文件的完整路径名
+    abs_filename = get_abs_filename_with_sub_path(path_name, filename)
+    print(abs_filename)
+    print('---')
+
 
 if __name__ == '__main__':
 
-    # 定义父路径名称
-    sub_path = 'test_sub_dir'
-    # 定义文件名称
-    filename = 'demo_file.txt'
-    # 生成当前路径下一级文件的完整路径名
-    result = get_abs_filename_with_sub_path(sub_path, filename)
-    print(result)
+    test_file_path()
 
     # 定义父路径名称
     sub_path = 'test_sub_dir'
@@ -57,6 +66,3 @@ if __name__ == '__main__':
     
     result = check_sub_path_create(sub_path_name_non_existent)
     print(result)
-
-    
-

@@ -1,0 +1,18 @@
+Metadata-Version: 1.1
+Name: fish-base
+Version: 1.0.10
+Summary: some useful functions for python
+Home-page: https://github.com/chinapnr/fish_base
+Author: david.yi
+Author-email: wingfish@gmail.com
+License: MIT
+Description-Content-Type: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6

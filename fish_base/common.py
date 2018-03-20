@@ -9,6 +9,18 @@ import configparser
 import re
 
 
+# 单例基础类
+# 2018.2.13 create by David Yi, #11015
+class SingleTon(object):
+    _state = {}
+
+    def __new__(cls, *args, **kwargs):
+        ob = super(SingleTon, cls).__new__(cls)
+        # 类维护所有实例的共享属性
+        ob.__dict__ = cls._state
+        return ob
+
+
 # 通过调用os.platform来获得当前操作系统名称
 # 2017.2.13 create by David Yi, #19006
 def check_platform():
@@ -67,22 +79,33 @@ def if_any_elements_is_space(source):
     return False
 
 
-# 读入配置文件，返回根据配置文件内容生成的字典类型变量
+# 读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
 # 输入： conf 文件长文件名
-# 输出： 字典变量
+# 输出： 字典变量, flag: 是否操作成功 d: config 文件内容 count: 字典 key 的数量
 # 2017.2.23 create by David.Yi, #19008
+# 2018.2.12 edit by David Yi, 增加返回内容，字典长度, #11014
 def conf_as_dict(conf_filename):
+
+    flag = True
 
     cf = configparser.ConfigParser()
 
-    cf.read(conf_filename)
+    # 读入 config 文件
+    try:
+        cf.read(conf_filename)
+    except:
+        flag = False
+        return flag
 
     d = dict(cf._sections)
     for k in d:
         d[k] = dict(cf._defaults, **d[k])
         d[k].pop('__name__', None)
 
-    return d
+    # 计算有多少 key
+    count = len(d.keys())
+
+    return flag, d, count
 
 
 # r2c1 v1.0.1 #12089
