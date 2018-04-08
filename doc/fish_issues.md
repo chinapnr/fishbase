@@ -1,13 +1,21 @@
-fish_common 特性列表
+##fish_common 特性列表
 
-last update: 2018.2.1 
+last update: 2018.4.8
+
+#### v1.0.11
+
+* 19011，从19011开始编号
+* 19012，优化日志功能，缩写line->ln, 增加可选是否记录线程的编号
+* 19013，删除 fish_common fish_date fish_file 等为了保持兼容的包, ok
+* 19014，unittest, 完善 test_common 部分
+* 19015，common 中的函数增加说明和 demo
 
 ####v1.0.10
 
 * 19006，增加，get_time_uuid(), 获得带时间戳的流水号；ok
 * 19007，增加，if_any_elements_is_space(),判断参数列表是否存在不合法的参数，如果存在 None 或空字符串或空格字符串，
     则返回True, 否则返回False；ok
-* 19008，common，增加 conf_as_dict(),读入配置文件，返回根据配置文件内容生成的字典类型变量; 
+* 19008，common，增加 conf_as_dict(),读入配置文件，返回根据配置文件内容生成的字典类型变量; ok
 * 11001，整体结构和开发方法调整；
 * 11002, 增加 csv 功能模块，增加函数 csv_file_to_list(); ok
 * 11003, fish_file 模块修改为 file，目前向下兼容保留 fish_file; ok

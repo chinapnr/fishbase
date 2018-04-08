@@ -11,15 +11,13 @@
 # 2016.10.4 start v1.0.9
 # 2017.1.8 v1.0.9, add fish_file.py
 # 2018.1.1 v1.0.10, delete old functions
+# 2018.4.8 v1.0.11, delete old import
 
 
 from .common import *
 from .csv import *
 from .date import *
 from .file import *
-from .fish_common import *
-from .fish_date import *
-from .fish_file import *
 from .logger import *
 
 fish_base_ver = '1.0.10'

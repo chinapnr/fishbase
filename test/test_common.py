@@ -1,7 +1,7 @@
 # fish_common.py 单元测试
 # 2017.5.23 create by Leo
 
-from fish_base.fish_common import *
+from fish_base.common import *
 import unittest
 
 
