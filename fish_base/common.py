@@ -84,8 +84,21 @@ def if_any_elements_is_space(source):
 # 输出： 字典变量, flag: 是否操作成功 d: config 文件内容 count: 字典 key 的数量
 # 2017.2.23 create by David.Yi, #19008
 # 2018.2.12 edit by David Yi, 增加返回内容，字典长度, #11014
+# 2018.4.18 #19015, 加入 docstring，完善文档说明
 def conf_as_dict(conf_filename):
 
+    """读入 ini 配置文件，返回根据配置文件内容生成的字典类型变量
+
+    将 ini 配置文件读入到字典中，大大减少磁盘交互
+
+    :param conf_filename: string, ini 配置文件长文件名
+
+    :return
+        flag(bool): 读取配置文件是否正确，正确返回 True，错误返回 False
+        d(): 如果读取配置文件正确返回的包含配置文件内容的字典
+        count(): 读取到的配置文件有多少个 key 的数量
+
+    """
     flag = True
 
     cf = configparser.ConfigParser()

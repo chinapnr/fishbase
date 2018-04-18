@@ -8,7 +8,9 @@ last update: 2018.4.8
 * 19012，优化日志功能，缩写line->ln, 增加可选是否记录线程的编号
 * 19013，删除 fish_common fish_date fish_file 等为了保持兼容的包, ok
 * 19014，unittest, 完善 test_common 部分
-* 19015，common 中的函数增加说明和 demo
+* 19015，common conf_as_dict() 增加 docstring 说明， ok
+* 19016，开始测试使用 sphinx 来组织 api 说明文档，ok
+* 19017，将 conf_as_dict() 说明加入到 doc 中
 
 ####v1.0.10
 
