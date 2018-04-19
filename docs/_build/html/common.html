@@ -32,8 +32,34 @@
             
   <div class="section" id="common">
 <h1>常用函数 common<a class="headerlink" href="#common" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="conf-as-dict">
-<h2>conf_as_dict()<a class="headerlink" href="#conf-as-dict" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-common">
+<span id="conf-as-dict"></span><h2>conf_as_dict()<a class="headerlink" href="#module-common" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="common.conf_as_dict">
+<code class="descclassname">common.</code><code class="descname">conf_as_dict</code><span class="sig-paren">(</span><em>conf_filename</em><span class="sig-paren">)</span><a class="headerlink" href="#common.conf_as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>读入 ini 配置文件，返回根据配置文件内容生成的字典类型变量</p>
+<p>将 ini 配置文件读入到字典中，大大减少磁盘交互</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li>conf_filename: (string) 需要读入的 ini 配置文件长文件名</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>flag: (bool) 读取配置文件是否正确，正确返回 True，错误返回 False</li>
+<li>d: (dict) 如果读取配置文件正确返回的包含配置文件内容的字典</li>
+<li>count: (int) 读取到的配置文件有多少个 key 的数量</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 </div>
 
@@ -46,7 +72,7 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">常用函数 common</a><ul>
-<li><a class="reference internal" href="#conf-as-dict">conf_as_dict()</a></li>
+<li><a class="reference internal" href="#module-common">conf_as_dict()</a></li>
 </ul>
 </li>
 </ul>

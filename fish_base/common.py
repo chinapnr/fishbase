@@ -91,12 +91,12 @@ def conf_as_dict(conf_filename):
 
     将 ini 配置文件读入到字典中，大大减少磁盘交互
 
-    :param conf_filename: string, ini 配置文件长文件名
-
-    :return
-        flag(bool): 读取配置文件是否正确，正确返回 True，错误返回 False
-        d(): 如果读取配置文件正确返回的包含配置文件内容的字典
-        count(): 读取到的配置文件有多少个 key 的数量
+    :param:
+        * conf_filename: (string) 需要读入的 ini 配置文件长文件名
+    :returns:
+        * flag: (bool) 读取配置文件是否正确，正确返回 True，错误返回 False
+        * d: (dict) 如果读取配置文件正确返回的包含配置文件内容的字典
+        * count: (int) 读取到的配置文件有多少个 key 的数量
 
     """
     flag = True
