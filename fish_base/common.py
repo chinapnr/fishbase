@@ -9,6 +9,46 @@ import configparser
 import re
 
 
+# 读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
+# 2017.2.23 create by David.Yi, #19008
+# 2018.2.12 edit by David Yi, 增加返回内容，字典长度, #11014
+# 2018.4.18 #19015, 加入 docstring，完善文档说明
+def conf_as_dict(conf_filename):
+
+    """读入 ini 配置文件，返回根据配置文件内容生成的字典类型变量
+
+    将 ini 配置文件读入到字典中，大大减少磁盘交互
+
+    :param:
+        * conf_filename: (string) 需要读入的 ini 配置文件长文件名
+    :returns:
+        * flag: (bool) 读取配置文件是否正确，正确返回 True，错误返回 False
+        * d: (dict) 如果读取配置文件正确返回的包含配置文件内容的字典
+        * count: (int) 读取到的配置文件有多少个 key 的数量
+
+    """
+    flag = True
+
+    cf = configparser.ConfigParser()
+
+    # 读入 config 文件
+    try:
+        cf.read(conf_filename)
+    except:
+        flag = False
+        return flag
+
+    d = dict(cf._sections)
+    for k in d:
+        d[k] = dict(cf._defaults, **d[k])
+        d[k].pop('__name__', None)
+
+    # 计算有多少 key
+    count = len(d.keys())
+
+    return flag, d, count
+
+
 # 单例基础类
 # 2018.2.13 create by David Yi, #11015
 class SingleTon(object):
@@ -79,64 +119,6 @@ def if_any_elements_is_space(source):
     return False
 
 
-# 读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
-# 输入： conf 文件长文件名
-# 输出： 字典变量, flag: 是否操作成功 d: config 文件内容 count: 字典 key 的数量
-# 2017.2.23 create by David.Yi, #19008
-# 2018.2.12 edit by David Yi, 增加返回内容，字典长度, #11014
-# 2018.4.18 #19015, 加入 docstring，完善文档说明
-def conf_as_dict(conf_filename):
-
-    """读入 ini 配置文件，返回根据配置文件内容生成的字典类型变量
-
-    将 ini 配置文件读入到字典中，大大减少磁盘交互
-
-    :param:
-        * conf_filename: (string) 需要读入的 ini 配置文件长文件名
-    :returns:
-        * flag: (bool) 读取配置文件是否正确，正确返回 True，错误返回 False
-        * d: (dict) 如果读取配置文件正确返回的包含配置文件内容的字典
-        * count: (int) 读取到的配置文件有多少个 key 的数量
-
-    """
-    flag = True
-
-    cf = configparser.ConfigParser()
-
-    # 读入 config 文件
-    try:
-        cf.read(conf_filename)
-    except:
-        flag = False
-        return flag
-
-    d = dict(cf._sections)
-    for k in d:
-        d[k] = dict(cf._defaults, **d[k])
-        d[k].pop('__name__', None)
-
-    # 计算有多少 key
-    count = len(d.keys())
-
-    return flag, d, count
-
-
-# r2c1 v1.0.1 #12089
-# 2016.4.3 edit class and function name
-# 通过conf文件。eg ini，读取值，通过字典缓存来提高读取速度
-class FishCache:
-    __cache = {}
-
-    def get_cf_cache(self, cf, section, key):
-        # 生成 key，用于 dict
-        temp_key = section + '_' + key
-
-        if not (temp_key in self.__cache):
-            self.__cache[temp_key] = cf[section][key]
-
-        return self.__cache[temp_key]
-
-
 # 2017.3.30 create by Leo #11001
 # 功能：监测list或者元素是否含有特殊字符
 # 输入：source 是参数列表或元组
@@ -175,3 +157,19 @@ def if_any_elements_is_letter(source):
             return False
 
     return True
+
+
+# r2c1 v1.0.1 #12089
+# 2016.4.3 edit class and function name
+# 通过conf文件。eg ini，读取值，通过字典缓存来提高读取速度
+class FishCache:
+    __cache = {}
+
+    def get_cf_cache(self, cf, section, key):
+        # 生成 key，用于 dict
+        temp_key = section + '_' + key
+
+        if not (temp_key in self.__cache):
+            self.__cache[temp_key] = cf[section][key]
+
+        return self.__cache[temp_key]
