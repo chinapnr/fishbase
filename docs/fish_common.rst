@@ -2,5 +2,5 @@
 常用函数 common
 ================
 
-.. automodule:: common
+.. automodule:: fish_common
    :members:

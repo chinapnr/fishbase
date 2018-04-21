@@ -1,6 +1,6 @@
 ##fish_common 特性列表
 
-last update: 2018.4.8
+last update: 2018.4.21
 
 #### v1.0.11
 
@@ -11,6 +11,10 @@ last update: 2018.4.8
 * 19015，common conf_as_dict() 增加 docstring 说明， ok
 * 19016，开始测试使用 sphinx 来组织 api 说明文档，ok
 * 19017，将 conf_as_dict() 说明加入到 doc 中，ok
+* 19018，`__init__.py 中的 get_ver() 返回版本号功能简化，ok
+* 19019，common class SingleTon() 增加 docstring 说明，ok
+* 19020，csv csv_file_to_list() 增加 docstring 说明
+* 19021，common 重新声明为 fish_common, csv 重新生命为 fish_csv, 所有包带 fish 前缀，ok
 
 ####v1.0.10
 

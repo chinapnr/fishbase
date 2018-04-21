@@ -25,7 +25,8 @@ this part of the documentation is for you.
 .. toctree::
    :maxdepth: 1
 
-   common
+   fish_common
+   fish_csv
 
 
 

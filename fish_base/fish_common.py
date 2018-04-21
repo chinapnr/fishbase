@@ -15,9 +15,8 @@ import re
 # 2018.4.18 #19015, 加入 docstring，完善文档说明
 def conf_as_dict(conf_filename):
 
-    """读入 ini 配置文件，返回根据配置文件内容生成的字典类型变量
-
-    将 ini 配置文件读入到字典中，大大减少磁盘交互
+    """
+    读入 ini 配置文件，返回根据配置文件内容生成的字典类型变量；
 
     :param:
         * conf_filename: (string) 需要读入的 ini 配置文件长文件名
@@ -49,9 +48,21 @@ def conf_as_dict(conf_filename):
     return flag, d, count
 
 
-# 单例基础类
+# 申明一个单例类
 # 2018.2.13 create by David Yi, #11015
+# 2018.4.20 edit, #19019，增加 docstring
 class SingleTon(object):
+
+    """
+    申明一个单例类，可以作为需要单例类时候申明用的父类
+
+    :param:
+        无
+    :returns:
+        无
+
+    """
+
     _state = {}
 
     def __new__(cls, *args, **kwargs):
