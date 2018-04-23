@@ -1,4 +1,4 @@
-from fish_base.file import *
+from fish_base.fish_file import *
 from fish_base.fish_csv import *
 
 

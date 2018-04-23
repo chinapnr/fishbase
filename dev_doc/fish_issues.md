@@ -13,8 +13,10 @@ last update: 2018.4.21
 * 19017，将 conf_as_dict() 说明加入到 doc 中，ok
 * 19018，`__init__.py 中的 get_ver() 返回版本号功能简化，ok
 * 19019，common class SingleTon() 增加 docstring 说明，ok
-* 19020，csv csv_file_to_list() 增加 docstring 说明
+* 19020，csv csv_file_to_list() 增加 docstring 说明，ok
 * 19021，common 重新声明为 fish_common, csv 重新生命为 fish_csv, 所有包带 fish 前缀，ok
+* 19022，sphinx doc 的 theme 修改为 rtd theme，https://sphinx-rtd-theme.readthedocs.io/en/latest/ , ok
+* 19023，logger set_log_file() 增加 docstring 说明，ok
 
 ####v1.0.10
 

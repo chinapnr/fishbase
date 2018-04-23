@@ -15,7 +15,17 @@ logger = logging.getLogger()
 # 2018.2.6 edit by David Yi
 # 2018.2.11 edit, log 相关代码优化简化; #11010
 # 2018.2.13 edit, remove thread watch
+# 2018.4.23 edit，#19023 增加 docstring
 def set_log_file(local_file=None):
+
+    """
+    设置日志记录，按照每天一个文件，记录包括 info 以及以上级别的内容；
+
+    :param:
+        * local_fie: (string) 日志文件名
+    :returns:
+
+    """
 
     default_log_file = 'default.log'
 

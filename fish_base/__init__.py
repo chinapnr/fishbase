@@ -17,8 +17,8 @@
 from .fish_common import *
 from .fish_csv import *
 from .date import *
-from .file import *
-from .logger import *
+from .fish_file import *
+from .fish_logger import *
 
 ver = '1.0.11'
 

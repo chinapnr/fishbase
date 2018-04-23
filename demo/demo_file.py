@@ -1,7 +1,7 @@
 # demo_file 单元测试
 # 2017.3.11 create by Leo
 
-from fish_base.file import *
+from fish_base.fish_file import *
 
 
 # 2018.1.31 测试 get_abs_filename_with_sub_path()

@@ -1,3 +1,9 @@
+"""
+
+``fish_common`` 包含的是最通用的一些函数和类。
+
+"""
+
 # 2016.4.1 create fish_common.py by david.yi
 # 2016.4.3 edit FishCache class, and edit get_cf_cache
 # 2016.4.7 v1.0.6, v1.0.7  add get_long_filename_with_sub_dir()
