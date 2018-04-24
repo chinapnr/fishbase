@@ -9,6 +9,10 @@ fish_base 函数库使用说明
 **fish_base** 是我们自己开发、收集和整理的一套 Python 基础函数库。
 抽象了很多常见的通用的业务逻辑，以希望减少日常开发中的一些重复的工作量。
 
+.. toctree::
+   :maxdepth: 1
+
+   update
 
 
 API 函数列表

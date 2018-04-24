@@ -1,12 +1,11 @@
 Metadata-Version: 1.1
 Name: fish-base
-Version: 1.0.10
+Version: 1.0.11
 Summary: some useful functions for python
 Home-page: https://github.com/chinapnr/fish_base
 Author: david.yi
 Author-email: wingfish@gmail.com
 License: MIT
-Description-Content-Type: UNKNOWN
 Description: UNKNOWN
 Platform: UNKNOWN
 Classifier: Development Status :: 3 - Alpha

@@ -3,12 +3,12 @@ from setuptools import setup
 
 setup(
     name='fish_base',
-    version='1.0.10',
+    version='1.0.11',
     install_requires=['python-dateutil'],
 
     url='https://github.com/chinapnr/fish_base',
     license='MIT',
-    author='david.yi',
+    author='David Yi',
     author_email='wingfish@gmail.com',
     description='some useful functions for python',
 
