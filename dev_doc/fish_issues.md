@@ -17,6 +17,7 @@ last update: 2018.4.21
 * 19021，common 重新声明为 fish_common, csv 重新生命为 fish_csv, 所有包带 fish 前缀，ok
 * 19022，sphinx doc 的 theme 修改为 rtd theme，https://sphinx-rtd-theme.readthedocs.io/en/latest/ , ok
 * 19023，logger set_log_file() 增加 docstring 说明，ok
+* 19024，fish_file 函数加入 docstring 说明，ok
 
 ####v1.0.10
 

@@ -7,17 +7,38 @@ import inspect
 
 
 # 生成当前路径下一级路径某文件的完整文件名
-# 输入:
-# sub_path: 下一级的某路径名称
-# filename: 下一级路径的某个文件名
-# 输出:
-# flag: 如果文件存在，返回 True，文件不存在，返回 False
-# abs_filename: 指定 filename 的包含路径的长文件名
 # ---
 # 2016.4.7 v1.0.6, v1.0.7, create by david.yi
 # 2017.1.8 v1.0.9 edit the function name, #19002
 # 2018.1.30 1.31 v1.0.10 代码优化, #11004
+# 2018.4.24 v1.0.11 加入 docstring
 def get_abs_filename_with_sub_path(sub_path, filename):
+
+    """
+        生成当前路径下一级路径某文件的完整文件名；
+
+        :param:
+            * sub_path: (string) 下一级的某路径名称
+            * filename: (string) 下一级路径的某个文件名
+        :returns:
+            * flag: (bool) 如果文件存在，返回 True，文件不存在，返回 False
+            * abs_filename: (string) 指定 filename 的包含路径的长文件名
+
+        举例如下::
+
+            # 定义子路径名称
+            path_name = 'test_sub_dir'
+            # 定义文件名称
+            filename = 'test_file.txt'
+            # 生成当前路径下一级文件的完整路径名
+            abs_filename = get_abs_filename_with_sub_path(path_name, filename)
+            print(abs_filename)
+
+        输出结果::
+
+        (True, '/Users/yijun/Documents/dev_python/fish_base/demo/test_sub_dir/test_file.txt')
+
+    """
 
     try:
         cur_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
@@ -34,11 +55,42 @@ def get_abs_filename_with_sub_path(sub_path, filename):
 
 
 # 生成使用模块时的下一级路径某文件的完整文件名
-# 输入: 子目录, 文件名
-# 输出: 文件是否存在标志, 完整文件名
 # 2016.5.18 create by David Yi
 # 2017.1.8 v1.0.9 edit the function name, #19004
+# 2018.4.24 v1.0.11 增加 docstring 支持
 def get_abs_filename_with_sub_path_module(sub_path, filename):
+
+    """
+        生成使用模块时的下一级路径某文件的完整文件名；
+
+        :param:
+            * sub_path: (string) 下一级的某路径名称
+            * filename: (string) 下一级路径的某个文件名
+        :returns:
+            * flag: (bool) 如果文件存在，返回 True，文件不存在，返回 False
+            * abs_filename: (string) 指定 filename 的包含路径的长文件名，注意是模块安装的路径，不是应用程序的路径
+
+        举例如下::
+
+            # 定义子路径名称
+            sub_path = 'test_sub_dir'
+            # 定义存在的文件名称
+            filename_existent = 'demo_file.txt'
+            # 定义不存在的文件名称
+            filename_non_existent = 'demo.txt'
+            # 生成下一级路径文件的完整文件名
+            result = get_abs_filename_with_sub_path_module(sub_path, filename_existent)
+            print(result)
+
+            result = get_abs_filename_with_sub_path_module(sub_path, filename_non_existent)
+            print(result)
+
+        输出结果::
+
+            (True, '/Users/yijun/anaconda3/lib/python3.6/site-packages/fish_base/test_sub_dir/demo_file.txt')
+            (False, '/Users/yijun/anaconda3/lib/python3.6/site-packages/fish_base/test_sub_dir/demo.txt')
+
+    """
 
     cur_module_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
     abs_filename = os.path.join(cur_module_dir, sub_path, filename)

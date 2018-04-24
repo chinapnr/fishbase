@@ -20,6 +20,7 @@ API 函数列表
    :maxdepth: 2
 
    fish_common
+   fish_file
    fish_csv
    fish_logger
 

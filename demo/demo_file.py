@@ -22,7 +22,7 @@ if __name__ == '__main__':
 
     test_file_path()
 
-    # 定义父路径名称
+    # 定义子路径名称
     sub_path = 'test_sub_dir'
     # 定义存在的文件名称
     filename_existent = 'demo_file.txt'

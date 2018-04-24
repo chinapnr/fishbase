@@ -86,6 +86,7 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">fish_common</span></code> 基本函数包</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fish_csv.html"><code class="docutils literal notranslate"><span class="pre">fish_csv</span></code> csv 函数包</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fish_logger.html"><code class="docutils literal notranslate"><span class="pre">fish_logger</span></code> 日志记录函数包</a></li>
 </ul>
 
             
@@ -192,6 +193,35 @@
 </tr>
 </tbody>
 </table>
+<p>举例如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">demo_common_config</span><span class="p">():</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--- conf_as_dict demo---&#39;</span><span class="p">)</span>
+    <span class="c1"># 定义配置文件名</span>
+    <span class="n">conf_filename</span> <span class="o">=</span> <span class="s1">&#39;test_conf.ini&#39;</span>
+    <span class="c1"># 读取配置文件</span>
+
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">conf_as_dict</span><span class="p">(</span><span class="n">conf_filename</span><span class="p">)</span>
+    <span class="c1"># 显示是否成功，所有 dict 的内容，dict 的 key 数量</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;flag:&#39;</span><span class="p">,</span> <span class="n">ds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;dict:&#39;</span><span class="p">,</span> <span class="n">ds</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;length:&#39;</span><span class="p">,</span> <span class="n">ds</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># 显示一个 section 下的所有内容</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;section show_opt:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;show_opt&#39;</span><span class="p">])</span>
+    <span class="c1"># 显示一个 section 下面的 key 的 value 内容</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;section show_opt, key short_opt:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;show_opt&#39;</span><span class="p">][</span><span class="s1">&#39;short_opt&#39;</span><span class="p">])</span>
+
+    <span class="c1"># 读取一个复杂的section，先读出 key 中的 count 内容，再遍历每个 key 的 value</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;get_extra_rules&#39;</span><span class="p">][</span><span class="s1">&#39;erule_count&#39;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;section get_extra_rules, key erule_count:&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;section get_extra_rules, key erule_type:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;get_extra_rules&#39;</span><span class="p">][</span><span class="s1">&#39;erule_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>

@@ -22,6 +22,21 @@ def csv_file_to_list(csv_filename, deli=',', del_blank_row=True):
     :returns:
         * csv_list: (list) 转换后的 list
 
+    举例如下::
+
+        from fish_base.fish_file import *
+        from fish_base.fish_csv import *
+
+        def test_csv():
+            csv_filename = get_abs_filename_with_sub_path('csv', 'test_csv.csv')[1]
+            print(csv_filename)
+            csv_list = csv_file_to_list(csv_filename)
+            print(csv_list)
+
+
+        if __name__ == '__main__':
+            test_csv()
+
     """
 
     with open(csv_filename) as csv_file:

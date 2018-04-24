@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="fish_logger 日志记录函数包" href="fish_logger.html" />
     <link rel="prev" title="fish_common 基本函数包" href="fish_common.html" /> 
 
   
@@ -85,6 +86,7 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="fish_common.html"><code class="docutils literal notranslate"><span class="pre">fish_common</span></code> 基本函数包</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">fish_csv</span></code> csv 函数包</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fish_logger.html"><code class="docutils literal notranslate"><span class="pre">fish_logger</span></code> 日志记录函数包</a></li>
 </ul>
 
             
@@ -174,6 +176,21 @@
 </tr>
 </tbody>
 </table>
+<p>举例如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fish_base.fish_file</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">fish_base.fish_csv</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">test_csv</span><span class="p">():</span>
+    <span class="n">csv_filename</span> <span class="o">=</span> <span class="n">get_abs_filename_with_sub_path</span><span class="p">(</span><span class="s1">&#39;csv&#39;</span><span class="p">,</span> <span class="s1">&#39;test_csv.csv&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">csv_filename</span><span class="p">)</span>
+    <span class="n">csv_list</span> <span class="o">=</span> <span class="n">csv_file_to_list</span><span class="p">(</span><span class="n">csv_filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">csv_list</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">test_csv</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -185,6 +202,8 @@
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="fish_logger.html" class="btn btn-neutral float-right" title="fish_logger 日志记录函数包" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="fish_common.html" class="btn btn-neutral" title="fish_common 基本函数包" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

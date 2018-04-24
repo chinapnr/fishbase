@@ -152,6 +152,8 @@
             
   <div class="section" id="module-fish_logger">
 <span id="fish-logger"></span><h1><code class="docutils literal notranslate"><span class="pre">fish_logger</span></code> 日志记录函数包<a class="headerlink" href="#module-fish_logger" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">fish_logger</span></code> 包含的是日志处理相关的函数。</p>
+<p>通过 <code class="docutils literal notranslate"><span class="pre">set_log_file()</span></code> 可以方便的进行分卷的日志文件记录。</p>
 <dl class="function">
 <dt id="fish_logger.set_log_file">
 <code class="descclassname">fish_logger.</code><code class="descname">set_log_file</code><span class="sig-paren">(</span><em>local_file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fish_logger.set_log_file" title="Permalink to this definition">¶</a></dt>
@@ -170,6 +172,21 @@
 </tr>
 </tbody>
 </table>
+<p>举例如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fish_base.fish_logger</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">fish_base.fish_file</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="n">log_abs_filename</span> <span class="o">=</span> <span class="n">get_abs_filename_with_sub_path</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="s1">&#39;fish_test.log&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">set_log_file</span><span class="p">(</span><span class="n">log_abs_filename</span><span class="p">)</span>
+
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;test fish base log&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;test fish base log&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;test fish base log&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;log ok&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>

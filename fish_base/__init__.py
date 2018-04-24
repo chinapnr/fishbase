@@ -16,7 +16,7 @@
 
 from .fish_common import *
 from .fish_csv import *
-from .date import *
+from .fish_date import *
 from .fish_file import *
 from .fish_logger import *
 
