@@ -12,7 +12,7 @@ fish_base 函数库使用说明
 .. toctree::
    :maxdepth: 1
 
-   update
+   change_log
 
 
 API 函数列表

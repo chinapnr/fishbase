@@ -56,3 +56,9 @@ last update: 2018.4.21
 
 * 19012，优化日志功能，缩写line->ln, 增加可选是否记录线程的编号
 * 19014，unittest, 完善 test_common 部分
+* 19025，file 中剩余函数也加入 docstring 说明
+* 19026，构建统一单元测试，从 csv 中开始
+
+安装
+
+* 文档主题需要安装 pip install sphinx_rtd_theme
