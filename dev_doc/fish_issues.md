@@ -58,6 +58,8 @@ last update: 2018.4.21
 * 19014，unittest, 完善 test_common 部分
 * 19025，file 中剩余函数也加入 docstring 说明
 * 19026，构建统一单元测试，从 csv 中开始
+* 19027，file auto_add_file_ext() 原来实现方式有问题，删除该函数
+* 19028，修改完善 demo_file.py 中的例子；ok
 
 安装
 

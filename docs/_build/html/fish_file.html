@@ -157,6 +157,87 @@
             
   <div class="section" id="module-fish_file">
 <span id="fish-file"></span><h1><code class="docutils literal notranslate"><span class="pre">fish_file</span></code> 文件处理函数包<a class="headerlink" href="#module-fish_file" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">fish_file</span></code> 包含的是文件、路径处理相关的函数。</p>
+<p>各类相对绝对文件的路径处理等都是开发时候经常需要处理的问题，fish_file 中的函数试图简化这些操作。</p>
+<dl class="function">
+<dt id="fish_file.check_kind_path_file">
+<code class="descclassname">fish_file.</code><code class="descname">check_kind_path_file</code><span class="sig-paren">(</span><em>kind_name</em>, <em>file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#fish_file.check_kind_path_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>检查指定类型的文件名是否在指定的路径下, 比如用来检查 conf 路径下的配置文件是否存在；</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li>kind_name: (string) 类别名称，比如 conf</li>
+<li>file_name: (string)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>返回类型 (tuple)，有两个值</li>
+<li>Flag: (bool) True: 文件存在，False: 文件不存在</li>
+<li>abs_filename: (string) 要检查的文件的长文件名</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>举例如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 定义路径（类型）</span>
+<span class="n">kind_name</span> <span class="o">=</span> <span class="s1">&#39;test_conf&#39;</span>
+<span class="c1"># 定义文件名</span>
+<span class="n">conf_filename</span> <span class="o">=</span> <span class="s1">&#39;test_conf.ini&#39;</span>
+<span class="c1"># 检查指定路径（类型）的文件名是否在指定的路径下</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">check_kind_path_file</span><span class="p">(</span><span class="n">kind_name</span><span class="p">,</span> <span class="n">conf_filename</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>输出结果:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;/Users/yijun/Documents/dev_python/fish_base/demo/test_conf/test_conf.ini&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fish_file.check_sub_path_create">
+<code class="descclassname">fish_file.</code><code class="descname">check_sub_path_create</code><span class="sig-paren">(</span><em>sub_path</em><span class="sig-paren">)</span><a class="headerlink" href="#fish_file.check_sub_path_create" title="Permalink to this definition">¶</a></dt>
+<dd><p>检查当前路径下的某个子路径是否存在, 不存在则创建；</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li>sub_path: (string) 下一级的某路径名称</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>返回类型 (tuple)，有两个值</li>
+<li>True: 路径存在，False: 不需要创建</li>
+<li>False: 路径不存在，True: 创建成功</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>举例如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 定义存在子路径名</span>
+<span class="n">sub_path</span> <span class="o">=</span> <span class="s1">&#39;test_sub_dir&#39;</span>
+<span class="c1"># 检查当前路径下的一个子路径是否存在，不存在则创建</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">check_sub_path_create</span><span class="p">(</span><span class="n">sub_path</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;check sub path:&#39;</span><span class="p">,</span> <span class="n">sub_path</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>输出结果:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">check</span> <span class="n">sub</span> <span class="n">path</span><span class="p">:</span> <span class="n">test_sub_dir</span>
+<span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
 <dl class="function">
 <dt id="fish_file.get_abs_filename_with_sub_path">
 <code class="descclassname">fish_file.</code><code class="descname">get_abs_filename_with_sub_path</code><span class="sig-paren">(</span><em>sub_path</em>, <em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#fish_file.get_abs_filename_with_sub_path" title="Permalink to this definition">¶</a></dt>
@@ -172,6 +253,7 @@
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>返回类型 (tuple)，有两个值，第一个为 flag，第二个为文件名，说明见下</li>
 <li>flag: (bool) 如果文件存在，返回 True，文件不存在，返回 False</li>
 <li>abs_filename: (string) 指定 filename 的包含路径的长文件名</li>
 </ul>
@@ -211,6 +293,7 @@
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>返回类型 (tuple)，有两个值，第一个为 flag，第二个为文件名，说明见下</li>
 <li>flag: (bool) 如果文件存在，返回 True，文件不存在，返回 False</li>
 <li>abs_filename: (string) 指定 filename 的包含路径的长文件名，注意是模块安装的路径，不是应用程序的路径</li>
 </ul>
