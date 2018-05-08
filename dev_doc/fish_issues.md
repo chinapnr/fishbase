@@ -1,6 +1,6 @@
 ##fish_common 特性列表
 
-last update: 2018.4.21
+last update: 2018.5.8
 
 #### v1.0.11
 
@@ -15,6 +15,8 @@ last update: 2018.4.21
 * 19022，sphinx doc 的 theme 修改为 rtd theme，https://sphinx-rtd-theme.readthedocs.io/en/latest/ , ok
 * 19023，logger set_log_file() 增加 docstring 说明，ok
 * 19024，fish_file 函数加入 docstring 说明，ok
+* 19025, common, 去除 get_md5()函数，ok
+* 19026, common, 增加 class GetMD5，
 
 ---
 

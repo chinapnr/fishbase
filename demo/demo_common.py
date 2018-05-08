@@ -3,6 +3,7 @@
 # 2018.2.11 edit by David Yi
 
 from fish_base.fish_common import *
+from fish_base.fish_file import get_abs_filename_with_sub_path
 
 
 # 2018.2.12 common 中 config 文件处理相关，#11013
@@ -13,6 +14,7 @@ def demo_common_config():
     # 读取配置文件
 
     ds = conf_as_dict(conf_filename)
+
     # 显示是否成功，所有 dict 的内容，dict 的 key 数量
     print('flag:', ds[0])
     print('dict:', ds[1])
@@ -33,16 +35,18 @@ def demo_common_config():
     print('---')
 
 
+def demo_common_md5():
+    print('--- md5 demo ---')
+    print('string md5:', GetMD5.str('hello world!'))
+    print('file md5:', GetMD5.file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
+    print('big file md5:', GetMD5.big_file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
+    print('---')
+
+
 if __name__ == '__main__':
 
     # 检查当前系统名称
     result = check_platform()
-    print(result)
-
-    # 定义需要生成md5值的字符串
-    s = 'Hello World!'
-    # 生成md5值
-    result = get_md5(s)
     print(result)
 
     # 定义需要序列化的对象
@@ -74,8 +78,4 @@ if __name__ == '__main__':
 
     demo_common_config()
 
-    # # 初始化类
-    # FishCache_test = FishCache()
-    # # 从config文件读取值
-    # result = FishCache_test.get_cf_cache(result, 'show_opt', 'short_opt')
-    # print(result)
+    demo_common_md5()

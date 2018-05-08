@@ -13,6 +13,8 @@ import sys
 import uuid
 import configparser
 import re
+import hashlib
+import os
 
 
 # 读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
@@ -120,19 +122,6 @@ def check_platform():
         return sys.platform
 
 
-# md5 函数
-# 输入: s: str 字符串
-# 输出: 经过md5计算的值
-# 2015.5.27 create by david.yi
-# 2015.6.6 edit, 转移到这里，作为基本工具函数
-def get_md5(s):
-    import hashlib
-
-    m = hashlib.md5()
-    m.update(s.encode('utf-8'))
-    return m.hexdigest()
-
-
 # 对象序列化
 # 输入: info: 要显示的字段解释，field_default：默认的字段名称
 # 输出: 字段名称
@@ -219,3 +208,50 @@ class FishCache:
             self.__cache[temp_key] = cf[section][key]
 
         return self.__cache[temp_key]
+
+
+# 2018.5.8 edit by David Yi, edit from Jia Chunying
+class GetMD5(object):
+
+    @staticmethod
+    def str(string):
+        """
+        获取一个字符串的MD5值
+        :param string 待hash的字符串
+        :return: 32位小写MD5值
+        """
+        m = hashlib.md5()
+        m.update(string.encode('utf-8'))
+        result = m.hexdigest()
+        return result
+
+    @staticmethod
+    def file(file_path):
+        """
+        获取一个文件的MD5值
+        :param file_path 待hash的文件路径
+        :return: 32位小写MD5值
+        """
+        with open(file_path, 'rb') as f:
+            m = hashlib.md5()
+            m.update(f.read())
+            return m.hexdigest()
+
+    @staticmethod
+    def big_file(file_name):
+        """
+        获取一个较大文件的MD5值
+        :param file_name 待hash的文件路径
+        :return: 32位小写MD5值
+        """
+        if not os.path.isfile(file_name):
+            return
+        m = hashlib.md5()
+        f = open(file_name, 'rb')
+        while True:
+            b = f.read(8096)
+            if not b:
+                break
+            m.update(b)
+        f.close()
+        return m.hexdigest()
