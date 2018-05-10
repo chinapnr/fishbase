@@ -212,46 +212,65 @@ class FishCache:
 
 # 2018.5.8 edit by David Yi, edit from Jia Chunying
 class GetMD5(object):
+    """
+    封装了 MD5 计算的类，可以计算普通字符串和一般的文件，对于大的文件（比如几兆以上）也可以快速计算
+
+    举例如下::
+
+        def demo_common_md5():
+            print('--- md5 demo ---')
+            print('string md5:', GetMD5.str('hello world!'))
+            print('file md5:', GetMD5.file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
+            print('big file md5:', GetMD5.big_file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
+            print('---')
+
+    """
 
     @staticmethod
-    def str(string):
+    def str(str):
         """
         获取一个字符串的MD5值
-        :param string 待hash的字符串
-        :return: 32位小写MD5值
+
+        :param:
+            * (string) str 需要进行 hash 的字符串
+        :return:
+            * (string) result 32位小写MD5值
         """
         m = hashlib.md5()
-        m.update(string.encode('utf-8'))
+        m.update(str.encode('utf-8'))
         result = m.hexdigest()
         return result
 
     @staticmethod
-    def file(file_path):
+    def file(filename):
         """
-        获取一个文件的MD5值
-        :param file_path 待hash的文件路径
-        :return: 32位小写MD5值
+        获取一个文件的 MD5 值
+
+        :param:
+            * (string) filename 需要进行 hash 的文件名
+        :return:
+            * (string) result 32位小写MD5值
         """
-        with open(file_path, 'rb') as f:
-            m = hashlib.md5()
+        m = hashlib.md5()
+        with open(filename, 'rb') as f:
             m.update(f.read())
-            return m.hexdigest()
+            result = m.hexdigest()
+            return result
 
     @staticmethod
-    def big_file(file_name):
+    def big_file(filename):
         """
-        获取一个较大文件的MD5值
-        :param file_name 待hash的文件路径
-        :return: 32位小写MD5值
+        获取一个大文件的 MD5 值
+
+        :param:
+            * (string) filename 需要进行 hash 的大文件路径
+        :return:
+            * (string) result 32位小写MD5值
         """
-        if not os.path.isfile(file_name):
-            return
-        m = hashlib.md5()
-        f = open(file_name, 'rb')
-        while True:
-            b = f.read(8096)
-            if not b:
-                break
-            m.update(b)
-        f.close()
-        return m.hexdigest()
+        md5 = hashlib.md5()
+        with open(filename, 'rb') as f:
+            for chunk in iter(lambda: f.read(8192), b''):
+                md5.update(chunk)
+
+        result = md5.digest()
+        return result

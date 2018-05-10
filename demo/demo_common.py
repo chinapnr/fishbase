@@ -35,6 +35,7 @@ def demo_common_config():
     print('---')
 
 
+# 2018.5.10
 def demo_common_md5():
     print('--- md5 demo ---')
     print('string md5:', GetMD5.str('hello world!'))

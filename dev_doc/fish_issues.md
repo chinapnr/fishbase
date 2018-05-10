@@ -16,7 +16,8 @@ last update: 2018.5.8
 * 19023，logger set_log_file() 增加 docstring 说明，ok
 * 19024，fish_file 函数加入 docstring 说明，ok
 * 19025, common, 去除 get_md5()函数，ok
-* 19026, common, 增加 class GetMD5，
+* 19026, common, 增加 class GetMD5，ok  
+https://stackoverflow.com/questions/1131220/get-md5-hash-of-big-files-in-python?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 
 ---
 
