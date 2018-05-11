@@ -19,6 +19,7 @@ last update: 2018.5.8
 * 19026, common, 增加 class GetMD5，ok  
 https://stackoverflow.com/questions/1131220/get-md5-hash-of-big-files-in-python?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 
+
 ---
 
 #### v1.0.10

@@ -213,13 +213,13 @@ class FishCache:
 # 2018.5.8 edit by David Yi, edit from Jia Chunying
 class GetMD5(object):
     """
-    封装了 MD5 计算的类，可以计算普通字符串和一般的文件，对于大的文件（比如几兆以上）也可以快速计算
+    封装了 MD5 计算的类，可以计算普通字符串和一般的文件，对于大文件采取逐步读入的方式，也可以快速计算
 
     举例如下::
 
         def demo_common_md5():
             print('--- md5 demo ---')
-            print('string md5:', GetMD5.str('hello world!'))
+            print('string md5:', GetMD5.string('hello world!'))
             print('file md5:', GetMD5.file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
             print('big file md5:', GetMD5.big_file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
             print('---')
@@ -227,17 +227,17 @@ class GetMD5(object):
     """
 
     @staticmethod
-    def str(str):
+    def string(s):
         """
         获取一个字符串的MD5值
 
         :param:
             * (string) str 需要进行 hash 的字符串
         :return:
-            * (string) result 32位小写MD5值
+            * (string) result 32位小写 MD5 值
         """
         m = hashlib.md5()
-        m.update(str.encode('utf-8'))
+        m.update(s.encode('utf-8'))
         result = m.hexdigest()
         return result
 
@@ -249,7 +249,7 @@ class GetMD5(object):
         :param:
             * (string) filename 需要进行 hash 的文件名
         :return:
-            * (string) result 32位小写MD5值
+            * (string) result 32位小写 MD5 值
         """
         m = hashlib.md5()
         with open(filename, 'rb') as f:
@@ -265,12 +265,13 @@ class GetMD5(object):
         :param:
             * (string) filename 需要进行 hash 的大文件路径
         :return:
-            * (string) result 32位小写MD5值
+            * (string) result 32位小写 MD5 值
         """
+
         md5 = hashlib.md5()
         with open(filename, 'rb') as f:
             for chunk in iter(lambda: f.read(8192), b''):
                 md5.update(chunk)
 
-        result = md5.digest()
+        result = md5.hexdigest()
         return result

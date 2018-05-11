@@ -38,7 +38,7 @@ def demo_common_config():
 # 2018.5.10
 def demo_common_md5():
     print('--- md5 demo ---')
-    print('string md5:', GetMD5.str('hello world!'))
+    print('string md5:', GetMD5.string('hello world!'))
     print('file md5:', GetMD5.file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
     print('big file md5:', GetMD5.big_file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
     print('---')
