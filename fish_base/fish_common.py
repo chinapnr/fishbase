@@ -41,7 +41,6 @@ def conf_as_dict(conf_filename):
             # 定义配置文件名
             conf_filename = 'test_conf.ini'
             # 读取配置文件
-
             ds = conf_as_dict(conf_filename)
             # 显示是否成功，所有 dict 的内容，dict 的 key 数量
             print('flag:', ds[0])
@@ -210,7 +209,7 @@ class FishCache:
         return self.__cache[temp_key]
 
 
-# 2018.5.8 edit by David Yi, edit from Jia Chunying
+# 2018.5.8 edit by David Yi, edit from Jia Chunying，#19026
 class GetMD5(object):
     """
     封装了 MD5 计算的类，可以计算普通字符串和一般的文件，对于大文件采取逐步读入的方式，也可以快速计算
@@ -223,6 +222,12 @@ class GetMD5(object):
             print('file md5:', GetMD5.file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
             print('big file md5:', GetMD5.big_file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
             print('---')
+
+    执行结果::
+
+        string md5: fc3ff98e8c6a0d3087d515c0473f8677
+        file md5: fb7528c9778b2377e30b0f7e4c26fef0
+        big file md5: fb7528c9778b2377e30b0f7e4c26fef0
 
     """
 

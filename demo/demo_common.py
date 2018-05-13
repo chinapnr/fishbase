@@ -12,7 +12,6 @@ def demo_common_config():
     # 定义配置文件名
     conf_filename = 'test_conf.ini'
     # 读取配置文件
-
     ds = conf_as_dict(conf_filename)
 
     # 显示是否成功，所有 dict 的内容，dict 的 key 数量
