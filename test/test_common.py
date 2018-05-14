@@ -6,17 +6,18 @@ sys.path.append('../fish_base')
 from fish_base.fish_common import *
 
 
+# 2018.5.14 v1.0.11 #19027 create by David Yi, 开始进行单元测试
 class TestFishCommon(object):
 
     def test_config_dict(self):
         # 定义配置文件名
-        conf_filename = 'test_conf.ini'
+        # conf_filename = os.path.join(os.getcwd(), 'test', 'test_conf.ini')
+        conf_filename = './test/test_conf.ini'
+
         # 读取配置文件
         ds = conf_as_dict(conf_filename)
 
-        # 显示是否成功，所有 dict 的内容，dict 的 key 数量
-        # print('flag:', ds[0])
-        # print('dict:', ds[1])
-        # print('length:', ds[2])
-
+        # 返回结果
         assert ds[0] is True
+        # 返回长度
+        assert ds[2] == 7
