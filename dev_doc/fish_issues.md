@@ -18,7 +18,7 @@ last update: 2018.5.8
 * 19025, common, 去除 get_md5()函数，ok
 * 19026, common, 增加 class GetMD5，ok  
 https://stackoverflow.com/questions/1131220/get-md5-hash-of-big-files-in-python?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
-
+* 19027, test，修改原来的 unittest 部分，先完善对于 common 函数的单元测试
 
 ---
 
