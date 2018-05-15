@@ -1,6 +1,6 @@
 ##fish_common 特性列表
 
-last update: 2018.5.8
+last update: 2018.5.15
 
 #### v1.0.11
 
@@ -18,8 +18,17 @@ last update: 2018.5.8
 * 19025, common, 去除 get_md5()函数，ok
 * 19026, common, 增加 class GetMD5，ok  
 https://stackoverflow.com/questions/1131220/get-md5-hash-of-big-files-in-python?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
-* 19027, test，修改原来的 unittest 部分，先完善对于 common 函数的单元测试
+* 19027, test，修改原来的 unittest 部分，先完善对于 common 函数的单元测试，完成 conf_as_dict() 和 GetMD5()等，ok
 * 19028, common conf_as_dict 逻辑修改，更加严密, ok
+
+在 PyCharm 中支持 pytest 框架：I think you need to use the Run/Debug Configuration item on the toolbar. 
+Click it and 'Edit Configurations' (or alternatively use the menu item Run->Edit Configurations). 
+In the 'Defaults' section in the left pane there is a 'py.test' item which I think is what you want.
+配置一个专门的测试配置项，运行即可
+
+fish_common 目前测试覆盖率 62%
+
+* 19029, common, 增加ag bot 所需要的 json_contained() 函数，判断两个 json 是否有包含关系；
 
 ---
 

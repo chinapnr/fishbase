@@ -43,6 +43,15 @@ def demo_common_md5():
     print('---')
 
 
+# 2018.5.15
+def demo_json_contain():
+    print('--- json contain demo ---')
+    json1 = {"id": "0001"}
+    json2 = {"id": "0001", "value": "File"}
+    print(if_json_contain(json1, json2))
+    print('---')
+
+
 if __name__ == '__main__':
 
     # 检查当前系统名称
@@ -79,3 +88,5 @@ if __name__ == '__main__':
     demo_common_config()
 
     demo_common_md5()
+
+    demo_json_contain()

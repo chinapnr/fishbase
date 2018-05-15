@@ -317,6 +317,43 @@
 </div>
 </dd></dl>
 
+<dl class="function">
+<dt id="fish_common.if_json_contain">
+<code class="descclassname">fish_common.</code><code class="descname">if_json_contain</code><span class="sig-paren">(</span><em>left_json</em>, <em>right_json</em>, <em>op='strict'</em><span class="sig-paren">)</span><a class="headerlink" href="#fish_common.if_json_contain" title="Permalink to this definition">¶</a></dt>
+<dd><p>判断一个 json 是否包含另外一个 json 的 key，并且 value 相等；</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li>left_json: (dict) 需要判断的 json，我们称之为 left</li>
+<li>right_json: (dict) 需要判断的 json，我们称之为 right，目前是判断 left 是否包含在 right 中</li>
+<li>op: (string) 判断操作符，目前只有一种，默认为 strict，向后兼容</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>result: (bool) right json 包含 left json 的 key，并且 value 一样，返回 True，否则都返回 False</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>举例如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--- json contain demo ---&#39;</span><span class="p">)</span>
+<span class="n">json1</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;0001&quot;</span><span class="p">}</span>
+<span class="n">json2</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;0001&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;File&quot;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">if_json_contain</span><span class="p">(</span><span class="n">json1</span><span class="p">,</span> <span class="n">json2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>执行结果:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </div>
 
 

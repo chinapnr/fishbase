@@ -287,3 +287,38 @@ class GetMD5(object):
 
         result = md5.hexdigest()
         return result
+
+
+# 19029 2018.5.15 v1.0.11 original by Lu Jie, edit by David Yi
+def if_json_contain(left_json, right_json, op='strict'):
+    """
+    判断一个 json 是否包含另外一个 json 的 key，并且 value 相等；
+
+    :param:
+        * left_json: (dict) 需要判断的 json，我们称之为 left
+        * right_json: (dict) 需要判断的 json，我们称之为 right，目前是判断 left 是否包含在 right 中
+        * op: (string) 判断操作符，目前只有一种，默认为 strict，向后兼容
+    :returns:
+        * result: (bool) right json 包含 left json 的 key，并且 value 一样，返回 True，否则都返回 False
+
+    举例如下::
+
+        print('--- json contain demo ---')
+        json1 = {"id": "0001"}
+        json2 = {"id": "0001", "value": "File"}
+        print(if_json_contain(json1, json2))
+        print('---')
+
+    执行结果::
+
+           True
+
+    """
+
+    key_list = left_json.keys()
+
+    if op == 'strict':
+        for key in key_list:
+            if not right_json.get(key) == left_json.get(key):
+                return False
+        return True

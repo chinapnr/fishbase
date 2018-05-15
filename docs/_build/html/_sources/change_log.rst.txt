@@ -15,8 +15,11 @@ v1.0.11
 * 19022, sphinx doc 的 theme 修改为 rtd theme，https://sphinx-rtd-theme.readthedocs.io/en/latest/ , ok
 * 19023, logger ``set_log_file()`` 增加 docstring 说明，ok
 * 19024, fish_file 函数加入 docstring 说明，ok
-* 19025, common, 去除 get_md5()函数，ok
-* 19026, common, 增加 class GetMD5，增加字符串、小文件、大文件三种类型的 md5计算，ok
+* 19025, common, 去除 ``get_md5()`` 函数，ok
+* 19026, common, 增加 ``class GetMD5``，增加字符串、小文件、大文件三种类型的 md5计算，ok
+* 19027, test, 修改原来的 unittest 部分，完善对于 common 函数的单元测试，ok
+* 19028, common, ``conf_as_dict()`` 逻辑修改，更加严密，ok
+* 19029, common, 增加 ``json_contained()`` 函数，判断两个 json 是否有包含关系，ok
 
 
 v1.0.10

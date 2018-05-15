@@ -20,7 +20,7 @@ from .fish_date import *
 from .fish_file import *
 from .fish_logger import *
 
-ver = '1.0.11'
+ver = '1.0.11'  # type: str
 
 
 # 返回fish_base 版本号,

@@ -28,10 +28,12 @@ API 函数列表
    fish_csv
    fish_logger
 
-从 ``v1.0.11`` 开始，所有 fish_base 的引用需要用如下格式::
+----
+
+从 ``v1.0.11`` 开始，所有 fish_base 包的的引用需要用如下格式::
 
     from fish_base.fish_aaaa import *
 
-也就是所有的 fish_base 模块都使用 ``fish_`` 开头。
+也就是所有的 fish_base 子模块也是 ``fish_`` 开头。
 
 
