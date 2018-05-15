@@ -28,8 +28,8 @@ In the 'Defaults' section in the left pane there is a 'py.test' item which I thi
 
 fish_common 目前测试覆盖率 62%
 
-* 19029, common, 增加ag bot 所需要的 json_contained() 函数，判断两个 json 是否有包含关系；
-
+* 19029, common, 增加 ag bot 所需要的 json_contained() 函数，判断两个 json 是否有包含关系；
+* 19030, common, 增加 splice_url_params() 函数
 ---
 
 #### v1.0.10
