@@ -354,6 +354,38 @@
 </div>
 </dd></dl>
 
+<dl class="function">
+<dt id="fish_common.splice_url_params">
+<code class="descclassname">fish_common.</code><code class="descname">splice_url_params</code><span class="sig-paren">(</span><em>dic</em><span class="sig-paren">)</span><a class="headerlink" href="#fish_common.splice_url_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>根据传入的键值对，拼接 url 后面 ? 的参数，比如 ?key1=value1&amp;key2=value2</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li>dic: (dict) 参数键值对</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>result: (string) 拼接好的参数</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>举例如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dic1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;key1&#39;</span><span class="p">:</span> <span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="s1">&#39;key2&#39;</span><span class="p">:</span> <span class="s1">&#39;value2&#39;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">splice_url_params</span><span class="p">(</span><span class="n">dic1</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>执行结果:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>?key1=value1&amp;key2=value2
+</pre></div>
+</div>
+</dd></dl>
+
 </div>
 
 

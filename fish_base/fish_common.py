@@ -83,7 +83,7 @@ def conf_as_dict(conf_filename):
         d[k] = dict(cf._defaults, **d[k])
         d[k].pop('__name__', None)
 
-    flag= True
+    flag = True
 
     # 计算有多少 key
     count = len(d.keys())
@@ -289,7 +289,7 @@ class GetMD5(object):
         return result
 
 
-# 19029 2018.5.15 v1.0.11 original by Lu Jie, edit by David Yi
+# 2018.5.15 v1.0.11 original by Lu Jie, edit by David Yi, #19029
 def if_json_contain(left_json, right_json, op='strict'):
     """
     判断一个 json 是否包含另外一个 json 的 key，并且 value 相等；
@@ -311,7 +311,7 @@ def if_json_contain(left_json, right_json, op='strict'):
 
     执行结果::
 
-           True
+        True
 
     """
 
@@ -322,3 +322,35 @@ def if_json_contain(left_json, right_json, op='strict'):
             if not right_json.get(key) == left_json.get(key):
                 return False
         return True
+
+
+# 2018.3.8 edit by Xiang qinqin
+# 2018.5.15 edit by David Yi, #19030
+def splice_url_params(dic):
+    """
+    根据传入的键值对，拼接 url 后面 ? 的参数，比如 ?key1=value1&key2=value2
+
+    :param:
+        * dic: (dict) 参数键值对
+    :returns:
+        * result: (string) 拼接好的参数
+
+    举例如下::
+
+        dic1 = {'key1': 'value1', 'key2': 'value2'}
+        print(splice_url_params(dic1))
+
+    执行结果::
+
+        ?key1=value1&key2=value2
+
+    """
+
+    item = dic.items()
+    url = "?"
+    for key, value in item:
+        temp_str = key + "=" + value
+        url = url + temp_str + "&"
+    # 去掉最后一个&字符
+    url = url[:len(url) - 1]
+    return url

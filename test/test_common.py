@@ -1,5 +1,5 @@
 # fish_common.py 单元测试
-# 2017.5.23 create by Leo
+# 2018.5.15 create by David Yi
 
 import pytest
 import sys
@@ -71,4 +71,13 @@ class TestFishCommon(object):
         assert if_json_contain(json02, json10) is False
         assert if_json_contain(json01, json11) is False
         assert if_json_contain(json01, json12) is False
+
+    # 测试 test_splice_url_params() 通过和不通过 tc
+    def test_splice_url_params_01(self):
+
+        dic01 = {'key1': 'value1', 'key2': 'value2'}
+        dic02 = {'key1': '1111', 'key2': 'value2'}
+
+        assert splice_url_params(dic01) == '?key1=value1&key2=value2'
+        assert splice_url_params(dic02) != '?key1=value1&key2=value2'
 

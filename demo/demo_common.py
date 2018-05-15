@@ -90,3 +90,6 @@ if __name__ == '__main__':
     demo_common_md5()
 
     demo_json_contain()
+
+    dic1 = {'key1': 'value1', 'key2': 'value2'}
+    print(splice_url_params(dic1))

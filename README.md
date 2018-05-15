@@ -4,4 +4,11 @@
 
 ---
 
-帮助文档：http://fish-base.readthedocs.io/
+目前主要分为：
+
+* fish_common 基本函数包
+* fish_file 文件处理函数包
+* fish_csv csv 函数包
+* fish_logger 日志记录函数包
+
+详细帮助文档：http://fish-base.readthedocs.io/
