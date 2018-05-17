@@ -30,6 +30,8 @@ fish_common 目前测试覆盖率 62%
 
 * 19029, common, 增加 ag bot 所需要的 json_contained() 函数，判断两个 json 是否有包含关系；ok
 * 19030, common, 增加 splice_url_params() 函数；ok
+* 19031, 项目增加 requirements.txt; ok
+* 19032, 项目增加 .travis.yml, 准备持续集成测试; ok
 ---
 
 #### v1.0.10
