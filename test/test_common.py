@@ -7,6 +7,7 @@ sys.path.append('../fish_base')
 from fish_base.fish_common import *
 
 
+
 # 2018.5.14 v1.0.11 #19027 create by David Yi, 开始进行单元测试
 class TestFishCommon(object):
 

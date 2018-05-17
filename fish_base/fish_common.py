@@ -15,6 +15,7 @@ import configparser
 import re
 import hashlib
 import os
+from collections import OrderedDict
 
 
 # 读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
@@ -346,11 +347,12 @@ def splice_url_params(dic):
 
     """
 
-    item = dic.items()
-    url = "?"
-    for key, value in item:
-        temp_str = key + "=" + value
-        url = url + temp_str + "&"
+    od = OrderedDict(sorted(dic.items()))
+
+    url = '?'
+    for key, value in od.items():
+        temp_str = key + '=' + value
+        url = url + temp_str + '&'
     # 去掉最后一个&字符
     url = url[:len(url) - 1]
     return url
