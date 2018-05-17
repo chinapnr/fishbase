@@ -3,6 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. image:: https://api.travis-ci.org/chinapnr/fish_base.svg?branch=v1.0.11_develop
+
 fish_base 函数库使用说明
 =====================================
 

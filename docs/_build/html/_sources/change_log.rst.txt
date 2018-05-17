@@ -20,6 +20,7 @@ v1.0.11
 * 19027, test, 修改原来的 unittest 部分，完善对于 common 函数的单元测试，ok
 * 19028, common, ``conf_as_dict()`` 逻辑修改，更加严密，ok
 * 19029, common, 增加 ``json_contained()`` 函数，判断两个 json 是否有包含关系，ok
+* 19030, common, 增加 ``splice_url_params()`` 函数；ok
 
 
 v1.0.10
