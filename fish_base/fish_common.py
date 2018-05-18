@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 
 ``fish_common`` 包含的是最通用的一些函数和类。

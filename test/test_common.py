@@ -1,3 +1,4 @@
+# coding=utf-8
 # fish_common.py 单元测试
 # 2018.5.15 create by David Yi
 
