@@ -32,7 +32,7 @@ fish_common 目前测试覆盖率 62%
 * 19030, common, 增加 splice_url_params() 函数；ok
 * 19031, 项目增加 requirements.txt; ok
 * 19032, 项目增加 .travis.yml, 准备持续集成测试; ok
-* 19033, 项目增加对于 coveralls.io 的支持，监视覆盖率; 
+* 19033, 项目增加对于 coveralls.io 的支持，监视覆盖率; 本地 python 2.7.15 测试通过; ok
 
 ---
 

@@ -11,8 +11,13 @@
 # 2016.10.4 v1.0.9 add #19001 check_sub_path_create()
 # 2017.1.8 v1.0.9 #19003, remove file related functions to fish_file.py
 import sys
+
+if sys.version > '3':
+    import configparser
+else:
+    import ConfigParser as configparser
+
 import uuid
-import configparser
 import re
 import hashlib
 import os
