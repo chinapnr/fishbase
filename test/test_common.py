@@ -54,8 +54,12 @@ class TestFishCommon(object):
 
         assert GetMD5.string('hello world') != 'fc3ff98e8c6a0d3087d515c0473f8677'
 
-        with pytest.raises(FileNotFoundError):
-            GetMD5.file('./test/test_conf1.ini')
+        if sys.version > '3':
+            with pytest.raises(FileNotFoundError):
+                GetMD5.file('./test/test_conf1.ini')
+        else:
+            with pytest.raises(IOError):
+                GetMD5.file('./test/test_conf1.ini')
 
         assert GetMD5.file('./test/test_conf.ini') != 'bb7528c9778b2377e30b0f7e4c26fef0'
 
