@@ -11,4 +11,4 @@ install:
 script:
   - pytest
 after_success:
- - COVERALLS_REPO_TOKEN=mV2Jajb8y3c6AFlcVNagHO20fiZNkXPVy coveralls
+  - coveralls
