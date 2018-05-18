@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 
 ``fish_logger`` 包含的是日志处理相关的函数。

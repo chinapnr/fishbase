@@ -1,3 +1,4 @@
+# coding=utf-8
 # 2015.6.6 create by david.yi
 # add function get_md5()
 # 2015.6.7 add def input_field(info, field_default) 提示用户输入指定解释信息的字段名称
