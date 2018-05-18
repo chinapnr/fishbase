@@ -11,4 +11,5 @@ install:
 script:
   - pytest
 after_success:
+  - converage run test/test_common.py
   - coveralls
