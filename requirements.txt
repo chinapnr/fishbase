@@ -1,4 +1,3 @@
 python-dateutil
-pytest
 coverage
 coveralls
