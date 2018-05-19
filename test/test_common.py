@@ -86,7 +86,7 @@ class TestFishCommon(object):
         assert splice_url_params(dic01) == '?key1=value1&key2=value2'
         assert splice_url_params(dic02) != '?key1=value1&key2=value2'
 
-    # test singleton() test case 
+    # test singleton() test case
     def test_singleton_01(self):
 
         t1 = SingleTon()
