@@ -13,5 +13,5 @@ install:
 script:
   - pytest
 after_success:
-  - coverage run test/test_common.py --source=fish_base
+  - coverage run test/test_common.py
   - coveralls
