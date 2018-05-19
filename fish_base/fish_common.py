@@ -43,31 +43,42 @@ def conf_as_dict(conf_filename):
 
     举例如下::
 
-        def demo_common_config():
+        print('--- conf_as_dict demo---')
+        # 定义配置文件名
+        conf_filename = 'test_conf.ini'
+        # 读取配置文件
+        ds = conf_as_dict(conf_filename)
+        # 显示是否成功，所有 dict 的内容，dict 的 key 数量
+        print('flag:', ds[0])
+        print('dict:', ds[1])
+        print('length:', ds[2])
 
-            print('--- conf_as_dict demo---')
-            # 定义配置文件名
-            conf_filename = 'test_conf.ini'
-            # 读取配置文件
-            ds = conf_as_dict(conf_filename)
-            # 显示是否成功，所有 dict 的内容，dict 的 key 数量
-            print('flag:', ds[0])
-            print('dict:', ds[1])
-            print('length:', ds[2])
+        d = ds[1]
 
-            d = ds[1]
+        # 显示一个 section 下的所有内容
+        print('section show_opt:', d['show_opt'])
+        # 显示一个 section 下面的 key 的 value 内容
+        print('section show_opt, key short_opt:', d['show_opt']['short_opt'])
 
-            # 显示一个 section 下的所有内容
-            print('section show_opt:', d['show_opt'])
-            # 显示一个 section 下面的 key 的 value 内容
-            print('section show_opt, key short_opt:', d['show_opt']['short_opt'])
+        # 读取一个复杂的section，先读出 key 中的 count 内容，再遍历每个 key 的 value
+        i = int(d['get_extra_rules']['erule_count'])
+        print('section get_extra_rules, key erule_count:', i)
+        for j in range(i):
+            print('section get_extra_rules, key erule_type:', d['get_extra_rules']['erule_'+str(j)])
+        print('---')
 
-            # 读取一个复杂的section，先读出 key 中的 count 内容，再遍历每个 key 的 value
-            i = int(d['get_extra_rules']['erule_count'])
-            print('section get_extra_rules, key erule_count:', i)
-            for j in range(i):
-                print('section get_extra_rules, key erule_type:', d['get_extra_rules']['erule_'+str(j)])
-            print('---')
+    执行结果::
+
+        --- conf_as_dict demo---
+        flag: True
+        dict: {'show_opt': {'short_opt': 'b:d:v:p:f:', 'long_opt': 'region=,prov=,mer_id=,mer_short_name=,web_status='}, 'show_opt_common': {'-b': 'business', '-d': 'date', '--region': 'region', '--prov': 'prov'}, 'show_opt_common2': {'check': '-b,-d,-p,--region,--prov,--web_status,', 'need': '-b'}, 'get_args': {'args': 'download,test'}, 'show_rule_pattern': {'rule_type': 'list', 'list': 'sky01,sky02,sky03'}, 'show_pattern': {'sky00': 'mer_id,area', 'sky01': 'mer_id,area,prov,web_status,bid_avg_sum'}, 'get_extra_rules': {'erule_count': '2', 'erule_0': 'extra_rule_1', 'erule_0_key': 'business', 'erule_0_value': 'user', 'erule_0_key1': 'user', 'erule_1': 'extra_rule_2', 'erule_1_key': 'business', 'erule_1_value': 'user'}}
+        length: 7
+        section show_opt: {'short_opt': 'b:d:v:p:f:', 'long_opt': 'region=,prov=,mer_id=,mer_short_name=,web_status='}
+        section show_opt, key short_opt: b:d:v:p:f:
+        section get_extra_rules, key erule_count: 2
+        section get_extra_rules, key erule_type: extra_rule_1
+        section get_extra_rules, key erule_type: extra_rule_2
+---
 
     """
     flag = False
@@ -100,7 +111,7 @@ def conf_as_dict(conf_filename):
 
 # 申明一个单例类
 # 2018.2.13 create by David Yi, #11015
-# 2018.4.20 edit, #19019，增加 docstring
+# 2018.4.20 5.19 edit, #19019，增加 docstring
 class SingleTon(object):
 
     """
@@ -110,6 +121,29 @@ class SingleTon(object):
         无
     :returns:
         无
+
+    举例如下::
+
+        print('--- class singleton demo ---')
+        t1 = SingleTon()
+        t1.x = 2
+        print('t1.x:', t1.x)
+
+        t2 = SingleTon()
+
+        t1.x += 1
+
+        print('t1.x:', t1.x)
+        print('t2.x:', t2.x)
+        print('---')
+
+    执行结果::
+
+        --- class singleton demo ---
+        t1.x: 2
+        t1.x: 3
+        t2.x: 3
+        ---
 
     """
 
@@ -230,12 +264,11 @@ class GetMD5(object):
 
     举例如下::
 
-        def demo_common_md5():
-            print('--- md5 demo ---')
-            print('string md5:', GetMD5.string('hello world!'))
-            print('file md5:', GetMD5.file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
-            print('big file md5:', GetMD5.big_file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
-            print('---')
+        print('--- md5 demo ---')
+        print('string md5:', GetMD5.string('hello world!'))
+        print('file md5:', GetMD5.file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
+        print('big file md5:', GetMD5.big_file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
+        print('---')
 
     执行结果::
 

@@ -33,7 +33,8 @@ fish_common 目前测试覆盖率 65%
 * 19031, 项目，增加 requirements.txt; ok
 * 19032, 项目，增加 .travis.yml, 准备持续集成测试; ok
 * 19033, 项目，增加对于 coveralls.io 的支持，监视覆盖率; 本地 python 2.7.15 测试通过; ok
-* 19034, 项目，修改 __init__.py 和 setup.py 中对于 __version__ 的用法; ok
+* 19034, 项目，修改 `__init__.py` 和 setup.py 中对于 `__version__` 的用法; ok
+* 19035, common, Add SingleTon() demo and unittest; 
 
 ---
 

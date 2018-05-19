@@ -52,6 +52,22 @@ def demo_json_contain():
     print('---')
 
 
+# 2018.5.19
+def demo_singleton():
+    print('--- class singleton demo ---')
+    t1 = SingleTon()
+    t1.x = 2
+    print('t1.x:', t1.x)
+
+    t2 = SingleTon()
+
+    t1.x += 1
+
+    print('t1.x:', t1.x)
+    print('t2.x:', t2.x)
+    print('---')
+
+
 if __name__ == '__main__':
 
     # 检查当前系统名称
@@ -93,3 +109,5 @@ if __name__ == '__main__':
 
     dic1 = {'key1': 'value1', 'key2': 'value2'}
     print(splice_url_params(dic1))
+
+    demo_singleton()

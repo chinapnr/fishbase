@@ -77,7 +77,7 @@ class TestFishCommon(object):
         assert if_json_contain(json01, json11) is False
         assert if_json_contain(json01, json12) is False
 
-    # 测试 test_splice_url_params() 通过和不通过 tc
+    # 测试 splice_url_params() 通过和不通过 tc
     def test_splice_url_params_01(self):
 
         dic01 = {'key1': 'value1', 'key2': 'value2'}
@@ -85,3 +85,16 @@ class TestFishCommon(object):
 
         assert splice_url_params(dic01) == '?key1=value1&key2=value2'
         assert splice_url_params(dic02) != '?key1=value1&key2=value2'
+
+    # test singleton() test case 
+    def test_singleton_01(self):
+
+        t1 = SingleTon()
+        t1.x = 2
+        t2 = SingleTon()
+        t1.x += 1
+
+        assert t2.x == t1.x
+
+        t2.x = 5
+        assert t1.x == 5
