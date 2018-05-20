@@ -11,3 +11,4 @@ fish_base/__pycache__/fish_file.cpython-35.pyc
 test/log
 >>>>>>> 1a649f6bc4e5e2764d5828516da5ce51f2a79ee9
 demo/log
+.pytest_cache

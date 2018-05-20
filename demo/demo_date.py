@@ -1,7 +1,7 @@
 # demo_date 单元测试
 # 2017.3.15 create by Leo
 
-from fish_base.date import *
+from fish_base.fish_date import *
 
 
 # 2016.4.26

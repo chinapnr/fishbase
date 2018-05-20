@@ -1,0 +1,6 @@
+================
+常用函数 common
+================
+
+.. automodule:: common
+   :members:

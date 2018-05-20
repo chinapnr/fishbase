@@ -1,14 +1,15 @@
 # from distutils.core import setup
 from setuptools import setup
+from fish_base import __version__
 
 setup(
     name='fish_base',
-    version='1.0.10',
+    version=__version__,
     install_requires=['python-dateutil'],
 
     url='https://github.com/chinapnr/fish_base',
     license='MIT',
-    author='david.yi',
+    author='David Yi',
     author_email='wingfish@gmail.com',
     description='some useful functions for python',
 
@@ -34,7 +35,7 @@ setup(
 
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
-        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
     ]

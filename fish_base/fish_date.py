@@ -1,4 +1,4 @@
-# 2016.4.26 v1.0.8,  get_date_range()
+# coding=utf-8
 
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
