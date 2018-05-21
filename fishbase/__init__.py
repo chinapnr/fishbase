@@ -1,3 +1,4 @@
+# coding=utf-8
 # 2015.6.6 create by david.yi
 # add function get_md5()
 # 2015.6.7 add def input_field(info, field_default) 提示用户输入指定解释信息的字段名称
@@ -11,18 +12,14 @@
 # 2016.10.4 start v1.0.9
 # 2017.1.8 v1.0.9, add fish_file.py
 # 2018.1.1 v1.0.10, delete old functions
+# 2018.4.8 v1.0.11, delete old import
+# 2018.5.18 v1.0.11, user __version__
 
 
 from .fish_common import *
-from .fish_file import *
-from .file import *
+from .fish_csv import *
 from .fish_date import *
-from .logger import *
+from .fish_file import *
+from .fish_logger import *
 
-fish_base_ver = '1.0.10'
-
-
-# 返回fish_base 版本号,
-# 2016.2.22 create by david.yi, e2at v1.0.0 #10006
-def get_fish_base_ver():
-    return fish_base_ver
+__version__ = '1.0.12'  # type: str

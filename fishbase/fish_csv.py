@@ -25,8 +25,8 @@ def csv_file_to_list(csv_filename, deli=',', del_blank_row=True):
 
     举例如下::
 
-        from fish_base.fish_file import *
-        from fish_base.fish_csv import *
+        from fishbase.fish_file import *
+        from fishbase.fish_csv import *
 
         def test_csv():
             csv_filename = get_abs_filename_with_sub_path('csv', 'test_csv.csv')[1]

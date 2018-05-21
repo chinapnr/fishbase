@@ -1,8 +1,8 @@
 Metadata-Version: 1.1
-Name: fish-base
-Version: 1.0.11
+Name: fishbase
+Version: 1.0.12
 Summary: some useful functions for python
-Home-page: https://github.com/chinapnr/fish_base
+Home-page: https://github.com/chinapnr/fishbase
 Author: David Yi
 Author-email: wingfish@gmail.com
 License: MIT

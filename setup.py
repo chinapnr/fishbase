@@ -1,21 +1,21 @@
 # from distutils.core import setup
 from setuptools import setup
-from fish_base import __version__
+from fishbase import __version__
 
 setup(
-    name='fish_base',
+    name='fishbase',
     version=__version__,
     install_requires=['python-dateutil'],
 
-    url='https://github.com/chinapnr/fish_base',
+    url='https://github.com/chinapnr/fishbase',
     license='MIT',
     author='David Yi',
     author_email='wingfish@gmail.com',
     description='some useful functions for python',
 
-    packages=['fish_base'],
+    packages=['fishbase'],
 
-    # packages=['fish_base', 'fish_base.naive_bayes'],
+    # packages=['fishbase', 'fishbase.naive_bayes'],
     # package_data={'': ['stopwords.txt']},
 
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers

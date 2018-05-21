@@ -1,6 +1,10 @@
 ##fish_common 特性列表
 
-last update: 2018.5.15
+last update: 2018.5.21
+
+* 19036, edit fish_base to fishbase
+
+last update: 2018.5.18
 
 #### v1.0.11
 

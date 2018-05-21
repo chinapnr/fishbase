@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>fish_common 基本函数包 &mdash; fish_base 1.0.11 documentation</title>
+  <title>fish_common 基本函数包 &mdash; fishbase 1.0.12 documentation</title>
   
 
   
@@ -49,7 +49,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> fish_base
+            <a href="index.html" class="icon icon-home"> fishbase
           
 
           
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0.11
+                1.0.12
               </div>
             
           
@@ -105,7 +105,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">fish_base</a>
+          <a href="index.html">fishbase</a>
         
       </nav>
 
@@ -163,12 +163,11 @@
 <em class="property">class </em><code class="descclassname">fish_common.</code><code class="descname">GetMD5</code><a class="headerlink" href="#fish_common.GetMD5" title="Permalink to this definition">¶</a></dt>
 <dd><p>封装了 MD5 计算的类，可以计算普通字符串和一般的文件，对于大文件采取逐步读入的方式，也可以快速计算</p>
 <p>举例如下:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">demo_common_md5</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--- md5 demo ---&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;string md5:&#39;</span><span class="p">,</span> <span class="n">GetMD5</span><span class="o">.</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39;hello world!&#39;</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;file md5:&#39;</span><span class="p">,</span> <span class="n">GetMD5</span><span class="o">.</span><span class="n">file</span><span class="p">(</span><span class="n">get_abs_filename_with_sub_path</span><span class="p">(</span><span class="s1">&#39;test_conf&#39;</span><span class="p">,</span> <span class="s1">&#39;test_conf.ini&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;big file md5:&#39;</span><span class="p">,</span> <span class="n">GetMD5</span><span class="o">.</span><span class="n">big_file</span><span class="p">(</span><span class="n">get_abs_filename_with_sub_path</span><span class="p">(</span><span class="s1">&#39;test_conf&#39;</span><span class="p">,</span> <span class="s1">&#39;test_conf.ini&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--- md5 demo ---&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;string md5:&#39;</span><span class="p">,</span> <span class="n">GetMD5</span><span class="o">.</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39;hello world!&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;file md5:&#39;</span><span class="p">,</span> <span class="n">GetMD5</span><span class="o">.</span><span class="n">file</span><span class="p">(</span><span class="n">get_abs_filename_with_sub_path</span><span class="p">(</span><span class="s1">&#39;test_conf&#39;</span><span class="p">,</span> <span class="s1">&#39;test_conf.ini&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;big file md5:&#39;</span><span class="p">,</span> <span class="n">GetMD5</span><span class="o">.</span><span class="n">big_file</span><span class="p">(</span><span class="n">get_abs_filename_with_sub_path</span><span class="p">(</span><span class="s1">&#39;test_conf&#39;</span><span class="p">,</span> <span class="s1">&#39;test_conf.ini&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>执行结果:</p>
@@ -262,6 +261,29 @@
 </tr>
 </tbody>
 </table>
+<p>举例如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--- class singleton demo ---&#39;</span><span class="p">)</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">SingleTon</span><span class="p">()</span>
+<span class="n">t1</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;t1.x:&#39;</span><span class="p">,</span> <span class="n">t1</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">t2</span> <span class="o">=</span> <span class="n">SingleTon</span><span class="p">()</span>
+
+<span class="n">t1</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;t1.x:&#39;</span><span class="p">,</span> <span class="n">t1</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;t2.x:&#39;</span><span class="p">,</span> <span class="n">t2</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>执行结果:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="k">class</span> <span class="nc">singleton</span> <span class="n">demo</span> <span class="o">---</span>
+<span class="n">t1</span><span class="o">.</span><span class="n">x</span><span class="p">:</span> <span class="mi">2</span>
+<span class="n">t1</span><span class="o">.</span><span class="n">x</span><span class="p">:</span> <span class="mi">3</span>
+<span class="n">t2</span><span class="o">.</span><span class="n">x</span><span class="p">:</span> <span class="mi">3</span>
+<span class="o">---</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
@@ -288,31 +310,42 @@
 </tbody>
 </table>
 <p>举例如下:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">demo_common_config</span><span class="p">():</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--- conf_as_dict demo---&#39;</span><span class="p">)</span>
+<span class="c1"># 定义配置文件名</span>
+<span class="n">conf_filename</span> <span class="o">=</span> <span class="s1">&#39;test_conf.ini&#39;</span>
+<span class="c1"># 读取配置文件</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">conf_as_dict</span><span class="p">(</span><span class="n">conf_filename</span><span class="p">)</span>
+<span class="c1"># 显示是否成功，所有 dict 的内容，dict 的 key 数量</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;flag:&#39;</span><span class="p">,</span> <span class="n">ds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;dict:&#39;</span><span class="p">,</span> <span class="n">ds</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;length:&#39;</span><span class="p">,</span> <span class="n">ds</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--- conf_as_dict demo---&#39;</span><span class="p">)</span>
-    <span class="c1"># 定义配置文件名</span>
-    <span class="n">conf_filename</span> <span class="o">=</span> <span class="s1">&#39;test_conf.ini&#39;</span>
-    <span class="c1"># 读取配置文件</span>
-    <span class="n">ds</span> <span class="o">=</span> <span class="n">conf_as_dict</span><span class="p">(</span><span class="n">conf_filename</span><span class="p">)</span>
-    <span class="c1"># 显示是否成功，所有 dict 的内容，dict 的 key 数量</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;flag:&#39;</span><span class="p">,</span> <span class="n">ds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;dict:&#39;</span><span class="p">,</span> <span class="n">ds</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;length:&#39;</span><span class="p">,</span> <span class="n">ds</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
-    <span class="n">d</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="c1"># 显示一个 section 下的所有内容</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;section show_opt:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;show_opt&#39;</span><span class="p">])</span>
+<span class="c1"># 显示一个 section 下面的 key 的 value 内容</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;section show_opt, key short_opt:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;show_opt&#39;</span><span class="p">][</span><span class="s1">&#39;short_opt&#39;</span><span class="p">])</span>
 
-    <span class="c1"># 显示一个 section 下的所有内容</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;section show_opt:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;show_opt&#39;</span><span class="p">])</span>
-    <span class="c1"># 显示一个 section 下面的 key 的 value 内容</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;section show_opt, key short_opt:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;show_opt&#39;</span><span class="p">][</span><span class="s1">&#39;short_opt&#39;</span><span class="p">])</span>
-
-    <span class="c1"># 读取一个复杂的section，先读出 key 中的 count 内容，再遍历每个 key 的 value</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;get_extra_rules&#39;</span><span class="p">][</span><span class="s1">&#39;erule_count&#39;</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;section get_extra_rules, key erule_count:&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;section get_extra_rules, key erule_type:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;get_extra_rules&#39;</span><span class="p">][</span><span class="s1">&#39;erule_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="p">)</span>
+<span class="c1"># 读取一个复杂的section，先读出 key 中的 count 内容，再遍历每个 key 的 value</span>
+<span class="n">i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;get_extra_rules&#39;</span><span class="p">][</span><span class="s1">&#39;erule_count&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;section get_extra_rules, key erule_count:&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;section get_extra_rules, key erule_type:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;get_extra_rules&#39;</span><span class="p">][</span><span class="s1">&#39;erule_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>执行结果:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="n">conf_as_dict</span> <span class="n">demo</span><span class="o">---</span>
+<span class="n">flag</span><span class="p">:</span> <span class="kc">True</span>
+<span class="nb">dict</span><span class="p">:</span> <span class="p">(</span><span class="n">omit</span><span class="p">)</span>
+<span class="n">length</span><span class="p">:</span> <span class="mi">7</span>
+<span class="n">section</span> <span class="n">show_opt</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;short_opt&#39;</span><span class="p">:</span> <span class="s1">&#39;b:d:v:p:f:&#39;</span><span class="p">,</span> <span class="s1">&#39;long_opt&#39;</span><span class="p">:</span> <span class="s1">&#39;region=,prov=,mer_id=,mer_short_name=,web_status=&#39;</span><span class="p">}</span>
+<span class="n">section</span> <span class="n">show_opt</span><span class="p">,</span> <span class="n">key</span> <span class="n">short_opt</span><span class="p">:</span> <span class="n">b</span><span class="p">:</span><span class="n">d</span><span class="p">:</span><span class="n">v</span><span class="p">:</span><span class="n">p</span><span class="p">:</span><span class="n">f</span><span class="p">:</span>
+<span class="n">section</span> <span class="n">get_extra_rules</span><span class="p">,</span> <span class="n">key</span> <span class="n">erule_count</span><span class="p">:</span> <span class="mi">2</span>
+<span class="n">section</span> <span class="n">get_extra_rules</span><span class="p">,</span> <span class="n">key</span> <span class="n">erule_type</span><span class="p">:</span> <span class="n">extra_rule_1</span>
+<span class="n">section</span> <span class="n">get_extra_rules</span><span class="p">,</span> <span class="n">key</span> <span class="n">erule_type</span><span class="p">:</span> <span class="n">extra_rule_2</span>
+<span class="o">---</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -430,7 +463,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0.11',
+            VERSION:'1.0.12',
             LANGUAGE:'zh-CN',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

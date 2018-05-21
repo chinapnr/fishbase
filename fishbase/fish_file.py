@@ -45,7 +45,7 @@ def get_abs_filename_with_sub_path(sub_path, filename):
 
         输出结果::
 
-            (True, '/Users/yijun/Documents/dev_python/fish_base/demo/test_sub_dir/test_file.txt')
+            (True, '/Users/yijun/Documents/dev_python/fishbase/demo/test_sub_dir/test_file.txt')
 
     """
 
@@ -97,8 +97,8 @@ def get_abs_filename_with_sub_path_module(sub_path, filename):
 
         输出结果::
 
-            (True, '/Users/yijun/anaconda3/lib/python3.6/site-packages/fish_base/test_sub_dir/demo_file.txt')
-            (False, '/Users/yijun/anaconda3/lib/python3.6/site-packages/fish_base/test_sub_dir/demo.txt')
+            (True, '/Users/yijun/anaconda3/lib/python3.6/site-packages/fishbase/test_sub_dir/demo_file.txt')
+            (False, '/Users/yijun/anaconda3/lib/python3.6/site-packages/fishbase/test_sub_dir/demo.txt')
 
     """
 
@@ -151,7 +151,7 @@ def check_kind_path_file(kind_name, file_name):
 
         输出结果::
 
-            (True, '/Users/yijun/Documents/dev_python/fish_base/demo/test_conf/test_conf.ini')
+            (True, '/Users/yijun/Documents/dev_python/fishbase/demo/test_conf/test_conf.ini')
 
     """
 
