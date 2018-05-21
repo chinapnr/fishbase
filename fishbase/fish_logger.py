@@ -36,8 +36,8 @@ def set_log_file(local_file=None):
 
     举例如下::
 
-        from fish_base.fish_logger import *
-        from fish_base.fish_file import *
+        from fishbase.fish_logger import *
+        from fishbase.fish_file import *
 
         log_abs_filename = get_abs_filename_with_sub_path('log', 'fish_test.log')[1]
 

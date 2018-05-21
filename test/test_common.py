@@ -4,7 +4,7 @@
 
 import pytest
 import sys
-sys.path.append('../fish_base')
+sys.path.append('../fishbase')
 from fishbase.fish_common import *
 
 

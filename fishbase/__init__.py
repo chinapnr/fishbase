@@ -22,4 +22,4 @@ from .fish_date import *
 from .fish_file import *
 from .fish_logger import *
 
-__version__ = '1.0.11'  # type: str
+__version__ = '1.0.12'  # type: str

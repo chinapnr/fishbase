@@ -4,6 +4,9 @@
    contain the root `toctree` directive.
 
 .. image:: https://api.travis-ci.org/chinapnr/fishbase.svg?branch=master
+.. image:: https://readthedocs.org/projects/fishbase/badge/?version=latest
+.. image:: https://coveralls.io/repos/github/chinapnr/fishbase/badge.svg?branch=master
+
 
 fishbase 函数库使用说明
 =====================================
