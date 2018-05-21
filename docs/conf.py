@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# fish_base documentation build configuration file, created by
+# fishbase documentation build configuration file, created by
 # sphinx-quickstart on Wed Apr 18 15:20:36 2018.
 #
 # This file is execfile()d with the current directory set to its
@@ -19,7 +19,7 @@ import os
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-sys.path.insert(0, os.path.abspath('../fish_base'))
+sys.path.insert(0, os.path.abspath('../fishbase'))
 
 # -- General configuration ------------------------------------------------
 
@@ -48,7 +48,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'fish_base'
+project = 'fishbase'
 copyright = '2018, David Yi'
 author = 'David Yi'
 
@@ -224,7 +224,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'fish_base.tex', 'fish\\_base Documentation',
+    (master_doc, 'fishbase.tex', 'fishbase Documentation',
      'David Yi', 'manual'),
 ]
 
@@ -254,7 +254,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'fish_base', 'fish_base Documentation',
+    (master_doc, 'fishbase', 'fishbase Documentation',
      [author], 1)
 ]
 
@@ -268,8 +268,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'fish_base', 'fish_base Documentation',
-     author, 'fish_base', 'One line description of project.',
+    (master_doc, 'fishbase', 'fishbase Documentation',
+     author, 'fishbase', 'One line description of project.',
      'Miscellaneous'),
 ]
 

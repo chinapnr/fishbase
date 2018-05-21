@@ -1,5 +1,5 @@
-from fish_base.fish_file import *
-from fish_base.fish_csv import *
+from fishbase.fish_file import *
+from fishbase.fish_csv import *
 
 
 # csv 相关 demo

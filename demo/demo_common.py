@@ -2,8 +2,8 @@
 # 2017.3.15 create by Leo
 # 2018.2.11 edit by David Yi
 
-from fish_base.fish_common import *
-from fish_base.fish_file import get_abs_filename_with_sub_path
+from fishbase.fish_common import *
+from fishbase.fish_file import get_abs_filename_with_sub_path
 
 
 # 2018.2.12 common 中 config 文件处理相关，#11013

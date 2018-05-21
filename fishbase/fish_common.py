@@ -78,7 +78,7 @@ def conf_as_dict(conf_filename):
         section get_extra_rules, key erule_count: 2
         section get_extra_rules, key erule_type: extra_rule_1
         section get_extra_rules, key erule_type: extra_rule_2
----
+        ---
 
     """
     flag = False
