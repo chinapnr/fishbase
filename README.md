@@ -15,4 +15,4 @@
 * fish_csv csv 函数包
 * fish_logger 日志记录函数包
 
-详细帮助文档：http://fish-base.readthedocs.io/
+详细帮助文档：http://fishbase.readthedocs.io/
