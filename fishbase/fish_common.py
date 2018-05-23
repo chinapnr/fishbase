@@ -1,7 +1,7 @@
 # coding=utf-8
 """
 
-``fish_common`` 包含的是最通用的一些函数和类。
+``fish_common`` 包含的是最常用用的一些函数和类。
 
 """
 
@@ -30,7 +30,6 @@ from collections import OrderedDict
 # 2018.4.18 #19015 加入 docstring，完善文档说明
 # 2018.5.14 v1.0.11 $19028 逻辑修改，更加严密
 def conf_as_dict(conf_filename):
-
     """
     读入 ini 配置文件，返回根据配置文件内容生成的字典类型变量；
 
@@ -113,7 +112,6 @@ def conf_as_dict(conf_filename):
 # 2018.2.13 create by David Yi, #11015
 # 2018.4.20 5.19 edit, #19019，增加 docstring
 class SingleTon(object):
-
     """
     申明一个单例类，可以作为需要单例类时候申明用的父类
 
@@ -154,19 +152,6 @@ class SingleTon(object):
         # 类维护所有实例的共享属性
         ob.__dict__ = cls._state
         return ob
-
-
-# 通过调用os.platform来获得当前操作系统名称
-# 2017.2.13 create by David Yi, #19006
-def check_platform():
-    if sys.platform == 'win32':
-        return 'win32'
-    elif sys.platform == 'darwin':
-        return 'macos'
-    elif sys.platform == 'linux':
-        return 'linux'
-    else:
-        return sys.platform
 
 
 # 对象序列化

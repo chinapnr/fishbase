@@ -1,6 +1,28 @@
 ##fish_common 特性列表
 
-last update: 2018.5.21
+last update: 2018.5.23
+
+#### v1.0.13
+
+* 19037， common 中 check_platform() 移动到 fish_system 中，改名为 get_platform(),
+
+.---------------------.------------.
+| System              | Value      |
+|---------------------|------------|
+| Linux (2.x and 3.x) | linux2 (*) |
+| Windows             | win32      |
+| Windows/Cygwin      | cygwin     |
+| Mac OS X            | darwin     |
+| OS/2                | os2        |
+| OS/2 EMX            | os2emx     |
+| RiscOS              | riscos     |
+| AtheOS              | atheos     |
+| FreeBSD 7           | freebsd7   |
+| FreeBSD 8           | freebsd8   |
+| FreeBSD N           | freebsdN   |
+'---------------------'------------'
+
+#### v1.0.12
 
 * 19036, edit fish_base to fishbase
 
