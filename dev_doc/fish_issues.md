@@ -1,26 +1,11 @@
 ##fish_common 特性列表
 
-last update: 2018.5.23
+last update: 2018.5.26
 
 #### v1.0.13
 
-* 19037， common 中 check_platform() 移动到 fish_system 中，改名为 get_platform(),
-
-.---------------------.------------.
-| System              | Value      |
-|---------------------|------------|
-| Linux (2.x and 3.x) | linux2 (*) |
-| Windows             | win32      |
-| Windows/Cygwin      | cygwin     |
-| Mac OS X            | darwin     |
-| OS/2                | os2        |
-| OS/2 EMX            | os2emx     |
-| RiscOS              | riscos     |
-| AtheOS              | atheos     |
-| FreeBSD 7           | freebsd7   |
-| FreeBSD 8           | freebsd8   |
-| FreeBSD N           | freebsdN   |
-'---------------------'------------'
+* 19037, common and system, common 中的 check_platform() 移动到 fish_system 中，改名为 get_platform(); ok
+* 19038, common, get_time_uuid() 增加文档和单元测试; 
 
 #### v1.0.12
 

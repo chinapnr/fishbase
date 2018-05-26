@@ -70,16 +70,14 @@ def demo_singleton():
 
 if __name__ == '__main__':
 
-    # 检查当前系统名称
-    result = check_platform()
-    print(result)
-
     # 定义需要序列化的对象
     class Foo(object):
         a = 1
-        
+        b = [1, 2, 3]
+        c = {'a': 1, 'b': 2}
+
         def test(self):
-            pass
+            print('hello')
 
     # 序列化对象
     result = serialize_instance(Foo)

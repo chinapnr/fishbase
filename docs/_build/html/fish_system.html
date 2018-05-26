@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>fishbase 函数库使用说明 &mdash; fishbase 1.0.12 documentation</title>
+  <title>fish_system 系统相关函数包 &mdash; fishbase 1.0.12 documentation</title>
   
 
   
@@ -29,7 +29,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="更新记录" href="change_log.html" /> 
+    <link rel="next" title="fish_file 文件处理函数包" href="fish_file.html" />
+    <link rel="prev" title="fish_common 基本函数包" href="fish_common.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -48,7 +49,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> fishbase
+            <a href="index.html" class="icon icon-home"> fishbase
           
 
           
@@ -85,9 +86,9 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="change_log.html">更新记录</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="fish_common.html"><code class="docutils literal notranslate"><span class="pre">fish_common</span></code> 基本函数包</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fish_system.html"><code class="docutils literal notranslate"><span class="pre">fish_system</span></code> 系统相关函数包</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">fish_system</span></code> 系统相关函数包</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fish_file.html"><code class="docutils literal notranslate"><span class="pre">fish_file</span></code> 文件处理函数包</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fish_csv.html"><code class="docutils literal notranslate"><span class="pre">fish_csv</span></code> csv 函数包</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fish_logger.html"><code class="docutils literal notranslate"><span class="pre">fish_logger</span></code> 日志记录函数包</a></li>
@@ -105,7 +106,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">fishbase</a>
+          <a href="index.html">fishbase</a>
         
       </nav>
 
@@ -134,15 +135,15 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>fishbase 函数库使用说明</li>
+      <li><code class="docutils literal notranslate"><span class="pre">fish_system</span></code> 系统相关函数包</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/fish_system.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -155,34 +156,40 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <img alt="https://api.travis-ci.org/chinapnr/fishbase.svg?branch=master" src="https://api.travis-ci.org/chinapnr/fishbase.svg?branch=master" />
-<img alt="https://readthedocs.org/projects/fishbase/badge/?version=latest" src="https://readthedocs.org/projects/fishbase/badge/?version=latest" />
-<img alt="https://coveralls.io/repos/github/chinapnr/fishbase/badge.svg?branch=master" src="https://coveralls.io/repos/github/chinapnr/fishbase/badge.svg?branch=master" />
-<div class="section" id="fishbase">
-<h1>fishbase 函数库使用说明<a class="headerlink" href="#fishbase" title="Permalink to this headline">¶</a></h1>
-<p><strong>fishbase</strong> 是我们自己开发和整理的一套 Python 基础函数库。
-从这几年的 Python 开发中抽象了很多常见的通用的业务逻辑，以希望减少日常开发中的一些重复的工作量。</p>
-<p>我们从2016年左右逐渐开始用 Python 开发一些项目，还不能算很有经验，但是也经常碰到一些问题，
-fishbase 库并不是用来解决很复杂的问题，并且有些是对系统函数的进一步封装，以简化应用程序开发中的工作量和引用的复杂度。</p>
-<p>目前，我们正在加快 fishbase 库的建设，包括完善文档和加入单元测试、示例代码、文档等。希望能够帮助到所有的 Python 爱好者和应用开发人员。</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="change_log.html">更新记录</a></li>
+  <div class="section" id="module-fish_system">
+<span id="fish-system"></span><h1><code class="docutils literal notranslate"><span class="pre">fish_system</span></code> 系统相关函数包<a class="headerlink" href="#module-fish_system" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">fish_system</span></code> 包含的是一些系统相关的函数和类。</p>
+<dl class="function">
+<dt id="fish_system.get_platform">
+<code class="descclassname">fish_system.</code><code class="descname">get_platform</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fish_system.get_platform" title="Permalink to this definition">¶</a></dt>
+<dd><p>返回当前程序运行的操作系统名称, 基于 sys.platform();</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li>无</li>
 </ul>
-</div>
-<div class="section" id="api">
-<h2>API 函数列表<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
-<p>可以到以下单元中查找具体的函数列表和使用说明。</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="fish_common.html"><code class="docutils literal notranslate"><span class="pre">fish_common</span></code> 基本函数包</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fish_system.html"><code class="docutils literal notranslate"><span class="pre">fish_system</span></code> 系统相关函数包</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fish_file.html"><code class="docutils literal notranslate"><span class="pre">fish_file</span></code> 文件处理函数包</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fish_csv.html"><code class="docutils literal notranslate"><span class="pre">fish_csv</span></code> csv 函数包</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fish_logger.html"><code class="docutils literal notranslate"><span class="pre">fish_logger</span></code> 日志记录函数包</a></li>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>platform: (string) 返回 linux, osx, win32 或者其他</li>
 </ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>举例如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;current os:&#39;</span><span class="p">,</span> <span class="n">get_platform</span><span class="p">())</span>
+</pre></div>
 </div>
+<p>执行结果:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">current</span> <span class="n">os</span><span class="p">:</span> <span class="n">osx</span>
+</pre></div>
 </div>
+</dd></dl>
+
 </div>
 
 
@@ -193,8 +200,10 @@ fishbase 库并不是用来解决很复杂的问题，并且有些是对系统�
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="change_log.html" class="btn btn-neutral float-right" title="更新记录" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="fish_file.html" class="btn btn-neutral float-right" title="fish_file 文件处理函数包" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
+      
+        <a href="fish_common.html" class="btn btn-neutral" title="fish_common 基本函数包" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

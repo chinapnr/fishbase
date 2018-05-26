@@ -11,17 +11,16 @@
 # 2016.10.4 v1.0.9 add #19001 check_sub_path_create()
 # 2017.1.8 v1.0.9 #19003, remove file related functions to fish_file.py
 import sys
-
-if sys.version > '3':
-    import configparser
-else:
-    import ConfigParser as configparser
-
 import uuid
 import re
 import hashlib
 import os
 from collections import OrderedDict
+
+if sys.version > '3':
+    import configparser
+else:
+    import ConfigParser as configparser
 
 
 # 读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
@@ -155,8 +154,6 @@ class SingleTon(object):
 
 
 # 对象序列化
-# 输入: info: 要显示的字段解释，field_default：默认的字段名称
-# 输出: 字段名称
 # 2015.6.14  edit by david.yi
 def serialize_instance(obj):
     d = {'__classname__': type(obj).__name__}
