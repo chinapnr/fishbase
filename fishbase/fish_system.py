@@ -12,7 +12,7 @@ import sys
 # 2018.5.23 edit by David Yi, #19037
 def get_platform():
     """
-    返回当前程序运行的操作系统名称, 基于 sys.platform();
+    返回当前程序运行的操作系统名称, 基于 sys.platform() 进行封装;
 
     :param:
         * 无

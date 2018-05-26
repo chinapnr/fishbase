@@ -9,6 +9,7 @@ from fishbase.fish_common import *
 
 
 # 2018.5.14 v1.0.11 #19027 create by David Yi, 开始进行单元测试
+# 2018.5.26 v1.0.13 #19038 edit, 增加 get_uuid() 的 ut
 class TestFishCommon(object):
 
     # 测试 conf_as_dict()  tc
@@ -98,3 +99,31 @@ class TestFishCommon(object):
 
         t2.x = 5
         assert t1.x == 5
+
+    # test get_uuid() tc
+    def test_get_uuid_01(self):
+
+        u1 = get_uuid(udTime)
+        u2 = get_uuid(udTime)
+
+        assert u1 != u2
+
+        # 获得uuid time 方式的系统编号，检查是否一致
+        u1s = uuid.UUID(u1).fields[5]
+        u2s = uuid.UUID(u2).fields[5]
+
+        assert u1s == u2s
+
+        u1 = get_time_uuid()
+        u2 = get_time_uuid()
+
+        # 获得uuid time 方式的系统编号，检查是否一致
+        u1s = uuid.UUID(u1).fields[5]
+        u2s = uuid.UUID(u2).fields[5]
+
+        assert u1s == u2s
+
+        u1 = get_uuid(udRandom)
+        u2 = get_uuid(udRandom)
+
+        assert u1 != u2

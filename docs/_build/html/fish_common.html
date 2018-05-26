@@ -162,7 +162,7 @@
 <dl class="class">
 <dt id="fish_common.GetMD5">
 <em class="property">class </em><code class="descclassname">fish_common.</code><code class="descname">GetMD5</code><a class="headerlink" href="#fish_common.GetMD5" title="Permalink to this definition">¶</a></dt>
-<dd><p>封装了 MD5 计算的类，可以计算普通字符串和一般的文件，对于大文件采取逐步读入的方式，也可以快速计算</p>
+<dd><p>计算普通字符串和一般的文件，对于大文件采取逐步读入的方式，也可以快速计算；基于 Python 的 hashlib.md5() 进行封装和扩展；</p>
 <p>举例如下:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--- md5 demo ---&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;string md5:&#39;</span><span class="p">,</span> <span class="n">GetMD5</span><span class="o">.</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39;hello world!&#39;</span><span class="p">))</span>
@@ -346,6 +346,64 @@
 <span class="n">section</span> <span class="n">get_extra_rules</span><span class="p">,</span> <span class="n">key</span> <span class="n">erule_count</span><span class="p">:</span> <span class="mi">2</span>
 <span class="n">section</span> <span class="n">get_extra_rules</span><span class="p">,</span> <span class="n">key</span> <span class="n">erule_type</span><span class="p">:</span> <span class="n">extra_rule_1</span>
 <span class="n">section</span> <span class="n">get_extra_rules</span><span class="p">,</span> <span class="n">key</span> <span class="n">erule_type</span><span class="p">:</span> <span class="n">extra_rule_2</span>
+<span class="o">---</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fish_common.get_uuid">
+<code class="descclassname">fish_common.</code><code class="descname">get_uuid</code><span class="sig-paren">(</span><em>kind</em><span class="sig-paren">)</span><a class="headerlink" href="#fish_common.get_uuid" title="Permalink to this definition">¶</a></dt>
+<dd><p>获得不重复的 uuid，可以是包含时间戳的 uuid，也可以是完全随机的；基于 Python 的 uuid 类进行封装和扩展；</p>
+<p>支持 get_time_uuid() 这样的写法，不需要参数及表示基于时间戳的 uuid，兼容 v1.0.12 以及之前版本；</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li>kind: (int) uuid 类型，整形常量 udTime 表示基于时间戳， udRandom 表示完全随机</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>result: (string) 返回类似 66b438e3-200d-4fe3-8c9e-2bc431bb3000 的 uuid</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>举例如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--- uuid demo ---&#39;</span><span class="p">)</span>
+<span class="c1"># 获得带时间戳的uuid</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">get_uuid</span><span class="p">(</span><span class="n">udTime</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="p">)</span>
+
+<span class="c1"># 时间戳 uuid 的简单写法，兼容之前版本</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">get_time_uuid</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="p">)</span>
+
+<span class="c1"># 获得随机的uuid</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">get_uuid</span><span class="p">(</span><span class="n">udRandom</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>执行结果:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="n">uuid</span> <span class="n">demo</span> <span class="o">---</span>
+<span class="n">c8aa92cc</span><span class="o">-</span><span class="mi">60</span><span class="n">ef</span><span class="o">-</span><span class="mf">11e8</span><span class="o">-</span><span class="n">aa87</span><span class="o">-</span><span class="n">acbf52d15413</span>
+<span class="n">c8ab7194</span><span class="o">-</span><span class="mi">60</span><span class="n">ef</span><span class="o">-</span><span class="mf">11e8</span><span class="o">-</span><span class="n">b7bd</span><span class="o">-</span><span class="n">acbf52d15413</span>
+<span class="o">---</span>
+<span class="n">c8ab7368</span><span class="o">-</span><span class="mi">60</span><span class="n">ef</span><span class="o">-</span><span class="mf">11e8</span><span class="o">-</span><span class="mi">996</span><span class="n">c</span><span class="o">-</span><span class="n">acbf52d15413</span>
+<span class="n">c8ab741e</span><span class="o">-</span><span class="mi">60</span><span class="n">ef</span><span class="o">-</span><span class="mf">11e8</span><span class="o">-</span><span class="mi">959</span><span class="n">d</span><span class="o">-</span><span class="n">acbf52d15413</span>
+<span class="o">---</span>
+<span class="mf">8e108777</span><span class="o">-</span><span class="mi">26</span><span class="n">a1</span><span class="o">-</span><span class="mi">42</span><span class="n">d6</span><span class="o">-</span><span class="mi">9</span><span class="n">c4c</span><span class="o">-</span><span class="n">a0c029423eb0</span>
+<span class="mi">8175</span><span class="n">a81a</span><span class="o">-</span><span class="n">f346</span><span class="o">-</span><span class="mi">46</span><span class="n">af</span><span class="o">-</span><span class="mi">9659</span><span class="o">-</span><span class="mi">077</span><span class="n">ad52e3e8f</span>
 <span class="o">---</span>
 </pre></div>
 </div>

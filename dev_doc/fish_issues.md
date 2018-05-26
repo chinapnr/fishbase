@@ -5,7 +5,7 @@ last update: 2018.5.26
 #### v1.0.13
 
 * 19037, common and system, common 中的 check_platform() 移动到 fish_system 中，改名为 get_platform(); ok
-* 19038, common, get_time_uuid() 增加文档和单元测试; 
+* 19038, common, add get_uuid(), edit get_time_uuid(), add doc and unittest; ok
 
 #### v1.0.12
 

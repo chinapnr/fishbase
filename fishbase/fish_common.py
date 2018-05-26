@@ -16,11 +16,17 @@ import re
 import hashlib
 import os
 from collections import OrderedDict
+import functools
 
 if sys.version > '3':
     import configparser
 else:
     import ConfigParser as configparser
+
+
+# 定义 uuid kind
+udTime = 10001
+udRandom = 10002
 
 
 # 读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
@@ -161,15 +167,64 @@ def serialize_instance(obj):
     return d
 
 
-# 功能：获取带时间戳的流水号
-# 输入参数：无
-# 输出参数：流水号（string)
-# 2017.2.22, create by David.Yi, #19006
-def get_time_uuid():
-    # Generate a UUID from a host ID, sequence number, and the current time.
-    # If node is not given, getnode() is used to obtain the hardware address.
-    # If clock_seq is given, it is used as the sequence number; otherwise a random 14-bit sequence number is chosen.
-    return str(uuid.uuid1())
+# 2018.5.26 v1.0.13 #19038, edit by David Yi
+def get_uuid(kind):
+    """
+    获得不重复的 uuid，可以是包含时间戳的 uuid，也可以是完全随机的；基于 Python 的 uuid 类进行封装和扩展；
+
+    支持 get_time_uuid() 这样的写法，不需要参数，也可以表示生成包含时间戳的 uuid，兼容 v1.0.12 以及之前版本；
+
+    :param:
+        * kind: (int) uuid 类型，整形常量 udTime 表示基于时间戳， udRandom 表示完全随机
+    :returns:
+        * result: (string) 返回类似 66b438e3-200d-4fe3-8c9e-2bc431bb3000 的 uuid
+
+    举例如下::
+
+        print('--- uuid demo ---')
+        # 获得带时间戳的uuid
+        for i in range(2):
+            print(get_uuid(udTime))
+
+        print('---')
+
+        # 时间戳 uuid 的简单写法，兼容之前版本
+        for i in range(2):
+            print(get_time_uuid())
+
+        print('---')
+
+        # 获得随机的uuid
+        for i in range(2):
+            print(get_uuid(udRandom))
+
+        print('---')
+
+    执行结果::
+
+        --- uuid demo ---
+        c8aa92cc-60ef-11e8-aa87-acbf52d15413
+        c8ab7194-60ef-11e8-b7bd-acbf52d15413
+        ---
+        c8ab7368-60ef-11e8-996c-acbf52d15413
+        c8ab741e-60ef-11e8-959d-acbf52d15413
+        ---
+        8e108777-26a1-42d6-9c4c-a0c029423eb0
+        8175a81a-f346-46af-9659-077ad52e3e8f
+        ---
+
+    """
+
+    if kind == udTime:
+        return str(uuid.uuid1())
+    elif kind == udRandom:
+        return str(uuid.uuid4())
+    else:
+        return str(uuid.uuid4())
+
+
+# 2018.5.26 v1.0.13 #19038, edit by David Yi
+get_time_uuid = functools.partial(get_uuid, udTime)
 
 
 # 功能：判断参数列表是否存在不合法的参数，如果存在None或空字符串或空格字符串，则返回True, 否则返回False
@@ -242,7 +297,7 @@ class FishCache:
 # 2018.5.8 edit by David Yi, edit from Jia Chunying，#19026
 class GetMD5(object):
     """
-    封装了 MD5 计算的类，可以计算普通字符串和一般的文件，对于大文件采取逐步读入的方式，也可以快速计算
+    计算普通字符串和一般的文件，对于大文件采取逐步读入的方式，也可以快速计算；基于 Python 的 hashlib.md5() 进行封装和扩展；
 
     举例如下::
 

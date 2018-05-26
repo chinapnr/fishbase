@@ -4,7 +4,7 @@
 2018.5.26 v1.0.13
 ---------------------------
 
-* new version working
+* new version working, system get_platform(), common get_uuid(), compatible with get_time_uuid()
 
 2018.5.21 v1.0.12
 ---------------------------

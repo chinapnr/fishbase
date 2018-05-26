@@ -68,6 +68,28 @@ def demo_singleton():
     print('---')
 
 
+# 2018.5.26
+def demo_uuid():
+    print('--- uuid demo ---')
+    # 获得带时间戳的uuid
+    for i in range(2):
+        print(get_uuid(udTime))
+
+    print('---')
+
+    # 时间戳 uuid 的简单写法，兼容之前版本
+    for i in range(2):
+        print(get_time_uuid())
+
+    print('---')
+
+    # 获得随机的uuid
+    for i in range(2):
+        print(get_uuid(udRandom))
+
+    print('---')
+
+
 if __name__ == '__main__':
 
     # 定义需要序列化的对象
@@ -81,10 +103,6 @@ if __name__ == '__main__':
 
     # 序列化对象
     result = serialize_instance(Foo)
-    print(result)
-
-    # 获得带时间戳的流水号
-    result = get_time_uuid()
     print(result)
 
     # 定义需要判断的列表
@@ -109,3 +127,5 @@ if __name__ == '__main__':
     print(splice_url_params(dic1))
 
     demo_singleton()
+
+    demo_uuid()
