@@ -1,9 +1,0 @@
-2018-05-27 10:41:03,102 INFO demo_logger.py[line:11] test fish base log
-2018-05-27 10:41:03,102 WARNING demo_logger.py[line:12] test fish base log
-2018-05-27 10:41:03,102 ERROR demo_logger.py[line:13] test fish base log
-2018-05-27 10:59:36,351 INFO demo_logger.py[line:11] test fish base log
-2018-05-27 10:59:36,351 WARNING demo_logger.py[line:12] test fish base log
-2018-05-27 10:59:36,352 ERROR demo_logger.py[line:13] test fish base log
-2018-05-27 20:35:18,679 INFO demo_logger.py[ln:11] test fish base log
-2018-05-27 20:35:18,679 WARNING demo_logger.py[ln:12] test fish base log
-2018-05-27 20:35:18,679 ERROR demo_logger.py[ln:13] test fish base log

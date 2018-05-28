@@ -60,8 +60,8 @@ def get_abs_filename_with_sub_path(sub_path, filename):
     """
 
     try:
-        cur_dir = os.getcwd()
-        abs_filename = os.path.join(cur_dir, sub_path, filename)
+        cur_path = os.getcwd()
+        abs_filename = os.path.join(cur_path, sub_path, filename)
 
         flag = os.path.isfile(abs_filename)
 
@@ -133,98 +133,47 @@ def auto_add_file_ext(short_filename, ext):
     return temp_filename
 
 
-# 检查指定类型的文件名是否在指定的路径下, 比如用来检查 conf 路径下的配置文件是否存在
-# 2016.2.22 e2at v1.0.0 #10005, create by  David Yi
-# 2017.1.8 v1.0.9 #19005, minor edit
-def check_kind_path_file(kind_name, file_name):
-
-    """
-        检查指定类型的文件名是否在指定的路径下, 比如用来检查 conf 路径下的配置文件是否存在；
-
-        :param:
-            * kind_name: (string) 类别名称，比如 conf
-            * file_name: (string)
-        :returns:
-            * 返回类型 (tuple)，有两个值
-            * Flag: (bool) True: 文件存在，False: 文件不存在
-            * abs_filename: (string) 要检查的文件的长文件名
-
-        举例如下::
-
-            # 定义路径（类型）
-            kind_name = 'test_conf'
-            # 定义文件名
-            conf_filename = 'test_conf.ini'
-            # 检查指定路径（类型）的文件名是否在指定的路径下
-            result = check_kind_path_file(kind_name, conf_filename)
-            print(result)
-
-        输出结果::
-
-            (True, '/Users/yijun/Documents/dev_python/fishbase/demo/test_conf/test_conf.ini')
-
-    """
-
-    # 文件路径
-    kind_path = os.path.join(os.path.abspath(''), kind_name)
-
-    # 完整文件名，包含路径
-    abs_filename = os.path.join(kind_path, file_name)
-
-    # 文件如果不存在
-    if not os.path.isfile(abs_filename):
-        return False, abs_filename
-    # 文件存在
-    else:
-        return True, abs_filename
-
-
 # 检查当前路径下的某个子路径是否存在, 不存在则创建
-# 2016.10.4 by David Yi, v1.0.9 #19001
+# 2016.10.4 v1.0.9 #19001, edit by David Yi
+# 2018.5.28 v1.0.13 #19042, edit by David Yi
 def check_sub_path_create(sub_path):
 
     """
-        检查当前路径下的某个子路径是否存在, 不存在则创建；
+    检查当前路径下的某个子路径是否存在, 不存在则创建；
 
-        :param:
-            * sub_path: (string) 下一级的某路径名称
-        :returns:
-            * 返回类型 (tuple)，有两个值
-            * True: 路径存在，False: 不需要创建
-            * False: 路径不存在，True: 创建成功
+    :param:
+        * sub_path: (string) 下一级的某路径名称
+    :returns:
+        * 返回类型 (tuple)，有两个值
+        * True: 路径存在，False: 不需要创建
+        * False: 路径不存在，True: 创建成功
 
-        举例如下::
+    举例如下::
 
-            # 定义存在子路径名
-            sub_path = 'test_sub_dir'
-            # 检查当前路径下的一个子路径是否存在，不存在则创建
-            result = check_sub_path_create(sub_path)
-            print('check sub path:', sub_path)
-            print(result)
+        # 定义子路径名称
+        sub_path = 'demo_sub_dir'
+        # 检查当前路径下的一个子路径是否存在，不存在则创建
+        print('check sub path:', sub_path)
+        result = check_sub_path_create(sub_path)
+        print(result)
 
-        输出结果::
+    输出结果::
 
-            check sub path: test_sub_dir
-            (True, False)
-
+        check sub path: demo_sub_dir
+        (True, False)
     """
 
     # 获得当前路径
     cur_path = os.path.abspath('')
-    # print('cur absolute path:', cur_path)
 
     # 生成 带有 sub_path_name 的路径
     path = os.path.join(cur_path, sub_path)
-    # print('check path:', path)
 
     # 判断是否存在带有 sub_path 路径
     if os.path.exists(path):
-        # print('path exists')
         # 返回 True: 路径存在, False: 不需要创建
         return True, False
     else:
-        # print('log path not exists')
         os.makedirs(path)
         # 返回 False: 路径不存在  True: 路径已经创建
-        # print('create sub path')
         return False, True

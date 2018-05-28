@@ -46,21 +46,11 @@ if __name__ == '__main__':
     print(result)
     print('---')
 
-    print('test check_kind_path_file() ')
-    # 定义路径（类型）
-    kind_name = 'test_conf'
-    # 定义文件名
-    conf_filename = 'test_conf.ini'
-    # 检查指定路径（类型）的文件名是否在指定的路径下
-    result = check_kind_path_file(kind_name, conf_filename)
-    print(result)
-    print('---')
-
-    print('test check_sub_path_create() ')
-    # 定义存在子路径名
-    sub_path = 'test_sub_dir'
+    print('demo check_sub_path_create() ')
+    # 定义子路径名称
+    sub_path = 'demo_sub_dir'
     # 检查当前路径下的一个子路径是否存在，不存在则创建
-    result = check_sub_path_create(sub_path)
     print('check sub path:', sub_path)
+    result = check_sub_path_create(sub_path)
     print(result)
     print('---')

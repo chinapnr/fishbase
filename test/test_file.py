@@ -8,7 +8,7 @@ sys.path.append('../fishbase')
 from fishbase.fish_file import *
 
 
-# 2018.5.28 v1.0.13 #19040, create by David Yi, fish_file unittest
+# 2018.5.28 v1.0.13 #19040,#19042, create by David Yi, fish_file unittest
 class TestFishFile(object):
 
     # tc for get_abs_filename_with_sub_path()
@@ -37,3 +37,33 @@ class TestFishFile(object):
 
         result = get_abs_filename_with_sub_path(path_name_1, filename_1)
         assert result[0] is False
+
+    # tc for check_sub_path_create()
+    def test_check_sub_path_create_01(self):
+
+        # 定义子路径名
+        sub_path = 'test_sub_path'
+        # 获得完整路径名
+        cur_path = os.getcwd()
+        abs_path = os.path.join(cur_path, sub_path)
+
+        # 如果存在该子路径，先删除
+        if os.path.isdir(abs_path):
+            os.rmdir(abs_path)
+
+        # tc 不存在子路径，创建检查
+        result = check_sub_path_create(sub_path)
+        assert result[0] is False
+        assert result[1] is True
+
+        os.rmdir(abs_path)
+
+        # tc 存在子路径，不创建检查
+        os.makedirs(abs_path)
+        result = check_sub_path_create(sub_path)
+        assert result[0] is True
+        assert result[1] is False
+
+
+
+
