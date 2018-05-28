@@ -30,7 +30,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="fish_csv csv 函数包" href="fish_csv.html" />
-    <link rel="prev" title="fish_common 基本函数包" href="fish_common.html" /> 
+    <link rel="prev" title="fish_system 系统相关函数包" href="fish_system.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -88,6 +88,7 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="fish_common.html"><code class="docutils literal notranslate"><span class="pre">fish_common</span></code> 基本函数包</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fish_system.html"><code class="docutils literal notranslate"><span class="pre">fish_system</span></code> 系统相关函数包</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">fish_file</span></code> 文件处理函数包</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fish_csv.html"><code class="docutils literal notranslate"><span class="pre">fish_csv</span></code> csv 函数包</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fish_logger.html"><code class="docutils literal notranslate"><span class="pre">fish_logger</span></code> 日志记录函数包</a></li>
@@ -263,17 +264,26 @@
 </tbody>
 </table>
 <p>举例如下:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 定义子路径名称</span>
-<span class="n">path_name</span> <span class="o">=</span> <span class="s1">&#39;test_sub_dir&#39;</span>
-<span class="c1"># 定义文件名称</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;get_abs_filename_with_sub_path&#39;</span><span class="p">)</span>
+<span class="c1"># define sub dir</span>
+<span class="n">path_name</span> <span class="o">=</span> <span class="s1">&#39;sub_dir&#39;</span>
+<span class="c1"># define not exists file</span>
 <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;test_file.txt&#39;</span>
-<span class="c1"># 生成当前路径下一级文件的完整路径名</span>
+
 <span class="n">abs_filename</span> <span class="o">=</span> <span class="n">get_abs_filename_with_sub_path</span><span class="p">(</span><span class="n">path_name</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+<span class="c1"># return False and abs filename</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">abs_filename</span><span class="p">)</span>
+
+<span class="c1"># define exists file</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;demo.txt&#39;</span>
+<span class="n">abs_filename</span> <span class="o">=</span> <span class="n">get_abs_filename_with_sub_path</span><span class="p">(</span><span class="n">path_name</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+<span class="c1"># return True and abs filename</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">abs_filename</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>输出结果:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;/Users/yijun/Documents/dev_python/fishbase/demo/test_sub_dir/test_file.txt&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;/Users/****/Documents/dev_python/fishbase/demo/sub_dir/test_file.txt&#39;</span><span class="p">)</span>
+<span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;/Users/****/Documents/dev_python/fishbase/demo/sub_dir/demo.txt&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -337,7 +347,7 @@
         <a href="fish_csv.html" class="btn btn-neutral float-right" title="fish_csv csv 函数包" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fish_common.html" class="btn btn-neutral" title="fish_common 基本函数包" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="fish_system.html" class="btn btn-neutral" title="fish_system 系统相关函数包" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

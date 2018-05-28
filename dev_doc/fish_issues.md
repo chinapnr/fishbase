@@ -7,6 +7,7 @@ last update: 2018.5.26
 * 19037, common and system, common 中的 check_platform() 移动到 fish_system 中，改名为 get_platform(); ok
 * 19038, common, add get_uuid(), edit get_time_uuid(), add doc and unittest; ok
 * 19039, logger, edit set_log_file() by class SafeFileHandler(), prevent the multi process delete log file; ok
+* 19040, file, edit get_abs_filename_with_sub_path(), suggested by Wu Yanan; ok
 
 #### v1.0.12
 
