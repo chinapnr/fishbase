@@ -9,7 +9,7 @@
 * 19039, logger, edit function :meth:`fish_logger.set_log_file()` by ``class SafeFileHandler()``, prevent the multi process delete log file error
 * 19040, file, edit function :meth:`fish_file.get_abs_filename_with_sub_path`, thanks to Wu Yanan
 * 19041, file, delete function ``check_kind_path_file()``
-* 19042, file, edit function :meth:`check_sub_path_create`, do some optimize, add doc and unittest
+* 19042, file, edit function :meth:`fish_file.check_sub_path_create`, do some optimize, add doc and unittest
 
 2018.5.21 v1.0.12
 ---------------------------
