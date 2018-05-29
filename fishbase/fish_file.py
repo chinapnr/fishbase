@@ -10,7 +10,6 @@
 # 2017.1.8 v1.0.9 created
 
 import os
-import sys
 import inspect
 
 
@@ -107,8 +106,8 @@ def get_abs_filename_with_sub_path_module(sub_path, filename):
 
         输出结果::
 
-            (True, '/Users/yijun/anaconda3/lib/python3.6/site-packages/fishbase/test_sub_dir/demo_file.txt')
-            (False, '/Users/yijun/anaconda3/lib/python3.6/site-packages/fishbase/test_sub_dir/demo.txt')
+            (True, '/Users/*****/anaconda3/lib/python3.6/site-packages/fishbase/test_sub_dir/demo_file.txt')
+            (False, '/Users/****/anaconda3/lib/python3.6/site-packages/fishbase/test_sub_dir/demo.txt')
 
     """
 
@@ -123,7 +122,7 @@ def get_abs_filename_with_sub_path_module(sub_path, filename):
 
 
 # 判断文件名是否没有输入后缀，没有的话则加上后缀
-# create 2015.8.1. by david.yi
+# create 2015.8.1. by David Yi
 def auto_add_file_ext(short_filename, ext):
 
     temp_filename = short_filename

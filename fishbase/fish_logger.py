@@ -104,6 +104,7 @@ def set_log_file(local_file=None):
 
     """
     设置日志记录，按照每天一个文件，记录包括 info 以及以上级别的内容；
+    日志格式采取日志文件名直接加上日期，比如 fish_test.log.2018-05-27
 
     :param:
         * local_fie: (string) 日志文件名
