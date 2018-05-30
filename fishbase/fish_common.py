@@ -442,13 +442,15 @@ def splice_url_params(dic):
 def sorted_list_from_dict(p_dict, order=odASC):
     """
     根据字典的 value 进行排序，并以列表形式返回
-    :param
+
+    :param:
         * p_dict: (dict) 需要排序的字典
         * order: (int) 排序规则，odASC 升序，odDES 降序，默认为升序
     :return:
         * o_list: (list) 排序后的 list
 
     举例如下::
+
         # 定义待处理字典
         dict1 = {'a_key': 'a_value', '1_key': '1_value', 'A_key': 'A_value', 'z_key': 'z_value'}
         print(dict1)
@@ -460,6 +462,7 @@ def sorted_list_from_dict(p_dict, order=odASC):
         print('descending order result is:', list1)
 
     执行结果::
+
         {'a_key': 'a_value', 'A_key': 'A_value', '1_key': '1_value', 'z_key': 'z_value'}
         ascending order result is: ['1_value', 'A_value', 'a_value', 'z_value']
         descending order result is: ['z_value', 'a_value', 'A_value', '1_value']

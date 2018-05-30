@@ -447,6 +447,48 @@
 </dd></dl>
 
 <dl class="function">
+<dt id="fish_common.sorted_list_from_dict">
+<code class="descclassname">fish_common.</code><code class="descname">sorted_list_from_dict</code><span class="sig-paren">(</span><em>p_dict</em>, <em>order=10011</em><span class="sig-paren">)</span><a class="headerlink" href="#fish_common.sorted_list_from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>根据字典的 value 进行排序，并以列表形式返回</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li>p_dict: (dict) 需要排序的字典</li>
+<li>order: (int) 排序规则，odASC 升序，odDES 降序，默认为升序</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>o_list: (list) 排序后的 list</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>举例如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 定义待处理字典</span>
+<span class="n">dict1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a_key&#39;</span><span class="p">:</span> <span class="s1">&#39;a_value&#39;</span><span class="p">,</span> <span class="s1">&#39;1_key&#39;</span><span class="p">:</span> <span class="s1">&#39;1_value&#39;</span><span class="p">,</span> <span class="s1">&#39;A_key&#39;</span><span class="p">:</span> <span class="s1">&#39;A_value&#39;</span><span class="p">,</span> <span class="s1">&#39;z_key&#39;</span><span class="p">:</span> <span class="s1">&#39;z_value&#39;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dict1</span><span class="p">)</span>
+<span class="c1"># 升序结果</span>
+<span class="n">list1</span> <span class="o">=</span> <span class="n">sorted_list_from_dict</span><span class="p">(</span><span class="n">dict1</span><span class="p">,</span> <span class="n">odASC</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ascending order result is:&#39;</span><span class="p">,</span> <span class="n">list1</span><span class="p">)</span>
+<span class="c1"># 降序结果</span>
+<span class="n">list1</span> <span class="o">=</span> <span class="n">sorted_list_from_dict</span><span class="p">(</span><span class="n">dict1</span><span class="p">,</span> <span class="n">odDES</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;descending order result is:&#39;</span><span class="p">,</span> <span class="n">list1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>执行结果:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;a_key&#39;</span><span class="p">:</span> <span class="s1">&#39;a_value&#39;</span><span class="p">,</span> <span class="s1">&#39;A_key&#39;</span><span class="p">:</span> <span class="s1">&#39;A_value&#39;</span><span class="p">,</span> <span class="s1">&#39;1_key&#39;</span><span class="p">:</span> <span class="s1">&#39;1_value&#39;</span><span class="p">,</span> <span class="s1">&#39;z_key&#39;</span><span class="p">:</span> <span class="s1">&#39;z_value&#39;</span><span class="p">}</span>
+<span class="n">ascending</span> <span class="n">order</span> <span class="n">result</span> <span class="ow">is</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;1_value&#39;</span><span class="p">,</span> <span class="s1">&#39;A_value&#39;</span><span class="p">,</span> <span class="s1">&#39;a_value&#39;</span><span class="p">,</span> <span class="s1">&#39;z_value&#39;</span><span class="p">]</span>
+<span class="n">descending</span> <span class="n">order</span> <span class="n">result</span> <span class="ow">is</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;z_value&#39;</span><span class="p">,</span> <span class="s1">&#39;a_value&#39;</span><span class="p">,</span> <span class="s1">&#39;A_value&#39;</span><span class="p">,</span> <span class="s1">&#39;1_value&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
 <dt id="fish_common.splice_url_params">
 <code class="descclassname">fish_common.</code><code class="descname">splice_url_params</code><span class="sig-paren">(</span><em>dic</em><span class="sig-paren">)</span><a class="headerlink" href="#fish_common.splice_url_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>根据传入的键值对，拼接 url 后面 ? 的参数，比如 ?key1=value1&amp;key2=value2</p>
