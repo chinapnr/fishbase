@@ -79,36 +79,35 @@ def get_abs_filename_with_sub_path(sub_path, filename):
 def get_abs_filename_with_sub_path_module(sub_path, filename):
 
     """
-        生成使用模块时的下一级路径某文件的完整文件名；
+    生成使用模块时的下一级路径某文件的完整文件名；
 
-        :param:
-            * sub_path: (string) 下一级的某路径名称
-            * filename: (string) 下一级路径的某个文件名
-        :returns:
-            * 返回类型 (tuple)，有两个值，第一个为 flag，第二个为文件名，说明见下
-            * flag: (bool) 如果文件存在，返回 True，文件不存在，返回 False
-            * abs_filename: (string) 指定 filename 的包含路径的长文件名，注意是模块安装的路径，不是应用程序的路径
+    :param:
+        * sub_path: (string) 下一级的某路径名称
+        * filename: (string) 下一级路径的某个文件名
+    :return:
+        * 返回类型 (tuple)，有两个值，第一个为 flag，第二个为文件名，说明见下
+        * flag: (bool) 如果文件存在，返回 True，文件不存在，返回 False
+        * abs_filename: (string) 指定 filename 的包含路径的长文件名，注意是模块安装的路径，不是应用程序的路径
 
-        举例如下::
+    举例如下::
 
-            # 定义子路径名称
-            sub_path = 'test_sub_dir'
-            # 定义存在的文件名称
-            filename_existent = 'demo_file.txt'
-            # 定义不存在的文件名称
-            filename_non_existent = 'demo.txt'
-            # 生成下一级路径文件的完整文件名
-            result = get_abs_filename_with_sub_path_module(sub_path, filename_existent)
-            print(result)
+        # 定义子路径名称
+        sub_path = 'test_sub_dir'
+        # 定义存在的文件名称
+        filename_existent = 'demo_file.txt'
+        # 定义不存在的文件名称
+        filename_non_existent = 'demo.txt'
+        # 生成下一级路径文件的完整文件名
+        result = get_abs_filename_with_sub_path_module(sub_path, filename_existent)
+        print(result)
 
-            result = get_abs_filename_with_sub_path_module(sub_path, filename_non_existent)
-            print(result)
+        result = get_abs_filename_with_sub_path_module(sub_path, filename_non_existent)
+        print(result)
 
-        输出结果::
+    输出结果::
 
-            (True, '/Users/*****/anaconda3/lib/python3.6/site-packages/fishbase/test_sub_dir/demo_file.txt')
-            (False, '/Users/****/anaconda3/lib/python3.6/site-packages/fishbase/test_sub_dir/demo.txt')
-
+        (True, '/Users/*****/anaconda3/lib/python3.6/site-packages/fishbase/test_sub_dir/demo_file.txt')
+        (False, '/Users/****/anaconda3/lib/python3.6/site-packages/fishbase/test_sub_dir/demo.txt')
     """
 
     cur_module_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -142,7 +141,7 @@ def check_sub_path_create(sub_path):
 
     :param:
         * sub_path: (string) 下一级的某路径名称
-    :returns:
+    :return:
         * 返回类型 (tuple)，有两个值
         * True: 路径存在，False: 不需要创建
         * False: 路径不存在，True: 创建成功

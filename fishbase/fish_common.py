@@ -23,7 +23,6 @@ if sys.version > '3':
 else:
     import ConfigParser as configparser
 
-
 # uuid kind const
 udTime = 10001
 udRandom = 10002
@@ -31,7 +30,6 @@ udRandom = 10002
 # order const
 odASC = 10011
 odDES = 10012
-
 
 # 读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
 # 2017.2.23 #19008 create by David Yi
@@ -44,7 +42,7 @@ def conf_as_dict(conf_filename):
 
     :param:
         * conf_filename: (string) 需要读入的 ini 配置文件长文件名
-    :returns:
+    :return:
         * flag: (bool) 读取配置文件是否正确，正确返回 True，错误返回 False
         * d: (dict) 如果读取配置文件正确返回的包含配置文件内容的字典
         * count: (int) 读取到的配置文件有多少个 key 的数量
@@ -180,7 +178,7 @@ def get_uuid(kind):
 
     :param:
         * kind: (int) uuid 类型，整形常量 udTime 表示基于时间戳， udRandom 表示完全随机
-    :returns:
+    :return:
         * result: (string) 返回类似 66b438e3-200d-4fe3-8c9e-2bc431bb3000 的 uuid
 
     举例如下::
@@ -379,7 +377,7 @@ def if_json_contain(left_json, right_json, op='strict'):
         * left_json: (dict) 需要判断的 json，我们称之为 left
         * right_json: (dict) 需要判断的 json，我们称之为 right，目前是判断 left 是否包含在 right 中
         * op: (string) 判断操作符，目前只有一种，默认为 strict，向后兼容
-    :returns:
+    :return:
         * result: (bool) right json 包含 left json 的 key，并且 value 一样，返回 True，否则都返回 False
 
     举例如下::
@@ -413,7 +411,7 @@ def splice_url_params(dic):
 
     :param:
         * dic: (dict) 参数键值对
-    :returns:
+    :return:
         * result: (string) 拼接好的参数
 
     举例如下::

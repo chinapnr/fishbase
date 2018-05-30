@@ -108,7 +108,7 @@ def set_log_file(local_file=None):
 
     :param:
         * local_fie: (string) 日志文件名
-    :returns:
+    :return: 无
 
     举例如下::
 
