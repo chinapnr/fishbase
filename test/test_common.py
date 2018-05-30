@@ -127,3 +127,18 @@ class TestFishCommon(object):
         u2 = get_uuid(udRandom)
 
         assert u1 != u2
+
+    # test sorted_list_from_dict() tc
+    def test_sorted_list_from_dict_01(self):
+
+        # 定义待处理字典
+        dict1 = {'a_key': 'a_value', '1_key': '1_value', 'A_key': 'A_value', 'z_key': 'z_value'}
+        # 升序结果
+        list1 = sorted_list_from_dict(dict1, odASC)
+
+        assert list1 == ['1_value', 'A_value', 'a_value', 'z_value']
+
+        # 降序结果
+        list1 = sorted_list_from_dict(dict1, odDES)
+
+        assert list1 == ['z_value', 'a_value', 'A_value', '1_value']

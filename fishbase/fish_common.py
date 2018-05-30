@@ -24,9 +24,13 @@ else:
     import ConfigParser as configparser
 
 
-# 定义 uuid kind
+# uuid kind const
 udTime = 10001
 udRandom = 10002
+
+# order const
+odASC = 10011
+odDES = 10012
 
 
 # 读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
@@ -432,3 +436,37 @@ def splice_url_params(dic):
     # 去掉最后一个&字符
     url = url[:len(url) - 1]
     return url
+
+
+# v1.0.13 #19043, edit by Hu Jun, edit by David Yi
+def sorted_list_from_dict(p_dict, order=odASC):
+    """
+    根据字典的 value 进行排序，并以列表形式返回
+    :param
+        * p_dict: (dict) 需要排序的字典
+        * order: (int) 排序规则，odASC 升序，odDES 降序，默认为升序
+    :return:
+        * o_list: (list) 排序后的 list
+
+    举例如下::
+        # 定义待处理字典
+        dict1 = {'a_key': 'a_value', '1_key': '1_value', 'A_key': 'A_value', 'z_key': 'z_value'}
+        print(dict1)
+        # 升序结果
+        list1 = sorted_list_from_dict(dict1, odASC)
+        print('ascending order result is:', list1)
+        # 降序结果
+        list1 = sorted_list_from_dict(dict1, odDES)
+        print('descending order result is:', list1)
+
+    执行结果::
+        {'a_key': 'a_value', 'A_key': 'A_value', '1_key': '1_value', 'z_key': 'z_value'}
+        ascending order result is: ['1_value', 'A_value', 'a_value', 'z_value']
+        descending order result is: ['z_value', 'a_value', 'A_value', '1_value']
+    """
+    o_list = sorted(value for (key, value) in p_dict.items())
+
+    if order == odASC:
+        return o_list
+    elif order == odDES:
+        return o_list[::-1]

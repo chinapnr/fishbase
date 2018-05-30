@@ -90,6 +90,21 @@ def demo_uuid():
     print('---')
 
 
+# 2018.5.30
+def demo_dict():
+    print('--- sorted_list_from_dict() demo ---')
+    # 定义待处理字典
+    dict1 = {'a_key': 'a_value', '1_key': '1_value', 'A_key': 'A_value', 'z_key': 'z_value'}
+    print(dict1)
+    # 升序结果
+    list1 = sorted_list_from_dict(dict1, odASC)
+    print('ascending order result is:', list1)
+    # 降序结果
+    list1 = sorted_list_from_dict(dict1, odDES)
+    print('descending order result is:', list1)
+    print('---')
+
+
 if __name__ == '__main__':
 
     # 定义需要序列化的对象
@@ -129,3 +144,5 @@ if __name__ == '__main__':
     demo_singleton()
 
     demo_uuid()
+
+    demo_dict()

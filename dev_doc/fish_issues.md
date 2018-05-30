@@ -8,8 +8,9 @@ last update: 2018.5.26
 * 19038, common, add function get_uuid(), edit get_time_uuid(), add doc and unittest; ok
 * 19039, logger, edit function set_log_file() by class SafeFileHandler(), prevent the multi process delete log file; ok
 * 19040, file, edit function get_abs_filename_with_sub_path(), suggested by Wu Yanan; ok
-* 19041, file, delete function check_kind_path_file(), it's feature include in get_abs_filename_with_sub_path();ok
-* 19042, file, edit function check_sub_path_create(), edit docstring, add unittest; 
+* 19041, file, delete function check_kind_path_file(), it's feature include in get_abs_filename_with_sub_path(); ok
+* 19042, file, edit function check_sub_path_create(), edit docstring, add unittest; ok
+* 19043, common, edit function sorted_list_from_dict(), optimize, doc and unittest; ok
 
 #### v1.0.12
 
