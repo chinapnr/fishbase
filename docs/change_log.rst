@@ -10,7 +10,7 @@
 * 19040, file, edit function :meth:`fish_file.get_abs_filename_with_sub_path`, thanks to Wu Yanan
 * 19041, file, delete function ``check_kind_path_file()``
 * 19042, file, edit function :meth:`fish_file.check_sub_path_create`, optimize, doc and unittest
-* 19043, common, edit function :meth:`fish_common.sorted_list_from_dict(), optimize, doc and unittest
+* 19043, common, edit function :meth:`fish_common.sorted_list_from_dict()`, optimize, doc and unittest
 
 2018.5.21 v1.0.12
 ---------------------------
