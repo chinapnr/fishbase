@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/mindjun/fishbase.svg?branch=v1.0.13_develop)](https://travis-ci.org/mindjun/fishbase)
-![doc](https://readthedocs.org/projects/fishbase/badge/?version=latest)
+[![Documentation Status](https://readthedocs.org/projects/fishbae-jun/badge/?version=latest)](https://fishbae-jun.readthedocs.io/en/latest/?badge=latest)
 [![Coverage Status](https://coveralls.io/repos/github/mindjun/fishbase/badge.svg?branch=v1.0.13_develop)](https://coveralls.io/github/mindjun/fishbase?branch=v1.0.13_develop)
 
 ## fishbase 简介
