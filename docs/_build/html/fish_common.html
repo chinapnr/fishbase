@@ -156,9 +156,44 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-fish_common">
-<span id="fish-common"></span><h1><code class="docutils literal notranslate"><span class="pre">fish_common</span></code> 基本函数包<a class="headerlink" href="#module-fish_common" title="Permalink to this headline">¶</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">fish_common</span></code> 包含的是最常用用的一些函数和类。</p>
+  <div class="section" id="fish-common">
+<h1><code class="docutils literal notranslate"><span class="pre">fish_common</span></code> 基本函数包<a class="headerlink" href="#fish-common" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#fish_common.conf_as_dict" title="fish_common.conf_as_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fish_common.conf_as_dict</span></code></a>(conf_filename)</td>
+<td>读入 ini 配置文件，返回根据配置文件内容生成的字典类型变量；</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#fish_common.get_uuid" title="fish_common.get_uuid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fish_common.get_uuid</span></code></a>(kind)</td>
+<td>获得不重复的 uuid，可以是包含时间戳的 uuid，也可以是完全随机的；基于 Python 的 uuid 类进行封装和扩展；</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#fish_common.GetMD5.string" title="fish_common.GetMD5.string"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fish_common.GetMD5.string</span></code></a>()</td>
+<td>获取一个字符串的MD5值</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#fish_common.GetMD5.file" title="fish_common.GetMD5.file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fish_common.GetMD5.file</span></code></a>()</td>
+<td>获取一个文件的 MD5 值</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#fish_common.GetMD5.big_file" title="fish_common.GetMD5.big_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fish_common.GetMD5.big_file</span></code></a>()</td>
+<td>获取一个大文件的 MD5 值</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#fish_common.if_json_contain" title="fish_common.if_json_contain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fish_common.if_json_contain</span></code></a>(left_json,&nbsp;…)</td>
+<td>判断一个 json 是否包含另外一个 json 的 key，并且 value 相等；</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#fish_common.SingleTon" title="fish_common.SingleTon"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fish_common.SingleTon</span></code></a></td>
+<td>申明一个单例类，可以作为需要单例类时候申明用的父类</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#fish_common.sorted_list_from_dict" title="fish_common.sorted_list_from_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fish_common.sorted_list_from_dict</span></code></a>(p_dict[,&nbsp;…])</td>
+<td>根据字典的 value 进行排序，并以列表形式返回</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#fish_common.splice_url_params" title="fish_common.splice_url_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fish_common.splice_url_params</span></code></a>(dic)</td>
+<td>根据传入的键值对，拼接 url 后面 ? 的参数，比如 ?key1=value1&amp;key2=value2</td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-fish_common"></span><p><code class="docutils literal notranslate"><span class="pre">fish_common</span></code> 包含的是最常用用的一些函数和类。</p>
 <dl class="class">
 <dt id="fish_common.GetMD5">
 <em class="property">class </em><code class="descclassname">fish_common.</code><code class="descname">GetMD5</code><a class="headerlink" href="#fish_common.GetMD5" title="Permalink to this definition">¶</a></dt>
