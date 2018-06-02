@@ -1,6 +1,17 @@
 更新记录
 ===========================
 
+2018.5.30 v1.0.13
+---------------------------
+
+* 19037, common and system, function ``check_platform()`` move to fish_system 中，rename to :meth:`fish_system.get_platform`
+* 19038, common, add function :meth:`fish_common.get_uuid`, edit ``fish_common.get_time_uuid``, add doc and unittest
+* 19039, logger, edit function :meth:`fish_logger.set_log_file()` by ``class SafeFileHandler()``, prevent the multi process delete log file error
+* 19040, file, edit function :meth:`fish_file.get_abs_filename_with_sub_path`, thanks to Wu Yanan
+* 19041, file, delete function ``check_kind_path_file()``
+* 19042, file, edit function :meth:`fish_file.check_sub_path_create`, optimize, doc and unittest
+* 19043, common, edit function :meth:`fish_common.sorted_list_from_dict()`, optimize, doc and unittest
+
 2018.5.21 v1.0.12
 ---------------------------
 

@@ -2,4 +2,4 @@
 =============================
 
 .. automodule:: fish_common
-   :members:
+    :members:

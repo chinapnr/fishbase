@@ -16,7 +16,7 @@ def get_platform():
 
     :param:
         * 无
-    :returns:
+    :return:
         * platform: (string) 返回 linux, osx, win 或者其他
 
     举例如下::

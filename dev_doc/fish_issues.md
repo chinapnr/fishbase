@@ -1,10 +1,24 @@
 ##fish_common 特性列表
 
-last update: 2018.5.21
+last update: 2018.5.26
+
+#### v1.0.13
+
+* 19037, common and system, function check_platform() move to fish_system，rename to get_platform(); ok
+* 19038, common, add function get_uuid(), edit get_time_uuid(), add doc and unittest; ok
+* 19039, logger, edit function set_log_file() by class SafeFileHandler(), prevent the multi process delete log file; ok
+* 19040, file, edit function get_abs_filename_with_sub_path(), suggested by Wu Yanan; ok
+* 19041, file, delete function check_kind_path_file(), it's feature include in get_abs_filename_with_sub_path(); ok
+* 19042, file, edit function check_sub_path_create(), edit docstring, add unittest; ok
+* 19043, common, edit function sorted_list_from_dict(), optimize, doc and unittest; ok
+
+---
+
+#### v1.0.12
 
 * 19036, edit fish_base to fishbase
 
-last update: 2018.5.18
+---
 
 #### v1.0.11
 
@@ -76,15 +90,6 @@ fish_common 目前测试覆盖率 65%
 
 ---
 
-待排
-
-* 19012，优化日志功能，缩写line->ln, 增加可选是否记录线程的编号
-* 19014，unittest, 完善 test_common 部分
-* 19025，file 中剩余函数也加入 docstring 说明
-* 19026，构建统一单元测试，从 csv 中开始
-* 19027，file auto_add_file_ext() 原来实现方式有问题，删除该函数
-* 19028，修改完善 demo_file.py 中的例子；ok
-
-安装
+补充
 
 * 文档主题需要安装 pip install sphinx_rtd_theme

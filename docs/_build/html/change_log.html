@@ -85,6 +85,7 @@
             
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">更新记录</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#v1-0-13">2018.5.30 v1.0.13</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#v1-0-12">2018.5.21 v1.0.12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#v1-0-11">2018.5.18 v1.0.11</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#v1-0-10">2018.3.20 v1.0.10</a></li>
@@ -93,6 +94,7 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="fish_common.html"><code class="docutils literal notranslate"><span class="pre">fish_common</span></code> 基本函数包</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fish_system.html"><code class="docutils literal notranslate"><span class="pre">fish_system</span></code> 系统相关函数包</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fish_file.html"><code class="docutils literal notranslate"><span class="pre">fish_file</span></code> 文件处理函数包</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fish_csv.html"><code class="docutils literal notranslate"><span class="pre">fish_csv</span></code> csv 函数包</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fish_logger.html"><code class="docutils literal notranslate"><span class="pre">fish_logger</span></code> 日志记录函数包</a></li>
@@ -162,6 +164,18 @@
             
   <div class="section" id="id1">
 <h1>更新记录<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="v1-0-13">
+<h2>2018.5.30 v1.0.13<a class="headerlink" href="#v1-0-13" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>19037, common and system, function <code class="docutils literal notranslate"><span class="pre">check_platform()</span></code> move to fish_system 中，rename to <a class="reference internal" href="fish_system.html#fish_system.get_platform" title="fish_system.get_platform"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fish_system.get_platform()</span></code></a></li>
+<li>19038, common, add function <a class="reference internal" href="fish_common.html#fish_common.get_uuid" title="fish_common.get_uuid"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fish_common.get_uuid()</span></code></a>, edit <code class="docutils literal notranslate"><span class="pre">fish_common.get_time_uuid</span></code>, add doc and unittest</li>
+<li>19039, logger, edit function <a class="reference internal" href="fish_logger.html#fish_logger.set_log_file" title="fish_logger.set_log_file"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fish_logger.set_log_file()</span></code></a> by <code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">SafeFileHandler()</span></code>, prevent the multi process delete log file error</li>
+<li>19040, file, edit function <a class="reference internal" href="fish_file.html#fish_file.get_abs_filename_with_sub_path" title="fish_file.get_abs_filename_with_sub_path"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fish_file.get_abs_filename_with_sub_path()</span></code></a>, thanks to Wu Yanan</li>
+<li>19041, file, delete function <code class="docutils literal notranslate"><span class="pre">check_kind_path_file()</span></code></li>
+<li>19042, file, edit function <a class="reference internal" href="fish_file.html#fish_file.check_sub_path_create" title="fish_file.check_sub_path_create"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fish_file.check_sub_path_create()</span></code></a>, optimize, doc and unittest</li>
+<li>19043, common, edit function <a class="reference internal" href="fish_common.html#fish_common.sorted_list_from_dict" title="fish_common.sorted_list_from_dict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fish_common.sorted_list_from_dict()</span></code></a>, optimize, doc and unittest</li>
+</ul>
+</div>
 <div class="section" id="v1-0-12">
 <h2>2018.5.21 v1.0.12<a class="headerlink" href="#v1-0-12" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">

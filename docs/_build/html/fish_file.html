@@ -30,7 +30,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="fish_csv csv 函数包" href="fish_csv.html" />
-    <link rel="prev" title="fish_common 基本函数包" href="fish_common.html" /> 
+    <link rel="prev" title="fish_system 系统相关函数包" href="fish_system.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -88,6 +88,7 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="fish_common.html"><code class="docutils literal notranslate"><span class="pre">fish_common</span></code> 基本函数包</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fish_system.html"><code class="docutils literal notranslate"><span class="pre">fish_system</span></code> 系统相关函数包</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">fish_file</span></code> 文件处理函数包</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fish_csv.html"><code class="docutils literal notranslate"><span class="pre">fish_csv</span></code> csv 函数包</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fish_logger.html"><code class="docutils literal notranslate"><span class="pre">fish_logger</span></code> 日志记录函数包</a></li>
@@ -160,46 +161,6 @@
 <p><code class="docutils literal notranslate"><span class="pre">fish_file</span></code> 包含的是文件、路径处理相关的函数。</p>
 <p>各类相对绝对文件的路径处理等都是开发时候经常需要处理的问题，fish_file 中的函数试图简化这些操作。</p>
 <dl class="function">
-<dt id="fish_file.check_kind_path_file">
-<code class="descclassname">fish_file.</code><code class="descname">check_kind_path_file</code><span class="sig-paren">(</span><em>kind_name</em>, <em>file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#fish_file.check_kind_path_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>检查指定类型的文件名是否在指定的路径下, 比如用来检查 conf 路径下的配置文件是否存在；</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
-<li>kind_name: (string) 类别名称，比如 conf</li>
-<li>file_name: (string)</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li>返回类型 (tuple)，有两个值</li>
-<li>Flag: (bool) True: 文件存在，False: 文件不存在</li>
-<li>abs_filename: (string) 要检查的文件的长文件名</li>
-</ul>
-</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>举例如下:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 定义路径（类型）</span>
-<span class="n">kind_name</span> <span class="o">=</span> <span class="s1">&#39;test_conf&#39;</span>
-<span class="c1"># 定义文件名</span>
-<span class="n">conf_filename</span> <span class="o">=</span> <span class="s1">&#39;test_conf.ini&#39;</span>
-<span class="c1"># 检查指定路径（类型）的文件名是否在指定的路径下</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">check_kind_path_file</span><span class="p">(</span><span class="n">kind_name</span><span class="p">,</span> <span class="n">conf_filename</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>输出结果:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;/Users/yijun/Documents/dev_python/fishbase/demo/test_conf/test_conf.ini&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
 <dt id="fish_file.check_sub_path_create">
 <code class="descclassname">fish_file.</code><code class="descname">check_sub_path_create</code><span class="sig-paren">(</span><em>sub_path</em><span class="sig-paren">)</span><a class="headerlink" href="#fish_file.check_sub_path_create" title="Permalink to this definition">¶</a></dt>
 <dd><p>检查当前路径下的某个子路径是否存在, 不存在则创建；</p>
@@ -223,16 +184,16 @@
 </tbody>
 </table>
 <p>举例如下:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 定义存在子路径名</span>
-<span class="n">sub_path</span> <span class="o">=</span> <span class="s1">&#39;test_sub_dir&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 定义子路径名称</span>
+<span class="n">sub_path</span> <span class="o">=</span> <span class="s1">&#39;demo_sub_dir&#39;</span>
 <span class="c1"># 检查当前路径下的一个子路径是否存在，不存在则创建</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">check_sub_path_create</span><span class="p">(</span><span class="n">sub_path</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;check sub path:&#39;</span><span class="p">,</span> <span class="n">sub_path</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">check_sub_path_create</span><span class="p">(</span><span class="n">sub_path</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>输出结果:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">check</span> <span class="n">sub</span> <span class="n">path</span><span class="p">:</span> <span class="n">test_sub_dir</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">check</span> <span class="n">sub</span> <span class="n">path</span><span class="p">:</span> <span class="n">demo_sub_dir</span>
 <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -263,17 +224,26 @@
 </tbody>
 </table>
 <p>举例如下:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 定义子路径名称</span>
-<span class="n">path_name</span> <span class="o">=</span> <span class="s1">&#39;test_sub_dir&#39;</span>
-<span class="c1"># 定义文件名称</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;get_abs_filename_with_sub_path&#39;</span><span class="p">)</span>
+<span class="c1"># define sub dir</span>
+<span class="n">path_name</span> <span class="o">=</span> <span class="s1">&#39;sub_dir&#39;</span>
+<span class="c1"># define not exists file</span>
 <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;test_file.txt&#39;</span>
-<span class="c1"># 生成当前路径下一级文件的完整路径名</span>
+
 <span class="n">abs_filename</span> <span class="o">=</span> <span class="n">get_abs_filename_with_sub_path</span><span class="p">(</span><span class="n">path_name</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+<span class="c1"># return False and abs filename</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">abs_filename</span><span class="p">)</span>
+
+<span class="c1"># define exists file</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;demo.txt&#39;</span>
+<span class="n">abs_filename</span> <span class="o">=</span> <span class="n">get_abs_filename_with_sub_path</span><span class="p">(</span><span class="n">path_name</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+<span class="c1"># return True and abs filename</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">abs_filename</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>输出结果:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;/Users/yijun/Documents/dev_python/fishbase/demo/test_sub_dir/test_file.txt&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;/Users/****/Documents/dev_python/fishbase/demo/sub_dir/test_file.txt&#39;</span><span class="p">)</span>
+<span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;/Users/****/Documents/dev_python/fishbase/demo/sub_dir/demo.txt&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -318,8 +288,8 @@
 </pre></div>
 </div>
 <p>输出结果:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;/Users/yijun/anaconda3/lib/python3.6/site-packages/fishbase/test_sub_dir/demo_file.txt&#39;</span><span class="p">)</span>
-<span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;/Users/yijun/anaconda3/lib/python3.6/site-packages/fishbase/test_sub_dir/demo.txt&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;/Users/*****/anaconda3/lib/python3.6/site-packages/fishbase/test_sub_dir/demo_file.txt&#39;</span><span class="p">)</span>
+<span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;/Users/****/anaconda3/lib/python3.6/site-packages/fishbase/test_sub_dir/demo.txt&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -337,7 +307,7 @@
         <a href="fish_csv.html" class="btn btn-neutral float-right" title="fish_csv csv 函数包" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fish_common.html" class="btn btn-neutral" title="fish_common 基本函数包" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="fish_system.html" class="btn btn-neutral" title="fish_system 系统相关函数包" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
