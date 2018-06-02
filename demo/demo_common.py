@@ -38,8 +38,8 @@ def demo_common_config():
 def demo_common_md5():
     print('--- md5 demo ---')
     print('string md5:', GetMD5.string('hello world!'))
-    print('file md5:', GetMD5.file(get_abs_filename_with_sub_path('conf', 'test_conf.ini')[1]))
-    print('big file md5:', GetMD5.big_file(get_abs_filename_with_sub_path('conf', 'test_conf.ini')[1]))
+    print('file md5:', GetMD5.file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
+    print('big file md5:', GetMD5.big_file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
     print('---')
 
 
@@ -68,41 +68,25 @@ def demo_singleton():
     print('---')
 
 
-# 2018.5.26
-def demo_uuid():
-    print('--- uuid demo ---')
-    # 获得带时间戳的uuid
-    for i in range(2):
-        print(get_uuid(udTime))
-
-    print('---')
-
-    # 时间戳 uuid 的简单写法，兼容之前版本
-    for i in range(2):
-        print(get_time_uuid())
-
-    print('---')
-
-    # 获得随机的uuid
-    for i in range(2):
-        print(get_uuid(udRandom))
-
-    print('---')
-
-
 if __name__ == '__main__':
+
+    # 检查当前系统名称
+    result = check_platform()
+    print(result)
 
     # 定义需要序列化的对象
     class Foo(object):
         a = 1
-        b = [1, 2, 3]
-        c = {'a': 1, 'b': 2}
-
+        
         def test(self):
-            print('hello')
+            pass
 
     # 序列化对象
     result = serialize_instance(Foo)
+    print(result)
+
+    # 获得带时间戳的流水号
+    result = get_time_uuid()
     print(result)
 
     # 定义需要判断的列表
@@ -127,5 +111,3 @@ if __name__ == '__main__':
     print(splice_url_params(dic1))
 
     demo_singleton()
-
-    demo_uuid()

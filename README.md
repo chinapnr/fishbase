@@ -1,6 +1,6 @@
-![build](https://api.travis-ci.org/chinapnr/fishbase.svg?branch=master)
-![doc](https://readthedocs.org/projects/fishbase/badge/?version=latest)
-[![Coverage Status](https://coveralls.io/repos/github/chinapnr/fishbase/badge.svg?branch=master)](https://coveralls.io/github/chinapnr/fishbase?branch=master)
+[![Build Status](https://travis-ci.org/mindjun/fishbase.svg?branch=v1.0.13_develop)](https://travis-ci.org/mindjun/fishbase)
+[![Documentation Status](https://readthedocs.org/projects/fishbae-jun/badge/?version=latest)](https://fishbae-jun.readthedocs.io/en/latest/?badge=latest)
+[![Coverage Status](https://coveralls.io/repos/github/mindjun/fishbase/badge.svg?branch=v1.0.13_develop)](https://coveralls.io/github/mindjun/fishbase?branch=v1.0.13_develop)
 
 ## fishbase 简介
 

@@ -3,4 +3,3 @@
 
 .. automodule:: fish_logger
    :members:
-   :exclude-members: SafeFileHandler

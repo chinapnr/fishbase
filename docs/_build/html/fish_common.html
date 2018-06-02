@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="fish_system 系统相关函数包" href="fish_system.html" />
+    <link rel="next" title="fish_file 文件处理函数包" href="fish_file.html" />
     <link rel="prev" title="更新记录" href="change_log.html" /> 
 
   
@@ -88,7 +88,6 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">fish_common</span></code> 基本函数包</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fish_system.html"><code class="docutils literal notranslate"><span class="pre">fish_system</span></code> 系统相关函数包</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fish_file.html"><code class="docutils literal notranslate"><span class="pre">fish_file</span></code> 文件处理函数包</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fish_csv.html"><code class="docutils literal notranslate"><span class="pre">fish_csv</span></code> csv 函数包</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fish_logger.html"><code class="docutils literal notranslate"><span class="pre">fish_logger</span></code> 日志记录函数包</a></li>
@@ -158,11 +157,11 @@
             
   <div class="section" id="module-fish_common">
 <span id="fish-common"></span><h1><code class="docutils literal notranslate"><span class="pre">fish_common</span></code> 基本函数包<a class="headerlink" href="#module-fish_common" title="Permalink to this headline">¶</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">fish_common</span></code> 包含的是最常用用的一些函数和类。</p>
+<p><code class="docutils literal notranslate"><span class="pre">fish_common</span></code> 包含的是最通用的一些函数和类。</p>
 <dl class="class">
 <dt id="fish_common.GetMD5">
 <em class="property">class </em><code class="descclassname">fish_common.</code><code class="descname">GetMD5</code><a class="headerlink" href="#fish_common.GetMD5" title="Permalink to this definition">¶</a></dt>
-<dd><p>计算普通字符串和一般的文件，对于大文件采取逐步读入的方式，也可以快速计算；基于 Python 的 hashlib.md5() 进行封装和扩展；</p>
+<dd><p>封装了 MD5 计算的类，可以计算普通字符串和一般的文件，对于大文件采取逐步读入的方式，也可以快速计算</p>
 <p>举例如下:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--- md5 demo ---&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;string md5:&#39;</span><span class="p">,</span> <span class="n">GetMD5</span><span class="o">.</span><span class="n">string</span><span class="p">(</span><span class="s1">&#39;hello world!&#39;</span><span class="p">))</span>
@@ -352,64 +351,6 @@
 </dd></dl>
 
 <dl class="function">
-<dt id="fish_common.get_uuid">
-<code class="descclassname">fish_common.</code><code class="descname">get_uuid</code><span class="sig-paren">(</span><em>kind</em><span class="sig-paren">)</span><a class="headerlink" href="#fish_common.get_uuid" title="Permalink to this definition">¶</a></dt>
-<dd><p>获得不重复的 uuid，可以是包含时间戳的 uuid，也可以是完全随机的；基于 Python 的 uuid 类进行封装和扩展；</p>
-<p>支持 get_time_uuid() 这样的写法，不需要参数，也可以表示生成包含时间戳的 uuid，兼容 v1.0.12 以及之前版本；</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
-<li>kind: (int) uuid 类型，整形常量 udTime 表示基于时间戳， udRandom 表示完全随机</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li>result: (string) 返回类似 66b438e3-200d-4fe3-8c9e-2bc431bb3000 的 uuid</li>
-</ul>
-</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>举例如下:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--- uuid demo ---&#39;</span><span class="p">)</span>
-<span class="c1"># 获得带时间戳的uuid</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">get_uuid</span><span class="p">(</span><span class="n">udTime</span><span class="p">))</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="p">)</span>
-
-<span class="c1"># 时间戳 uuid 的简单写法，兼容之前版本</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">get_time_uuid</span><span class="p">())</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="p">)</span>
-
-<span class="c1"># 获得随机的uuid</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">get_uuid</span><span class="p">(</span><span class="n">udRandom</span><span class="p">))</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>执行结果:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="n">uuid</span> <span class="n">demo</span> <span class="o">---</span>
-<span class="n">c8aa92cc</span><span class="o">-</span><span class="mi">60</span><span class="n">ef</span><span class="o">-</span><span class="mf">11e8</span><span class="o">-</span><span class="n">aa87</span><span class="o">-</span><span class="n">acbf52d15413</span>
-<span class="n">c8ab7194</span><span class="o">-</span><span class="mi">60</span><span class="n">ef</span><span class="o">-</span><span class="mf">11e8</span><span class="o">-</span><span class="n">b7bd</span><span class="o">-</span><span class="n">acbf52d15413</span>
-<span class="o">---</span>
-<span class="n">c8ab7368</span><span class="o">-</span><span class="mi">60</span><span class="n">ef</span><span class="o">-</span><span class="mf">11e8</span><span class="o">-</span><span class="mi">996</span><span class="n">c</span><span class="o">-</span><span class="n">acbf52d15413</span>
-<span class="n">c8ab741e</span><span class="o">-</span><span class="mi">60</span><span class="n">ef</span><span class="o">-</span><span class="mf">11e8</span><span class="o">-</span><span class="mi">959</span><span class="n">d</span><span class="o">-</span><span class="n">acbf52d15413</span>
-<span class="o">---</span>
-<span class="mf">8e108777</span><span class="o">-</span><span class="mi">26</span><span class="n">a1</span><span class="o">-</span><span class="mi">42</span><span class="n">d6</span><span class="o">-</span><span class="mi">9</span><span class="n">c4c</span><span class="o">-</span><span class="n">a0c029423eb0</span>
-<span class="mi">8175</span><span class="n">a81a</span><span class="o">-</span><span class="n">f346</span><span class="o">-</span><span class="mi">46</span><span class="n">af</span><span class="o">-</span><span class="mi">9659</span><span class="o">-</span><span class="mi">077</span><span class="n">ad52e3e8f</span>
-<span class="o">---</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
 <dt id="fish_common.if_json_contain">
 <code class="descclassname">fish_common.</code><code class="descname">if_json_contain</code><span class="sig-paren">(</span><em>left_json</em>, <em>right_json</em>, <em>op='strict'</em><span class="sig-paren">)</span><a class="headerlink" href="#fish_common.if_json_contain" title="Permalink to this definition">¶</a></dt>
 <dd><p>判断一个 json 是否包含另外一个 json 的 key，并且 value 相等；</p>
@@ -488,7 +429,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="fish_system.html" class="btn btn-neutral float-right" title="fish_system 系统相关函数包" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="fish_file.html" class="btn btn-neutral float-right" title="fish_file 文件处理函数包" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="change_log.html" class="btn btn-neutral" title="更新记录" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
