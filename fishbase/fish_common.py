@@ -510,7 +510,7 @@ def hmac_sha256(secret, message):
     """
     hashed_str = hmac.new(secret.encode(),
                           message.encode(),
-                          digestmod=hashlib.sha256).digest().hex()
+                          digestmod=hashlib.sha256).hexdigest()
     return hashed_str
 
 
@@ -629,7 +629,7 @@ def check_str(p_str, check_style=ZhType):
 
         print('--- check_str demo---')
         print('non_chinese_result:', check_str('meiyouzhongwen'))
-        print('chinese_result:', check_str('有zhongwen'))
+        print('chinese_result:', check_str(u'有zhongwen'))
         print('---')
 
     执行结果::
@@ -646,4 +646,3 @@ def check_str(p_str, check_style=ZhType):
             return True
         else:
             return False
-

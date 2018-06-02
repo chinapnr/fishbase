@@ -193,4 +193,4 @@ class TestFishCommon(object):
 
         assert check_str('meiyouzhongwen') is False
 
-        assert check_str('有zhongwen') is True
+        assert check_str(u'有zhongwen') is True
