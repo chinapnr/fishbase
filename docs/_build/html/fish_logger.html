@@ -86,11 +86,12 @@
 <li class="toctree-l1"><a class="reference internal" href="change_log.html">更新记录</a></li>
 </ul>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="fish_common.html"><code class="docutils literal notranslate"><span class="pre">fish_common</span></code> 基本函数包</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fish_system.html"><code class="docutils literal notranslate"><span class="pre">fish_system</span></code> 系统相关函数包</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fish_file.html"><code class="docutils literal notranslate"><span class="pre">fish_file</span></code> 文件处理函数包</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fish_csv.html"><code class="docutils literal notranslate"><span class="pre">fish_csv</span></code> csv 函数包</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">fish_logger</span></code> 日志记录函数包</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fish_common.html"><code class="docutils literal"><span class="pre">fish_common</span></code> 基本函数包</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fish_system.html"><code class="docutils literal"><span class="pre">fish_system</span></code> 系统相关函数包</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fish_file.html"><code class="docutils literal"><span class="pre">fish_file</span></code> 文件处理函数包</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fish_date.html"><code class="docutils literal"><span class="pre">fish_date</span></code> 日志记录函数包</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fish_csv.html"><code class="docutils literal"><span class="pre">fish_csv</span></code> csv 函数包</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal"><span class="pre">fish_logger</span></code> 日志记录函数包</a></li>
 </ul>
 
             
@@ -136,7 +137,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li><code class="docutils literal notranslate"><span class="pre">fish_logger</span></code> 日志记录函数包</li>
+      <li><code class="docutils literal"><span class="pre">fish_logger</span></code> 日志记录函数包</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -156,9 +157,9 @@
            <div itemprop="articleBody">
             
   <div class="section" id="module-fish_logger">
-<span id="fish-logger"></span><h1><code class="docutils literal notranslate"><span class="pre">fish_logger</span></code> 日志记录函数包<a class="headerlink" href="#module-fish_logger" title="Permalink to this headline">¶</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">fish_logger</span></code> 包含的是日志处理相关的函数。</p>
-<p>通过 <code class="docutils literal notranslate"><span class="pre">set_log_file()</span></code> 可以方便的进行分卷的日志文件记录。</p>
+<span id="fish-logger"></span><h1><code class="docutils literal"><span class="pre">fish_logger</span></code> 日志记录函数包<a class="headerlink" href="#module-fish_logger" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal"><span class="pre">fish_logger</span></code> 包含的是日志处理相关的函数。</p>
+<p>通过 <code class="docutils literal"><span class="pre">set_log_file()</span></code> 可以方便的进行分卷的日志文件记录。</p>
 <dl class="function">
 <dt id="fish_logger.set_log_file">
 <code class="descclassname">fish_logger.</code><code class="descname">set_log_file</code><span class="sig-paren">(</span><em>local_file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fish_logger.set_log_file" title="Permalink to this definition">¶</a></dt>
@@ -173,13 +174,13 @@
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">无</p>
 </td>
 </tr>
 </tbody>
 </table>
 <p>举例如下:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fishbase.fish_logger</span> <span class="k">import</span> <span class="o">*</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fishbase.fish_logger</span> <span class="k">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">fishbase.fish_file</span> <span class="k">import</span> <span class="o">*</span>
 
 <span class="n">log_abs_filename</span> <span class="o">=</span> <span class="n">get_abs_filename_with_sub_path</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="s1">&#39;fish_test.log&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
@@ -258,9 +259,7 @@
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enableSticky();
-          
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script> 
 

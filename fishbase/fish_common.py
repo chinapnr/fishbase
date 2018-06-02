@@ -17,6 +17,7 @@ import hashlib
 import os
 from collections import OrderedDict
 import functools
+import hmac
 
 if sys.version > '3':
     import configparser
@@ -30,6 +31,10 @@ udRandom = 10002
 # order const
 odASC = 10011
 odDES = 10012
+
+# string check_style const
+ZhType = 'chinese'
+
 
 # 读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
 # 2017.2.23 #19008 create by David Yi
@@ -439,7 +444,7 @@ def splice_url_params(dic):
 # v1.0.13 #19043, edit by Hu Jun, edit by David Yi
 def sorted_list_from_dict(p_dict, order=odASC):
     """
-    根据字典的 value 进行排序，并以列表形式返回
+    sorted_list_from_dict，根据字典的 value 进行排序，并以列表形式返回
 
     :param:
         * p_dict: (dict) 需要排序的字典
@@ -449,21 +454,23 @@ def sorted_list_from_dict(p_dict, order=odASC):
 
     举例如下::
 
-        # 定义待处理字典
+        print('--- sorted_list_from_dict demo ---')
         dict1 = {'a_key': 'a_value', '1_key': '1_value', 'A_key': 'A_value', 'z_key': 'z_value'}
         print(dict1)
-        # 升序结果
         list1 = sorted_list_from_dict(dict1, odASC)
         print('ascending order result is:', list1)
-        # 降序结果
         list1 = sorted_list_from_dict(dict1, odDES)
         print('descending order result is:', list1)
+        print('---')
 
     执行结果::
 
+        --- sorted_list_from_dict demo ---
         {'a_key': 'a_value', 'A_key': 'A_value', '1_key': '1_value', 'z_key': 'z_value'}
         ascending order result is: ['1_value', 'A_value', 'a_value', 'z_value']
         descending order result is: ['z_value', 'a_value', 'A_value', '1_value']
+        ---
+
     """
     o_list = sorted(value for (key, value) in p_dict.items())
 
@@ -471,3 +478,172 @@ def sorted_list_from_dict(p_dict, order=odASC):
         return o_list
     elif order == odDES:
         return o_list[::-1]
+
+
+# v1.0.13 #19044, original by Jia Chunying, edit by David Yi, edit by Hu Jun
+def hmac_sha256(secret, message):
+    """
+    hmac_sha256，通过秘钥获取消息的hash值
+
+    :param:
+        * secret: (string) 密钥
+        * message: (string) 消息输入
+    :return:
+        * hashed_str: (string) 长度为64的小写hex string 类型的hash值
+
+    举例如下::
+
+        print('--- hmac_sha256 demo---')
+        # 定义待hash的消息
+        message = 'Hello HMAC'
+        # 定义HMAC的秘钥
+        secret = '12345678'
+        print(hmac_sha256(secret, message))
+        print('---')
+
+    执行结果::
+
+        --- hmac_sha256 demo---
+        5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f
+        ---
+
+    """
+    hashed_str = hmac.new(secret.encode(),
+                          message.encode(),
+                          digestmod=hashlib.sha256).digest().hex()
+    return hashed_str
+
+
+# v1.0.13 #19045, edit by David Yi, edit by Hu Jun
+def if_element_is_timestamp(source):
+    """
+    if_element_is_timestamp，检查对象是否是unix时间戳
+
+    :param:
+        * source: （string, int）待检查对象
+
+    :return:
+        * result: (bool) 检查元素是timestamp，返回 True，否则都返回 False
+
+    举例如下::
+
+        print('--- if_element_is_timestamp demo---')
+        source1 = 1234567890
+        print(if_element_is_timestamp(source1))
+        source2 = '1234567890'
+        print(if_element_is_timestamp(source2))
+        source3 = [1234567890]
+        print(if_element_is_timestamp(source3))
+        print('---')
+
+    执行结果::
+
+        --- if_element_is_timestamp demo---
+        True
+        True
+        False
+        ---
+
+    """
+    if isinstance(source, int):
+        if len(str(source)) == 10:
+            return True
+    elif isinstance(source, str):
+        if source.isdigit() and len(source) == 10:
+            return True
+    return False
+
+
+# v1.0.13 #19046, edit by David Yi, edit by Hu Jun
+def check_number_len(p_number, min_length=None, max_length=None):
+    """
+    check_number_len，判断整数的位数、字符串的长度否在限定长度内
+
+    :param:
+        * p_number: (string, int) 需要判断的变量
+        * min_length: (int) 变量的最小长度，默认为None
+        * max_length: (int) 变量的最大长度，默认为None
+
+    :return:
+        * True 长度在要求长度内
+        * False 长度不在要求长度内
+
+    举例如下::
+
+        print('--- check_number_len demo ---')
+        check_param = '1234567890'
+        min_length = 0
+        max_length = 64
+        print(check_number_len(check_param, min_length, max_length))
+        print('---')
+
+        check_param = 1234567890
+        print(check_number_len(check_param, min_length, max_length))
+        print('---')
+
+        check_param = '1234567890'*10
+        print(check_number_len(check_param, min_length, max_length))
+        print('---')
+
+        min_length = 20
+        print(check_number_len(check_param, min_length, max_length))
+        print('---')
+
+    执行结果::
+
+       --- check_number_len demo ---
+        True
+        ---
+        True
+        ---
+        False
+        ---
+        False
+        ---
+
+    """
+    length = len(str(p_number))
+    # 参数最大值不为 None 则判断是否超过最大值
+    if max_length is not None and length > max_length:
+        return False
+    # 参数最小值不为 None 则判断是否小于最小值
+    if min_length is not None and length < min_length:
+        return False
+    return True
+
+
+# v1.0.13 #19047, edit by David Yi, edit by Hu Jun
+def check_str(p_str, check_style=ZhType):
+    """
+    check_str，检查字符串是否含有指定类型字符
+
+    :param:
+        * p_str: (string) 需要判断的字符串
+        * check_style: (string) 需要判断的字符类型，目前默认为 ZhType(检查是否含有中文)，向后兼容
+
+    :return:
+        * True 含有指定类型字符
+        * False 不含有指定类型字符
+
+    举例如下::
+
+        print('--- check_str demo---')
+        print('non_chinese_result:', check_str('meiyouzhongwen'))
+        print('chinese_result:', check_str('有zhongwen'))
+        print('---')
+
+    执行结果::
+
+        --- check_str demo---
+        non_chinese_result: False
+        chinese_result: True
+        ---
+
+    """
+    if check_style == ZhType:
+        check_pattern = re.compile(u'[\u4e00-\u9fa5]+')
+        if check_pattern.search(p_str):
+            return True
+        else:
+            return False
+

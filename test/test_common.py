@@ -142,3 +142,55 @@ class TestFishCommon(object):
         list1 = sorted_list_from_dict(dict1, odDES)
 
         assert list1 == ['z_value', 'a_value', 'A_value', '1_value']
+
+    # test hmac_sha256() tc
+    def test_hmac_sha256_01(self):
+
+        # 定义待hash的消息
+        message = 'Hello HMAC'
+        # 定义HMAC的秘钥
+        secret = '12345678'
+
+        assert hmac_sha256(secret, message) == '5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f'
+
+    # test if_element_is_timestamp() tc
+    def test_if_element_is_timestamp_01(self):
+
+        source1 = 1234567890
+        assert if_element_is_timestamp(source1) is True
+
+        source2 = '1234567890'
+        assert if_element_is_timestamp(source2) is True
+
+        source3 = [1234567890]
+        assert if_element_is_timestamp(source3) is False
+
+    # test check_number_len() tc
+    def test_check_number_len_01(self):
+
+        check_param = '1234567890'
+        # 定义最小长度
+        min_length = 0
+        # 定义最大长度
+        max_length = 64
+
+        assert check_number_len(check_param, min_length, max_length) is True
+
+        # 定义待检查类型为整型
+        check_param_int = 1234567890
+        assert check_number_len(check_param_int, min_length, max_length) is True
+
+        # 定义最大长度为8
+        max_length_8 = 8
+        assert check_number_len(check_param, min_length, max_length_8) is False
+
+        # 定义最小长度为20
+        min_length_20 = 20
+        assert check_number_len(check_param, min_length_20, max_length) is False
+
+    # test check_str() tc
+    def test_check_str_01(self):
+
+        assert check_str('meiyouzhongwen') is False
+
+        assert check_str('有zhongwen') is True
