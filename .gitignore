@@ -104,3 +104,4 @@ venv.bak/
 .mypy_cache/
 test/log
 /_build/*
+demo/log
