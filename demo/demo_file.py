@@ -9,7 +9,7 @@ from fishbase.fish_file import *
 # 2018.5.26 edit, #19040
 def demo_get_abs_filename_with_sub_path():
 
-    print('get_abs_filename_with_sub_path')
+    print('demo get_abs_filename_with_sub_path')
     # define sub dir
     path_name = 'sub_dir'
     # define not exists file
@@ -32,20 +32,6 @@ if __name__ == '__main__':
 
     demo_get_abs_filename_with_sub_path()
 
-    print('test get_abs_filename_with_sub_path_module() ')
-    # 定义子路径名称
-    sub_path = 'test_sub_dir'
-    # 定义存在的文件名称
-    filename_existent = 'demo_file.txt'
-    # 定义不存在的文件名称
-    filename_non_existent = 'demo.txt'
-    # 生成下一级路径文件的完整文件名
-    result = get_abs_filename_with_sub_path_module(sub_path, filename_existent)
-    print(result)
-    result = get_abs_filename_with_sub_path_module(sub_path, filename_non_existent)
-    print(result)
-    print('---')
-
     print('demo check_sub_path_create() ')
     # 定义子路径名称
     sub_path = 'demo_sub_dir'
@@ -54,3 +40,6 @@ if __name__ == '__main__':
     result = check_sub_path_create(sub_path)
     print(result)
     print('---')
+
+    print('demo check_ext_add()')
+

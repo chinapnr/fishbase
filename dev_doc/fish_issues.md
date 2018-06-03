@@ -1,6 +1,6 @@
 ##fish_common 特性列表
 
-last update: 2018.5.26
+last update: 2018.6.3
 
 #### v1.0.13
 
@@ -11,6 +11,8 @@ last update: 2018.5.26
 * 19041, file, delete function check_kind_path_file(), it's feature include in get_abs_filename_with_sub_path(); ok
 * 19042, file, edit function check_sub_path_create(), edit docstring, add unittest; ok
 * 19043, common, edit function sorted_list_from_dict(), optimize, doc and unittest; ok
+* 19044, file, remove auto_add_file_ext(); ok
+* 19045, file, remove get_abs_filename_with_sub_path_module(); ok
 
 ---
 
