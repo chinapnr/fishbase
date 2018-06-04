@@ -11,8 +11,12 @@ last update: 2018.5.26
 * 19041, file, delete function check_kind_path_file(), it's feature include in get_abs_filename_with_sub_path(); ok
 * 19042, file, edit function check_sub_path_create(), edit docstring, add unittest; ok
 * 19043, common, edit function sorted_list_from_dict(), optimize, doc and unittest; ok
-
----
+* 19044, common, edit function sorted_list_from_dict(), update doc; ok
+* 19045, common, edit function hmac_sha256(), optimize, doc and unittest; ok
+* 19046, common, edit function if_element_is_timestamp(), optimize, doc and unittest; ok
+* 19047, common, edit function check_number_len(), optimize, doc and unittest; ok
+* 19048, common, edit function check_str(), optimize, doc and unittest; ok
+* 19049, date, edit function previous_months_date(), optimize, doc and unittest; ok
 
 #### v1.0.12
 

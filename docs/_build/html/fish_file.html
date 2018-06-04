@@ -1,0 +1,368 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>fish_file 文件处理函数包 &mdash; fishbase 1.0.12 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="fish_date 日志记录函数包" href="fish_date.html" />
+    <link rel="prev" title="fish_system 系统相关函数包" href="fish_system.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> fishbase
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.12
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="change_log.html">更新记录</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="fish_common.html"><code class="docutils literal"><span class="pre">fish_common</span></code> 基本函数包</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fish_system.html"><code class="docutils literal"><span class="pre">fish_system</span></code> 系统相关函数包</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal"><span class="pre">fish_file</span></code> 文件处理函数包</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fish_date.html"><code class="docutils literal"><span class="pre">fish_date</span></code> 日志记录函数包</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fish_csv.html"><code class="docutils literal"><span class="pre">fish_csv</span></code> csv 函数包</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fish_logger.html"><code class="docutils literal"><span class="pre">fish_logger</span></code> 日志记录函数包</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">fishbase</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li><code class="docutils literal"><span class="pre">fish_file</span></code> 文件处理函数包</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/fish_file.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-fish_file">
+<span id="fish-file"></span><h1><code class="docutils literal"><span class="pre">fish_file</span></code> 文件处理函数包<a class="headerlink" href="#module-fish_file" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal"><span class="pre">fish_file</span></code> 包含的是文件、路径处理相关的函数。</p>
+<p>各类相对绝对文件的路径处理等都是开发时候经常需要处理的问题，fish_file 中的函数试图简化这些操作。</p>
+<dl class="function">
+<dt id="fish_file.check_sub_path_create">
+<code class="descclassname">fish_file.</code><code class="descname">check_sub_path_create</code><span class="sig-paren">(</span><em>sub_path</em><span class="sig-paren">)</span><a class="headerlink" href="#fish_file.check_sub_path_create" title="Permalink to this definition">¶</a></dt>
+<dd><p>检查当前路径下的某个子路径是否存在, 不存在则创建；</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li>sub_path: (string) 下一级的某路径名称</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>返回类型 (tuple)，有两个值</li>
+<li>True: 路径存在，False: 不需要创建</li>
+<li>False: 路径不存在，True: 创建成功</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>举例如下:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 定义子路径名称</span>
+<span class="n">sub_path</span> <span class="o">=</span> <span class="s1">&#39;demo_sub_dir&#39;</span>
+<span class="c1"># 检查当前路径下的一个子路径是否存在，不存在则创建</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;check sub path:&#39;</span><span class="p">,</span> <span class="n">sub_path</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">check_sub_path_create</span><span class="p">(</span><span class="n">sub_path</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>输出结果:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">check</span> <span class="n">sub</span> <span class="n">path</span><span class="p">:</span> <span class="n">demo_sub_dir</span>
+<span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fish_file.get_abs_filename_with_sub_path">
+<code class="descclassname">fish_file.</code><code class="descname">get_abs_filename_with_sub_path</code><span class="sig-paren">(</span><em>sub_path</em>, <em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#fish_file.get_abs_filename_with_sub_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>生成当前路径下一级路径某文件的完整文件名；</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li>sub_path: (string) 下一级的某路径名称</li>
+<li>filename: (string) 下一级路径的某个文件名</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>返回类型 (tuple)，有两个值，第一个为 flag，第二个为文件名，说明见下</li>
+<li>flag: (bool) 如果文件存在，返回 True，文件不存在，返回 False</li>
+<li>abs_filename: (string) 指定 filename 的包含路径的长文件名</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>举例如下:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;get_abs_filename_with_sub_path&#39;</span><span class="p">)</span>
+<span class="c1"># define sub dir</span>
+<span class="n">path_name</span> <span class="o">=</span> <span class="s1">&#39;sub_dir&#39;</span>
+<span class="c1"># define not exists file</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;test_file.txt&#39;</span>
+
+<span class="n">abs_filename</span> <span class="o">=</span> <span class="n">get_abs_filename_with_sub_path</span><span class="p">(</span><span class="n">path_name</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+<span class="c1"># return False and abs filename</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">abs_filename</span><span class="p">)</span>
+
+<span class="c1"># define exists file</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;demo.txt&#39;</span>
+<span class="n">abs_filename</span> <span class="o">=</span> <span class="n">get_abs_filename_with_sub_path</span><span class="p">(</span><span class="n">path_name</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+<span class="c1"># return True and abs filename</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">abs_filename</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>输出结果:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;/Users/****/Documents/dev_python/fishbase/demo/sub_dir/test_file.txt&#39;</span><span class="p">)</span>
+<span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;/Users/****/Documents/dev_python/fishbase/demo/sub_dir/demo.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fish_file.get_abs_filename_with_sub_path_module">
+<code class="descclassname">fish_file.</code><code class="descname">get_abs_filename_with_sub_path_module</code><span class="sig-paren">(</span><em>sub_path</em>, <em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#fish_file.get_abs_filename_with_sub_path_module" title="Permalink to this definition">¶</a></dt>
+<dd><p>生成使用模块时的下一级路径某文件的完整文件名；</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li>sub_path: (string) 下一级的某路径名称</li>
+<li>filename: (string) 下一级路径的某个文件名</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>返回类型 (tuple)，有两个值，第一个为 flag，第二个为文件名，说明见下</li>
+<li>flag: (bool) 如果文件存在，返回 True，文件不存在，返回 False</li>
+<li>abs_filename: (string) 指定 filename 的包含路径的长文件名，注意是模块安装的路径，不是应用程序的路径</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>举例如下:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 定义子路径名称</span>
+<span class="n">sub_path</span> <span class="o">=</span> <span class="s1">&#39;test_sub_dir&#39;</span>
+<span class="c1"># 定义存在的文件名称</span>
+<span class="n">filename_existent</span> <span class="o">=</span> <span class="s1">&#39;demo_file.txt&#39;</span>
+<span class="c1"># 定义不存在的文件名称</span>
+<span class="n">filename_non_existent</span> <span class="o">=</span> <span class="s1">&#39;demo.txt&#39;</span>
+<span class="c1"># 生成下一级路径文件的完整文件名</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">get_abs_filename_with_sub_path_module</span><span class="p">(</span><span class="n">sub_path</span><span class="p">,</span> <span class="n">filename_existent</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">get_abs_filename_with_sub_path_module</span><span class="p">(</span><span class="n">sub_path</span><span class="p">,</span> <span class="n">filename_non_existent</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>输出结果:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;/Users/*****/anaconda3/lib/python3.6/site-packages/fishbase/test_sub_dir/demo_file.txt&#39;</span><span class="p">)</span>
+<span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;/Users/****/anaconda3/lib/python3.6/site-packages/fishbase/test_sub_dir/demo.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="fish_date.html" class="btn btn-neutral float-right" title="fish_date 日志记录函数包" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="fish_system.html" class="btn btn-neutral" title="fish_system 系统相关函数包" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, David Yi.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.12',
+            LANGUAGE:'zh-CN',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

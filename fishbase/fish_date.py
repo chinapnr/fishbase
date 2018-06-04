@@ -3,6 +3,9 @@
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 
+# months of a year const
+MONTH = 12
+
 
 # 2016.4.26
 # 输入: date_kind, eg 'last month', 'this month'
@@ -32,3 +35,42 @@ def get_date_range(date_kind):
         last_day = this_month_last_day
 
     return first_day, last_day
+
+
+# v1.0.13 #19049, edit by David Yi, edit by Hu Jun
+def previous_months_date(n):
+    """
+    previous_months_date，获得当前时间往前n个月的时间（年月）
+
+    :param:
+        * n: (int) n个月前，正整数
+
+    :return:
+        * result: (string) n个月前的年月
+
+    举例如下::
+
+        print('--- previous_months_date demo---')
+        print('now is :', str(datetime.now().year*100 + datetime.now().month))
+        print('last month:', previous_months_date(1))
+        print('10 months ago:', previous_months_date(10))
+        print('---')
+
+    执行结果::
+
+        --- previous_months_date demo---
+        now is : 201806
+        last month: 201805
+        10 months ago: 201708
+        ---
+
+    """
+    now = datetime.now()
+    current_months_count = now.year * MONTH + now.month
+    current_months_count -= n
+    result_year, result_month = divmod(current_months_count, MONTH)
+    if result_month == 0:
+        result_year -= 1
+        result_month = MONTH
+    result = ''.join(['%04d' % result_year, '%02d' % result_month])
+    return result
