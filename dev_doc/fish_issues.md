@@ -12,12 +12,18 @@ last update: 2018.5.26
 * 19042, file, edit function check_sub_path_create(), edit docstring, add unittest; ok
 * 19043, common, edit function sorted_list_from_dict(), optimize, doc and unittest; ok
 * 19044, common, edit function sorted_list_from_dict(), update doc; ok
+* 19045, common, edit function hmac_sha256(), optimize, doc and unittest; ok
+* 19046, common, edit function if_element_is_timestamp(), optimize, doc and unittest; ok
+* 19047, common, edit function check_number_len(), optimize, doc and unittest; ok
+* 19048, common, edit function check_str(), optimize, doc and unittest; ok
+* 19049, date, edit function previous_months_date(), optimize, doc and unittest; ok
+---
 
 #### v1.0.12
 
 * 19036, edit fish_base to fishbase
 
-last update: 2018.5.18
+---
 
 #### v1.0.11
 
@@ -89,15 +95,6 @@ fish_common 目前测试覆盖率 65%
 
 ---
 
-待排
-
-* 19012，优化日志功能，缩写line->ln, 增加可选是否记录线程的编号
-* 19014，unittest, 完善 test_common 部分
-* 19025，file 中剩余函数也加入 docstring 说明
-* 19026，构建统一单元测试，从 csv 中开始
-* 19027，file auto_add_file_ext() 原来实现方式有问题，删除该函数
-* 19028，修改完善 demo_file.py 中的例子；ok
-
-安装
+补充
 
 * 文档主题需要安装 pip install sphinx_rtd_theme

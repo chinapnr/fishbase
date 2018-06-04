@@ -37,7 +37,7 @@ def get_date_range(date_kind):
     return first_day, last_day
 
 
-# v1.0.13 #19048, edit by David Yi, edit by Hu Jun
+# v1.0.13 #19049, edit by David Yi, edit by Hu Jun
 def previous_months_date(n):
     """
     previous_months_date，获得当前时间往前n个月的时间（年月）
