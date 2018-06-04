@@ -40,7 +40,7 @@ ZhType = 'chinese'
 # 2017.2.23 #19008 create by David Yi
 # 2018.2.12 #11014 edit by David Yi, 增加返回内容，字典长度,
 # 2018.4.18 #19015 加入 docstring，完善文档说明
-# 2018.5.14 v1.0.11 $19028 逻辑修改，更加严密
+# 2018.5.14 v1.0.11 #19028 逻辑修改，更加严密
 def conf_as_dict(conf_filename):
     """
     读入 ini 配置文件，返回根据配置文件内容生成的字典类型变量；
@@ -444,7 +444,7 @@ def splice_url_params(dic):
 # v1.0.13 #19043, edit by Hu Jun, edit by David Yi
 def sorted_list_from_dict(p_dict, order=odASC):
     """
-    sorted_list_from_dict，根据字典的 value 进行排序，并以列表形式返回
+    根据字典的 value 进行排序，并以列表形式返回
 
     :param:
         * p_dict: (dict) 需要排序的字典
@@ -454,7 +454,7 @@ def sorted_list_from_dict(p_dict, order=odASC):
 
     举例如下::
 
-        print('--- sorted_list_from_dict demo ---')
+        # 定义待处理字典
         dict1 = {'a_key': 'a_value', '1_key': '1_value', 'A_key': 'A_value', 'z_key': 'z_value'}
         print(dict1)
         list1 = sorted_list_from_dict(dict1, odASC)
@@ -465,7 +465,6 @@ def sorted_list_from_dict(p_dict, order=odASC):
 
     执行结果::
 
-        --- sorted_list_from_dict demo ---
         {'a_key': 'a_value', 'A_key': 'A_value', '1_key': '1_value', 'z_key': 'z_value'}
         ascending order result is: ['1_value', 'A_value', 'a_value', 'z_value']
         descending order result is: ['z_value', 'a_value', 'A_value', '1_value']
@@ -480,7 +479,7 @@ def sorted_list_from_dict(p_dict, order=odASC):
         return o_list[::-1]
 
 
-# v1.0.13 #19044, original by Jia Chunying, edit by David Yi, edit by Hu Jun
+# v1.0.13 #19045, original by Jia Chunying, edit by David Yi, edit by Hu Jun
 def hmac_sha256(secret, message):
     """
     hmac_sha256，通过秘钥获取消息的hash值
@@ -514,7 +513,7 @@ def hmac_sha256(secret, message):
     return hashed_str
 
 
-# v1.0.13 #19045, edit by David Yi, edit by Hu Jun
+# v1.0.13 #19046, edit by David Yi, edit by Hu Jun
 def if_element_is_timestamp(source):
     """
     if_element_is_timestamp，检查对象是否是unix时间戳
@@ -554,7 +553,7 @@ def if_element_is_timestamp(source):
     return False
 
 
-# v1.0.13 #19046, edit by David Yi, edit by Hu Jun
+# v1.0.13 #19047, edit by David Yi, edit by Hu Jun
 def check_number_len(p_number, min_length=None, max_length=None):
     """
     check_number_len，判断整数的位数、字符串的长度否在限定长度内
@@ -612,7 +611,7 @@ def check_number_len(p_number, min_length=None, max_length=None):
     return True
 
 
-# v1.0.13 #19047, edit by David Yi, edit by Hu Jun
+# v1.0.13 #19048, edit by David Yi, edit by Hu Jun
 def check_str(p_str, check_style=ZhType):
     """
     check_str，检查字符串是否含有指定类型字符
