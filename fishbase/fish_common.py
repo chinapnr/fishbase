@@ -90,6 +90,9 @@ def conf_as_dict(conf_filename):
     """
     flag = False
 
+    a = 1
+    b = a
+
     # 检查文件是否存在
     if not(os.path.isfile(conf_filename)):
         return flag,
