@@ -11,6 +11,12 @@
 * 19041, file, delete function ``check_kind_path_file()``
 * 19042, file, edit function :meth:`fish_file.check_sub_path_create`, optimize, doc and unittest
 * 19043, common, edit function :meth:`fish_common.sorted_list_from_dict()`, optimize, doc and unittest
+* 19044, common, edit function :meth:`fish_common.hmac_sha256()`, optimize, doc and unittest
+* 19045, common, edit function :meth:`fish_common.if_element_is_timestamp()`, optimize, doc and unittest
+* 19046, common, edit function :meth:`fish_common.check_number_len()`, optimize, doc and unittest
+* 19047, common, edit function :meth:`fish_common.check_str()`, optimize, doc and unittest
+* 19048, common, edit function :meth:`fish_date.previous_months_date()`, optimize, doc and unittest
+
 
 2018.5.21 v1.0.12
 ---------------------------

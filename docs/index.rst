@@ -36,6 +36,7 @@ API 函数列表
    fish_common
    fish_system
    fish_file
+   fish_date
    fish_csv
    fish_logger
 
