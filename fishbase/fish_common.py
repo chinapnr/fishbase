@@ -491,7 +491,7 @@ def sorted_list_from_dict(p_dict, order=odASC):
         return o_list[::-1]
 
 
-# v1.0.13 #19046, edit by David Yi, edit by Hu Jun
+# v1.0.13 #36, edit by David Yi, edit by Hu Jun
 def check_str(p_str, check_style=charChinese):
     """
     检查字符串是否含有指定类型字符
