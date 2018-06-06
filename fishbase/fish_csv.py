@@ -20,7 +20,7 @@ def csv_file_to_list(csv_filename, deli=',', del_blank_row=True):
         * csv_filename: (string) csv 文件的长文件名
         * deli: (string) csv 文件分隔符，默认为逗号
         * del_blank_row: (string) 是否要删除空行，默认为删除
-    :returns:
+    :return:
         * csv_list: (list) 转换后的 list
 
     举例如下::

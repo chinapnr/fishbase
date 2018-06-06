@@ -1,7 +1,7 @@
 # coding=utf-8
 """
 
-``fish_common`` 包含的是最通用的一些函数和类。
+``fish_common`` 包含的是最常用用的一些函数和类。
 
 """
 
@@ -11,32 +11,39 @@
 # 2016.10.4 v1.0.9 add #19001 check_sub_path_create()
 # 2017.1.8 v1.0.9 #19003, remove file related functions to fish_file.py
 import sys
+import uuid
+import re
+import hashlib
+import os
+from collections import OrderedDict
+import functools
 
 if sys.version > '3':
     import configparser
 else:
     import ConfigParser as configparser
 
-import uuid
-import re
-import hashlib
-import os
-from collections import OrderedDict
+# uuid kind const
+udTime = 10001
+udRandom = 10002
+
+# order const
+odASC = 10011
+odDES = 10012
 
 
 # 读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
 # 2017.2.23 #19008 create by David Yi
 # 2018.2.12 #11014 edit by David Yi, 增加返回内容，字典长度,
 # 2018.4.18 #19015 加入 docstring，完善文档说明
-# 2018.5.14 v1.0.11 $19028 逻辑修改，更加严密
+# 2018.5.14 v1.0.11 #19028 逻辑修改，更加严密
 def conf_as_dict(conf_filename):
-
     """
     读入 ini 配置文件，返回根据配置文件内容生成的字典类型变量；
 
     :param:
         * conf_filename: (string) 需要读入的 ini 配置文件长文件名
-    :returns:
+    :return:
         * flag: (bool) 读取配置文件是否正确，正确返回 True，错误返回 False
         * d: (dict) 如果读取配置文件正确返回的包含配置文件内容的字典
         * count: (int) 读取到的配置文件有多少个 key 的数量
@@ -113,7 +120,6 @@ def conf_as_dict(conf_filename):
 # 2018.2.13 create by David Yi, #11015
 # 2018.4.20 5.19 edit, #19019，增加 docstring
 class SingleTon(object):
-
     """
     申明一个单例类，可以作为需要单例类时候申明用的父类
 
@@ -156,22 +162,7 @@ class SingleTon(object):
         return ob
 
 
-# 通过调用os.platform来获得当前操作系统名称
-# 2017.2.13 create by David Yi, #19006
-def check_platform():
-    if sys.platform == 'win32':
-        return 'win32'
-    elif sys.platform == 'darwin':
-        return 'macos'
-    elif sys.platform == 'linux':
-        return 'linux'
-    else:
-        return sys.platform
-
-
 # 对象序列化
-# 输入: info: 要显示的字段解释，field_default：默认的字段名称
-# 输出: 字段名称
 # 2015.6.14  edit by david.yi
 def serialize_instance(obj):
     d = {'__classname__': type(obj).__name__}
@@ -179,15 +170,64 @@ def serialize_instance(obj):
     return d
 
 
-# 功能：获取带时间戳的流水号
-# 输入参数：无
-# 输出参数：流水号（string)
-# 2017.2.22, create by David.Yi, #19006
-def get_time_uuid():
-    # Generate a UUID from a host ID, sequence number, and the current time.
-    # If node is not given, getnode() is used to obtain the hardware address.
-    # If clock_seq is given, it is used as the sequence number; otherwise a random 14-bit sequence number is chosen.
-    return str(uuid.uuid1())
+# 2018.5.26 v1.0.13 #19038, edit by David Yi
+def get_uuid(kind):
+    """
+    获得不重复的 uuid，可以是包含时间戳的 uuid，也可以是完全随机的；基于 Python 的 uuid 类进行封装和扩展；
+
+    支持 get_time_uuid() 这样的写法，不需要参数，也可以表示生成包含时间戳的 uuid，兼容 v1.0.12 以及之前版本；
+
+    :param:
+        * kind: (int) uuid 类型，整形常量 udTime 表示基于时间戳， udRandom 表示完全随机
+    :return:
+        * result: (string) 返回类似 66b438e3-200d-4fe3-8c9e-2bc431bb3000 的 uuid
+
+    举例如下::
+
+        print('--- uuid demo ---')
+        # 获得带时间戳的uuid
+        for i in range(2):
+            print(get_uuid(udTime))
+
+        print('---')
+
+        # 时间戳 uuid 的简单写法，兼容之前版本
+        for i in range(2):
+            print(get_time_uuid())
+
+        print('---')
+
+        # 获得随机的uuid
+        for i in range(2):
+            print(get_uuid(udRandom))
+
+        print('---')
+
+    执行结果::
+
+        --- uuid demo ---
+        c8aa92cc-60ef-11e8-aa87-acbf52d15413
+        c8ab7194-60ef-11e8-b7bd-acbf52d15413
+        ---
+        c8ab7368-60ef-11e8-996c-acbf52d15413
+        c8ab741e-60ef-11e8-959d-acbf52d15413
+        ---
+        8e108777-26a1-42d6-9c4c-a0c029423eb0
+        8175a81a-f346-46af-9659-077ad52e3e8f
+        ---
+
+    """
+
+    if kind == udTime:
+        return str(uuid.uuid1())
+    elif kind == udRandom:
+        return str(uuid.uuid4())
+    else:
+        return str(uuid.uuid4())
+
+
+# 2018.5.26 v1.0.13 #19038, edit by David Yi
+get_time_uuid = functools.partial(get_uuid, udTime)
 
 
 # 功能：判断参数列表是否存在不合法的参数，如果存在None或空字符串或空格字符串，则返回True, 否则返回False
@@ -260,7 +300,7 @@ class FishCache:
 # 2018.5.8 edit by David Yi, edit from Jia Chunying，#19026
 class GetMD5(object):
     """
-    封装了 MD5 计算的类，可以计算普通字符串和一般的文件，对于大文件采取逐步读入的方式，也可以快速计算
+    计算普通字符串和一般的文件，对于大文件采取逐步读入的方式，也可以快速计算；基于 Python 的 hashlib.md5() 进行封装和扩展；
 
     举例如下::
 
@@ -338,7 +378,7 @@ def if_json_contain(left_json, right_json, op='strict'):
         * left_json: (dict) 需要判断的 json，我们称之为 left
         * right_json: (dict) 需要判断的 json，我们称之为 right，目前是判断 left 是否包含在 right 中
         * op: (string) 判断操作符，目前只有一种，默认为 strict，向后兼容
-    :returns:
+    :return:
         * result: (bool) right json 包含 left json 的 key，并且 value 一样，返回 True，否则都返回 False
 
     举例如下::
@@ -372,7 +412,7 @@ def splice_url_params(dic):
 
     :param:
         * dic: (dict) 参数键值对
-    :returns:
+    :return:
         * result: (string) 拼接好的参数
 
     举例如下::
@@ -395,3 +435,40 @@ def splice_url_params(dic):
     # 去掉最后一个&字符
     url = url[:len(url) - 1]
     return url
+
+
+# v1.0.13 #19043, edit by Hu Jun, edit by David Yi
+def sorted_list_from_dict(p_dict, order=odASC):
+    """
+    根据字典的 value 进行排序，并以列表形式返回
+
+    :param:
+        * p_dict: (dict) 需要排序的字典
+        * order: (int) 排序规则，odASC 升序，odDES 降序，默认为升序
+    :return:
+        * o_list: (list) 排序后的 list
+
+    举例如下::
+
+        # 定义待处理字典
+        dict1 = {'a_key': 'a_value', '1_key': '1_value', 'A_key': 'A_value', 'z_key': 'z_value'}
+        print(dict1)
+        # 升序结果
+        list1 = sorted_list_from_dict(dict1, odASC)
+        print('ascending order result is:', list1)
+        # 降序结果
+        list1 = sorted_list_from_dict(dict1, odDES)
+        print('descending order result is:', list1)
+
+    执行结果::
+
+        {'a_key': 'a_value', 'A_key': 'A_value', '1_key': '1_value', 'z_key': 'z_value'}
+        ascending order result is: ['1_value', 'A_value', 'a_value', 'z_value']
+        descending order result is: ['z_value', 'a_value', 'A_value', '1_value']
+    """
+    o_list = sorted(value for (key, value) in p_dict.items())
+
+    if order == odASC:
+        return o_list
+    elif order == odDES:
+        return o_list[::-1]

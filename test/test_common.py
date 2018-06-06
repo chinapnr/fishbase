@@ -9,9 +9,10 @@ from fishbase.fish_common import *
 
 
 # 2018.5.14 v1.0.11 #19027 create by David Yi, 开始进行单元测试
+# 2018.5.26 v1.0.13 #19038 edit, 增加 get_uuid() 的 ut
 class TestFishCommon(object):
 
-    # 测试 conf_as_dict() 通过的 tc
+    # 测试 conf_as_dict()  tc
     def test_config_dict_01(self):
         # 定义配置文件名
         conf_filename = './test/test_conf.ini'
@@ -27,7 +28,7 @@ class TestFishCommon(object):
         # 某个 section 下面某个 key 的 value
         assert d['show_opt']['short_opt'] == 'b:d:v:p:f:'
 
-    # 测试 conf_as_dict() 通不过的 tc
+    # 测试 conf_as_dict()  tc
     def test_config_dict_02(self):
         # 定义配置文件名
         conf_filename = './test/test_conf1.ini'
@@ -42,14 +43,14 @@ class TestFishCommon(object):
         with pytest.raises(IndexError):
             d = ds[1]
 
-    # 测试 GetMD5() 通过的 tc
+    # 测试 GetMD5()  tc
     def test_md5_01(self):
 
         assert GetMD5.string('hello world!') == 'fc3ff98e8c6a0d3087d515c0473f8677'
         assert GetMD5.file('./test/test_conf.ini') == 'fb7528c9778b2377e30b0f7e4c26fef0'
         assert GetMD5.big_file('./test/test_conf.ini') == 'fb7528c9778b2377e30b0f7e4c26fef0'
 
-    # 测试 GetMD5() 通不过的 tc
+    # 测试 GetMD5()  tc
     def test_md5_02(self):
 
         assert GetMD5.string('hello world') != 'fc3ff98e8c6a0d3087d515c0473f8677'
@@ -63,7 +64,7 @@ class TestFishCommon(object):
 
         assert GetMD5.file('./test/test_conf.ini') != 'bb7528c9778b2377e30b0f7e4c26fef0'
 
-    # 测试 if_json_contain() 通过和不通过 tc
+    # 测试 if_json_contain()  tc
     def test_json_contain_01(self):
 
         json01 = {"id": "0001"}
@@ -77,7 +78,7 @@ class TestFishCommon(object):
         assert if_json_contain(json01, json11) is False
         assert if_json_contain(json01, json12) is False
 
-    # 测试 splice_url_params() 通过和不通过 tc
+    # 测试 splice_url_params()  tc
     def test_splice_url_params_01(self):
 
         dic01 = {'key1': 'value1', 'key2': 'value2'}
@@ -98,3 +99,46 @@ class TestFishCommon(object):
 
         t2.x = 5
         assert t1.x == 5
+
+    # test get_uuid() tc
+    def test_get_uuid_01(self):
+
+        u1 = get_uuid(udTime)
+        u2 = get_uuid(udTime)
+
+        assert u1 != u2
+
+        # 获得uuid time 方式的系统编号，检查是否一致
+        u1s = uuid.UUID(u1).fields[5]
+        u2s = uuid.UUID(u2).fields[5]
+
+        assert u1s == u2s
+
+        u1 = get_time_uuid()
+        u2 = get_time_uuid()
+
+        # 获得uuid time 方式的系统编号，检查是否一致
+        u1s = uuid.UUID(u1).fields[5]
+        u2s = uuid.UUID(u2).fields[5]
+
+        assert u1s == u2s
+
+        u1 = get_uuid(udRandom)
+        u2 = get_uuid(udRandom)
+
+        assert u1 != u2
+
+    # test sorted_list_from_dict() tc
+    def test_sorted_list_from_dict_01(self):
+
+        # 定义待处理字典
+        dict1 = {'a_key': 'a_value', '1_key': '1_value', 'A_key': 'A_value', 'z_key': 'z_value'}
+        # 升序结果
+        list1 = sorted_list_from_dict(dict1, odASC)
+
+        assert list1 == ['1_value', 'A_value', 'a_value', 'z_value']
+
+        # 降序结果
+        list1 = sorted_list_from_dict(dict1, odDES)
+
+        assert list1 == ['z_value', 'a_value', 'A_value', '1_value']
