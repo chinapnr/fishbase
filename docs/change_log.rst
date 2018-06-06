@@ -1,10 +1,12 @@
 更新记录
 ===========================
 
-2018.6. v1.0.14
+2018.6.6 v1.0.14
 ---------------------------
 
 * 19046, setup, edit setup.py to add long description etc., the package detail;
+* issue ID use directly on github
+* 36, common, edit function :meth:`fish_common.check_str()`, optimize, doc and unittest;
 
 2018.6.6 v1.0.13
 ---------------------------

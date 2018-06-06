@@ -31,6 +31,10 @@ udRandom = 10002
 odASC = 10011
 odDES = 10012
 
+# character kind const
+charChinese = 10021
+charNum = 10022
+
 
 # 读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
 # 2017.2.23 #19008 create by David Yi
@@ -311,10 +315,12 @@ class GetMD5(object):
         print('---')
 
     执行结果::
-
+        
+        --- md5 demo ---
         string md5: fc3ff98e8c6a0d3087d515c0473f8677
         file md5: fb7528c9778b2377e30b0f7e4c26fef0
         big file md5: fb7528c9778b2377e30b0f7e4c26fef0
+        ---
 
     """
 
@@ -390,8 +396,10 @@ def if_json_contain(left_json, right_json, op='strict'):
         print('---')
 
     执行结果::
-
+        
+        --- json contain demo ---
         True
+        ---
 
     """
 
@@ -416,13 +424,17 @@ def splice_url_params(dic):
         * result: (string) 拼接好的参数
 
     举例如下::
-
+        
+        print('--- splice_url_params demo ---')
         dic1 = {'key1': 'value1', 'key2': 'value2'}
         print(splice_url_params(dic1))
+        print('---')
 
     执行结果::
-
+        
+        --- splice_url_params demo ---
         ?key1=value1&key2=value2
+        ---
 
     """
 
@@ -449,7 +461,8 @@ def sorted_list_from_dict(p_dict, order=odASC):
         * o_list: (list) 排序后的 list
 
     举例如下::
-
+        
+        print('--- sorted_list_from_dict demo ---')
         # 定义待处理字典
         dict1 = {'a_key': 'a_value', '1_key': '1_value', 'A_key': 'A_value', 'z_key': 'z_value'}
         print(dict1)
@@ -459,12 +472,16 @@ def sorted_list_from_dict(p_dict, order=odASC):
         # 降序结果
         list1 = sorted_list_from_dict(dict1, odDES)
         print('descending order result is:', list1)
+        print('---')
 
     执行结果::
-
+        
+        --- sorted_list_from_dict demo ---
         {'a_key': 'a_value', 'A_key': 'A_value', '1_key': '1_value', 'z_key': 'z_value'}
         ascending order result is: ['1_value', 'A_value', 'a_value', 'z_value']
         descending order result is: ['z_value', 'a_value', 'A_value', '1_value']
+        ---
+        
     """
     o_list = sorted(value for (key, value) in p_dict.items())
 
@@ -472,3 +489,63 @@ def sorted_list_from_dict(p_dict, order=odASC):
         return o_list
     elif order == odDES:
         return o_list[::-1]
+
+
+# v1.0.13 #36, edit by David Yi, edit by Hu Jun
+def check_str(p_str, check_style=charChinese):
+    """
+    检查字符串是否含有指定类型字符
+    
+    :param:
+        * p_str: (string) 需要判断的字符串
+        * check_style: (string) 需要判断的字符类型，默认为 charChinese，检查是否含有中文，编码仅支持utf-8，
+        支持 charNum，检查是否含有数字字符串，该参数向后兼容
+
+    :return:
+        * True 含有指定类型字符
+        * False 不含有指定类型字符
+
+    举例如下::
+        
+        print('--- check_str demo ---')
+        p_str1 = 'meiyouzhongwen'
+        non_chinese_result = check_str(p_str1, check_style=charChinese)
+        print(non_chinese_result)
+        
+        p_str2 = u'有zhongwen'
+        chinese_result = check_str(p_str2, check_style=charChinese)
+        print(chinese_result)
+        
+        p_str3 = 'nonnumberstring'
+        non_number_result = check_str(p_str3, check_style=charNum)
+        print(non_number_result)
+        
+        p_str4 = 'number123'
+        number_result = check_str(p_str4, check_style=charNum)
+        print(number_result)
+        print('---')
+
+    执行结果::
+        
+        --- check_str demo ---
+        False
+        True
+        False
+        True
+        ---
+
+    """
+    if check_style == charChinese:
+        check_pattern = re.compile(u'[\u4e00-\u9fa5]+')
+    elif check_style == charNum:
+        check_pattern = re.compile(u'[0-9]+')
+    else:
+        return False
+    
+    try:
+        if check_pattern.search(p_str):
+            return True
+        else:
+            return False
+    except TypeError as ex:
+        raise TypeError(str(ex))

@@ -142,3 +142,15 @@ class TestFishCommon(object):
         list1 = sorted_list_from_dict(dict1, odDES)
 
         assert list1 == ['z_value', 'a_value', 'A_value', '1_value']
+
+    # test check_str() tc
+    def test_check_str_01(self):
+        non_chinese_str = 'meiyouzhongwen'
+        chinese_str = u'有zhongwen'
+        non_num_str = 'nonnumberstring'
+        num_str = 'number123'
+        
+        assert check_str(non_chinese_str, check_style=charChinese) is False
+        assert check_str(chinese_str, check_style=charChinese) is True
+        assert check_str(non_num_str, check_style=charNum) is False
+        assert check_str(num_str, check_style=charNum) is True
