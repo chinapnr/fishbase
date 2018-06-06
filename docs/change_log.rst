@@ -13,6 +13,7 @@
 * 19043, common, edit function :meth:`fish_common.sorted_list_from_dict()`, optimize, doc and unittest;
 * 19044, file, remove ``auto_add_file_ext()``;
 * 19045, file, remove ``get_abs_filename_with_sub_path_module()``;
+* 19046, common, edit function :meth:`fish_common.check_str()`, optimize, doc and unittest;
 
 2018.5.21 v1.0.12
 ---------------------------
