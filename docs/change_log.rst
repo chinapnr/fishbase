@@ -1,7 +1,12 @@
 更新记录
 ===========================
 
-2018.5.30 v1.0.13
+2018.6. v1.0.14
+---------------------------
+
+* 19046, setup, edit setup.py to add long description etc., the package detail;
+
+2018.6.6 v1.0.13
 ---------------------------
 
 * 19037, common and system, function ``check_platform()`` move to fish_system 中，rename to :meth:`fish_system.get_platform`;
