@@ -13,6 +13,7 @@ last update: 2018.6.3
 * 19043, common, edit function sorted_list_from_dict(), optimize, doc and unittest; ok
 * 19044, file, remove auto_add_file_ext(); ok
 * 19045, file, remove get_abs_filename_with_sub_path_module(); ok
+* 19046, common, edit function check_str(), optimize, doc and unittest; ok
 
 ---
 

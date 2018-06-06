@@ -31,6 +31,10 @@ udRandom = 10002
 odASC = 10011
 odDES = 10012
 
+# character kind const
+charChinese = 10021
+charNum = 10022
+
 
 # 读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
 # 2017.2.23 #19008 create by David Yi
@@ -472,3 +476,49 @@ def sorted_list_from_dict(p_dict, order=odASC):
         return o_list
     elif order == odDES:
         return o_list[::-1]
+
+
+# v1.0.13 #19046, edit by David Yi, edit by Hu Jun
+def check_str(p_str, check_style=charChinese):
+    """
+    check_str，检查字符串是否含有指定类型字符
+
+    :param:
+        * p_str: (string) 需要判断的字符串
+        * check_style: (string) 需要判断的字符类型，默认为 charChinese，检查是否含有中文，支持 charNum，检查是否含有数字字符串，
+        该参数向后兼容
+
+    :return:
+        * True 含有指定类型字符
+        * False 不含有指定类型字符
+
+    举例如下::
+
+        print('--- check_str demo---')
+        print('non_chinese_result:', check_str('meiyouzhongwen', check_style=charChinese))
+        print('chinese_result:', check_str(u'有zhongwen', check_style=charChinese))
+        print('non_number_result:', check_str('nonnumberstring', check_style=charNum))
+        print('number_result:', check_str(u'number123', check_style=charNum))
+        print('---')
+
+    执行结果::
+
+        --- check_str demo---
+        non_chinese_result: False
+        chinese_result: True
+        non_number_result: False
+        number_result: True
+        ---
+
+    """
+    if check_style == charChinese:
+        check_pattern = re.compile(u'[\u4e00-\u9fa5]+')
+    elif check_style == charNum:
+        check_pattern = re.compile(u'[0-9]+')
+    else:
+        return False
+    
+    if check_pattern.search(p_str):
+        return True
+    else:
+        return False
