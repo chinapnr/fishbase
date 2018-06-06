@@ -1,6 +1,38 @@
 ##fish_common 特性列表
 
-last update: 2018.6.3
+last update: 2018.6.6
+
+
+#### v1.0.14
+
+之后所有 issue 直接使用 github 上的编号，并直接基于 github 作为详细设计和问题追踪的。
+
+* 19046, setup, edit setup.py to add long description etc., the package detail;
+
+eg.
+
+>
+    import setuptools
+    
+    with open("README.md", "r") as fh:
+        long_description = fh.read()
+    
+    setuptools.setup(
+        name="example_pkg",
+        version="0.0.1",
+        author="Example Author",
+        author_email="author@example.com",
+        description="A small example package",
+        long_description=long_description,
+        long_description_content_type="text/markdown",
+        url="https://github.com/pypa/example-project",
+        packages=setuptools.find_packages(),
+        classifiers=(
+            "Programming Language :: Python :: 3",
+            "License :: OSI Approved :: MIT License",
+            "Operating System :: OS Independent",
+        ),
+    )
 
 #### v1.0.13
 
@@ -13,7 +45,6 @@ last update: 2018.6.3
 * 19043, common, edit function sorted_list_from_dict(), optimize, doc and unittest; ok
 * 19044, file, remove auto_add_file_ext(); ok
 * 19045, file, remove get_abs_filename_with_sub_path_module(); ok
-* 19046, common, edit function check_str(), optimize, doc and unittest; ok
 
 ---
 
