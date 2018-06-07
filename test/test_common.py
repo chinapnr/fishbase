@@ -154,3 +154,14 @@ class TestFishCommon(object):
         assert check_str(chinese_str, check_style=charChinese) is True
         assert check_str(non_num_str, check_style=charNum) is False
         assert check_str(num_str, check_style=charNum) is True
+
+    # test find_files() tc
+    def test_find_files_01(self):
+        path = './'
+        prefix = ['test']
+        ext = ['ini', 'py']
+        
+        assert len(find_files(path)) == 5
+        assert len(find_files(path, prefix=prefix)) == 4
+        assert len(find_files(path, ext=ext)) == 5
+        assert len(find_files(path, prefix=prefix, ext=ext)) == 5

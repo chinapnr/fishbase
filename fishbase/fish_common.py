@@ -549,3 +549,59 @@ def check_str(p_str, check_style=charChinese):
             return False
     except TypeError as ex:
         raise TypeError(str(ex))
+
+
+# v1.0.14 #38, edit by Hu Jun
+def find_files(path, prefix=None, ext=None):
+    """
+    查找路径下的文件，返回对后缀名和前缀的文件名筛选的结果列表
+
+    :param:
+        * path: (string) 查找路径
+        * prefix: (list) 前缀筛选条件，默认为空
+        * suffix: (list) 后缀筛选条件，默认为空
+
+    :return:
+        * matches: (list) 结果文件列表
+
+    举例如下::
+        
+        print('--- find_files demo ---')
+        path1 = '/root/fishbase_issue'
+        all_files = find_files(path1)
+        print(all_files)
+        prefix_files = find_files(path1, prefix=['test'])
+        print(prefix_files)
+        ext_list_files = find_files(path1, prefix=['test'], ext=['js', 'py'])
+        print(ext_list_files)
+        print('---')
+    
+
+    执行结果::
+
+        --- find_files demo ---
+        ['/root/fishbase_issue/test.png', '/root/fishbase_issue/find_files.py', '/root/fishbase_issue/head.js', '/root/fishbase_issue/py/kyoto.js']
+        ['/root/fishbase_issue/test.png']
+        ['/root/fishbase_issue/test.png', '/root/fishbase_issue/head.js', '/root/fishbase_issue/py/kyoto.js']
+        ---
+
+        """
+    files_list = []
+    matches = []
+    for root, dirs, files in os.walk(path):
+        for name in files:
+            files_list.append(os.path.join(root, name))
+    
+    if prefix is None and ext is None:
+        matches = files_list
+    
+    if prefix is not None:
+        for item in prefix:
+            matches.extend([file for file in files_list if os.path.split(file)[-1].startswith(item)])
+
+    if ext is not None:
+        for item in ext:
+            matches.extend([file for file in files_list if os.path.split(file)[-1].endswith(item)])
+    
+    # 使用set去除列表中重复的元素
+    return list(set(matches))
