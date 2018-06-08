@@ -12,6 +12,7 @@
     fish_common.sorted_list_from_dict
     fish_common.splice_url_params
     fish_common.check_str
+    fish_common.find_files
 
 .. automodule:: fish_common
     :members:
