@@ -549,3 +549,44 @@ def check_str(p_str, check_style=charChinese):
             return False
     except TypeError as ex:
         raise TypeError(str(ex))
+
+
+# v1.0.14 #38, edit by Hu Jun, edit from Jia Chunying
+def find_files(path, exts=None):
+    """
+    查找路径下的文件，返回指定类型的文件列表
+
+    :param:
+        * path: (string) 查找路径
+        * exts: (list) 文件类型列表，默认为空
+
+    :return:
+        * files_list: (list) 文件列表
+
+    举例如下::
+        
+        print('--- find_files demo ---')
+        path1 = '/root/fishbase_issue'
+        all_files = find_files(path1)
+        print(all_files)
+        exts_files = find_files(path1, exts=['.png', '.py'])
+        print(exts_files)
+        print('---')
+
+    执行结果::
+
+        --- find_files demo ---
+        ['/root/fishbase_issue/test.png', '/root/fishbase_issue/head.jpg', '/root/fishbase_issue/py/man.png', '/root/fishbase_issue/py/issue.py']
+        ['/root/fishbase_issue/test.png', '/root/fishbase_issue/py/man.png', '/root/fishbase_issue/py/issue.py']
+        ---
+
+        """
+    files_list = []
+    for root, dirs, files in os.walk(path):
+        for name in files:
+            files_list.append(os.path.join(root, name))
+    
+    if exts is not None:
+        return [file for file in files_list if os.path.splitext(file)[-1] in exts]
+        
+    return files_list
