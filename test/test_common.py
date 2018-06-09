@@ -157,7 +157,7 @@ class TestFishCommon(object):
 
     # test find_files() tc
     def test_find_files_01(self):
-        path = './test'
-        exts_list = ['ini', 'py']
+        path = './'
+        exts_list = ['.ini', '.py']
         
         assert len(find_files(path)) >= len(find_files(path, exts=exts_list))
