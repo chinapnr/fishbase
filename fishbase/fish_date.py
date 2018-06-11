@@ -32,3 +32,50 @@ def get_date_range(date_kind):
         last_day = this_month_last_day
 
     return first_day, last_day
+
+
+# v1.0.14 #37, edit by Hu Jun
+def get_years(months=0, refer=None):
+    """
+    get_years，获取基准时月份增量的年月
+
+    :param:
+        * months: (int) 月份增量，正数为往后年月，整数为往前年月
+        * refer: (datetime obj) datetime 对象，或者有month和year属性的实例，默认为当前时间
+    :return:
+        * result: (string) 年月字符串
+
+    举例如下::
+
+        print('--- get_years demo ---')
+        print(get_years(-5))
+        print(get_years(7, datetime.now()))
+        print('---')
+
+    执行结果::
+
+        --- get_years demo ---
+        201801
+        201901
+        ---
+
+    """
+    if refer is None:
+        refer = datetime.now()
+    # 计算当前总月份数
+    try:
+        months_count = refer.year * 12 + refer.month
+    except Exception:
+        raise TypeError('refer except {}, got an {}'.format(type(datetime.now()), type(refer)))
+    
+    # 计算结果总月分数
+    months_count += months
+    
+    y, m = divmod(months_count, 12)
+    
+    # 将m的值转换为1-12
+    if m == 0:
+        y -= 1
+        m = 12
+    
+    return ''.join(['%04d' % y, '%02d' % m])
