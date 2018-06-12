@@ -163,9 +163,6 @@ class TestFishCommon(object):
         assert check_str(non_num_str, check_style=charNum) is False
         assert check_str(num_str, check_style=charNum) is True
         assert check_str(non_num_str, check_style=10020) is False
-        
-        with pytest.raises(TypeError):
-            check_str('有zhongwen', check_style=charChinese)
 
     # test find_files() tc
     def test_find_files_01(self):
