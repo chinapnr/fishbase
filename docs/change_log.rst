@@ -8,6 +8,7 @@
 * issue ID use directly on github
 * 36, common, edit function :meth:`fish_common.check_str()`, optimize, doc and unittest;
 * 38, common, edit function :meth:`fish_common.find_files()`, optimize, doc and unittest;
+* 37, common, edit function :meth:`fish_date.get_years()`, optimize, doc and unittest;
 
 2018.6.6 v1.0.13
 ---------------------------

@@ -174,7 +174,7 @@ def serialize_instance(obj):
     return d
 
 
-# 2018.5.26 v1.0.13 #19038, edit by David Yi
+# 2018.5.26 v1.0.13 edit by David Yi，#19038
 def get_uuid(kind):
     """
     获得不重复的 uuid，可以是包含时间戳的 uuid，也可以是完全随机的；基于 Python 的 uuid 类进行封装和扩展；
@@ -230,7 +230,7 @@ def get_uuid(kind):
         return str(uuid.uuid4())
 
 
-# 2018.5.26 v1.0.13 #19038, edit by David Yi
+# 2018.5.26 v1.0.13 edit by David Yi，#19038
 get_time_uuid = functools.partial(get_uuid, udTime)
 
 
@@ -302,6 +302,7 @@ class FishCache:
 
 
 # 2018.5.8 edit by David Yi, edit from Jia Chunying，#19026
+# 2018.6.12 edit by Hu Jun, edit from Jia Chunying，#37
 class GetMD5(object):
     """
     计算普通字符串和一般的文件，对于大文件采取逐步读入的方式，也可以快速计算；基于 Python 的 hashlib.md5() 进行封装和扩展；
@@ -325,17 +326,19 @@ class GetMD5(object):
     """
 
     @staticmethod
-    def string(s):
+    def string(s, salt=None):
         """
         获取一个字符串的MD5值
 
         :param:
             * (string) str 需要进行 hash 的字符串
+            * (string) salt 随机字符串，默认为None
         :return:
             * (string) result 32位小写 MD5 值
         """
         m = hashlib.md5()
-        m.update(s.encode('utf-8'))
+        s = s.encode('utf-8') + salt.encode('utf-8') if salt is not None else s.encode('utf-8')
+        m.update(s)
         result = m.hexdigest()
         return result
 
@@ -449,7 +452,7 @@ def splice_url_params(dic):
     return url
 
 
-# v1.0.13 #19043, edit by Hu Jun, edit by David Yi
+# v1.0.13 edit by Hu Jun, edit by David Yi，#19043
 def sorted_list_from_dict(p_dict, order=odASC):
     """
     根据字典的 value 进行排序，并以列表形式返回
@@ -491,7 +494,7 @@ def sorted_list_from_dict(p_dict, order=odASC):
         return o_list[::-1]
 
 
-# v1.0.13 #36, edit by David Yi, edit by Hu Jun
+# v1.0.13 edit by David Yi, edit by Hu Jun，#36
 def check_str(p_str, check_style=charChinese):
     """
     检查字符串是否含有指定类型字符
@@ -551,7 +554,7 @@ def check_str(p_str, check_style=charChinese):
         raise TypeError(str(ex))
 
 
-# v1.0.14 #38, edit by Hu Jun, edit from Jia Chunying
+# v1.0.14 edit by Hu Jun, edit from Jia Chunying，#38
 def find_files(path, exts=None):
     """
     查找路径下的文件，返回指定类型的文件列表

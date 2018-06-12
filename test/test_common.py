@@ -64,6 +64,11 @@ class TestFishCommon(object):
 
         assert GetMD5.file('./test/test_conf.ini') != 'bb7528c9778b2377e30b0f7e4c26fef0'
 
+    # 测试 GetMD5()  tc
+    def test_md5_03(self):
+        salt = 'm4xV2yGFSn'
+        assert GetMD5.string('hello world!', salt) == '984d47991401fad7d920a30f715cfd22'
+    
     # 测试 if_json_contain()  tc
     def test_json_contain_01(self):
 
@@ -127,6 +132,9 @@ class TestFishCommon(object):
         u2 = get_uuid(udRandom)
 
         assert u1 != u2
+        
+        u3 = get_uuid(10000)
+        assert u3 != u1
 
     # test sorted_list_from_dict() tc
     def test_sorted_list_from_dict_01(self):
@@ -154,6 +162,7 @@ class TestFishCommon(object):
         assert check_str(chinese_str, check_style=charChinese) is True
         assert check_str(non_num_str, check_style=charNum) is False
         assert check_str(num_str, check_style=charNum) is True
+        assert check_str(non_num_str, check_style=10020) is False
 
     # test find_files() tc
     def test_find_files_01(self):
