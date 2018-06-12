@@ -64,6 +64,11 @@ class TestFishCommon(object):
 
         assert GetMD5.file('./test/test_conf.ini') != 'bb7528c9778b2377e30b0f7e4c26fef0'
 
+    # 测试 GetMD5()  tc
+    def test_md5_03(self):
+        salt = 'm4xV2yGFSn'
+        assert GetMD5.string('hello world!', salt) == '984d47991401fad7d920a30f715cfd22'
+    
     # 测试 if_json_contain()  tc
     def test_json_contain_01(self):
 
