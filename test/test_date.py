@@ -17,6 +17,17 @@ class TestFishDate(object):
         
         assert get_years(7, this_month) == '201901'
         assert get_years(-5, this_month) == '201801'
+        assert get_years(-6, this_month) == '201712'
 
+        this_month1 = datetime.datetime.now()
+        
+        y = this_month1.year
+        m = this_month1.month + 1
+        if m == 12:
+            y += 1
+            m = 1
+        
+        assert get_years(1) == ''.join(['%04d' % y, '%02d' % m])
+        
         with pytest.raises(TypeError):
             get_years(-5, 8)
