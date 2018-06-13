@@ -13,6 +13,7 @@
     fish_common.splice_url_params
     fish_common.check_str
     fish_common.find_files
+    fish_common.hmac_sha256
 
 .. automodule:: fish_common
     :members:
