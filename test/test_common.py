@@ -175,3 +175,9 @@ class TestFishCommon(object):
         exts_list = ['.ini', '.py']
 
         assert len(find_files(path)) >= len(find_files(path, exts=exts_list))
+
+    # test find_files() tc
+    def test_hmac_sha256_01(self):
+        message = 'Hello HMAC'
+        secret = '12345678'
+        assert hmac_sha256(secret, message) == '5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f'

@@ -14,6 +14,7 @@ import sys
 import uuid
 import re
 import hashlib
+import hmac
 import os
 from collections import OrderedDict
 import functools
@@ -593,3 +594,39 @@ def find_files(path, exts=None):
         return [file for file in files_list if os.path.splitext(file)[-1] in exts]
         
     return files_list
+
+
+# v1.0.14 original by Jia Chunying, edit by Hu Jun, #27
+def hmac_sha256(secret, message):
+    """
+    hmac_sha256，通过秘钥获取消息的hash值
+
+    :param:
+        * secret: (string) 密钥
+        * message: (string) 消息输入
+
+    :return:
+        * hashed_str: (string) 长度为64的小写hex string 类型的hash值
+
+    举例如下::
+
+        print('--- hmac_sha256 demo---')
+        # 定义待hash的消息
+        message = 'Hello HMAC'
+        # 定义HMAC的秘钥
+        secret = '12345678'
+        hashed_str = hmac_sha256(secret, message)
+        print(hashed_str)
+        print('---')
+
+    执行结果::
+
+        --- hmac_sha256 demo---
+        5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f
+        ---
+
+    """
+    hashed_str = hmac.new(secret.encode('utf-8'),
+                          message.encode('utf-8'),
+                          digestmod=hashlib.sha256).hexdigest()
+    return hashed_str
