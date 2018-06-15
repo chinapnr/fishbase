@@ -31,3 +31,15 @@ class TestFishDate(object):
         
         with pytest.raises(TypeError):
             get_years(-5, 8)
+
+    def test_get_date_range_01(self):
+        this_month = datetime.date(day=1, month=2, year=2018)
+    
+        assert get_date_range(this_month) == ('2018-02-1', '2018-02-28')
+        assert get_date_range('201802', separator='/') == ('2018/02/1', '2018/02/28')
+        
+        with pytest.raises(ValueError):
+            get_date_range('2016798')
+        
+        with pytest.raises(TypeError):
+            get_date_range('asdafsd')

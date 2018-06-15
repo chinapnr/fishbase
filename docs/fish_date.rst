@@ -2,6 +2,7 @@
 =============================
 
 .. autosummary::
+    fish_date.get_date_range
     fish_date.get_years
 
 .. automodule:: fish_date
