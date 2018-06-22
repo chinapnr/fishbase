@@ -14,6 +14,9 @@
     fish_common.check_str
     fish_common.find_files
     fish_common.hmac_sha256
+    fish_common.Base64.string
+    fish_common.Base64.file
+    fish_common.Base64.decode
 
 .. automodule:: fish_common
     :members:

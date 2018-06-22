@@ -16,6 +16,7 @@ import re
 import hashlib
 import hmac
 import os
+import base64
 from collections import OrderedDict
 import functools
 
@@ -630,3 +631,64 @@ def hmac_sha256(secret, message):
                           message.encode('utf-8'),
                           digestmod=hashlib.sha256).hexdigest()
     return hashed_str
+
+
+# v1.0.14 edit by Hu Jun, #59
+class Base64:
+    """
+    计算返回文件和字符串的base64编码字符串
+
+    举例如下::
+
+        print('--- Base64 demo ---')
+        print('string base64:', Base64.string('hello world!'))
+        print('file base64:', Base64.file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
+        print('decode base64:', Base64.decode(b'aGVsbG8gd29ybGQ='))
+        print('---')
+
+    执行结果::
+
+        --- Base64 demo ---
+        string base64: b'aGVsbG8gd29ybGQ='
+        file base64: b'IyEvYmluL2Jhc2gKCmNkIC9yb290L3d3dy9zaW5nbGVfcWEKCm5vaHVwIC9yb290L2FwcC9weXRob24zNjIvYmluL2d1bmljb3JuIC1jIGd1bmljb3JuLmNvbmYgc2luZ2xlX3NlcnZlcjphcHAK'
+        decode base64: b'hello world'
+        ---
+
+    """
+    
+    @staticmethod
+    def string(s):
+        """
+        获取一个字符串的base64值
+
+        :param:
+            * (string) s 需要进行 base64编码 的字符串
+        :return:
+            * (string) base64 编码结果
+        """
+        return base64.b64encode(s.encode('utf-8'))
+    
+    @staticmethod
+    def file(filename):
+        """
+        获取一个文件的base64值
+
+        :param:
+            * (string) filename 需要进行 base64编码 文件路径
+        :return:
+            * (string) base64 编码结果
+        """
+        with open(filename, 'rb') as f:
+            return base64.b64encode(f.read())
+    
+    @staticmethod
+    def decode(s):
+        """
+        获取base64 解码结果
+
+        :param:
+            * (string) filename 需要进行 base64编码 文件路径
+        :return:
+            * (string) base64 编码结果
+        """
+        return base64.b64decode(s)
