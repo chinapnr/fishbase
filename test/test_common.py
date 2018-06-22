@@ -191,7 +191,7 @@ class TestFishCommon(object):
                        b'ZXN0LnRlc3RfZGF0ZSBpbXBvcnQgKg0KZnJvbSB0ZXN0LnRlc3Rfc3lzdGVtIGltcG9ydCAqDQoN'
                        b'CnB5dGVzdC5tYWluKCkNCg==')
     
-        assert Base64.file('./test/__init__.py') == file_base64
+        assert Base64.file('./__init__.py') == file_base64
     
         assert Base64.decode(b'aGVsbG8gd29ybGQ=') == b'hello world'
 
@@ -203,9 +203,9 @@ class TestFishCommon(object):
     
         if sys.version > '3':
             with pytest.raises(FileNotFoundError):
-                GetMD5.file('./test/__init1__.py')
+                GetMD5.file('./__init1__.py')
         else:
             with pytest.raises(IOError):
-                GetMD5.file('./test/__init1__.py')
+                GetMD5.file('./__init1__.py')
     
-        assert GetMD5.file('./test/__init__.py') != b'bb7528c9778b2377e30b0f7e4c26fef0'
+        assert GetMD5.file('./__init__.py') != b'bb7528c9778b2377e30b0f7e4c26fef0'
