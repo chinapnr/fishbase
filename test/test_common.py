@@ -186,15 +186,12 @@ class TestFishCommon(object):
     def test_base64_01(self):
         assert Base64.string('hello world') == b'aGVsbG8gd29ybGQ='
     
-        here = os.path.split(os.path.dirname(__file__))[0]
-        file_path = os.path.join(here, 'test', '__init__.py')
-    
         file_base64 = (b'aW1wb3J0IHN5cw0Kc3lzLnBhdGguYXBwZW5kKCcuLi9maXNoYmFzZScpDQoNCmZyb20gdGVzdC50'
                        b'ZXN0X2ZpbGUgaW1wb3J0ICoNCmZyb20gdGVzdC50ZXN0X2NvbW1vbiBpbXBvcnQgKg0KZnJvbSB0'
                        b'ZXN0LnRlc3RfZGF0ZSBpbXBvcnQgKg0KZnJvbSB0ZXN0LnRlc3Rfc3lzdGVtIGltcG9ydCAqDQoN'
                        b'CnB5dGVzdC5tYWluKCkNCg==')
     
-        assert Base64.file(file_path) == file_base64
+        assert Base64.file('./test/__init__.py') == file_base64
     
         assert Base64.decode(b'aGVsbG8gd29ybGQ=') == b'hello world'
 
@@ -204,15 +201,11 @@ class TestFishCommon(object):
         assert GetMD5.string('hello world') != b'aGVsbG8gd29ybGQ=='
         assert Base64.decode(b'aGVsbG8gd29ybGQ=') != b'hello'
     
-        here = os.path.split(os.path.dirname(__file__))[0]
-        file_path = os.path.join(here, 'test', '__init__.py')
-        file_path1 = os.path.join(here, 'test', '__init1__.py')
-    
         if sys.version > '3':
             with pytest.raises(FileNotFoundError):
-                GetMD5.file(file_path1)
+                GetMD5.file('./test/__init1__.py')
         else:
             with pytest.raises(IOError):
-                GetMD5.file(file_path1)
+                GetMD5.file('./test/__init1__.py')
     
-        assert GetMD5.file(file_path) != b'bb7528c9778b2377e30b0f7e4c26fef0'
+        assert GetMD5.file('./test/__init__.py') != b'bb7528c9778b2377e30b0f7e4c26fef0'
