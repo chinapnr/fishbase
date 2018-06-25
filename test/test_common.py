@@ -204,3 +204,29 @@ class TestFishCommon(object):
                 GetMD5.file('./test/test_conf1.ini')
     
         assert GetMD5.file('./test/test_conf.ini') != b'bb7528c9778b2377e30b0f7e4c26fef0'
+    
+    # test get_random_str()
+    def test_get_random_str_01(self):
+        assert len(get_random_str(6)) == 6
+    
+        import re
+    
+        digits_pattern = re.compile('[0-9]+')
+        letters_pattern = re.compile('[a-zA-Z]+')
+        letters_digits_pattern = re.compile('[0-9a-zA-Z]+')
+        punctuation_ord_list = [ord(item) for item in string.punctuation]
+    
+        letter_str = get_random_str(6)
+        assert letters_pattern.match(letter_str)
+    
+        letter_digits_str = get_random_str(6, digits=True)
+        assert letters_digits_pattern.match(letter_digits_str)
+    
+        digits_str = get_random_str(6, letters=False, digits=True)
+        assert digits_pattern.match(digits_str)
+    
+        punctuation_str = get_random_str(6, letters=False, punctuation=True)
+        for item in punctuation_str:
+            assert ord(item) in punctuation_ord_list
+    
+        assert len(get_random_str(12, letters=False, digits=True, punctuation=True)) == 12

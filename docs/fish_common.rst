@@ -17,6 +17,7 @@
     fish_common.Base64.string
     fish_common.Base64.file
     fish_common.Base64.decode
+    fish_common.get_random_str
 
 .. automodule:: fish_common
     :members:

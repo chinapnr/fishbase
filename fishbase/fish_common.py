@@ -17,6 +17,8 @@ import hashlib
 import hmac
 import os
 import base64
+import string
+import random
 from collections import OrderedDict
 import functools
 
@@ -692,3 +694,47 @@ class Base64:
             * (string) base64 编码结果
         """
         return base64.b64decode(s)
+
+
+# v1.0.14 edit by Hu Jun, #51
+def get_random_str(length, letters=True, digits=False, punctuation=False):
+    """
+    获得指定长度，不同规则的随机字符串，可以包含数字，字母和标点符号
+    
+    :param:
+        * length: (int) 随机字符串的长度
+        * letters: (bool) 随机字符串是否包含字母，默认包含
+        * digits: (bool) 随机字符串是否包含数字，默认不包含
+        * punctuation: (bool) 随机字符串是否包含特殊标点符号，默认不包含
+
+    :return:
+        * random_str: (string) 指定规则的随机字符串
+
+    举例如下::
+
+        print('--- get_random_str demo---')
+        print(get_random_str(6))
+        print(get_random_str(6, digits=True))
+        print(get_random_str(12, punctuation=True))
+        print(get_random_str(6, letters=False, digits=True))
+        print(get_random_str(12, letters=False, digits=True, punctuation=True))
+        print('---')
+
+    执行结果::
+
+        --- get_random_str demo---
+        nRBDHf
+        jXG5wR
+        )I;rz{ob&Clg
+        427681
+        *"4$0^`2}%9{
+        ---
+
+    """
+    random_source = ''
+    random_source += string.ascii_letters if letters else ''
+    random_source += string.digits if digits else ''
+    random_source += string.punctuation if punctuation else ''
+
+    random_str = ''.join(random.sample(random_source, length))
+    return random_str
