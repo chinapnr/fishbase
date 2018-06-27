@@ -1,3 +1,4 @@
+# coding=utf-8
 import os
 import shutil
 from fishbase.fish_csv import csv_file_to_list
