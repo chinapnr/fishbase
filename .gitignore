@@ -105,3 +105,7 @@ venv.bak/
 test/log
 /_build/*
 demo/log
+
+# test cache data
+test/.test_cache_data/*
+test/.test_cache_data
