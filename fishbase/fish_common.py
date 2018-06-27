@@ -691,7 +691,7 @@ class Base64:
         :param:
             * (string) filename 需要进行 base64编码 文件路径
         :return:
-            * (bytes) base64 编码结果
+            * (bytes) base64 解码结果
         """
         return base64.b64decode(s)
 
