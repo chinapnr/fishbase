@@ -1,7 +1,7 @@
 更新记录
 ===========================
 
-2018.6.6 v1.0.14
+2018.6.25 v1.0.14
 ---------------------------
 
 * 19046, setup, edit setup.py to add long description etc., the package detail;
@@ -11,6 +11,9 @@
 * 37, date, edit function :meth:`fish_date.get_years()`, optimize, doc and unittest;
 * 27, common, edit function :meth:`fish_common.hmac_sha256()`, optimize, doc and unittest;
 * 61, date, edit function :meth:`fish_date.get_date_range()`, optimize, doc and unittest;
+* 57, common, update function :meth:`fish_common.GetMD5.string()`, optimize;
+* 59, common, edit function :meth:`fish_common.Base64`, optimize, doc and unittest;
+* 51, common, edit function :meth:`fish_common.get_random_str`, optimize, doc and unittest;
 
 2018.6.6 v1.0.13
 ---------------------------
