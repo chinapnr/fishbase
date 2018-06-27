@@ -666,7 +666,7 @@ class Base64:
         :param:
             * (string) s 需要进行 base64编码 的字符串
         :return:
-            * (string) base64 编码结果
+            * (bytes) base64 编码结果
         """
         return base64.b64encode(s.encode('utf-8'))
     
@@ -678,7 +678,7 @@ class Base64:
         :param:
             * (string) filename 需要进行 base64编码 文件路径
         :return:
-            * (string) base64 编码结果
+            * (bytes) base64 编码结果
         """
         with open(filename, 'rb') as f:
             return base64.b64encode(f.read())
@@ -691,7 +691,7 @@ class Base64:
         :param:
             * (string) filename 需要进行 base64编码 文件路径
         :return:
-            * (string) base64 编码结果
+            * (bytes) base64 编码结果
         """
         return base64.b64decode(s)
 
