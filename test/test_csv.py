@@ -1,4 +1,5 @@
 # coding=utf-8
+import io
 import os
 import shutil
 from fishbase.fish_csv import csv_file_to_list
@@ -16,7 +17,7 @@ class TestCsv(object):
         if not os.path.exists(os.path.dirname(csv_file_name)):
             os.makedirs(os.path.dirname(csv_file_name))
         csv_content = "a,b\n1,2"
-        with open(csv_file_name, 'w', encoding='utf8') as f:
+        with io.open(csv_file_name, 'w', encoding='utf8') as f:
             f.write(csv_content)
             f.close()
         result = csv_file_to_list(csv_file_name)
