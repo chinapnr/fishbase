@@ -16,7 +16,7 @@ class TestCsv(object):
             os.remove(csv_file_name)
         if not os.path.exists(os.path.dirname(csv_file_name)):
             os.makedirs(os.path.dirname(csv_file_name))
-        csv_content = "a,b\n1,2"
+        csv_content = u"a,b\n1,2"
         with io.open(csv_file_name, 'w', encoding='utf8') as f:
             f.write(csv_content)
             f.close()
