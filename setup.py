@@ -1,10 +1,13 @@
 # from distutils.core import setup
 from setuptools import setup
-from fishbase import __version__
+import io
+import re
+with io.open('fishbase/__init__.py', 'rt', encoding='utf8') as f:
+    version = re.search(r'__version__ = \'(.*?)\'', f.read()).group(1)
 
 setup(
     name='fishbase',
-    version=__version__,
+    version=version,
     install_requires=['python-dateutil'],
 
     url='https://github.com/chinapnr/fishbase',

@@ -33,8 +33,8 @@ def get_abs_filename_with_sub_path(sub_path, filename):
             * abs_filename: (string) 指定 filename 的包含路径的长文件名
 
         举例如下::
-
-            print('get_abs_filename_with_sub_path')
+            
+            print('--- get_abs_filename_with_sub_path demo ---')
             # define sub dir
             path_name = 'sub_dir'
             # define not exists file
@@ -49,12 +49,15 @@ def get_abs_filename_with_sub_path(sub_path, filename):
             abs_filename = get_abs_filename_with_sub_path(path_name, filename)
             # return True and abs filename
             print(abs_filename)
+            print('---')
 
         输出结果::
-
+            
+            --- get_abs_filename_with_sub_path demo ---
             (False, '/Users/****/Documents/dev_python/fishbase/demo/sub_dir/test_file.txt')
             (True, '/Users/****/Documents/dev_python/fishbase/demo/sub_dir/demo.txt')
-
+            ---
+            
     """
 
     try:
@@ -99,18 +102,23 @@ def check_sub_path_create(sub_path):
         * False: 路径不存在，True: 创建成功
 
     举例如下::
-
+        
+        print('--- check_sub_path_create demo ---')
         # 定义子路径名称
         sub_path = 'demo_sub_dir'
         # 检查当前路径下的一个子路径是否存在，不存在则创建
         print('check sub path:', sub_path)
         result = check_sub_path_create(sub_path)
         print(result)
+        print('---')
 
     输出结果::
-
+        
+        --- check_sub_path_create demo ---
         check sub path: demo_sub_dir
         (True, False)
+        ---
+        
     """
 
     # 获得当前路径

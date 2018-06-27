@@ -64,6 +64,11 @@ class TestFishCommon(object):
 
         assert GetMD5.file('./test/test_conf.ini') != 'bb7528c9778b2377e30b0f7e4c26fef0'
 
+    # 测试 GetMD5()  tc
+    def test_md5_03(self):
+        salt = 'm4xV2yGFSn'
+        assert GetMD5.string('hello world!', salt) == '984d47991401fad7d920a30f715cfd22'
+    
     # 测试 if_json_contain()  tc
     def test_json_contain_01(self):
 
@@ -127,6 +132,9 @@ class TestFishCommon(object):
         u2 = get_uuid(udRandom)
 
         assert u1 != u2
+        
+        u3 = get_uuid(10000)
+        assert u3 != u1
 
     # test sorted_list_from_dict() tc
     def test_sorted_list_from_dict_01(self):
@@ -142,3 +150,83 @@ class TestFishCommon(object):
         list1 = sorted_list_from_dict(dict1, odDES)
 
         assert list1 == ['z_value', 'a_value', 'A_value', '1_value']
+
+    # test check_str() tc
+    def test_check_str_01(self):
+        non_chinese_str = 'meiyouzhongwen'
+        chinese_str = u'有zhongwen'
+        non_num_str = 'nonnumberstring'
+        num_str = 'number123'
+        
+        assert check_str(non_chinese_str, check_style=charChinese) is False
+        assert check_str(chinese_str, check_style=charChinese) is True
+        assert check_str(non_num_str, check_style=charNum) is False
+        assert check_str(num_str, check_style=charNum) is True
+        assert check_str(non_num_str, check_style=10020) is False
+
+        if sys.version > '3':
+            chinese_str1 = u'有zhongwen'.encode('gbk')
+            with pytest.raises(TypeError):
+                check_str(chinese_str1, check_style=charChinese)
+
+    # test find_files() tc
+    def test_find_files_01(self):
+        path = './'
+        exts_list = ['.ini', '.py']
+
+        assert len(find_files(path)) >= len(find_files(path, exts=exts_list))
+
+    # test find_files() tc
+    def test_hmac_sha256_01(self):
+        message = 'Hello HMAC'
+        secret = '12345678'
+        assert hmac_sha256(secret, message) == '5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f'
+
+    # test Base64() tc
+    def test_base64_01(self):
+        assert Base64.string('hello world') == b'aGVsbG8gd29ybGQ='
+    
+        assert len(Base64.file('./test/test_conf.ini')) != 0
+    
+        assert Base64.decode(b'aGVsbG8gd29ybGQ=') == b'hello world'
+
+    # test Base64()  tc
+    def test_base64_02(self):
+    
+        assert GetMD5.string('hello world') != b'aGVsbG8gd29ybGQ=='
+        assert Base64.decode(b'aGVsbG8gd29ybGQ=') != b'hello'
+    
+        if sys.version > '3':
+            with pytest.raises(FileNotFoundError):
+                GetMD5.file('./test/test_conf1.ini')
+        else:
+            with pytest.raises(IOError):
+                GetMD5.file('./test/test_conf1.ini')
+    
+        assert GetMD5.file('./test/test_conf.ini') != b'bb7528c9778b2377e30b0f7e4c26fef0'
+    
+    # test get_random_str()
+    def test_get_random_str_01(self):
+        assert len(get_random_str(6)) == 6
+    
+        import re
+    
+        digits_pattern = re.compile('[0-9]+')
+        letters_pattern = re.compile('[a-zA-Z]+')
+        letters_digits_pattern = re.compile('[0-9a-zA-Z]+')
+        punctuation_ord_list = [ord(item) for item in string.punctuation]
+    
+        letter_str = get_random_str(6)
+        assert letters_pattern.match(letter_str)
+    
+        letter_digits_str = get_random_str(6, digits=True)
+        assert letters_digits_pattern.match(letter_digits_str)
+    
+        digits_str = get_random_str(6, letters=False, digits=True)
+        assert digits_pattern.match(digits_str)
+    
+        punctuation_str = get_random_str(6, letters=False, punctuation=True)
+        for item in punctuation_str:
+            assert ord(item) in punctuation_ord_list
+    
+        assert len(get_random_str(12, letters=False, digits=True, punctuation=True)) == 12

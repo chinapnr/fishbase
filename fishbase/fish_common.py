@@ -14,7 +14,11 @@ import sys
 import uuid
 import re
 import hashlib
+import hmac
 import os
+import base64
+import string
+import random
 from collections import OrderedDict
 import functools
 
@@ -30,6 +34,10 @@ udRandom = 10002
 # order const
 odASC = 10011
 odDES = 10012
+
+# character kind const
+charChinese = 10021
+charNum = 10022
 
 
 # 读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
@@ -170,7 +178,7 @@ def serialize_instance(obj):
     return d
 
 
-# 2018.5.26 v1.0.13 #19038, edit by David Yi
+# 2018.5.26 v1.0.13 edit by David Yi，#19038
 def get_uuid(kind):
     """
     获得不重复的 uuid，可以是包含时间戳的 uuid，也可以是完全随机的；基于 Python 的 uuid 类进行封装和扩展；
@@ -226,7 +234,7 @@ def get_uuid(kind):
         return str(uuid.uuid4())
 
 
-# 2018.5.26 v1.0.13 #19038, edit by David Yi
+# 2018.5.26 v1.0.13 edit by David Yi，#19038
 get_time_uuid = functools.partial(get_uuid, udTime)
 
 
@@ -298,6 +306,7 @@ class FishCache:
 
 
 # 2018.5.8 edit by David Yi, edit from Jia Chunying，#19026
+# 2018.6.12 edit by Hu Jun, edit from Jia Chunying，#37
 class GetMD5(object):
     """
     计算普通字符串和一般的文件，对于大文件采取逐步读入的方式，也可以快速计算；基于 Python 的 hashlib.md5() 进行封装和扩展；
@@ -311,25 +320,29 @@ class GetMD5(object):
         print('---')
 
     执行结果::
-
+        
+        --- md5 demo ---
         string md5: fc3ff98e8c6a0d3087d515c0473f8677
         file md5: fb7528c9778b2377e30b0f7e4c26fef0
         big file md5: fb7528c9778b2377e30b0f7e4c26fef0
+        ---
 
     """
 
     @staticmethod
-    def string(s):
+    def string(s, salt=None):
         """
         获取一个字符串的MD5值
 
         :param:
             * (string) str 需要进行 hash 的字符串
+            * (string) salt 随机字符串，默认为None
         :return:
             * (string) result 32位小写 MD5 值
         """
         m = hashlib.md5()
-        m.update(s.encode('utf-8'))
+        s = s.encode('utf-8') + salt.encode('utf-8') if salt is not None else s.encode('utf-8')
+        m.update(s)
         result = m.hexdigest()
         return result
 
@@ -390,8 +403,10 @@ def if_json_contain(left_json, right_json, op='strict'):
         print('---')
 
     执行结果::
-
+        
+        --- json contain demo ---
         True
+        ---
 
     """
 
@@ -416,13 +431,17 @@ def splice_url_params(dic):
         * result: (string) 拼接好的参数
 
     举例如下::
-
+        
+        print('--- splice_url_params demo ---')
         dic1 = {'key1': 'value1', 'key2': 'value2'}
         print(splice_url_params(dic1))
+        print('---')
 
     执行结果::
-
+        
+        --- splice_url_params demo ---
         ?key1=value1&key2=value2
+        ---
 
     """
 
@@ -437,7 +456,7 @@ def splice_url_params(dic):
     return url
 
 
-# v1.0.13 #19043, edit by Hu Jun, edit by David Yi
+# v1.0.13 edit by Hu Jun, edit by David Yi，#19043
 def sorted_list_from_dict(p_dict, order=odASC):
     """
     根据字典的 value 进行排序，并以列表形式返回
@@ -449,7 +468,8 @@ def sorted_list_from_dict(p_dict, order=odASC):
         * o_list: (list) 排序后的 list
 
     举例如下::
-
+        
+        print('--- sorted_list_from_dict demo ---')
         # 定义待处理字典
         dict1 = {'a_key': 'a_value', '1_key': '1_value', 'A_key': 'A_value', 'z_key': 'z_value'}
         print(dict1)
@@ -459,12 +479,16 @@ def sorted_list_from_dict(p_dict, order=odASC):
         # 降序结果
         list1 = sorted_list_from_dict(dict1, odDES)
         print('descending order result is:', list1)
+        print('---')
 
     执行结果::
-
+        
+        --- sorted_list_from_dict demo ---
         {'a_key': 'a_value', 'A_key': 'A_value', '1_key': '1_value', 'z_key': 'z_value'}
         ascending order result is: ['1_value', 'A_value', 'a_value', 'z_value']
         descending order result is: ['z_value', 'a_value', 'A_value', '1_value']
+        ---
+        
     """
     o_list = sorted(value for (key, value) in p_dict.items())
 
@@ -472,3 +496,245 @@ def sorted_list_from_dict(p_dict, order=odASC):
         return o_list
     elif order == odDES:
         return o_list[::-1]
+
+
+# v1.0.13 edit by David Yi, edit by Hu Jun，#36
+def check_str(p_str, check_style=charChinese):
+    """
+    检查字符串是否含有指定类型字符
+    
+    :param:
+        * p_str: (string) 需要判断的字符串
+        * check_style: (string) 需要判断的字符类型，默认为 charChinese，检查是否含有中文，编码仅支持utf-8，
+        支持 charNum，检查是否含有数字字符串，该参数向后兼容
+
+    :return:
+        * True 含有指定类型字符
+        * False 不含有指定类型字符
+
+    举例如下::
+        
+        print('--- check_str demo ---')
+        p_str1 = 'meiyouzhongwen'
+        non_chinese_result = check_str(p_str1, check_style=charChinese)
+        print(non_chinese_result)
+        
+        p_str2 = u'有zhongwen'
+        chinese_result = check_str(p_str2, check_style=charChinese)
+        print(chinese_result)
+        
+        p_str3 = 'nonnumberstring'
+        non_number_result = check_str(p_str3, check_style=charNum)
+        print(non_number_result)
+        
+        p_str4 = 'number123'
+        number_result = check_str(p_str4, check_style=charNum)
+        print(number_result)
+        print('---')
+
+    执行结果::
+        
+        --- check_str demo ---
+        False
+        True
+        False
+        True
+        ---
+
+    """
+    if check_style == charChinese:
+        check_pattern = re.compile(u'[\u4e00-\u9fa5]+')
+    elif check_style == charNum:
+        check_pattern = re.compile(u'[0-9]+')
+    else:
+        return False
+    
+    try:
+        if check_pattern.search(p_str):
+            return True
+        else:
+            return False
+    except TypeError as ex:
+        raise TypeError(str(ex))
+
+
+# v1.0.14 edit by Hu Jun, edit from Jia Chunying，#38
+def find_files(path, exts=None):
+    """
+    查找路径下的文件，返回指定类型的文件列表
+
+    :param:
+        * path: (string) 查找路径
+        * exts: (list) 文件类型列表，默认为空
+
+    :return:
+        * files_list: (list) 文件列表
+
+    举例如下::
+        
+        print('--- find_files demo ---')
+        path1 = '/root/fishbase_issue'
+        all_files = find_files(path1)
+        print(all_files)
+        exts_files = find_files(path1, exts=['.png', '.py'])
+        print(exts_files)
+        print('---')
+
+    执行结果::
+
+        --- find_files demo ---
+        ['/root/fishbase_issue/test.png', '/root/fishbase_issue/head.jpg', '/root/fishbase_issue/py/man.png', '/root/fishbase_issue/py/issue.py']
+        ['/root/fishbase_issue/test.png', '/root/fishbase_issue/py/man.png', '/root/fishbase_issue/py/issue.py']
+        ---
+
+        """
+    files_list = []
+    for root, dirs, files in os.walk(path):
+        for name in files:
+            files_list.append(os.path.join(root, name))
+    
+    if exts is not None:
+        return [file for file in files_list if os.path.splitext(file)[-1] in exts]
+        
+    return files_list
+
+
+# v1.0.14 original by Jia Chunying, edit by Hu Jun, #27
+def hmac_sha256(secret, message):
+    """
+    hmac_sha256，通过秘钥获取消息的hash值
+
+    :param:
+        * secret: (string) 密钥
+        * message: (string) 消息输入
+
+    :return:
+        * hashed_str: (string) 长度为64的小写hex string 类型的hash值
+
+    举例如下::
+
+        print('--- hmac_sha256 demo---')
+        # 定义待hash的消息
+        message = 'Hello HMAC'
+        # 定义HMAC的秘钥
+        secret = '12345678'
+        hashed_str = hmac_sha256(secret, message)
+        print(hashed_str)
+        print('---')
+
+    执行结果::
+
+        --- hmac_sha256 demo---
+        5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f
+        ---
+
+    """
+    hashed_str = hmac.new(secret.encode('utf-8'),
+                          message.encode('utf-8'),
+                          digestmod=hashlib.sha256).hexdigest()
+    return hashed_str
+
+
+# v1.0.14 edit by Hu Jun, #59
+class Base64:
+    """
+    计算返回文件和字符串的base64编码字符串
+
+    举例如下::
+
+        print('--- Base64 demo ---')
+        print('string base64:', Base64.string('hello world!'))
+        print('file base64:', Base64.file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
+        print('decode base64:', Base64.decode(b'aGVsbG8gd29ybGQ='))
+        print('---')
+
+    执行结果::
+
+        --- Base64 demo ---
+        string base64: b'aGVsbG8gd29ybGQ='
+        file base64: b'IyEvYmluL2Jhc2gKCmNkIC9yb290L3d3dy9zaW5nbGVfcWEKCm5vaHVwIC9yb290L2FwcC9weXRob24zNjIvYmluL2d1bmljb3JuIC1jIGd1bmljb3JuLmNvbmYgc2luZ2xlX3NlcnZlcjphcHAK'
+        decode base64: b'hello world'
+        ---
+
+    """
+    
+    @staticmethod
+    def string(s):
+        """
+        获取一个字符串的base64值
+
+        :param:
+            * (string) s 需要进行 base64编码 的字符串
+        :return:
+            * (bytes) base64 编码结果
+        """
+        return base64.b64encode(s.encode('utf-8'))
+    
+    @staticmethod
+    def file(filename):
+        """
+        获取一个文件的base64值
+
+        :param:
+            * (string) filename 需要进行 base64编码 文件路径
+        :return:
+            * (bytes) base64 编码结果
+        """
+        with open(filename, 'rb') as f:
+            return base64.b64encode(f.read())
+    
+    @staticmethod
+    def decode(s):
+        """
+        获取base64 解码结果
+
+        :param:
+            * (string) filename 需要进行 base64编码 文件路径
+        :return:
+            * (bytes) base64 解码结果
+        """
+        return base64.b64decode(s)
+
+
+# v1.0.14 edit by Hu Jun, #51
+def get_random_str(length, letters=True, digits=False, punctuation=False):
+    """
+    获得指定长度，不同规则的随机字符串，可以包含数字，字母和标点符号
+    
+    :param:
+        * length: (int) 随机字符串的长度
+        * letters: (bool) 随机字符串是否包含字母，默认包含
+        * digits: (bool) 随机字符串是否包含数字，默认不包含
+        * punctuation: (bool) 随机字符串是否包含特殊标点符号，默认不包含
+
+    :return:
+        * random_str: (string) 指定规则的随机字符串
+
+    举例如下::
+
+        print('--- get_random_str demo---')
+        print(get_random_str(6))
+        print(get_random_str(6, digits=True))
+        print(get_random_str(12, punctuation=True))
+        print(get_random_str(6, letters=False, digits=True))
+        print(get_random_str(12, letters=False, digits=True, punctuation=True))
+        print('---')
+
+    执行结果::
+
+        --- get_random_str demo---
+        nRBDHf
+        jXG5wR
+        )I;rz{ob&Clg
+        427681
+        *"4$0^`2}%9{
+        ---
+
+    """
+    random_source = ''
+    random_source += string.ascii_letters if letters else ''
+    random_source += string.digits if digits else ''
+    random_source += string.punctuation if punctuation else ''
+
+    random_str = ''.join(random.sample(random_source, length))
+    return random_str
