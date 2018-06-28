@@ -505,8 +505,7 @@ def check_str(p_str, check_style=charChinese):
     
     :param:
         * p_str: (string) 需要判断的字符串
-        * check_style: (string) 需要判断的字符类型，默认为 charChinese，检查是否含有中文，编码仅支持utf-8，
-        支持 charNum，检查是否含有数字字符串，该参数向后兼容
+        * check_style: (string) 需要判断的字符类型，默认为 charChinese(编码仅支持utf-8),支持 charNum，该参数向后兼容
 
     :return:
         * True 含有指定类型字符
