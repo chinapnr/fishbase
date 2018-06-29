@@ -1,6 +1,12 @@
 更新记录
 ===========================
 
+2018.6.29 v1.0.15
+---------------------------
+
+* 36, common, edit function :meth:`fish_common.is_contain_special_char()`, change function name;
+* 62, common, edit function :meth:`fish_common.if_any_elements_is_space()`, optimize, doc and unittest;
+
 2018.6.27 v1.0.14
 ---------------------------
 
@@ -11,7 +17,7 @@
 * 37, date, add function :meth:`fish_date.get_years()`, doc and unittest;
 * 27, common, add function :meth:`fish_common.hmac_sha256()`, doc and unittest;
 * 61, date, edit function :meth:`fish_date.get_date_range()`, optimize, doc and unittest;
-* 57, common, update function :meth:`fish_common.GetMD5.string()`, optimize;
+* 57, common, edit function :meth:`fish_common.GetMD5.string()`, optimize;
 * 59, common, add function :meth:`fish_common.Base64`, doc and unittest;
 * 51, common, add function :meth:`fish_common.get_random_str`, doc and unittest;
 

@@ -238,14 +238,54 @@ def get_uuid(kind):
 get_time_uuid = functools.partial(get_uuid, udTime)
 
 
-# 功能：判断参数列表是否存在不合法的参数，如果存在None或空字符串或空格字符串，则返回True, 否则返回False
-# 输入参数：source 是参数列表或元组
-# 输出参数：True : 有元素为 None，或空； False：没有元素为 None 或空
 # 2017.2.22 edit by David.Yi, #19007
+# 2018.6.29 v1.0.14 edit by Hu Jun，#62
 def if_any_elements_is_space(source):
-    for i in source:
+    """
+    判断对象中的元素，如果存在None或空字符串或空格字符串，则返回True, 否则返回False, 支持字典、列表和元组
+
+    :param:
+        * source: (list, set, dict) 需要检查的对象
+
+    :return:
+        * result: (bool) 存在None或空字符串或空格字符串返回True， 否则返回False
+
+    举例如下::
+
+        print('--- if_any_elements_is_space demo---')
+        print(if_any_elements_is_space([1, 2, 'test_str']))
+        print(if_any_elements_is_space([0, 2]))
+        print(if_any_elements_is_space([1, 2, None]))
+        print(if_any_elements_is_space((1, [1, 2], 3, '')))
+        print(if_any_elements_is_space({'a': 1, 'b': 0}))
+        print(if_any_elements_is_space({'a': 1, 'b': []}))
+        print('---')
+
+    执行结果::
+
+        --- if_any_elements_is_space demo---
+        False
+        False
+        True
+        True
+        False
+        True
+        ---
+
+    """
+    if isinstance(source, dict):
+        check_list = list(source.values())
+    elif isinstance(source, list) or isinstance(source, tuple):
+        check_list = list(source)
+    else:
+        raise TypeError('source except list, tuple or dict, but got {}'.format(type(source)))
+    
+    for i in check_list:
+        if i is 0:
+            continue
         if not (i and str(i).strip()):
             return True
+    
     return False
 
 
@@ -499,7 +539,8 @@ def sorted_list_from_dict(p_dict, order=odASC):
 
 
 # v1.0.13 edit by David Yi, edit by Hu Jun，#36
-def check_str(p_str, check_style=charChinese):
+# v1.0.14 edit by Hu Jun #38
+def is_contain_special_char(p_str, check_style=charChinese):
     """
     检查字符串是否含有指定类型字符
     
@@ -513,7 +554,7 @@ def check_str(p_str, check_style=charChinese):
 
     举例如下::
         
-        print('--- check_str demo ---')
+        print('--- is_contain_special_char demo ---')
         p_str1 = 'meiyouzhongwen'
         non_chinese_result = check_str(p_str1, check_style=charChinese)
         print(non_chinese_result)
@@ -533,7 +574,7 @@ def check_str(p_str, check_style=charChinese):
 
     执行结果::
         
-        --- check_str demo ---
+        --- is_contain_special_char demo ---
         False
         True
         False
