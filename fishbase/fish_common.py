@@ -19,6 +19,7 @@ import os
 import base64
 import string
 import random
+from urllib import parse
 from collections import OrderedDict
 import functools
 
@@ -461,6 +462,7 @@ def if_json_contain(left_json, right_json, op='strict'):
 
 # 2018.3.8 edit by Xiang qinqin
 # 2018.5.15 edit by David Yi, #19030
+# v1.0.15 edit by Hu Jun, #67
 def splice_url_params(dic):
     """
     根据传入的键值对，拼接 url 后面 ? 的参数，比如 ?key1=value1&key2=value2
@@ -488,11 +490,10 @@ def splice_url_params(dic):
     od = OrderedDict(sorted(dic.items()))
 
     url = '?'
-    for key, value in od.items():
-        temp_str = key + '=' + value
-        url = url + temp_str + '&'
-    # 去掉最后一个&字符
-    url = url[:len(url) - 1]
+    temp_str = parse.urlencode(od)
+    
+    url = url + temp_str
+    
     return url
 
 
