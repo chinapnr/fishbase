@@ -19,14 +19,15 @@ import os
 import base64
 import string
 import random
-from urllib import parse
 from collections import OrderedDict
 import functools
 
 if sys.version > '3':
     import configparser
+    from urllib import parse
 else:
     import ConfigParser as configparser
+    from urllib import urlencode as parse
 
 # uuid kind const
 udTime = 10001
