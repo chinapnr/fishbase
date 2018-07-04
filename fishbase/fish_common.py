@@ -27,7 +27,7 @@ if sys.version > '3':
     from urllib import parse
 else:
     import ConfigParser as configparser
-    from urllib import urlencode as parse
+    import urllib as parse
 
 # uuid kind const
 udTime = 10001
