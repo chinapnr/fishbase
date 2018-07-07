@@ -248,3 +248,19 @@ class TestFishCommon(object):
         
         with pytest.raises(TypeError):
             if_any_elements_is_space("test_str")
+
+    # test remove_duplicate_elements()
+    def test_remove_duplicate_elements_01(self):
+        list1 = [1, 5, 2, 1, 9, 1, 5, 10]
+        assert list(remove_duplicate_elements(list1)) == [1, 5, 2, 9, 10]
+    
+        list2 = [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 1, 'y': 2}, {'x': 2, 'y': 4}]
+    
+        dict_demo1 = remove_duplicate_elements(list2, key=lambda d: (d['x'], d['y']))
+        assert (list(dict_demo1)) == [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 2, 'y': 4}]
+    
+        dict_demo2 = remove_duplicate_elements(list2, key=lambda d: d['x'])
+        assert (list(dict_demo2)) == [{'x': 1, 'y': 2}, {'x': 2, 'y': 4}]
+    
+        dict_demo3 = remove_duplicate_elements(list2, key=lambda d: d['y'])
+        assert (list(dict_demo3)) == [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 2, 'y': 4}]

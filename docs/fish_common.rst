@@ -19,6 +19,7 @@
     fish_common.Base64.decode
     fish_common.get_random_str
     fish_common.if_any_elements_is_space
+    fish_common.remove_duplicate_elements
 
 .. automodule:: fish_common
     :members:

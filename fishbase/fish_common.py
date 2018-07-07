@@ -780,3 +780,47 @@ def get_random_str(length, letters=True, digits=False, punctuation=False):
 
     random_str = ''.join(random.sample(random_source, length))
     return random_str
+
+
+# v1.0.15 edit by Hu Jun, #77 #63
+def remove_duplicate_elements(items, key=None):
+    """
+    去除序列中的重复元素，使得剩下的元素仍然保持顺序不变，对于不可哈希的对象，需要指定key，说明去重元素
+
+    :param:
+        * items: (list) 需要去重的列表
+        * key: (hook函数) 指定一个函数，用来将序列中的元素转换成可哈希类型
+
+    :return:
+        * result: (generator) 去重后的结果的生成器
+
+    举例如下::
+
+        print('--- remove_duplicate_elements demo---')
+        list_demo = remove_duplicate_elements([1, 5, 2, 1, 9, 1, 5, 10])
+        print(list(list_demo))
+        list2 = [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 1, 'y': 2}, {'x': 2, 'y': 4}]
+        dict_demo1 = remove_duplicate_elements(list2, key=lambda d: (d['x'], d['y']))
+        print(list(dict_demo1))
+        dict_demo2 = remove_duplicate_elements(list2, key=lambda d: d['x'])
+        print(list(dict_demo2))
+        dict_demo3 = remove_duplicate_elements(list2, key=lambda d: d['y'])
+        print(list(dict_demo3))
+        print('---')
+
+    执行结果::
+
+        --- remove_duplicate_elements demo---
+        [1, 5, 2, 9, 10]
+        [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 2, 'y': 4}]
+        [{'x': 1, 'y': 2}, {'x': 2, 'y': 4}]
+        [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 2, 'y': 4}]
+        ---
+
+    """
+    seen = set()
+    for item in items:
+        val = item if key is None else key(item)
+        if val not in seen:
+            yield item
+            seen.add(val)
