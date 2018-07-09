@@ -158,16 +158,16 @@ class TestFishCommon(object):
         non_num_str = 'nonnumberstring'
         num_str = 'number123'
         
-        assert check_str(non_chinese_str, check_style=charChinese) is False
-        assert check_str(chinese_str, check_style=charChinese) is True
-        assert check_str(non_num_str, check_style=charNum) is False
-        assert check_str(num_str, check_style=charNum) is True
-        assert check_str(non_num_str, check_style=10020) is False
+        assert is_contain_special_char(non_chinese_str, check_style=charChinese) is False
+        assert is_contain_special_char(chinese_str, check_style=charChinese) is True
+        assert is_contain_special_char(non_num_str, check_style=charNum) is False
+        assert is_contain_special_char(num_str, check_style=charNum) is True
+        assert is_contain_special_char(non_num_str, check_style=10020) is False
 
         if sys.version > '3':
             chinese_str1 = u'有zhongwen'.encode('gbk')
             with pytest.raises(TypeError):
-                check_str(chinese_str1, check_style=charChinese)
+                is_contain_special_char(chinese_str1, check_style=charChinese)
 
     # test find_files() tc
     def test_find_files_01(self):
@@ -230,3 +230,37 @@ class TestFishCommon(object):
             assert ord(item) in punctuation_ord_list
     
         assert len(get_random_str(12, letters=False, digits=True, punctuation=True)) == 12
+
+    # test if_any_elements_is_space()
+    def test_if_any_elements_is_space_01(self):
+
+        assert if_any_elements_is_space([1, 2, 'test_str']) is False
+
+        assert if_any_elements_is_space([0, 2]) is False
+
+        assert if_any_elements_is_space([1, 2, None]) is True
+
+        assert if_any_elements_is_space((1, [1, 2], 3, '')) is True
+
+        assert if_any_elements_is_space({'a': 1, 'b': 0}) is False
+
+        assert if_any_elements_is_space({'a': 1, 'b': []}) is True
+        
+        with pytest.raises(TypeError):
+            if_any_elements_is_space("test_str")
+
+    # test remove_duplicate_elements()
+    def test_remove_duplicate_elements_01(self):
+        list1 = [1, 5, 2, 1, 9, 1, 5, 10]
+        assert list(remove_duplicate_elements(list1)) == [1, 5, 2, 9, 10]
+    
+        list2 = [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 1, 'y': 2}, {'x': 2, 'y': 4}]
+    
+        dict_demo1 = remove_duplicate_elements(list2, key=lambda d: (d['x'], d['y']))
+        assert (list(dict_demo1)) == [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 2, 'y': 4}]
+    
+        dict_demo2 = remove_duplicate_elements(list2, key=lambda d: d['x'])
+        assert (list(dict_demo2)) == [{'x': 1, 'y': 2}, {'x': 2, 'y': 4}]
+    
+        dict_demo3 = remove_duplicate_elements(list2, key=lambda d: d['y'])
+        assert (list(dict_demo3)) == [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 2, 'y': 4}]

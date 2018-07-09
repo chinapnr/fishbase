@@ -11,13 +11,15 @@
     fish_common.SingleTon
     fish_common.sorted_list_from_dict
     fish_common.splice_url_params
-    fish_common.check_str
+    fish_common.is_contain_special_char
     fish_common.find_files
     fish_common.hmac_sha256
     fish_common.Base64.string
     fish_common.Base64.file
     fish_common.Base64.decode
     fish_common.get_random_str
+    fish_common.if_any_elements_is_space
+    fish_common.remove_duplicate_elements
 
 .. automodule:: fish_common
     :members:
