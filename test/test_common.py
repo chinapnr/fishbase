@@ -264,3 +264,36 @@ class TestFishCommon(object):
     
         dict_demo3 = remove_duplicate_elements(list2, key=lambda d: d['y'])
         assert (list(dict_demo3)) == [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 2, 'y': 4}]
+
+    # test sorted_objs_by_attr()
+    def test_sorted_objs_by_attr_01(self):
+        class User(object):
+            def __init__(self, user_id):
+                self.user_id = user_id
+    
+        users = [User(23), User(3), User(99)]
+        result = sorted_objs_by_attr(users, key='user_id')
+        assert result[0].user_id == 3
+        reverse_result = sorted_objs_by_attr(users, key='user_id', reverse=True)
+        assert reverse_result[0].user_id == 99
+
+    # test sorted_objs_by_attr()
+    def test_sorted_objs_by_attr_02(self):
+        class User(object):
+            def __init__(self, user_id):
+                self.user_id = user_id
+    
+        users = [User(23), User(3), User(99)]
+    
+        with pytest.raises(AttributeError):
+            sorted_objs_by_attr(users, key='user_id1')
+    
+        assert len(sorted_objs_by_attr([], key='user_id')) == 0
+
+    # test get_query_param_from_url()
+    def test_get_query_param_from_url_01(self):
+        url = 'http://localhost:8811/mytest?page_number=1&page_size=10' \
+              '&start_time=20180515&end_time=20180712'
+        query_dict = get_query_param_from_url(url)
+        assert 'page_number' in query_dict
+        assert '20180515' in query_dict['start_time']

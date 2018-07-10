@@ -20,6 +20,8 @@
     fish_common.get_random_str
     fish_common.if_any_elements_is_space
     fish_common.remove_duplicate_elements
+    fish_common.sorted_objs_by_attr
+    fish_common.get_query_param_from_url
 
 .. automodule:: fish_common
     :members:

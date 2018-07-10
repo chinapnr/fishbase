@@ -20,14 +20,17 @@ import base64
 import string
 import random
 from collections import OrderedDict
+from operator import attrgetter
 import functools
 
 if sys.version > '3':
     import configparser
-    from urllib import parse
+    from urllib.parse import parse_qs, urlsplit, urlencode
 else:
     import ConfigParser as configparser
-    import urllib as parse
+    from urllib import urlencode
+    from urlparse import parse_qs, urlsplit
+    
 
 # uuid kind const
 udTime = 10001
@@ -491,7 +494,7 @@ def splice_url_params(dic):
     od = OrderedDict(sorted(dic.items()))
 
     url = '?'
-    temp_str = parse.urlencode(od)
+    temp_str = urlencode(od)
     
     url = url + temp_str
     
@@ -824,3 +827,81 @@ def remove_duplicate_elements(items, key=None):
         if val not in seen:
             yield item
             seen.add(val)
+
+
+# v1.0.15 edit by Hu Jun, #64
+def sorted_objs_by_attr(objs, key, reverse=False):
+    """
+    对原生不支持比较操作的对象根据属性排序
+
+    :param:
+        * objs: (list) 需要排序的对象列表
+        * key: (string) 需要进行排序的对象属性
+        * reverse: (bool) 排序结果是否进行反转，默认为False，不进行反转
+
+    :return:
+        * result: (list) 排序后的对象列表
+
+    举例如下::
+
+        print('--- sorted_objs_by_attr demo---')
+
+
+        class User(object):
+            def __init__(self, user_id):
+                self.user_id = user_id
+                
+        
+        users = [User(23), User(3), User(99)]
+        result = sorted_objs_by_attr(users, key='user_id')
+        reverse_result = sorted_objs_by_attr(users, key='user_id', reverse=True)
+        print([item.user_id for item in result])
+        print([item.user_id for item in reverse_result])
+        print('---')
+
+    执行结果::
+
+        --- sorted_objs_by_attr demo---
+        [3, 23, 99]
+        [99, 23, 3]
+        ---
+
+    """
+    if len(objs) == 0:
+        return []
+    if not hasattr(objs[0], key):
+        raise AttributeError('{0} object has no attribute {1}'.format(type(objs[0]), key))
+    result = sorted(objs, key=attrgetter(key), reverse=reverse)
+    return result
+
+
+# v1.0.15 edit by Hu Jun, #79
+def get_query_param_from_url(url):
+    """
+    从url中获取query参数字典
+
+    :param:
+        * url: (string) 需要获取参数字典的url
+
+    :return:
+        * query_dict: (dict) query参数的有序字典，字典的值为query值组成的列表
+
+    举例如下::
+
+        print('--- get_query_param_from_url demo---')
+        url = 'http://localhost:8811/mytest?page_number=1&page_size=10&start_time=20180515&end_time=20180712'
+        query_dict = get_query_param_from_url(url)
+        print(query_dict['page_size'])
+        print('---')
+
+    执行结果::
+
+        --- get_query_param_from_url demo---
+        ['10']
+        ---
+
+    """
+    url_obj = urlsplit(url)
+    query_dict = parse_qs(url_obj.query)
+
+    return OrderedDict(query_dict)
