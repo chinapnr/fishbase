@@ -1,7 +1,7 @@
 更新记录
 ===========================
 
-2018.7.10 v1.0.15
+2018.7.11 v1.0.15
 ---------------------------
 
 * `#36 <https://github.com/chinapnr/fishbase/issues/36>`_, common, edit function :meth:`fish_common.is_contain_special_char()`, change function name;
@@ -11,6 +11,7 @@
 * `#63 <https://github.com/chinapnr/fishbase/issues/67>`_ and `#77 <https://github.com/chinapnr/fishbase/issues/67>`_, common, add function :meth:`fish_common.remove_duplicate_elements`, doc and unittest;
 * `#64 <https://github.com/chinapnr/fishbase/issues/64>`_ common, add function :meth:`fish_common.sorted_objs_by_attr`, doc and unittest;
 * `#79 <https://github.com/chinapnr/fishbase/issues/79>`_ common, add function :meth:`fish_common.get_query_param_from_url`, doc and unittest;
+* `#83 <https://github.com/chinapnr/fishbase/issues/83>`_ common, edit function :meth:`fish_common.conf_as_dict`, optimize;
 
 2018.6.27 v1.0.14
 ---------------------------

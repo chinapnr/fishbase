@@ -50,6 +50,7 @@ charNum = 10022
 # 2018.2.12 #11014 edit by David Yi, 增加返回内容，字典长度,
 # 2018.4.18 #19015 加入 docstring，完善文档说明
 # 2018.5.14 v1.0.11 #19028 逻辑修改，更加严密
+# v1.0.15 edit by Hu Jun, #83
 def conf_as_dict(conf_filename):
     """
     读入 ini 配置文件，返回根据配置文件内容生成的字典类型变量；
@@ -58,7 +59,7 @@ def conf_as_dict(conf_filename):
         * conf_filename: (string) 需要读入的 ini 配置文件长文件名
     :return:
         * flag: (bool) 读取配置文件是否正确，正确返回 True，错误返回 False
-        * d: (dict) 如果读取配置文件正确返回的包含配置文件内容的字典
+        * d: (dict) 如果读取配置文件正确返回的包含配置文件内容的字典，字典内容顺序与配置文件顺序保持一致
         * count: (int) 读取到的配置文件有多少个 key 的数量
 
     举例如下::
@@ -116,9 +117,9 @@ def conf_as_dict(conf_filename):
         flag = False
         return flag,
 
-    d = dict(cf._sections)
+    d = OrderedDict(cf._sections)
     for k in d:
-        d[k] = dict(cf._defaults, **d[k])
+        d[k] = OrderedDict(cf._defaults, **d[k])
         d[k].pop('__name__', None)
 
     flag = True

@@ -43,6 +43,20 @@ class TestFishCommon(object):
         with pytest.raises(IndexError):
             d = ds[1]
 
+    def test_config_dict_03(self):
+        # 定义配置文件名
+        conf_filename = './test/test_conf1.ini'
+    
+        # 读取配置文件
+        ds = conf_as_dict(conf_filename)
+        d = ds[1]
+
+        list1 = ['show_opt', 'show_opt_common', 'show_opt_common2', 'get_args', 'show_rule_pattern',
+                 'show_pattern', 'get_extra_rules']
+
+        # 断言是否保序
+        assert list(d.keys()) == list1
+
     # 测试 GetMD5()  tc
     def test_md5_01(self):
 
