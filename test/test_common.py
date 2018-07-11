@@ -45,7 +45,7 @@ class TestFishCommon(object):
 
     def test_config_dict_03(self):
         # 定义配置文件名
-        conf_filename = './test/test_conf1.ini'
+        conf_filename = './test/test_conf.ini'
     
         # 读取配置文件
         ds = conf_as_dict(conf_filename)
