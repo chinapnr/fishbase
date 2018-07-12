@@ -20,12 +20,17 @@ import base64
 import string
 import random
 from collections import OrderedDict
+from operator import attrgetter
 import functools
 
 if sys.version > '3':
     import configparser
+    from urllib.parse import parse_qs, urlsplit, urlencode
 else:
     import ConfigParser as configparser
+    from urllib import urlencode
+    from urlparse import parse_qs, urlsplit
+    
 
 # uuid kind const
 udTime = 10001
@@ -45,6 +50,7 @@ charNum = 10022
 # 2018.2.12 #11014 edit by David Yi, 增加返回内容，字典长度,
 # 2018.4.18 #19015 加入 docstring，完善文档说明
 # 2018.5.14 v1.0.11 #19028 逻辑修改，更加严密
+# v1.0.15 edit by Hu Jun, #83
 def conf_as_dict(conf_filename):
     """
     读入 ini 配置文件，返回根据配置文件内容生成的字典类型变量；
@@ -53,7 +59,7 @@ def conf_as_dict(conf_filename):
         * conf_filename: (string) 需要读入的 ini 配置文件长文件名
     :return:
         * flag: (bool) 读取配置文件是否正确，正确返回 True，错误返回 False
-        * d: (dict) 如果读取配置文件正确返回的包含配置文件内容的字典
+        * d: (dict) 如果读取配置文件正确返回的包含配置文件内容的字典，字典内容顺序与配置文件顺序保持一致
         * count: (int) 读取到的配置文件有多少个 key 的数量
 
     举例如下::
@@ -111,9 +117,9 @@ def conf_as_dict(conf_filename):
         flag = False
         return flag,
 
-    d = dict(cf._sections)
+    d = OrderedDict(cf._sections)
     for k in d:
-        d[k] = dict(cf._defaults, **d[k])
+        d[k] = OrderedDict(cf._defaults, **d[k])
         d[k].pop('__name__', None)
 
     flag = True
@@ -238,14 +244,54 @@ def get_uuid(kind):
 get_time_uuid = functools.partial(get_uuid, udTime)
 
 
-# 功能：判断参数列表是否存在不合法的参数，如果存在None或空字符串或空格字符串，则返回True, 否则返回False
-# 输入参数：source 是参数列表或元组
-# 输出参数：True : 有元素为 None，或空； False：没有元素为 None 或空
 # 2017.2.22 edit by David.Yi, #19007
+# 2018.6.29 v1.0.14 edit by Hu Jun，#62
 def if_any_elements_is_space(source):
-    for i in source:
+    """
+    判断对象中的元素，如果存在None或空字符串或空格字符串，则返回True, 否则返回False, 支持字典、列表和元组
+
+    :param:
+        * source: (list, set, dict) 需要检查的对象
+
+    :return:
+        * result: (bool) 存在None或空字符串或空格字符串返回True， 否则返回False
+
+    举例如下::
+
+        print('--- if_any_elements_is_space demo---')
+        print(if_any_elements_is_space([1, 2, 'test_str']))
+        print(if_any_elements_is_space([0, 2]))
+        print(if_any_elements_is_space([1, 2, None]))
+        print(if_any_elements_is_space((1, [1, 2], 3, '')))
+        print(if_any_elements_is_space({'a': 1, 'b': 0}))
+        print(if_any_elements_is_space({'a': 1, 'b': []}))
+        print('---')
+
+    执行结果::
+
+        --- if_any_elements_is_space demo---
+        False
+        False
+        True
+        True
+        False
+        True
+        ---
+
+    """
+    if isinstance(source, dict):
+        check_list = list(source.values())
+    elif isinstance(source, list) or isinstance(source, tuple):
+        check_list = list(source)
+    else:
+        raise TypeError('source except list, tuple or dict, but got {}'.format(type(source)))
+    
+    for i in check_list:
+        if i is 0:
+            continue
         if not (i and str(i).strip()):
             return True
+    
     return False
 
 
@@ -421,6 +467,7 @@ def if_json_contain(left_json, right_json, op='strict'):
 
 # 2018.3.8 edit by Xiang qinqin
 # 2018.5.15 edit by David Yi, #19030
+# v1.0.15 edit by Hu Jun, #67
 def splice_url_params(dic):
     """
     根据传入的键值对，拼接 url 后面 ? 的参数，比如 ?key1=value1&key2=value2
@@ -448,11 +495,10 @@ def splice_url_params(dic):
     od = OrderedDict(sorted(dic.items()))
 
     url = '?'
-    for key, value in od.items():
-        temp_str = key + '=' + value
-        url = url + temp_str + '&'
-    # 去掉最后一个&字符
-    url = url[:len(url) - 1]
+    temp_str = urlencode(od)
+    
+    url = url + temp_str
+    
     return url
 
 
@@ -499,14 +545,14 @@ def sorted_list_from_dict(p_dict, order=odASC):
 
 
 # v1.0.13 edit by David Yi, edit by Hu Jun，#36
-def check_str(p_str, check_style=charChinese):
+# v1.0.14 edit by Hu Jun #38
+def is_contain_special_char(p_str, check_style=charChinese):
     """
     检查字符串是否含有指定类型字符
     
     :param:
         * p_str: (string) 需要判断的字符串
-        * check_style: (string) 需要判断的字符类型，默认为 charChinese，检查是否含有中文，编码仅支持utf-8，
-        支持 charNum，检查是否含有数字字符串，该参数向后兼容
+        * check_style: (string) 需要判断的字符类型，默认为 charChinese(编码仅支持utf-8),支持 charNum，该参数向后兼容
 
     :return:
         * True 含有指定类型字符
@@ -514,7 +560,7 @@ def check_str(p_str, check_style=charChinese):
 
     举例如下::
         
-        print('--- check_str demo ---')
+        print('--- is_contain_special_char demo ---')
         p_str1 = 'meiyouzhongwen'
         non_chinese_result = check_str(p_str1, check_style=charChinese)
         print(non_chinese_result)
@@ -534,7 +580,7 @@ def check_str(p_str, check_style=charChinese):
 
     执行结果::
         
-        --- check_str demo ---
+        --- is_contain_special_char demo ---
         False
         True
         False
@@ -738,3 +784,125 @@ def get_random_str(length, letters=True, digits=False, punctuation=False):
 
     random_str = ''.join(random.sample(random_source, length))
     return random_str
+
+
+# v1.0.15 edit by Hu Jun, #77 #63
+def remove_duplicate_elements(items, key=None):
+    """
+    去除序列中的重复元素，使得剩下的元素仍然保持顺序不变，对于不可哈希的对象，需要指定key，说明去重元素
+
+    :param:
+        * items: (list) 需要去重的列表
+        * key: (hook函数) 指定一个函数，用来将序列中的元素转换成可哈希类型
+
+    :return:
+        * result: (generator) 去重后的结果的生成器
+
+    举例如下::
+
+        print('--- remove_duplicate_elements demo---')
+        list_demo = remove_duplicate_elements([1, 5, 2, 1, 9, 1, 5, 10])
+        print(list(list_demo))
+        list2 = [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 1, 'y': 2}, {'x': 2, 'y': 4}]
+        dict_demo1 = remove_duplicate_elements(list2, key=lambda d: (d['x'], d['y']))
+        print(list(dict_demo1))
+        dict_demo2 = remove_duplicate_elements(list2, key=lambda d: d['x'])
+        print(list(dict_demo2))
+        dict_demo3 = remove_duplicate_elements(list2, key=lambda d: d['y'])
+        print(list(dict_demo3))
+        print('---')
+
+    执行结果::
+
+        --- remove_duplicate_elements demo---
+        [1, 5, 2, 9, 10]
+        [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 2, 'y': 4}]
+        [{'x': 1, 'y': 2}, {'x': 2, 'y': 4}]
+        [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 2, 'y': 4}]
+        ---
+
+    """
+    seen = set()
+    for item in items:
+        val = item if key is None else key(item)
+        if val not in seen:
+            yield item
+            seen.add(val)
+
+
+# v1.0.15 edit by Hu Jun, #64
+def sorted_objs_by_attr(objs, key, reverse=False):
+    """
+    对原生不支持比较操作的对象根据属性排序
+
+    :param:
+        * objs: (list) 需要排序的对象列表
+        * key: (string) 需要进行排序的对象属性
+        * reverse: (bool) 排序结果是否进行反转，默认为False，不进行反转
+
+    :return:
+        * result: (list) 排序后的对象列表
+
+    举例如下::
+
+        print('--- sorted_objs_by_attr demo---')
+
+
+        class User(object):
+            def __init__(self, user_id):
+                self.user_id = user_id
+                
+        
+        users = [User(23), User(3), User(99)]
+        result = sorted_objs_by_attr(users, key='user_id')
+        reverse_result = sorted_objs_by_attr(users, key='user_id', reverse=True)
+        print([item.user_id for item in result])
+        print([item.user_id for item in reverse_result])
+        print('---')
+
+    执行结果::
+
+        --- sorted_objs_by_attr demo---
+        [3, 23, 99]
+        [99, 23, 3]
+        ---
+
+    """
+    if len(objs) == 0:
+        return []
+    if not hasattr(objs[0], key):
+        raise AttributeError('{0} object has no attribute {1}'.format(type(objs[0]), key))
+    result = sorted(objs, key=attrgetter(key), reverse=reverse)
+    return result
+
+
+# v1.0.15 edit by Hu Jun, #79
+def get_query_param_from_url(url):
+    """
+    从url中获取query参数字典
+
+    :param:
+        * url: (string) 需要获取参数字典的url
+
+    :return:
+        * query_dict: (dict) query参数的有序字典，字典的值为query值组成的列表
+
+    举例如下::
+
+        print('--- get_query_param_from_url demo---')
+        url = 'http://localhost:8811/mytest?page_number=1&page_size=10&start_time=20180515&end_time=20180712'
+        query_dict = get_query_param_from_url(url)
+        print(query_dict['page_size'])
+        print('---')
+
+    执行结果::
+
+        --- get_query_param_from_url demo---
+        ['10']
+        ---
+
+    """
+    url_obj = urlsplit(url)
+    query_dict = parse_qs(url_obj.query)
+
+    return OrderedDict(query_dict)
