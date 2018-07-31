@@ -51,7 +51,7 @@ class TestFishDate(object):
         this_month_days = calendar.monthrange(now.year, now.month)
         assert now.year == this_month.year
         assert now.month == this_month.month
-        assert now.day < this_month_days
+        assert now.day < this_month_days[1]
 
     # 测试 GetRandomTime()  tc
     def test_date_time_this_year_01(self):
