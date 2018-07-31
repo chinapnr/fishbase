@@ -43,3 +43,20 @@ class TestFishDate(object):
         
         with pytest.raises(TypeError):
             get_date_range('asdafsd')
+
+    # 测试 GetRandomTime()  tc
+    def test_date_time_this_month_01(self):
+        this_month = GetRandomTime.date_time_this_month()
+        now = datetime.datetime.now()
+        this_month_days = calendar.monthrange(now.year, now.month)
+        assert now.year == this_month.year
+        assert now.month == this_month.month
+        assert now.day < this_month_days
+
+    # 测试 GetRandomTime()  tc
+    def test_date_time_this_year_01(self):
+        this_month = GetRandomTime.date_time_this_year()
+        now = datetime.datetime.now()
+        this_year_days = sum(calendar.mdays)
+        assert now.year == this_month.year
+        assert now.day < this_year_days

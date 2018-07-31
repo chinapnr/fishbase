@@ -1,5 +1,9 @@
 更新记录
 ===========================
+2018.7.31 v1.0.15
+---------------------------
+* `#87 <https://github.com/chinapnr/fishbase/issues/87>`_, date, add function :meth:`fish_date.GetRandomTime`, doc and unittest;
+
 
 2018.7.11 v1.0.15
 ---------------------------
