@@ -117,7 +117,10 @@ def conf_as_dict(conf_filename, encode='utf-8'):
 
     # 读入 config 文件
     try:
-        cf.read(conf_filename, encoding=encode)
+        if sys.version > '3':
+            cf.read(conf_filename, encoding=encode)
+        else:
+            cf.read(conf_filename)
     except:
         flag = False
         return flag,

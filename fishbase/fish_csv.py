@@ -1,5 +1,6 @@
 # coding=utf-8
 import csv
+import sys
 
 
 # 将指定的 csv 文件转换为 list 返回
@@ -44,8 +45,12 @@ def csv_file_to_list(csv_filename, deli=',', del_blank_row=True, encode='utf-8')
     if encode not in ['utf-8', 'gbk']:
         encode = 'utf-8'
 
-    with open(csv_filename, encoding=encode) as csv_file:
-        csv_list = list(csv.reader(csv_file, delimiter=deli))
+    if sys.version > '3':
+        with open(csv_filename, encoding=encode) as csv_file:
+            csv_list = list(csv.reader(csv_file, delimiter=deli))
+    else:
+        with open(csv_filename) as csv_file:
+            csv_list = list(csv.reader(csv_file, delimiter=deli))
 
     # 如果设置为要删除空行
     if del_blank_row:

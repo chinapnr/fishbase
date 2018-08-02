@@ -73,10 +73,10 @@ class TestFishCommon(object):
 
     # 测试 GetMD5()  tc
     def test_md5_01(self):
-
+        
         assert GetMD5.string('hello world!') == 'fc3ff98e8c6a0d3087d515c0473f8677'
-        assert GetMD5.file('./test/test_conf.ini') == 'fb7528c9778b2377e30b0f7e4c26fef0'
-        assert GetMD5.big_file('./test/test_conf.ini') == 'fb7528c9778b2377e30b0f7e4c26fef0'
+        assert GetMD5.file('./test/test_conf.ini') == '8d4f03dc6b223bd199be6aa53d5d4f5c'
+        assert GetMD5.big_file('./test/test_conf.ini') == '8d4f03dc6b223bd199be6aa53d5d4f5c'
 
     # 测试 GetMD5()  tc
     def test_md5_02(self):

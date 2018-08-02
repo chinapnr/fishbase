@@ -1,6 +1,7 @@
 # coding=utf-8
 import io
 import os
+import sys
 import shutil
 from fishbase.fish_csv import csv_file_to_list
 
@@ -32,27 +33,29 @@ class TestCsv(object):
 
     # 测试 csv_file_to_list()  tc
     def test_csv_02(self):
-        csv_content = u"a,b\n1,中文"
-        csv_file_name = TestCsv.get_test_file(csv_content)
-        with io.open(csv_file_name, 'w', encoding='utf8') as f:
-            f.write(csv_content)
-            f.close()
-        result = csv_file_to_list(csv_file_name, encode='utf-8')
-        shutil.rmtree(os.path.dirname(csv_file_name))
-        assert len(result) == 2
-        assert len(result[0]) == 2
-        assert len(result[1]) == 2
+        if sys.version > '3':
+            csv_content = u"a,b\n1,中文"
+            csv_file_name = TestCsv.get_test_file(csv_content)
+            with io.open(csv_file_name, 'w', encoding='utf8') as f:
+                f.write(csv_content)
+                f.close()
+            result = csv_file_to_list(csv_file_name, encode='utf-8')
+            shutil.rmtree(os.path.dirname(csv_file_name))
+            assert len(result) == 2
+            assert len(result[0]) == 2
+            assert len(result[1]) == 2
 
     # 测试 csv_file_to_list()  tc
     def test_csv_03(self):
-        csv_content = u"a,b\n1,中文"
-        csv_file_name = TestCsv.get_test_file(csv_content)
-
-        with io.open(csv_file_name, 'w', encoding='gbk') as f:
-            f.write(csv_content)
-            f.close()
-        result = csv_file_to_list(csv_file_name, encode='gbk')
-        shutil.rmtree(os.path.dirname(csv_file_name))
-        assert len(result) == 2
-        assert len(result[0]) == 2
-        assert len(result[1]) == 2
+        if sys.version > '3':
+            csv_content = u"a,b\n1,中文"
+            csv_file_name = TestCsv.get_test_file(csv_content)
+    
+            with io.open(csv_file_name, 'w', encoding='gbk') as f:
+                f.write(csv_content)
+                f.close()
+            result = csv_file_to_list(csv_file_name, encode='gbk')
+            shutil.rmtree(os.path.dirname(csv_file_name))
+            assert len(result) == 2
+            assert len(result[0]) == 2
+            assert len(result[1]) == 2
