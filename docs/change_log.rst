@@ -1,8 +1,10 @@
 更新记录
 ===========================
-2018.7.31 v1.0.15
+2018.8.2 v1.0.16
 ---------------------------
 * `#87 <https://github.com/chinapnr/fishbase/issues/87>`_, date, add function :meth:`fish_date.GetRandomTime`, doc and unittest;
+* `#94 <https://github.com/chinapnr/fishbase/issues/94>`_, date, edit function :meth:`fish_csv.csv_file_to_list`, doc and unittest;
+* `#94 <https://github.com/chinapnr/fishbase/issues/94>`_, common, edit function :meth:`fish_common.conf_as_dict`, doc and unittest;
 
 
 2018.7.11 v1.0.15

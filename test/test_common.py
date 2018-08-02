@@ -57,6 +57,20 @@ class TestFishCommon(object):
         # 断言是否保序
         assert list(d.keys()) == list1
 
+    def test_config_dict_04(self):
+        # 定义配置文件名
+        conf_filename = './test/test_conf.ini'
+    
+        # 读取配置文件, 中文编码
+        ds = conf_as_dict(conf_filename, encode='utf-8')
+        d = ds[1]
+    
+        list1 = ['show_opt', 'show_opt_common', 'show_opt_common2', 'get_args', 'show_rule_pattern',
+                 'show_pattern', 'get_extra_rules']
+    
+        # 断言是否保序
+        assert list(d.keys()) == list1
+
     # 测试 GetMD5()  tc
     def test_md5_01(self):
 
