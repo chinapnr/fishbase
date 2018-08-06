@@ -1,7 +1,8 @@
 # coding=utf-8
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import calendar
+import random
 
 
 # 2016.4.26
@@ -103,3 +104,83 @@ def get_years(months=0, refer=None):
         m = 12
     
     return ''.join(['%04d' % y, '%02d' % m])
+
+
+# v1.0.16 #87, edit by Hu Jun
+class GetRandomTime(object):
+    """
+    获取随机时间
+
+    举例如下::
+
+        print('--- GetRandomTime demo ---')
+        print(GetRandomTime.date_time_this_month())
+        print(GetRandomTime.date_time_this_year())
+        print('---')
+
+    执行结果::
+
+        --- Base64 demo ---
+        2018-07-01 12:47:20
+        2018-02-08 17:16:09
+        ---
+
+    """
+    a_day_seconds = 24*60*60
+
+    @staticmethod
+    def date_time_this_month():
+        """
+        获取当前月的随机日期
+
+        :return:
+            * date_this_month(datetime) 当前月份的随机时间
+
+        举例如下::
+
+            print('--- GetRandomTime.date_time_this_month demo ---')
+            print(GetRandomTime.date_time_this_month())
+            print('---')
+
+        执行结果::
+    
+            --- GetRandomTime.date_time_this_month demo demo ---
+            2018-07-01 12:47:20
+            ---
+
+       """
+        now = datetime.now()
+        this_month_start = now.replace(
+            day=1, hour=0, minute=0, second=0, microsecond=0)
+        this_month_days = calendar.monthrange(now.year, now.month)
+        random_seconds = random.randint(0, this_month_days[1]*GetRandomTime.a_day_seconds)
+
+        return this_month_start + timedelta(seconds=random_seconds)
+
+    @staticmethod
+    def date_time_this_year():
+        """
+        获取当前年的随机日期
+        
+        :return:
+            * date_this_year(datetime) 当前月份的随机时间
+
+        举例如下::
+
+            print('--- GetRandomTime.date_time_this_year demo ---')
+            print(GetRandomTime.date_time_this_year())
+            print('---')
+
+        执行结果::
+    
+            --- GetRandomTime.date_time_this_year demo demo ---
+            2018-02-08 17:16:09
+            ---
+       """
+        now = datetime.now()
+        this_year_start = now.replace(
+            month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
+        this_year_days = sum(calendar.mdays)
+        random_seconds = random.randint(0, this_year_days*GetRandomTime.a_day_seconds)
+        
+        return this_year_start + timedelta(seconds=random_seconds)
