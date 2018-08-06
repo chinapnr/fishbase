@@ -52,13 +52,13 @@ charNum = 10022
 # 2018.5.14 v1.0.11 #19028 逻辑修改，更加严密
 # v1.0.15 edit by Hu Jun, #83
 # v1.0.16 edit by Hu Jun, #94
-def conf_as_dict(conf_filename, encode='utf-8'):
+def conf_as_dict(conf_filename, encode=None):
     """
     读入 ini 配置文件，返回根据配置文件内容生成的字典类型变量；
 
     :param:
         * conf_filename: (string) 需要读入的 ini 配置文件长文件名
-        * encode: (string) 文件编码，支持utf-8和gbk两种方式，默认为utf-8
+        * encode: (string) 文件编码
     :return:
         * flag: (bool) 读取配置文件是否正确，正确返回 True，错误返回 False
         * d: (dict) 如果读取配置文件正确返回的包含配置文件内容的字典，字典内容顺序与配置文件顺序保持一致
@@ -111,9 +111,6 @@ def conf_as_dict(conf_filename, encode='utf-8'):
         return flag,
 
     cf = configparser.ConfigParser()
-
-    if encode not in ['utf-8', 'gbk']:
-        encode = 'utf-8'
 
     # 读入 config 文件
     try:

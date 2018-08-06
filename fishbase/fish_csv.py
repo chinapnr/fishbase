@@ -1,6 +1,6 @@
 # coding=utf-8
 import csv
-import sys
+from io import open
 
 
 # 将指定的 csv 文件转换为 list 返回
@@ -12,8 +12,8 @@ import sys
 # ---
 # 2018.2.1 edit by David Yi, #11002
 # 2018.2.6 edit by David Yi, #11009， 增加过滤空行功能
-# v1.0.14 edit by Hu Jun #94
-def csv_file_to_list(csv_filename, deli=',', del_blank_row=True, encode='utf-8'):
+# v1.0.16 edit by Hu Jun #94
+def csv_file_to_list(csv_filename, deli=',', del_blank_row=True, encode=None):
 
     """
     将指定的 csv 文件转换为 list 返回；
@@ -22,7 +22,7 @@ def csv_file_to_list(csv_filename, deli=',', del_blank_row=True, encode='utf-8')
         * csv_filename: (string) csv 文件的长文件名
         * deli: (string) csv 文件分隔符，默认为逗号
         * del_blank_row: (string) 是否要删除空行，默认为删除
-        * encode: (string) 文件编码，支持utf-8和gbk两种方式，默认为utf-8
+        * encode: (string) 文件编码
     :return:
         * csv_list: (list) 转换后的 list
 
@@ -42,15 +42,8 @@ def csv_file_to_list(csv_filename, deli=',', del_blank_row=True, encode='utf-8')
             test_csv()
 
     """
-    if encode not in ['utf-8', 'gbk']:
-        encode = 'utf-8'
-
-    if sys.version > '3':
-        with open(csv_filename, encoding=encode) as csv_file:
-            csv_list = list(csv.reader(csv_file, delimiter=deli))
-    else:
-        with open(csv_filename) as csv_file:
-            csv_list = list(csv.reader(csv_file, delimiter=deli))
+    with open(csv_filename, encoding=encode) as csv_file:
+        csv_list = list(csv.reader(csv_file, delimiter=deli))
 
     # 如果设置为要删除空行
     if del_blank_row:
