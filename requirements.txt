@@ -2,4 +2,4 @@ python-dateutil
 coverage
 pytest-cov
 coveralls
-yaml
+pyyaml

@@ -8,8 +8,11 @@
 
 # 2018.8.3 add by Jia ChunYing
 import yaml
+import os
+import sys
 
-package_yml =  """
+
+package_yml = """
 project: hellopackage
 tree:
     - README.md
@@ -68,7 +71,15 @@ tree:
 
 
 def init_project_by_yml(yml=None, dist=None):
-    pass
+    yml_data = yaml.load(package_yml)
+    try:
+        project_name = yml_data['project']
+        project_tree = yml_data['tree']
+    except KeyError as e:
+        print(e)
+        sys.exit(1)
+    current_path = os.path.abspath('.')
+    project_path = os.path.join(current_path, project_name)
 
 
 def _makedirs_and_files(tree=None):
@@ -76,6 +87,6 @@ def _makedirs_and_files(tree=None):
     pass
 
 
-tree = yaml.load(package_yml)
-print(tree)
-a = pannle()
+
+
+
