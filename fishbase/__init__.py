@@ -24,4 +24,3 @@ from .fish_logger import *
 from .fish_system import *
 
 __version__ = '1.0.16'  # type: str
-
