@@ -1,9 +1,11 @@
 更新记录
 ===========================
-2018.8.13 v1.1.0
+2018.8.22 v1.1.0
 ---------------------------
 * `#74 <https://github.com/chinapnr/fishbase/issues/74>`_, common, add function :meth:`fish_common.get_group_list_data`, doc and unittest;
 * `#89 <https://github.com/chinapnr/fishbase/issues/89>`_, common, add function :meth:`fish_common.get_sub_dict`, doc and unittest;
+* `#90 <https://github.com/chinapnr/fishbase/issues/90>`_, common, add function :meth:`fish_date.get_time_interval`, doc and unittest;
+* `#93 <https://github.com/chinapnr/fishbase/issues/93>`_, common, add function :meth:`fish_date.transform_unix_to_datetime`, doc and unittest;
 
 
 2018.8.2 v1.0.16

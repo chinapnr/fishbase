@@ -184,3 +184,89 @@ class GetRandomTime(object):
         random_seconds = random.randint(0, this_year_days*GetRandomTime.a_day_seconds)
         
         return this_year_start + timedelta(seconds=random_seconds)
+
+
+# v1.1.0 #90, edit by Hu Jun
+def get_time_interval(start_time, end_time):
+    """
+    获取两个unix时间戳之间的时间间隔
+
+    :param:
+        * start_time: (int) 开始时间，unix时间戳
+        * end_time: (int) 结束时间，unix时间戳
+    :return:
+        * interval_dict: (dict) 时间间隔字典
+
+    举例如下::
+
+        print('--- get_time_interval demo ---')
+        import time
+        start = int(time.time())
+        end = start - 98908
+        print(get_time_interval(end, start))
+        print('---')
+
+    执行结果::
+
+        --- get_time_interval demo ---
+        {'days': 1, 'hours': 3, 'minutes': 28, 'seconds': 28}
+        ---
+
+    """
+    if not isinstance(start_time, int) or not isinstance(end_time, int):
+        raise TypeError('start_time and end_time should be int, bu we got {0} and {1}'.
+                        format(type(start_time), type(end_time)))
+        
+    # 计算天数
+    time_diff = abs(end_time - start_time)
+    days = (time_diff // (60*60*24))
+
+    # 计算小时数
+    remain = time_diff % (60*60*24)
+    hours = (remain // (60*60))
+
+    # 计算分钟数
+    remain = remain % (60*60)
+    minutes = (remain // 60)
+
+    # 计算秒数
+    seconds = remain % 60
+    interval_dict = {"days": days, "hours": hours, "minutes": minutes, "seconds": seconds}
+
+    return interval_dict
+
+
+# v1.1.0 #93, edit by Hu Jun
+def transform_unix_to_datetime(timestamp):
+    """
+    将unix时间戳转换成datetime类型
+
+    :param:
+        * timestamp: (int) unix时间戳
+    :return:
+        * data_type: (datetime) datetime类型实例
+
+    举例如下::
+
+        print('--- transform_unix_to_datetime demo ---')
+        import time
+        timestamp = int(time.time())
+        data_type = transform_unix_to_datetime(timestamp)
+        print(type(data_type))
+        print(data_type)
+        
+        print('---')
+
+    执行结果::
+
+        --- transform_unix_to_datetime demo ---
+        <class 'datetime.datetime'>
+        2018-08-22 19:48:03
+        ---
+
+    """
+    if not isinstance(timestamp, float) and not isinstance(timestamp, int):
+        raise TypeError('timestamp should be a float or int, but we got {}'.format(type(timestamp)))
+
+    date_time = datetime.fromtimestamp(timestamp)
+    return date_time
