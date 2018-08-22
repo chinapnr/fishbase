@@ -84,10 +84,10 @@ class TestFishDate(object):
     #  测试 transform_unix_to_datetime()  tc
     def test_transform_unix_to_datetime_01(self):
         timestamp = 1534938627
-        data_type = transform_unix_to_datetime(timestamp)
+        date_type = transform_unix_to_datetime(timestamp)
     
-        assert isinstance(data_type, datetime)
-        assert data_type.year == 2018
+        assert date_type.year == 2018
+        assert date_type.month == 8
 
     #  测试 transform_unix_to_datetime()  tc
     def test_transform_unix_to_datetime_02(self):

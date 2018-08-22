@@ -251,9 +251,9 @@ def transform_unix_to_datetime(timestamp):
         print('--- transform_unix_to_datetime demo ---')
         import time
         timestamp = int(time.time())
-        data_type = transform_unix_to_datetime(timestamp)
-        print(type(data_type))
-        print(data_type)
+        date_type = transform_unix_to_datetime(timestamp)
+        print(type(date_type))
+        print(date_type)
         
         print('---')
 
@@ -268,5 +268,5 @@ def transform_unix_to_datetime(timestamp):
     if not isinstance(timestamp, float) and not isinstance(timestamp, int):
         raise TypeError('timestamp should be a float or int, but we got {}'.format(type(timestamp)))
 
-    date_time = datetime.fromtimestamp(timestamp)
-    return date_time
+    date_type = datetime.fromtimestamp(timestamp)
+    return date_type
