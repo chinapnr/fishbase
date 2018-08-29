@@ -56,20 +56,49 @@ tree:
         - __init__.py
         - sdk:
             - __init__.py
-            - jarvis:
-                - __init__.py
-                - jaccount.py
-                - jfetch.py
-                - jfile.py
-                - jman.py
-            - saturn:
-                - __init__.py
-                - pegasus.py
-                - pyxis.py
 """
 
 
+# 通过配置文件初始化一个project
+# create 2018.8.3 by Jia ChunYing
 def init_project_by_yml(project_config=None, dist=None):
+    """
+        通过配置文件初始化一个project；
+
+        :param:
+            * project_config: (string) 用来生成project的配置文件
+            * dist: (string) project位置
+
+        举例如下::
+
+            print('--- init_project_by_yml demo ---')
+            # define yml string
+            package_yml = '''
+            project: hellopackage
+            tree:
+                - README.md
+                - requirements.txt
+                - setup.py
+                - MANIFEST.in
+                - hellopackage: # project name
+                    - __init__.py
+                - test: # unittest file
+                    - __init__.py
+                - demo: # usage demo
+                    - __init__.py
+                - doc: # documents
+            '''
+            # init project by yml
+            init_project_by_yml(package_yml, '.')
+            print(os.listdir('./hellopackage'))
+            print('---')
+
+        输出结果::
+
+            --- init_project_by_yml demo ---
+            ['demo', 'requirements.txt', 'test', 'MANIFEST.in', 'hellopackage', 'README.md', 'setup.py', 'doc']
+            ---
+    """
     if os.path.isfile(project_config):
         project_config = open(project_config)
     try:
@@ -108,16 +137,3 @@ def _create_null_file(file_path):
 def _makedirs_if_not_extis(dir_path):
     if not os.path.isdir(dir_path):
         os.makedirs(dir_path)
-
-
-def init_package_project(dist=None):
-    init_project_by_yml(package_yml, dist)
-
-
-def init_web_project(dist=None):
-    init_project_by_yml(web_yml, dist)
-
-
-if __name__ == '__main__':
-
-    init_project_by_yml(web_yml)
