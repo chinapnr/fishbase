@@ -39,7 +39,7 @@ class TestCsv(object):
             with io.open(csv_file_name, 'w', encoding='utf8') as f:
                 f.write(csv_content)
                 f.close()
-            result = csv_file_to_list(csv_file_name, encode='utf-8')
+            result = csv_file_to_list(csv_file_name, encoding='utf-8')
             shutil.rmtree(os.path.dirname(csv_file_name))
             assert len(result) == 2
             assert len(result[0]) == 2
@@ -54,7 +54,7 @@ class TestCsv(object):
             with io.open(csv_file_name, 'w', encoding='gbk') as f:
                 f.write(csv_content)
                 f.close()
-            result = csv_file_to_list(csv_file_name, encode='gbk')
+            result = csv_file_to_list(csv_file_name, encoding='gbk')
             shutil.rmtree(os.path.dirname(csv_file_name))
             assert len(result) == 2
             assert len(result[0]) == 2
