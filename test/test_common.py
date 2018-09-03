@@ -233,7 +233,7 @@ class TestFishCommon(object):
     
         assert GetMD5.file('./test/test_conf.ini') != b'bb7528c9778b2377e30b0f7e4c26fef0'
     
-    # test get_random_str()
+    # test get_random_str() tc
     def test_get_random_str_01(self):
         assert len(get_random_str(6)) == 6
     
@@ -259,7 +259,7 @@ class TestFishCommon(object):
     
         assert len(get_random_str(12, letters=False, digits=True, punctuation=True)) == 12
 
-    # test if_any_elements_is_space()
+    # test if_any_elements_is_space() tc
     def test_if_any_elements_is_space_01(self):
 
         assert if_any_elements_is_space([1, 2, 'test_str']) is False
@@ -277,7 +277,7 @@ class TestFishCommon(object):
         with pytest.raises(TypeError):
             if_any_elements_is_space("test_str")
 
-    # test remove_duplicate_elements()
+    # test remove_duplicate_elements() tc
     def test_remove_duplicate_elements_01(self):
         list1 = [1, 5, 2, 1, 9, 1, 5, 10]
         assert list(remove_duplicate_elements(list1)) == [1, 5, 2, 9, 10]
@@ -293,7 +293,7 @@ class TestFishCommon(object):
         dict_demo3 = remove_duplicate_elements(list2, key=lambda d: d['y'])
         assert (list(dict_demo3)) == [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 2, 'y': 4}]
 
-    # test sorted_objs_by_attr()
+    # test sorted_objs_by_attr() tc
     def test_sorted_objs_by_attr_01(self):
         class User(object):
             def __init__(self, user_id):
@@ -305,7 +305,7 @@ class TestFishCommon(object):
         reverse_result = sorted_objs_by_attr(users, key='user_id', reverse=True)
         assert reverse_result[0].user_id == 99
 
-    # test sorted_objs_by_attr()
+    # test sorted_objs_by_attr() tc
     def test_sorted_objs_by_attr_02(self):
         class User(object):
             def __init__(self, user_id):
@@ -318,7 +318,7 @@ class TestFishCommon(object):
     
         assert len(sorted_objs_by_attr([], key='user_id')) == 0
 
-    # test get_query_param_from_url()
+    # test get_query_param_from_url() tc
     def test_get_query_param_from_url_01(self):
         url = 'http://localhost:8811/mytest?page_number=1&page_size=10' \
               '&start_time=20180515&end_time=20180712'
@@ -326,13 +326,13 @@ class TestFishCommon(object):
         assert 'page_number' in query_dict
         assert '20180515' in query_dict['start_time']
 
-    # test get_group_list_data()
+    # test get_group_list_data() tc
     def test_get_group_list_data_01(self):
         all_records = list(range(100))
         res = get_group_list_data(all_records, group_number=7, group_size=15)
         assert res == [90, 91, 92, 93, 94, 95, 96, 97, 98, 99]
 
-    # test get_group_list_data()
+    # test get_group_list_data() tc
     def test_get_group_list_data_02(self):
         with pytest.raises(TypeError):
             get_group_list_data('test')
@@ -343,7 +343,7 @@ class TestFishCommon(object):
         with pytest.raises(ValueError):
             get_group_list_data(list(range(10)), group_number=-4)
 
-    # test get_sub_dict()
+    # test get_sub_dict() tc
     def test_get_sub_dict_01(self):
         dict1 = {'a': 1, 'b': 2, 'list1': [1, 2, 3]}
         list1 = ['a', 'list1', 'no_key']
@@ -356,7 +356,7 @@ class TestFishCommon(object):
         res_dict2 = get_sub_dict(dict1, list1, default_value='new default')
         assert res_dict2.get('no_key') == 'new default'
 
-    # test get_sub_dict()
+    # test get_sub_dict() tc
     def test_get_sub_dict_02(self):
         dict1 = {'a': 1, 'b': 2, 'list1': [1, 2, 3]}
         list1 = ['a', 'list1', 'no_key']

@@ -4,6 +4,7 @@
 
 import pytest
 import sys
+import time
 sys.path.append('../fishbase')
 from fishbase.fish_date import *
 import datetime
@@ -60,3 +61,37 @@ class TestFishDate(object):
         this_year_days = sum(calendar.mdays)
         assert now.year == this_month.year
         assert now.day <= this_year_days
+
+    #  测试 get_time_interval()  tc
+    def test_get_time_interval_01(self):
+        start = int(time.time())
+        end = start - 98908
+    
+        interval_dict = get_time_interval(end, start)
+    
+        assert interval_dict['days'] == 98908 // (60 * 60 * 24)
+        remain = 98908 % (60 * 60 * 24)
+        assert interval_dict['hours'] == remain // (60 * 60)
+
+    #  测试 get_time_interval()  tc
+    def test_get_time_interval_02(self):
+        start = int(time.time())
+        end = str(start - 98908)
+    
+        with pytest.raises(TypeError):
+            get_time_interval(end, start)
+
+    #  测试 transform_unix_to_datetime()  tc
+    def test_transform_unix_to_datetime_01(self):
+        timestamp = 1534938627
+        date_type = transform_unix_to_datetime(timestamp)
+    
+        assert date_type.year == 2018
+        assert date_type.month == 8
+
+    #  测试 transform_unix_to_datetime()  tc
+    def test_transform_unix_to_datetime_02(self):
+        timestamp = '1534938627'
+    
+        with pytest.raises(TypeError):
+            transform_unix_to_datetime(timestamp)
