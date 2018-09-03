@@ -911,3 +911,94 @@ def get_query_param_from_url(url):
     query_dict = parse_qs(url_obj.query)
 
     return OrderedDict(query_dict)
+
+
+# v1.1.0 edit by Hu Jun, #74
+def get_group_list_data(data_list, group_number=1, group_size=10):
+    """
+    获取分组列表数据
+
+    :param:
+        * data_list: (list) 需要获取分组的数据列表
+        * group_number: (int) 分组信息，默认为1
+        * group_size: (int) 分组大小，默认为10
+
+    :return:
+        * group_data: (list) 分组数据
+
+    举例如下::
+
+        print('--- get_group_list_data demo---')
+        all_records = [1, 2, 3, 4, 5]
+        print(get_group_list_data(all_records))
+        
+        all_records1 = list(range(100))
+        print(get_group_list_data(all_records1, group_number=5, group_size=15))
+        print(get_group_list_data(all_records1, group_number=7, group_size=15))
+        print('---')
+
+    执行结果::
+
+        --- get_group_list_data demo---
+        [1, 2, 3, 4, 5]
+        [60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74]
+        [90, 91, 92, 93, 94, 95, 96, 97, 98, 99]
+        ---
+
+    """
+    if not isinstance(data_list, list):
+        raise TypeError('data_list should be a list, but we got {}'.format(type(data_list)))
+        
+    if not isinstance(group_number, int) or not isinstance(group_size, int):
+        raise TypeError('group_number and group_size should be int, but we got group_number: {0}, '
+                        'group_size: {1}'.format(type(group_number), type(group_size)))
+    if group_number < 0 or group_size < 0:
+        raise ValueError('group_number and group_size should be positive int, but we got '
+                         'group_number: {0}, group_size: {1}'.format(group_number, group_size))
+
+    start = (group_number - 1) * group_size
+    end = group_number * group_size
+
+    return data_list[start:end]
+
+
+# v1.1.0 edit by Hu Jun, #89
+def get_sub_dict(data_dict, key_list, default_value='default_value'):
+    """
+    从字典中提取子集
+
+    :param:
+        * data_dict: (dict) 需要提取子集的字典
+        * key_list: (list) 需要获取子集的键列表
+        * default_value: (string) 当键不存在时的默认值，默认为 default_value
+
+    :return:
+        * sub_dict: (dict) 子集字典
+
+    举例如下::
+
+        print('--- get_sub_dict demo---')
+        dict1 = {'a': 1, 'b': 2, 'list1': [1,2,3]}
+        list1 = ['a', 'list1', 'no_key']
+        print(get_sub_dict(dict1, list1))
+        print(get_sub_dict(dict1, list1, default_value='new default'))
+        print('---')
+
+    执行结果::
+
+        --- get_sub_dict demo---
+        {'a': 1, 'list1': [1, 2, 3], 'no_key': 'default_value'}
+        {'a': 1, 'list1': [1, 2, 3], 'no_key': 'new default'}
+        ---
+
+    """
+    if not isinstance(data_dict, dict):
+        raise TypeError('data_dict should be dict, but we got {}'.format(type(data_dict)))
+
+    if not isinstance(key_list, list):
+        raise TypeError('key_list should be list, but we got {}'.format(type(key_list)))
+
+    sub_dict = dict()
+    for item in key_list:
+        sub_dict.update({item: data_dict.get(item, default_value)})
+    return sub_dict
