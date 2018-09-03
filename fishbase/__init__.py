@@ -22,6 +22,7 @@ from .fish_date import *
 from .fish_file import *
 from .fish_logger import *
 from .fish_system import *
+from .fish_project import *
 
 __version__ = '1.1.0'  # type: str
 
