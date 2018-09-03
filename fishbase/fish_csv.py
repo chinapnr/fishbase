@@ -13,7 +13,7 @@ from io import open
 # 2018.2.1 edit by David Yi, #11002
 # 2018.2.6 edit by David Yi, #11009， 增加过滤空行功能
 # v1.0.16 edit by Hu Jun #94
-def csv_file_to_list(csv_filename, deli=',', del_blank_row=True, encode=None):
+def csv_file_to_list(csv_filename, deli=',', del_blank_row=True, encoding=None):
 
     """
     将指定的 csv 文件转换为 list 返回；
@@ -42,7 +42,7 @@ def csv_file_to_list(csv_filename, deli=',', del_blank_row=True, encode=None):
             test_csv()
 
     """
-    with open(csv_filename, encoding=encode) as csv_file:
+    with open(csv_filename, encoding=encoding) as csv_file:
         csv_list = list(csv.reader(csv_file, delimiter=deli))
 
     # 如果设置为要删除空行
