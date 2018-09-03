@@ -62,7 +62,7 @@ class TestFishCommon(object):
         conf_filename = './test/test_conf.ini'
     
         # 读取配置文件, 中文编码
-        ds = conf_as_dict(conf_filename, encode='utf-8')
+        ds = conf_as_dict(conf_filename, encoding='utf-8')
         d = ds[1]
     
         list1 = ['show_opt', 'show_opt_common', 'show_opt_common2', 'get_args', 'show_rule_pattern',
