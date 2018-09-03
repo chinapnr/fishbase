@@ -19,6 +19,6 @@ fishbase 是我们自己开发和整理的一套 Python 基础函数库。 从�
 * fish_file 文件处理增强函数包
 * fish_csv csv 处理增强函数包
 * fish_logger 日志记录增强函数包
-* fish_project project目录结构生成函数包
+* fish_project project 目录结构生成函数包
 
 详细帮助文档：http://fishbase.readthedocs.io/
