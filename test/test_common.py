@@ -325,3 +325,44 @@ class TestFishCommon(object):
         query_dict = get_query_param_from_url(url)
         assert 'page_number' in query_dict
         assert '20180515' in query_dict['start_time']
+
+    # test get_group_list_data()
+    def test_get_group_list_data_01(self):
+        all_records = list(range(100))
+        res = get_group_list_data(all_records, group_number=7, group_size=15)
+        assert res == [90, 91, 92, 93, 94, 95, 96, 97, 98, 99]
+
+    # test get_group_list_data()
+    def test_get_group_list_data_02(self):
+        with pytest.raises(TypeError):
+            get_group_list_data('test')
+    
+        with pytest.raises(TypeError):
+            get_group_list_data(list(range(10)), group_number='asdsa')
+    
+        with pytest.raises(ValueError):
+            get_group_list_data(list(range(10)), group_number=-4)
+
+    # test get_sub_dict()
+    def test_get_sub_dict_01(self):
+        dict1 = {'a': 1, 'b': 2, 'list1': [1, 2, 3]}
+        list1 = ['a', 'list1', 'no_key']
+    
+        res_dict1 = get_sub_dict(dict1, list1)
+        assert 'a' in res_dict1
+        assert 'no_key' in res_dict1
+        assert res_dict1.get('list1') == [1, 2, 3]
+    
+        res_dict2 = get_sub_dict(dict1, list1, default_value='new default')
+        assert res_dict2.get('no_key') == 'new default'
+
+    # test get_sub_dict()
+    def test_get_sub_dict_02(self):
+        dict1 = {'a': 1, 'b': 2, 'list1': [1, 2, 3]}
+        list1 = ['a', 'list1', 'no_key']
+    
+        with pytest.raises(TypeError):
+            get_sub_dict(dict1, 'test_list')
+    
+        with pytest.raises(TypeError):
+            get_sub_dict('test_dict', list1)

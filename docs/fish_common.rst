@@ -22,6 +22,8 @@
     fish_common.remove_duplicate_elements
     fish_common.sorted_objs_by_attr
     fish_common.get_query_param_from_url
+    fish_common.get_sub_dict
+    fish_common.get_group_list_data
 
 .. automodule:: fish_common
     :members:
