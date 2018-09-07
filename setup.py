@@ -12,7 +12,8 @@ with io.open('fishbase/__init__.py', 'rt', encoding='utf8') as f:
 setup(
     name='fishbase',
     version=version,
-    install_requires=['python-dateutil'],
+    install_requires=['python-dateutil',
+                      'pyyaml'],
 
     url='https://github.com/chinapnr/fishbase',
     license='MIT',
