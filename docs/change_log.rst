@@ -2,7 +2,7 @@
 ===========================
 2018.9.23 v1.1.1
 ---------------------------
-* `#115 <https://github.com/chinapnr/fishbase/issues/115>`_, common,:meth:`fish_common.get_random_str`, optimize;
+* `#115 <https://github.com/chinapnr/fishbase/issues/115>`_, common, :meth:`fish_common.get_random_str`, optimize;
 * `#114 <https://github.com/chinapnr/fishbase/issues/114>`_, common, add function :meth:`fish_common.transform_hump_to_underline`, doc and unittest;
 * `#101 <https://github.com/chinapnr/fishbase/issues/101>`_, date, add function :meth:`fish_date.transform_datetime_to_unix`, doc and unittest;
 
