@@ -2,20 +2,25 @@
 from setuptools import setup
 import io
 import re
+
+with io.open('README.rst', 'rt', encoding='utf8') as f:
+    readme = f.read()
+
 with io.open('fishbase/__init__.py', 'rt', encoding='utf8') as f:
     version = re.search(r'__version__ = \'(.*?)\'', f.read()).group(1)
 
 setup(
     name='fishbase',
     version=version,
-    install_requires=['python-dateutil'],
+    install_requires=['python-dateutil',
+                      'pyyaml'],
 
     url='https://github.com/chinapnr/fishbase',
     license='MIT',
     author='David Yi',
     author_email='wingfish@gmail.com',
     description='some useful functions for python',
-
+    long_description=readme,
     packages=['fishbase'],
 
     # packages=['fishbase', 'fishbase.naive_bayes'],

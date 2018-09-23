@@ -106,4 +106,8 @@ test/log
 /_build/*
 demo/log
 
-/.idea
+# test cache data
+test/.test_cache_data/*
+test/.test_cache_data
+
+.idea

@@ -1,15 +1,47 @@
 更新记录
 ===========================
+2018.9.3 v1.1.0
+---------------------------
+* `#74 <https://github.com/chinapnr/fishbase/issues/74>`_, common, add function :meth:`fish_common.get_group_list_data`, doc and unittest;
+* `#89 <https://github.com/chinapnr/fishbase/issues/89>`_, common, add function :meth:`fish_common.get_sub_dict`, doc and unittest;
+* `#90 <https://github.com/chinapnr/fishbase/issues/90>`_, common, add function :meth:`fish_date.get_time_interval`, doc and unittest;
+* `#93 <https://github.com/chinapnr/fishbase/issues/93>`_, common, add function :meth:`fish_date.transform_unix_to_datetime`, doc and unittest;
+* `#82 <https://github.com/chinapnr/fishbase/issues/82>`_, project, add function :meth:`fish_project.init_project_by_yml`, doc and unittest;
 
-2018.6.6 v1.0.14
+
+
+2018.8.2 v1.0.16
+---------------------------
+* `#87 <https://github.com/chinapnr/fishbase/issues/87>`_, date, add function :meth:`fish_date.GetRandomTime`, doc and unittest;
+* `#94 <https://github.com/chinapnr/fishbase/issues/94>`_, date, edit function :meth:`fish_csv.csv_file_to_list`, doc and unittest;
+* `#94 <https://github.com/chinapnr/fishbase/issues/94>`_, common, edit function :meth:`fish_common.conf_as_dict`, doc and unittest;
+
+
+2018.7.11 v1.0.15
+---------------------------
+
+* `#36 <https://github.com/chinapnr/fishbase/issues/36>`_, common, edit function :meth:`fish_common.is_contain_special_char()`, change function name;
+* `#62 <https://github.com/chinapnr/fishbase/issues/62>`_, common, edit function :meth:`fish_common.if_any_elements_is_space()`, optimize, doc and unittest;
+* `#78 <https://github.com/chinapnr/fishbase/issues/78>`_, optimize change_log;
+* `#67 <https://github.com/chinapnr/fishbase/issues/67>`_, common, edit function :meth:`fish_common.splice_url_params`, optimize;
+* `#63 <https://github.com/chinapnr/fishbase/issues/67>`_ and `#77 <https://github.com/chinapnr/fishbase/issues/67>`_, common, add function :meth:`fish_common.remove_duplicate_elements`, doc and unittest;
+* `#64 <https://github.com/chinapnr/fishbase/issues/64>`_ common, add function :meth:`fish_common.sorted_objs_by_attr`, doc and unittest;
+* `#79 <https://github.com/chinapnr/fishbase/issues/79>`_ common, add function :meth:`fish_common.get_query_param_from_url`, doc and unittest;
+* `#83 <https://github.com/chinapnr/fishbase/issues/83>`_ common, edit function :meth:`fish_common.conf_as_dict`, optimize;
+
+2018.6.27 v1.0.14
 ---------------------------
 
 * 19046, setup, edit setup.py to add long description etc., the package detail;
 * issue ID use directly on github
-* 36, common, edit function :meth:`fish_common.check_str()`, optimize, doc and unittest;
-* 38, common, edit function :meth:`fish_common.find_files()`, optimize, doc and unittest;
-* 37, date, edit function :meth:`fish_date.get_years()`, optimize, doc and unittest;
-* 27, common, edit function :meth:`fish_common.hmac_sha256()`, optimize, doc and unittest;
+* `#36 <https://github.com/chinapnr/fishbase/issues/36>`_, common, add function :meth:`fish_common.check_str()`, doc and unittest;
+* `#38 <https://github.com/chinapnr/fishbase/issues/38>`_, common, add function :meth:`fish_common.find_files()`, doc and unittest;
+* `#37 <https://github.com/chinapnr/fishbase/issues/37>`_, date, add function :meth:`fish_date.get_years()`, doc and unittest;
+* `#27 <https://github.com/chinapnr/fishbase/issues/27>`_, common, add function :meth:`fish_common.hmac_sha256()`, doc and unittest;
+* `#61 <https://github.com/chinapnr/fishbase/issues/61>`_, date, edit function :meth:`fish_date.get_date_range()`, optimize, doc and unittest;
+* `#57 <https://github.com/chinapnr/fishbase/issues/57>`_, common, edit function :meth:`fish_common.GetMD5.string()`, optimize;
+* `#59 <https://github.com/chinapnr/fishbase/issues/59>`_, common, add function :meth:`fish_common.Base64`, doc and unittest;
+* `#51 <https://github.com/chinapnr/fishbase/issues/51>`_, common, add function :meth:`fish_common.get_random_str`, doc and unittest;
 
 2018.6.6 v1.0.13
 ---------------------------
