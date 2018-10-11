@@ -109,3 +109,5 @@ demo/log
 # test cache data
 test/.test_cache_data/*
 test/.test_cache_data
+
+.idea

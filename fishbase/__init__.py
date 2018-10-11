@@ -24,5 +24,5 @@ from .fish_logger import *
 from .fish_system import *
 from .fish_project import *
 
-__version__ = '1.1.0'  # type: str
+__version__ = '1.1.1'  # type: str
 

@@ -7,6 +7,7 @@
     fish_date.GetRandomTime
     fish_date.get_time_interval
     fish_date.transform_unix_to_datetime
+    fish_date.transform_datetime_to_unix
 
 .. automodule:: fish_date
     :members:

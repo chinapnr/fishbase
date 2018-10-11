@@ -1,5 +1,12 @@
 更新记录
 ===========================
+2018.9.23 v1.1.1
+---------------------------
+* `#115 <https://github.com/chinapnr/fishbase/issues/115>`_, common, :meth:`fish_common.get_random_str`, optimize;
+* `#114 <https://github.com/chinapnr/fishbase/issues/114>`_, common, add function :meth:`fish_common.transform_hump_to_underline`, doc and unittest;
+* `#101 <https://github.com/chinapnr/fishbase/issues/101>`_, date, add function :meth:`fish_date.transform_datetime_to_unix`, doc and unittest;
+
+
 2018.9.3 v1.1.0
 ---------------------------
 * `#74 <https://github.com/chinapnr/fishbase/issues/74>`_, common, add function :meth:`fish_common.get_group_list_data`, doc and unittest;
@@ -9,11 +16,10 @@
 * `#82 <https://github.com/chinapnr/fishbase/issues/82>`_, project, add function :meth:`fish_project.init_project_by_yml`, doc and unittest;
 
 
-
 2018.8.2 v1.0.16
 ---------------------------
 * `#87 <https://github.com/chinapnr/fishbase/issues/87>`_, date, add function :meth:`fish_date.GetRandomTime`, doc and unittest;
-* `#94 <https://github.com/chinapnr/fishbase/issues/94>`_, date, edit function :meth:`fish_csv.csv_file_to_list`, doc and unittest;
+* `#94 <https://github.com/chinapnr/fishbase/issues/94>`_, csv, edit function :meth:`fish_csv.csv_file_to_list`, doc and unittest;
 * `#94 <https://github.com/chinapnr/fishbase/issues/94>`_, common, edit function :meth:`fish_common.conf_as_dict`, doc and unittest;
 
 

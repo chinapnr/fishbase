@@ -92,6 +92,21 @@ class TestFishDate(object):
     #  测试 transform_unix_to_datetime()  tc
     def test_transform_unix_to_datetime_02(self):
         timestamp = '1534938627'
-    
+
         with pytest.raises(TypeError):
             transform_unix_to_datetime(timestamp)
+
+    #  测试 transform_datetime_to_unix()  tc
+    def test_transform_datetime_to_unix_01(self):
+        dtime = datetime.datetime.now()
+        ans_time = transform_datetime_to_unix(dtime=dtime)
+
+        assert isinstance(ans_time, float)
+        assert len(str(ans_time)) == 12
+
+    #  测试 transform_datetime_to_unix()  tc
+    def test_transform_datetime_to_unix_02(self):
+        dtime = '1534938627'
+
+        with pytest.raises(TypeError):
+            transform_datetime_to_unix(dtime=dtime)

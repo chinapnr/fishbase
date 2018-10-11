@@ -1,5 +1,6 @@
 # coding=utf-8
 
+import time
 from datetime import datetime, timedelta
 import calendar
 import random
@@ -8,7 +9,7 @@ import random
 # 2016.4.26
 # 输入: date_kind, eg 'last month', 'this month'
 # 输出: tuple, type datetime.date eg '2016-03-01' '2016-03-31'
-# v1.0.14 #61, edit by Hu Jun
+# v1.0.14 edit by Hu Jun #61
 def get_date_range(dates, separator='-'):
     """
     获取某个月的日期范围，返回该月第一天和最后一天的字符串表示
@@ -59,7 +60,7 @@ def get_date_range(dates, separator='-'):
     return first_day, last_day
 
 
-# v1.0.14 #37, edit by Hu Jun
+# v1.0.14 edit by Hu Jun #37
 def get_years(months=0, refer=None):
     """
     获取基准时月份增量的年月
@@ -106,7 +107,7 @@ def get_years(months=0, refer=None):
     return ''.join(['%04d' % y, '%02d' % m])
 
 
-# v1.0.16 #87, edit by Hu Jun
+# v1.0.16 edit by Hu Jun #87
 class GetRandomTime(object):
     """
     获取随机时间
@@ -186,7 +187,7 @@ class GetRandomTime(object):
         return this_year_start + timedelta(seconds=random_seconds)
 
 
-# v1.1.0 #90, edit by Hu Jun
+# v1.1.0 edit by Hu Jun #90
 def get_time_interval(start_time, end_time):
     """
     获取两个unix时间戳之间的时间间隔
@@ -236,7 +237,7 @@ def get_time_interval(start_time, end_time):
     return interval_dict
 
 
-# v1.1.0 #93, edit by Hu Jun
+# v1.1.0 edit by Hu Jun #93
 def transform_unix_to_datetime(timestamp):
     """
     将unix时间戳转换成datetime类型
@@ -270,3 +271,37 @@ def transform_unix_to_datetime(timestamp):
 
     date_type = datetime.fromtimestamp(timestamp)
     return date_type
+
+
+# v1.1.1 edit by Hu Jun #101
+def transform_datetime_to_unix(dtime=None):
+    """
+    将datetime类型转换成unix时间戳
+
+    :param:
+        * dtime: (datetime) datetime类型实例,默认为当前时间
+    :return:
+        * data_type: (datetime) datetime类型实例
+
+    举例如下::
+
+        print('--- transform_datetime_to_unix demo ---')
+        dtime = datetime.datetime.now()
+        ans_time = transform_datetime_to_unix(dtime)
+        print(ans_time)
+        print('---')
+
+    执行结果::
+
+        --- transform_datetime_to_unix demo ---
+        1535108620.0
+        ---
+
+    """
+    if not dtime:
+        dtime = datetime.now()
+
+    if not isinstance(dtime, datetime):
+        raise TypeError('dtime should be datetime, but we got {}'.format(type(dtime)))
+
+    return time.mktime(dtime.timetuple())

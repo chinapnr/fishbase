@@ -12,6 +12,7 @@
 # 2017.1.8 v1.0.9 #19003, remove file related functions to fish_file.py
 import sys
 import uuid
+import copy
 import re
 import hashlib
 import hmac
@@ -748,6 +749,7 @@ class Base64:
 
 
 # v1.0.14 edit by Hu Jun, #51
+# v1.1.1 edit by Hu Jun, #115
 def get_random_str(length, letters=True, digits=False, punctuation=False):
     """
     获得指定长度，不同规则的随机字符串，可以包含数字，字母和标点符号
@@ -786,6 +788,10 @@ def get_random_str(length, letters=True, digits=False, punctuation=False):
     random_source += string.ascii_letters if letters else ''
     random_source += string.digits if digits else ''
     random_source += string.punctuation if punctuation else ''
+
+    # 避免出现 ValueError: Sample larger than population or is negative
+    if length > len(random_source):
+        random_source *= (length//len(random_source) + 1)
 
     random_str = ''.join(random.sample(random_source, length))
     return random_str
@@ -1002,3 +1008,40 @@ def get_sub_dict(data_dict, key_list, default_value='default_value'):
     for item in key_list:
         sub_dict.update({item: data_dict.get(item, default_value)})
     return sub_dict
+
+
+# v1.1.1 edit by Hu Jun, #114
+def transform_hump_to_underline(param_dict):
+    """
+    将驼峰命名的参数字典键转换为下划线参数
+
+    :param:
+        * param_dict(dict): 请求参数字典
+
+    :return:
+        * temp_dict(dict): 转换后的参数字典
+
+    举例如下::
+
+        print('--- transform_hump_to_underline demo---')
+        hump_param_dict = {'firstName': 'Python', 'Second_Name': 'san', 'right_name': 'name'}
+        underline_param_dict = transform_hump_to_underline(hump_param_dict )
+        print(underline_param_dict )
+        print('---')
+
+    执行结果::
+
+        --- transform_hump_to_underline demo---
+        {'first_name': 'Python', 'second_name': 'san', 'right_name': 'name'}
+        ---
+
+    """
+    temp_dict = copy.deepcopy(param_dict)
+
+    # 正则
+    hump_to_underline = re.compile(r'([a-z]|\d)([A-Z])')
+    for key in list(param_dict.keys()):
+        # 将驼峰值替换为下划线
+        underline_sub = re.sub(hump_to_underline, r'\1_\2', key).lower()
+        temp_dict[underline_sub] = temp_dict.pop(key)
+    return temp_dict
