@@ -366,3 +366,11 @@ class TestFishCommon(object):
     
         with pytest.raises(TypeError):
             get_sub_dict('test_dict', list1)
+
+    # test transform_hump_to_underline() tc
+    def test_transform_hump_to_underline(self):
+        hump_param_dict = {'firstName': 'Python', 'Second_Name': 'zhangshan', 'right_name': 'name'}
+        underline_param_dict = transform_hump_to_underline(hump_param_dict)
+
+        assert 'firstName' not in underline_param_dict
+        assert 'first_name' in underline_param_dict

@@ -24,6 +24,7 @@
     fish_common.get_query_param_from_url
     fish_common.get_sub_dict
     fish_common.get_group_list_data
+    fish_common.transform_hump_to_underline
 
 .. automodule:: fish_common
     :members:
