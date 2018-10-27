@@ -25,6 +25,7 @@
     fish_common.get_sub_dict
     fish_common.get_group_list_data
     fish_common.transform_hump_to_underline
+    fish_common.find_common_between_dicts
 
 .. automodule:: fish_common
     :members:

@@ -1,5 +1,10 @@
 更新记录
 ===========================
+2018.10.27 v1.1.2
+---------------------------
+* `#80 <https://github.com/chinapnr/fishbase/issues/80>`_, common, :meth:`fish_common.find_common_between_dicts`, doc and unittest;
+
+
 2018.9.23 v1.1.1
 ---------------------------
 * `#115 <https://github.com/chinapnr/fishbase/issues/115>`_, common, :meth:`fish_common.get_random_str`, optimize;

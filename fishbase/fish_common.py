@@ -1045,3 +1045,45 @@ def transform_hump_to_underline(param_dict):
         underline_sub = re.sub(hump_to_underline, r'\1_\2', key).lower()
         temp_dict[underline_sub] = temp_dict.pop(key)
     return temp_dict
+
+
+# v1.1.2 edit by Hu Jun, #80
+def find_common_between_dicts(dict1, dict2, items=True, keys=False, values=False):
+    """
+    查找两个字典中的相同点，包括键、值、项，每次只能比较一个值，比较的优先级为项、键、值，仅支持hashable对象
+    :param:
+        * dict1(dict): 比较的字典1
+        * dict2(dict): 比较的字典2
+        * items(bool): 找出两个字典中相同的item，默认为True
+        * keys(bool): 找出两个字典中相同的key，默认为False
+        * values(bool): 找出两个字典中相同的value，默认为False
+
+    :return:
+        * info(set): 返回两个字典中相同的信息
+    
+    举例如下::
+
+        print('--- find_common_between_dicts demo---')
+        dict1 = {'x':1, 'y':2, 'z':3}
+        dict2 = {'w':10, 'x':1, 'y':2}
+        print(find_common_between_dicts(dict1, dict2))
+        print(find_common_between_dicts(dict1, dict2, items=False, keys=True))
+        print(find_common_between_dicts(dict1, dict2, items=False, values=True))
+        print('---')
+
+    执行结果::
+
+        --- find_common_between_dicts demo---
+        {'x':1}
+        {‘x’, 'y'}
+        {2}
+        ---
+    """
+    if items:
+        return dict1.items() & dict2.items()
+    elif keys:
+        return dict1.keys() & dict2.keys()
+    elif values:
+        return set(dict1.values()) & set(dict2.values())
+    else:
+        return set()
