@@ -359,6 +359,7 @@ class FishCache:
 
 # 2018.5.8 edit by David Yi, edit from Jia Chunying，#19026
 # 2018.6.12 edit by Hu Jun, edit from Jia Chunying，#37
+# 2018.10.28 edit by Hu Jun #99
 class GetMD5(object):
     """
     计算普通字符串和一般的文件，对于大文件采取逐步读入的方式，也可以快速计算；基于 Python 的 hashlib.md5() 进行封装和扩展；
@@ -369,6 +370,7 @@ class GetMD5(object):
         print('string md5:', GetMD5.string('hello world!'))
         print('file md5:', GetMD5.file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
         print('big file md5:', GetMD5.big_file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
+        print('string hmac_md5:', GetMD5.hmac_md5('hello world!', 'salt'))
         print('---')
 
     执行结果::
@@ -377,6 +379,7 @@ class GetMD5(object):
         string md5: fc3ff98e8c6a0d3087d515c0473f8677
         file md5: fb7528c9778b2377e30b0f7e4c26fef0
         big file md5: fb7528c9778b2377e30b0f7e4c26fef0
+        string hmac_md5: 191f82804523bfdafe0188bbbddd6587
         ---
 
     """
@@ -432,6 +435,26 @@ class GetMD5(object):
 
         result = md5.hexdigest()
         return result
+
+    @staticmethod
+    def hmac_md5(s, salt):
+        """
+        获取一个字符串的 使用salt加密的 hamc MD5值
+
+        :param:
+            * (string) str 需要进行 hash 的字符串
+            * (string) salt 随机字符串
+        :return:
+            * (string) result 32位小写 MD5 值
+        """
+        if sys.version > '3':
+            md5_str = s.encode('utf-8')
+            secret_bytes = salt.encode('utf-8')
+            return hmac.new(secret_bytes, md5_str, digestmod='MD5').hexdigest()
+        else:
+            my_hmac = hmac.new(bytes(salt))
+            my_hmac.update(bytes(s))
+            return my_hmac.hexdigest()
 
 
 # 2018.5.15 v1.0.11 original by Lu Jie, edit by David Yi, #19029

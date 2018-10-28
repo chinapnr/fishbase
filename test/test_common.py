@@ -96,7 +96,12 @@ class TestFishCommon(object):
     def test_md5_03(self):
         salt = 'm4xV2yGFSn'
         assert GetMD5.string('hello world!', salt) == '984d47991401fad7d920a30f715cfd22'
-    
+
+    # 测试 GetMD5()  tc
+    def test_md5_04(self):
+        salt = 'salt'
+        assert GetMD5.hmac_md5('hello world!', salt) == '191f82804523bfdafe0188bbbddd6587'
+
     # 测试 if_json_contain()  tc
     def test_json_contain_01(self):
 

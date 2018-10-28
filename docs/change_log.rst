@@ -3,6 +3,7 @@
 2018.10.27 v1.1.2
 ---------------------------
 * `#80 <https://github.com/chinapnr/fishbase/issues/80>`_, common, :meth:`fish_common.find_common_between_dicts`, doc and unittest;
+* `#99 <https://github.com/chinapnr/fishbase/issues/99>`_, common, :meth:`fish_common.GetMD5.hmac_md5`, doc and unittest;
 
 
 2018.9.23 v1.1.1
