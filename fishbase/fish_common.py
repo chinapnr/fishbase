@@ -1080,9 +1080,9 @@ def find_common_between_dicts(dict1, dict2, items=True, keys=False, values=False
         ---
     """
     if items:
-        return dict1.items() & dict2.items()
+        return set(dict1.items()) & set(dict2.items())
     elif keys:
-        return dict1.keys() & dict2.keys()
+        return set(dict1.keys()) & set(dict2.keys())
     elif values:
         return set(dict1.values()) & set(dict2.values())
     else:
