@@ -6,12 +6,8 @@
 .. image:: https://readthedocs.org/projects/fishbase/badge/?version=latest
     :target: https://fishbase.readthedocs.io/en/latest/?badge=latest
 
-
-
-.. _header-n22:
-
-fishbase 简介
-=============
+fishbase
+========
 
 fishbase 是我们自己开发和整理的一套 Python 基础函数库。 从这几年的
 Python
@@ -25,9 +21,19 @@ Python
 库的建设，包括完善文档和加入单元测试、示例代码、文档等。希望能够帮助到所有的
 Python 爱好者和应用开发人员。
 
---------------
+Installing
+==========
 
-目前主要分为：
+Install and update using `pip`_:
+
+.. code-block:: text
+
+    pip install -U fishbase
+
+Modules
+=======
+
+目前主要分为以下模块：
 
 -  fish_common 基本函数包
 
@@ -41,4 +47,36 @@ Python 爱好者和应用开发人员。
 
 -  fish_project project 目录结构生成函数包
 
+A Simple Example
+================
+
+.. code-block:: python
+
+    from fishbase.fish_common import conf_as_dict
+
+    # 定义配置文件名
+    conf_filename = 'test_conf.ini'
+    ds = conf_as_dict(conf_filename)
+    # 显示是否成功，所有 dict 的内容，dict 的 key 数量
+    print('flag:', ds[0])
+    print('dict:', ds[1])
+    print('length:', ds[2])
+
+    d = ds[1]
+
+    # 显示一个 section 下的所有内容
+    print('section show_opt:', d['show_opt'])
+
+.. code-block:: text
+
+    flag: True
+    dict: (omit)
+    length: 7
+    section show_opt: {'short_opt': 'b:d:v:p:f:', 'long_opt': 'region=,prov=,mer_id=,mer_short_name=,web_status='}
+
+Links
+=====
+
 详细帮助文档：http://fishbase.readthedocs.io/
+
+测试覆盖率：https://coveralls.io/github/chinapnr/fishbase?branch=master
