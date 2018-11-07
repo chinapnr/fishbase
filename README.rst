@@ -52,27 +52,24 @@ A Simple Example
 
 .. code-block:: python
 
-    from fishbase.fish_common import conf_as_dict
+    from fishbase.fish_common import GetMD5
 
-    # 定义配置文件名
-    conf_filename = 'test_conf.ini'
-    ds = conf_as_dict(conf_filename)
-    # 显示是否成功，所有 dict 的内容，dict 的 key 数量
-    print('flag:', ds[0])
-    print('dict:', ds[1])
-    print('length:', ds[2])
-
-    d = ds[1]
-
-    # 显示一个 section 下的所有内容
-    print('section show_opt:', d['show_opt'])
+    # 获取字符换的MD5值
+    md5_string = GetMD5.string('hello world!')
+    print('md5_string : ', md5_string)
+    # 获取文件的MD5值
+    file_path = './test_conf.ini'
+    md5_file = GetMD5.file(file_path)
+    print('md5_file : ', md5_file)
+    # 获取hmac算法MD5值
+    hmac_md5_string = GetMD5.hmac_md5('hello world!', 'salt')
+    print('hmac_md5_string : ', hmac_md5_string)
 
 .. code-block:: text
 
-    flag: True
-    dict: (omit)
-    length: 7
-    section show_opt: {'short_opt': 'b:d:v:p:f:', 'long_opt': 'region=,prov=,mer_id=,mer_short_name=,web_status='}
+    md5_string : fc3ff98e8c6a0d3087d515c0473f8677
+    md5_file : fb7528c9778b2377e30b0f7e4c26fef0
+    hmac_md5_string: 191f82804523bfdafe0188bbbddd6587
 
 Links
 =====
@@ -80,3 +77,6 @@ Links
 详细帮助文档：http://fishbase.readthedocs.io/
 
 测试覆盖率：https://coveralls.io/github/chinapnr/fishbase?branch=master
+
+
+.. _pip: https://pip.pypa.io/en/stable/quickstart/

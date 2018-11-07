@@ -380,11 +380,12 @@ class TestFishCommon(object):
         assert 'firstName' not in underline_param_dict
         assert 'first_name' in underline_param_dict
 
-    # test find_common_between_dicts() tc
-    def test_find_common_between_dicts_01(self):
+    # test find_duplicated_between_dicts() tc
+    def test_find_duplicated_between_dicts_01(self):
         dict1 = {'x': 1, 'y': 2, 'z': 3}
         dict2 = {'w': 10, 'x': 1, 'y': 4}
     
-        assert dict(find_common_between_dicts(dict1, dict2)) == {'x': 1}
-        assert find_common_between_dicts(dict1, dict2, items=False, keys=True) == {'x', 'y'}
-        assert find_common_between_dicts(dict1, dict2, items=False, values=True) == {1}
+        info = find_duplicated_between_dicts(dict1, dict2)
+        assert dict(info.item) == {'x': 1}
+        assert info.key == {'x', 'y'}
+        assert info.value == {1}

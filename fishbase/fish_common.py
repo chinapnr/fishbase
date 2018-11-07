@@ -20,7 +20,7 @@ import os
 import base64
 import string
 import random
-from collections import OrderedDict
+from collections import OrderedDict, namedtuple
 from operator import attrgetter
 import functools
 
@@ -442,20 +442,14 @@ class GetMD5(object):
         获取一个字符串的 使用salt加密的 hamc MD5值
 
         :param:
-            * (string) str 需要进行 hash 的字符串
+            * (string) s 需要进行 hash 的字符串
             * (string) salt 随机字符串
         :return:
             * (string) result 32位小写 MD5 值
         """
-        if sys.version > '3':
-            md5_str = s.encode('utf-8')
-            secret_bytes = salt.encode('utf-8')
-            return hmac.new(secret_bytes, md5_str, digestmod='MD5').hexdigest()
-        else:
-            my_hmac = hmac.new(bytes(salt))
-            my_hmac.update(bytes(s))
-            return my_hmac.hexdigest()
-
+        hmac_md5 = hmac.new(salt.encode('utf-8'), s.encode('utf-8'), digestmod='MD5').hexdigest()
+        return hmac_md5
+    
 
 # 2018.5.15 v1.0.11 original by Lu Jie, edit by David Yi, #19029
 def if_json_contain(left_json, right_json, op='strict'):
@@ -1071,42 +1065,37 @@ def transform_hump_to_underline(param_dict):
 
 
 # v1.1.2 edit by Hu Jun, #80
-def find_common_between_dicts(dict1, dict2, items=True, keys=False, values=False):
+def find_duplicated_between_dicts(dict1, dict2):
     """
-    查找两个字典中的相同点，包括键、值、项，每次只能比较一个值，比较的优先级为项、键、值，仅支持hashable对象
+    查找两个字典中的相同点，包括键、值、项，仅支持hashable对象
     :param:
         * dict1(dict): 比较的字典1
         * dict2(dict): 比较的字典2
-        * items(bool): 找出两个字典中相同的item，默认为True
-        * keys(bool): 找出两个字典中相同的key，默认为False
-        * values(bool): 找出两个字典中相同的value，默认为False
 
     :return:
-        * info(set): 返回两个字典中相同的信息
+        * dup_info(namedtuple): 返回两个字典中相同的信息组成的具名元组
     
     举例如下::
 
-        print('--- find_common_between_dicts demo---')
+        print('--- find_duplicated_between_dicts demo---')
         dict1 = {'x':1, 'y':2, 'z':3}
         dict2 = {'w':10, 'x':1, 'y':2}
-        print(find_common_between_dicts(dict1, dict2))
-        print(find_common_between_dicts(dict1, dict2, items=False, keys=True))
-        print(find_common_between_dicts(dict1, dict2, items=False, values=True))
+        res = find_common_between_dicts(dict1, dict2)
+        print(res.item)
+        print(res.key)
+        print(res.value)
         print('---')
 
     执行结果::
 
-        --- find_common_between_dicts demo---
-        {'x':1}
-        {‘x’, 'y'}
-        {2}
+        --- find_duplicated_between_dicts demo---
+        set([('x', 1)])
+        {'x', 'y'}
+        {1}
         ---
     """
-    if items:
-        return set(dict1.items()) & set(dict2.items())
-    elif keys:
-        return set(dict1.keys()) & set(dict2.keys())
-    elif values:
-        return set(dict1.values()) & set(dict2.values())
-    else:
-        return set()
+    Duplicated_info = namedtuple('duplicated_info', ['item', 'key', 'value'])
+    duplicated_info = Duplicated_info(set(dict1.items()) & set(dict2.items()),
+                                      set(dict1.keys()) & set(dict2.keys()),
+                                      set(dict1.values()) & set(dict2.values()))
+    return dup_info
