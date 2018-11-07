@@ -439,7 +439,7 @@ class GetMD5(object):
     @staticmethod
     def hmac_md5(s, salt):
         """
-        获取一个字符串的 使用salt加密的 hamc MD5值
+        获取一个字符串的 使用salt加密的 hmac MD5值
 
         :param:
             * (string) s 需要进行 hash 的字符串
@@ -447,9 +447,10 @@ class GetMD5(object):
         :return:
             * (string) result 32位小写 MD5 值
         """
-        hmac_md5 = hmac.new(salt.encode('utf-8'), s.encode('utf-8'), digestmod='MD5').hexdigest()
+        hmac_md5 = hmac.new(salt.encode('utf-8'), s.encode('utf-8'),
+                            digestmod=hashlib.md5).hexdigest()
         return hmac_md5
-    
+
 
 # 2018.5.15 v1.0.11 original by Lu Jie, edit by David Yi, #19029
 def if_json_contain(left_json, right_json, op='strict'):
@@ -1098,4 +1099,4 @@ def find_duplicated_between_dicts(dict1, dict2):
     duplicated_info = Duplicated_info(set(dict1.items()) & set(dict2.items()),
                                       set(dict1.keys()) & set(dict2.keys()),
                                       set(dict1.values()) & set(dict2.values()))
-    return dup_info
+    return duplicated_info
