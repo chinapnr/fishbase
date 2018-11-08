@@ -1081,7 +1081,7 @@ def find_duplicated_between_dicts(dict1, dict2):
         print('--- find_duplicated_between_dicts demo---')
         dict1 = {'x':1, 'y':2, 'z':3}
         dict2 = {'w':10, 'x':1, 'y':2}
-        res = find_common_between_dicts(dict1, dict2)
+        res = find_duplicated_between_dicts(dict1, dict2)
         print(res.item)
         print(res.key)
         print(res.value)
@@ -1095,7 +1095,7 @@ def find_duplicated_between_dicts(dict1, dict2):
         {1}
         ---
     """
-    Duplicated_info = namedtuple('duplicated_info', ['item', 'key', 'value'])
+    Duplicated_info = namedtuple('Duplicated_info', ['item', 'key', 'value'])
     duplicated_info = Duplicated_info(set(dict1.items()) & set(dict2.items()),
                                       set(dict1.keys()) & set(dict2.keys()),
                                       set(dict1.values()) & set(dict2.values()))
