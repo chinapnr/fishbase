@@ -15,24 +15,16 @@ class TestFishDate(object):
     # test get_years() tc
     def test_get_years_01(self):
         this_month = datetime.date(day=1, month=6, year=2018)
-        
+
         assert get_years(7, this_month) == '201901'
         assert get_years(-5, this_month) == '201801'
         assert get_years(-6, this_month) == '201712'
 
-        this_month1 = datetime.datetime.now()
-        
-        y = this_month1.year
-        m = this_month1.month + 1
-        if m == 12:
-            y += 1
-            m = 1
-        
-        assert get_years(1) == ''.join(['%04d' % y, '%02d' % m])
-        
         with pytest.raises(TypeError):
             get_years(-5, 8)
 
+        assert int(get_years(1)) >= 201811
+ 
     def test_get_date_range_01(self):
         this_month = datetime.date(day=1, month=2, year=2018)
     
@@ -103,6 +95,9 @@ class TestFishDate(object):
 
         assert isinstance(ans_time, float)
         assert len(str(ans_time)) == 12
+
+        ans_time_1 = transform_datetime_to_unix()
+        assert ans_time_1 > 1541594338
 
     #  测试 transform_datetime_to_unix()  tc
     def test_transform_datetime_to_unix_02(self):
