@@ -54,14 +54,14 @@ A Simple Example
 
     from fishbase.fish_common import GetMD5
 
-    # 获取字符换的MD5值
+    # 获取字符换的 MD5 值
     md5_string = GetMD5.string('hello world!')
     print('md5_string : ', md5_string)
-    # 获取文件的MD5值
+    # 获取文件的 MD5 值
     file_path = './test_conf.ini'
     md5_file = GetMD5.file(file_path)
     print('md5_file : ', md5_file)
-    # 获取hmac算法MD5值
+    # 获取 hmac 算法 MD5 值
     hmac_md5_string = GetMD5.hmac_md5('hello world!', 'salt')
     print('hmac_md5_string : ', hmac_md5_string)
 

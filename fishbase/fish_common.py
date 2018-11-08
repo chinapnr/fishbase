@@ -1067,19 +1067,19 @@ def transform_hump_to_underline(param_dict):
 
 
 # v1.1.2 edit by Hu Jun, #80
-def find_duplicated_between_dicts(dict1, dict2):
+def find_same_between_dicts(dict1, dict2):
     """
     查找两个字典中的相同点，包括键、值、项，仅支持 hashable 对象
     :param:
-        * dict1: (dict) 比较的字典1
-        * dict2: (dict) 比较的字典2
+        * dict1: (dict) 比较的字典 1
+        * dict2: (dict) 比较的字典 2
 
     :return:
         * dup_info: (namedtuple) 返回两个字典中相同的信息组成的具名元组
     
     举例如下::
 
-        print('--- find_duplicated_between_dicts demo---')
+        print('--- find_same_between_dicts demo---')
         dict1 = {'x':1, 'y':2, 'z':3}
         dict2 = {'w':10, 'x':1, 'y':2}
         res = find_duplicated_between_dicts(dict1, dict2)
@@ -1090,7 +1090,7 @@ def find_duplicated_between_dicts(dict1, dict2):
 
     执行结果::
 
-        --- find_duplicated_between_dicts demo---
+        --- find_same_between_dicts demo---
         set([('x', 1)])
         {'x', 'y'}
         {1}
