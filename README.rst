@@ -6,12 +6,8 @@
 .. image:: https://readthedocs.org/projects/fishbase/badge/?version=latest
     :target: https://fishbase.readthedocs.io/en/latest/?badge=latest
 
-
-
-.. _header-n22:
-
-fishbase 简介
-=============
+fishbase
+========
 
 fishbase 是我们自己开发和整理的一套 Python 基础函数库。 从这几年的
 Python
@@ -25,9 +21,19 @@ Python
 库的建设，包括完善文档和加入单元测试、示例代码、文档等。希望能够帮助到所有的
 Python 爱好者和应用开发人员。
 
---------------
+Installing
+==========
 
-目前主要分为：
+Install and update using `pip`_:
+
+.. code-block:: text
+
+    pip install -U fishbase
+
+Modules
+=======
+
+目前主要分为以下模块：
 
 -  fish_common 基本函数包
 
@@ -41,4 +47,36 @@ Python 爱好者和应用开发人员。
 
 -  fish_project project 目录结构生成函数包
 
+A Simple Example
+================
+
+.. code-block:: python
+
+    from fishbase.fish_common import GetMD5
+
+    # 获取字符换的MD5值
+    md5_string = GetMD5.string('hello world!')
+    print('md5_string : ', md5_string)
+    # 获取文件的MD5值
+    file_path = './test_conf.ini'
+    md5_file = GetMD5.file(file_path)
+    print('md5_file : ', md5_file)
+    # 获取hmac算法MD5值
+    hmac_md5_string = GetMD5.hmac_md5('hello world!', 'salt')
+    print('hmac_md5_string : ', hmac_md5_string)
+
+.. code-block:: text
+
+    md5_string : fc3ff98e8c6a0d3087d515c0473f8677
+    md5_file : fb7528c9778b2377e30b0f7e4c26fef0
+    hmac_md5_string: 191f82804523bfdafe0188bbbddd6587
+
+Links
+=====
+
 详细帮助文档：http://fishbase.readthedocs.io/
+
+测试覆盖率：https://coveralls.io/github/chinapnr/fishbase?branch=master
+
+
+.. _pip: https://pip.pypa.io/en/stable/quickstart/

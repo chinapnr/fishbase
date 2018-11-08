@@ -96,7 +96,12 @@ class TestFishCommon(object):
     def test_md5_03(self):
         salt = 'm4xV2yGFSn'
         assert GetMD5.string('hello world!', salt) == '984d47991401fad7d920a30f715cfd22'
-    
+
+    # 测试 GetMD5()  tc
+    def test_md5_04(self):
+        salt = 'salt'
+        assert GetMD5.hmac_md5('hello world!', salt) == '191f82804523bfdafe0188bbbddd6587'
+
     # 测试 if_json_contain()  tc
     def test_json_contain_01(self):
 
@@ -374,3 +379,13 @@ class TestFishCommon(object):
 
         assert 'firstName' not in underline_param_dict
         assert 'first_name' in underline_param_dict
+
+    # test find_duplicated_between_dicts() tc
+    def test_find_duplicated_between_dicts_01(self):
+        dict1 = {'x': 1, 'y': 2, 'z': 3}
+        dict2 = {'w': 10, 'x': 1, 'y': 4}
+    
+        info = find_duplicated_between_dicts(dict1, dict2)
+        assert dict(info.item) == {'x': 1}
+        assert info.key == {'x', 'y'}
+        assert info.value == {1}

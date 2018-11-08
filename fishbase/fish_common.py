@@ -20,7 +20,7 @@ import os
 import base64
 import string
 import random
-from collections import OrderedDict
+from collections import OrderedDict, namedtuple
 from operator import attrgetter
 import functools
 
@@ -359,6 +359,7 @@ class FishCache:
 
 # 2018.5.8 edit by David Yi, edit from Jia Chunying，#19026
 # 2018.6.12 edit by Hu Jun, edit from Jia Chunying，#37
+# 2018.10.28 edit by Hu Jun #99
 class GetMD5(object):
     """
     计算普通字符串和一般的文件，对于大文件采取逐步读入的方式，也可以快速计算；基于 Python 的 hashlib.md5() 进行封装和扩展；
@@ -369,6 +370,7 @@ class GetMD5(object):
         print('string md5:', GetMD5.string('hello world!'))
         print('file md5:', GetMD5.file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
         print('big file md5:', GetMD5.big_file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
+        print('string hmac_md5:', GetMD5.hmac_md5('hello world!', 'salt'))
         print('---')
 
     执行结果::
@@ -377,6 +379,7 @@ class GetMD5(object):
         string md5: fc3ff98e8c6a0d3087d515c0473f8677
         file md5: fb7528c9778b2377e30b0f7e4c26fef0
         big file md5: fb7528c9778b2377e30b0f7e4c26fef0
+        string hmac_md5: 191f82804523bfdafe0188bbbddd6587
         ---
 
     """
@@ -432,6 +435,21 @@ class GetMD5(object):
 
         result = md5.hexdigest()
         return result
+
+    @staticmethod
+    def hmac_md5(s, salt):
+        """
+        获取一个字符串的 使用salt加密的 hmac MD5值
+
+        :param:
+            * (string) s 需要进行 hash 的字符串
+            * (string) salt 随机字符串
+        :return:
+            * (string) result 32位小写 MD5 值
+        """
+        hmac_md5 = hmac.new(salt.encode('utf-8'), s.encode('utf-8'),
+                            digestmod=hashlib.md5).hexdigest()
+        return hmac_md5
 
 
 # 2018.5.15 v1.0.11 original by Lu Jie, edit by David Yi, #19029
@@ -1045,3 +1063,40 @@ def transform_hump_to_underline(param_dict):
         underline_sub = re.sub(hump_to_underline, r'\1_\2', key).lower()
         temp_dict[underline_sub] = temp_dict.pop(key)
     return temp_dict
+
+
+# v1.1.2 edit by Hu Jun, #80
+def find_duplicated_between_dicts(dict1, dict2):
+    """
+    查找两个字典中的相同点，包括键、值、项，仅支持hashable对象
+    :param:
+        * dict1(dict): 比较的字典1
+        * dict2(dict): 比较的字典2
+
+    :return:
+        * dup_info(namedtuple): 返回两个字典中相同的信息组成的具名元组
+    
+    举例如下::
+
+        print('--- find_duplicated_between_dicts demo---')
+        dict1 = {'x':1, 'y':2, 'z':3}
+        dict2 = {'w':10, 'x':1, 'y':2}
+        res = find_common_between_dicts(dict1, dict2)
+        print(res.item)
+        print(res.key)
+        print(res.value)
+        print('---')
+
+    执行结果::
+
+        --- find_duplicated_between_dicts demo---
+        set([('x', 1)])
+        {'x', 'y'}
+        {1}
+        ---
+    """
+    Duplicated_info = namedtuple('duplicated_info', ['item', 'key', 'value'])
+    duplicated_info = Duplicated_info(set(dict1.items()) & set(dict2.items()),
+                                      set(dict1.keys()) & set(dict2.keys()),
+                                      set(dict1.values()) & set(dict2.values()))
+    return duplicated_info

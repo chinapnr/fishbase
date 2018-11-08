@@ -7,6 +7,7 @@
     fish_common.GetMD5.string
     fish_common.GetMD5.file
     fish_common.GetMD5.big_file
+    fish_common.GetMD5.hmac_md5
     fish_common.if_json_contain
     fish_common.SingleTon
     fish_common.sorted_list_from_dict
@@ -25,6 +26,7 @@
     fish_common.get_sub_dict
     fish_common.get_group_list_data
     fish_common.transform_hump_to_underline
+    fish_common.find_duplicated_between_dicts
 
 .. automodule:: fish_common
     :members:
