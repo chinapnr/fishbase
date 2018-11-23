@@ -118,5 +118,5 @@ class TestFishDate(object):
         time_format = '%Y-%m-%d %H:%M:%S'
 
         datetime_obj = FishDateTimeFormat.strptime(date_time_str, time_format)
-        assert isinstance(datetime_obj, datetime)
+        assert isinstance(datetime_obj, datetime.datetime)
         assert datetime_obj.day == 23
