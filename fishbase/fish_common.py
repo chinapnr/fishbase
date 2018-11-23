@@ -1142,8 +1142,13 @@ def yaml_conf_as_dict(file_path, encoding=None):
         return False, {}, 'File not exist'
     
     try:
-        with open(file_path, 'r', encoding=encoding) as f:
-            d = OrderedDict(yaml.load(f.read()))
-            return True, d, 'Success'
+        if sys.version > '3':
+            with open(file_path, 'r', encoding=encoding) as f:
+                d = OrderedDict(yaml.load(f.read()))
+                return True, d, 'Success'
+        else:
+            with open(file_path, 'r') as f:
+                d = OrderedDict(yaml.load(f.read()))
+                return True, d, 'Success'
     except:
         return False, {}, 'Unknow error'
