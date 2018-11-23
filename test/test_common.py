@@ -394,23 +394,29 @@ class TestFishCommon(object):
     def test_yaml_conf_as_dict_01(self):
         # 定义配置文件名
         conf_filename = './test/test_conf.ymal'
-    
+
         # 读取配置文件
-        ds = yaml_conf_as_dict(conf_filename, encoding='utf-8')
-    
+        if sys.version > '3':
+            ds = yaml_conf_as_dict(conf_filename, encoding='utf-8')
+        else:
+            ds = yaml_conf_as_dict(conf_filename)
+
         # 返回结果
         assert ds[0] is True
-        assert len(ds[1]) == 7
+        assert len(ds[1]) == 2
         assert ds[-1] == 'Success'
 
     # 测试 yaml_conf_as_dict()  tc
     def test_yaml_conf_as_dict_02(self):
         # 定义配置文件名
         conf_filename = './test/test_conf1.ymal'
-    
+
         # 读取配置文件
-        ds = yaml_conf_as_dict(conf_filename, encoding='utf-8')
-    
+        if sys.version > '3':
+            ds = yaml_conf_as_dict(conf_filename, encoding='utf-8')
+        else:
+            ds = yaml_conf_as_dict(conf_filename)
+
         # 返回结果
         assert ds[0] is False
         assert ds[-1] == 'File not exist'
