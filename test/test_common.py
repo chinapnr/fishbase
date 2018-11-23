@@ -209,11 +209,25 @@ class TestFishCommon(object):
 
         assert len(find_files(path)) >= len(find_files(path, exts=exts_list))
 
-    # test find_files() tc
+    # test hmac_sha256() tc
     def test_hmac_sha256_01(self):
         message = 'Hello HMAC'
         secret = '12345678'
-        assert hmac_sha256(secret, message) == '5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f'
+        assert (hmac_sha256(secret, message) ==
+                '5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f')
+
+    # test GetSha256.hmac_sha256() tc
+    def test_hmac_sha256_02(self):
+        message = 'Hello HMAC'
+        secret = '12345678'
+        assert (GetSha256.hmac_sha256(secret, message) ==
+                '5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f')
+
+    # test GetSha256.hashlib_sha256() tc
+    def test_hashlib_sha256_01(self):
+        message = 'Hello HMAC'
+        assert (GetSha256.hashlib_sha256(message) ==
+                '4a1601381dfb85d6e713853a414f6b43daa76a82956911108512202f5a1c0ce4')
 
     # test Base64() tc
     def test_base64_01(self):

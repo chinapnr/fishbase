@@ -671,42 +671,6 @@ def find_files(path, exts=None):
     return files_list
 
 
-# v1.0.14 original by Jia Chunying, edit by Hu Jun, #27
-def hmac_sha256(secret, message):
-    """
-    hmac_sha256，通过秘钥获取消息的 hash 值
-
-    :param:
-        * secret: (string) 密钥
-        * message: (string) 消息输入
-
-    :return:
-        * hashed_str: (string) 长度为64的小写 hex string 类型的 hash 值
-
-    举例如下::
-
-        print('--- hmac_sha256 demo---')
-        # 定义待hash 的消息
-        message = 'Hello HMAC'
-        # 定义 HMAC 的秘钥
-        secret = '12345678'
-        hashed_str = hmac_sha256(secret, message)
-        print(hashed_str)
-        print('---')
-
-    执行结果::
-
-        --- hmac_sha256 demo---
-        5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f
-        ---
-
-    """
-    hashed_str = hmac.new(secret.encode('utf-8'),
-                          message.encode('utf-8'),
-                          digestmod=hashlib.sha256).hexdigest()
-    return hashed_str
-
-
 # v1.0.14 edit by Hu Jun, #59
 class Base64:
     """
@@ -1071,6 +1035,7 @@ def transform_hump_to_underline(param_dict):
 def find_same_between_dicts(dict1, dict2):
     """
     查找两个字典中的相同点，包括键、值、项，仅支持 hashable 对象
+
     :param:
         * dict1: (dict) 比较的字典 1
         * dict2: (dict) 比较的字典 2
@@ -1096,6 +1061,7 @@ def find_same_between_dicts(dict1, dict2):
         {'x', 'y'}
         {1}
         ---
+
     """
     Same_info = namedtuple('Same_info', ['item', 'key', 'value'])
     same_info = Same_info(set(dict1.items()) & set(dict2.items()),
@@ -1117,7 +1083,9 @@ def yaml_conf_as_dict(file_path, encoding=None):
     :return:
         * flag: (bool) 读取配置文件是否正确，正确返回 True，错误返回 False
         * d: (dict) 如果读取配置文件正确返回的包含配置文件内容的字典，字典内容顺序与配置文件顺序保持一致
+
     举例如下::
+
         print('--- yaml_conf_as_dict demo---')
         # 定义配置文件名
         conf_filename = 'test_conf.yaml'
@@ -1129,7 +1097,9 @@ def yaml_conf_as_dict(file_path, encoding=None):
         print('msg:', len(ds[1]))
         print('conf info: ', ds[1].get('tree'))
         print('---')
+
     执行结果::
+
         --- yaml_conf_as_dict demo---
         flag: True
         dict length: 2
@@ -1137,6 +1107,7 @@ def yaml_conf_as_dict(file_path, encoding=None):
         conf info:  ['README.md', 'requirements.txt', {'hellopackage': ['__init__.py']},
         {'test': ['__init__.py']}, {'doc': ['doc.rst']}]
         ---
+
     """
     if not os.path.isfile(file_path):
         return False, {}, 'File not exist'
@@ -1152,3 +1123,64 @@ def yaml_conf_as_dict(file_path, encoding=None):
                 return True, d, 'Success'
     except:
         return False, {}, 'Unknow error'
+
+
+# v1.1.3 edit by Hu Jun, #100
+class GetSha256(object):
+    """
+    计算字符串和密钥的 sha256 算法哈希值
+
+    举例如下::
+
+        print('--- GetSha256 demo ---')
+        # 定义哈希字符串
+        message = 'Hello HMAC'
+        # 定义密钥
+        secret = '12345678'
+        print('hmac_sha256:', GetSha256.hmac_sha256(secret, message))
+        print('hashlib_sha256:', GetSha256.hashlib_sha256(message))
+        print('---')
+
+    执行结果::
+
+        --- GetSha256 demo ---
+        hmac_sha256: 5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f
+        hashlib_sha256: 4a1601381dfb85d6e713853a414f6b43daa76a82956911108512202f5a1c0ce4
+        ---
+
+    """
+    @staticmethod
+    def hmac_sha256(secret, message):
+        """
+        获取一个字符串的在密钥 secret 加密下的 sha256 哈希值
+
+        :param:
+            * secret: (string) 哈希算法的密钥
+            * message: (string) 需要进行哈希的字符串
+        :return:
+            * hashed_str: sha256 算法哈希值
+        """
+        hashed_str = hmac.new(secret.encode('utf-8'),
+                              message.encode('utf-8'),
+                              digestmod=hashlib.sha256).hexdigest()
+        return hashed_str
+
+    @staticmethod
+    def hashlib_sha256(message):
+        """
+        获取一个字符串的 sha256 哈希值
+
+        :param:
+            * message: (string) 需要进行哈希的字符串
+        :return:
+            * hashed_str: sha256 算法哈希值
+        """
+        hashlib_sha256 = hashlib.sha256()
+        hashlib_sha256.update(message.encode('utf-8'))
+        hashed_str = hashlib_sha256.hexdigest()
+        return hashed_str
+
+
+# v1.0.14 original by Jia Chunying, edit by Hu Jun, #27
+# v1.1.3 edit by Hu Jun, #100 move hmac_sha256 to GetSha256
+hmac_sha256 = GetSha256.hmac_sha256
