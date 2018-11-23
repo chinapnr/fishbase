@@ -1,5 +1,10 @@
 更新记录
 ===========================
+2018.11.23 v1.1.3
+---------------------------
+* `#80 <https://github.com/chinapnr/fishbase/issues/98>`_, common, add function :meth:`fish_common.yaml_conf_as_dict`, doc and unittest;
+
+
 2018.10.27 v1.1.2
 ---------------------------
 * `#80 <https://github.com/chinapnr/fishbase/issues/80>`_, common, add function :meth:`fish_common.find_same_between_dicts`, doc and unittest;

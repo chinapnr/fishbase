@@ -20,6 +20,7 @@ import os
 import base64
 import string
 import random
+import yaml
 from collections import OrderedDict, namedtuple
 from operator import attrgetter
 import functools
@@ -1101,3 +1102,48 @@ def find_same_between_dicts(dict1, dict2):
                           set(dict1.keys()) & set(dict2.keys()),
                           set(dict1.values()) & set(dict2.values()))
     return same_info
+
+
+# v1.1.3 edit by Hu Jun, #94
+def yaml_conf_as_dict(file_path, encoding=None):
+    """
+    读入 yaml 配置文件，返回根据配置文件内容生成的字典类型变量
+
+    :param:
+        * file_path: (string) 需要读入的 yaml 配置文件长文件名
+        * encoding: (string) 文件编码
+        * msg: (string) 读取配置信息
+
+    :return:
+        * flag: (bool) 读取配置文件是否正确，正确返回 True，错误返回 False
+        * d: (dict) 如果读取配置文件正确返回的包含配置文件内容的字典，字典内容顺序与配置文件顺序保持一致
+    举例如下::
+        print('--- yaml_conf_as_dict demo---')
+        # 定义配置文件名
+        conf_filename = 'test_conf.yaml'
+        # 读取配置文件
+        ds = yaml_conf_as_dict(conf_filename, encoding='utf-8')
+        # 显示是否成功，所有 dict 的内容，dict 的 key 数量
+        print('flag:', ds[0])
+        print('dict length:', len(ds[1]))
+        print('msg:', len(ds[1]))
+        print('conf info: ', ds[1].get('tree'))
+        print('---')
+    执行结果::
+        --- yaml_conf_as_dict demo---
+        flag: True
+        dict length: 2
+        msg: Success
+        conf info:  ['README.md', 'requirements.txt', {'hellopackage': ['__init__.py']},
+        {'test': ['__init__.py']}, {'doc': ['doc.rst']}]
+        ---
+    """
+    if not os.path.isfile(file_path):
+        return False, {}, 'File not exist'
+    
+    try:
+        with open(file_path, 'r', encoding=encoding) as f:
+            d = OrderedDict(yaml.load(f.read()))
+            return True, d, 'Success'
+    except:
+        return False, {}, 'Unknow error'
