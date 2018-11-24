@@ -265,8 +265,8 @@ class TestFishCommon(object):
     
         letter_str = get_random_str(6)
         assert letters_pattern.match(letter_str)
-    
-        letter_digits_str = get_random_str(6, digits=True)
+
+        letter_digits_str = get_random_str(80, digits=True)
         assert letters_digits_pattern.match(letter_digits_str)
     
         digits_str = get_random_str(6, letters=False, digits=True)
@@ -434,3 +434,11 @@ class TestFishCommon(object):
         # 返回结果
         assert ds[0] is False
         assert ds[-1] == 'File not exist'
+
+    # 测试 if_any_elements_is_letter() tc
+    def test_if_any_elements_is_letter(self):
+        letter_str = 'adsadasdasa'
+        mix_str = 'asd12321'
+
+        assert if_any_elements_is_letter(letter_str)
+        assert not if_any_elements_is_letter(mix_str)
