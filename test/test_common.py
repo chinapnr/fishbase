@@ -437,8 +437,8 @@ class TestFishCommon(object):
 
     # 测试 if_any_elements_is_letter() tc
     def test_if_any_elements_is_letter(self):
-        letter_str = 'adsadasdasa'
-        mix_str = 'asd12321'
+        letter_str = 'test'
+        mix_str = 'mix123'
 
         assert if_any_elements_is_letter(letter_str)
         assert not if_any_elements_is_letter(mix_str)
