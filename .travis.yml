@@ -1,30 +1,16 @@
 language: python
-sudo: false
-matrix:
-  include:
-    - os: linux
-      python:
-        - "nightly"
-        - "3.8-dev"
-        - "pypy3.5"
-        - "3.7"
-        - "3.6"
-        - "3.5"
-        - "3.4"
-        - "2.7"
-    - os: windows
-      python:
-        - "nightly"
-        - "3.8-dev"
-        - "pypy3.5"
-        - "3.7"
-        - "3.6"
-        - "3.5"
-        - "3.4"
-        - "2.7"
-  allow_failures:
-    - python: nightly
-    - python: 3.8-dev
+python:
+  - "nightly"
+  - "3.8-dev"
+  - "pypy3.5"
+  - "3.7"
+  - "3.6"
+  - "3.5"
+  - "3.4"
+  - "2.7"
+allow_failures:
+  - python: nightly
+  - python: 3.8-dev
 
 # command to install dependencies
 install:
