@@ -1,0 +1,10 @@
+project: hellopackage
+tree:
+    - README.md
+    - requirements.txt
+    - hellopackage: # project name
+        - __init__.py
+    - test: # unittest file
+        - __init__.py
+    - doc: # documents
+        - doc.rst

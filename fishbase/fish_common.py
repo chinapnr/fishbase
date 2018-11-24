@@ -20,6 +20,7 @@ import os
 import base64
 import string
 import random
+import yaml
 from collections import OrderedDict, namedtuple
 from operator import attrgetter
 import functools
@@ -254,13 +255,13 @@ get_time_uuid = functools.partial(get_uuid, udTime)
 # 2018.6.29 v1.0.14 edit by Hu Jun，#62
 def if_any_elements_is_space(source):
     """
-    判断对象中的元素，如果存在None或空字符串或空格字符串，则返回True, 否则返回False, 支持字典、列表和元组
+    判断对象中的元素，如果存在 None 或空字符串或空格字符串，则返回 True, 否则返回 False, 支持字典、列表和元组
 
     :param:
         * source: (list, set, dict) 需要检查的对象
 
     :return:
-        * result: (bool) 存在None或空字符串或空格字符串返回True， 否则返回False
+        * result: (bool) 存在 None 或空字符串或空格字符串返回 True， 否则返回 False
 
     举例如下::
 
@@ -387,13 +388,13 @@ class GetMD5(object):
     @staticmethod
     def string(s, salt=None):
         """
-        获取一个字符串的MD5值
+        获取一个字符串的 MD5 值
 
         :param:
-            * (string) str 需要进行 hash 的字符串
-            * (string) salt 随机字符串，默认为None
+            * s: (string) 需要进行 hash 的字符串
+            * salt: (string) 随机字符串，默认为 None
         :return:
-            * (string) result 32位小写 MD5 值
+            * result: (string) 32 位小写 MD5 值
         """
         m = hashlib.md5()
         s = s.encode('utf-8') + salt.encode('utf-8') if salt is not None else s.encode('utf-8')
@@ -407,9 +408,9 @@ class GetMD5(object):
         获取一个文件的 MD5 值
 
         :param:
-            * (string) filename 需要进行 hash 的文件名
+            * filename: (string) 需要进行 hash 的文件名
         :return:
-            * (string) result 32位小写 MD5 值
+            * result: (string) 32位小写 MD5 值
         """
         m = hashlib.md5()
         with open(filename, 'rb') as f:
@@ -423,9 +424,9 @@ class GetMD5(object):
         获取一个大文件的 MD5 值
 
         :param:
-            * (string) filename 需要进行 hash 的大文件路径
+            * filename: (string) 需要进行 hash 的大文件路径
         :return:
-            * (string) result 32位小写 MD5 值
+            * result: (string) 32位小写 MD5 值
         """
 
         md5 = hashlib.md5()
@@ -439,13 +440,13 @@ class GetMD5(object):
     @staticmethod
     def hmac_md5(s, salt):
         """
-        获取一个字符串的 使用salt加密的 hmac MD5值
+        获取一个字符串的 使用 salt 加密的 hmac MD5 值
 
         :param:
-            * (string) s 需要进行 hash 的字符串
-            * (string) salt 随机字符串
+            * s: (string) 需要进行 hash 的字符串
+            * salt: (string) 随机字符串
         :return:
-            * (string) result 32位小写 MD5 值
+            * result: (string) 32位小写 MD5 值
         """
         hmac_md5 = hmac.new(salt.encode('utf-8'), s.encode('utf-8'),
                             digestmod=hashlib.md5).hexdigest()
@@ -576,7 +577,8 @@ def is_contain_special_char(p_str, check_style=charChinese):
     
     :param:
         * p_str: (string) 需要判断的字符串
-        * check_style: (string) 需要判断的字符类型，默认为 charChinese(编码仅支持utf-8),支持 charNum，该参数向后兼容
+        * check_style: (string) 需要判断的字符类型，默认为 charChinese (编码仅支持utf-8),
+        支持 charNum，该参数向后兼容
 
     :return:
         * True 含有指定类型字符
@@ -669,46 +671,10 @@ def find_files(path, exts=None):
     return files_list
 
 
-# v1.0.14 original by Jia Chunying, edit by Hu Jun, #27
-def hmac_sha256(secret, message):
-    """
-    hmac_sha256，通过秘钥获取消息的hash值
-
-    :param:
-        * secret: (string) 密钥
-        * message: (string) 消息输入
-
-    :return:
-        * hashed_str: (string) 长度为64的小写hex string 类型的hash值
-
-    举例如下::
-
-        print('--- hmac_sha256 demo---')
-        # 定义待hash的消息
-        message = 'Hello HMAC'
-        # 定义HMAC的秘钥
-        secret = '12345678'
-        hashed_str = hmac_sha256(secret, message)
-        print(hashed_str)
-        print('---')
-
-    执行结果::
-
-        --- hmac_sha256 demo---
-        5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f
-        ---
-
-    """
-    hashed_str = hmac.new(secret.encode('utf-8'),
-                          message.encode('utf-8'),
-                          digestmod=hashlib.sha256).hexdigest()
-    return hashed_str
-
-
 # v1.0.14 edit by Hu Jun, #59
 class Base64:
     """
-    计算返回文件和字符串的base64编码字符串
+    计算返回文件和字符串的 base64 编码字符串
 
     举例如下::
 
@@ -731,10 +697,10 @@ class Base64:
     @staticmethod
     def string(s):
         """
-        获取一个字符串的base64值
+        获取一个字符串的 base64 值
 
         :param:
-            * (string) s 需要进行 base64编码 的字符串
+            * s: (string) 需要进行 base64 编码 的字符串
         :return:
             * (bytes) base64 编码结果
         """
@@ -743,10 +709,10 @@ class Base64:
     @staticmethod
     def file(filename):
         """
-        获取一个文件的base64值
+        获取一个文件的 base64 值
 
         :param:
-            * (string) filename 需要进行 base64编码 文件路径
+            * filename: (string) 需要进行 base64 编码 文件路径
         :return:
             * (bytes) base64 编码结果
         """
@@ -756,10 +722,10 @@ class Base64:
     @staticmethod
     def decode(s):
         """
-        获取base64 解码结果
+        获取 base64 解码结果
 
         :param:
-            * (string) filename 需要进行 base64编码 文件路径
+            * filename: (string) 需要进行 base64 编码 文件路径
         :return:
             * (bytes) base64 解码结果
         """
@@ -818,7 +784,7 @@ def get_random_str(length, letters=True, digits=False, punctuation=False):
 # v1.0.15 edit by Hu Jun, #77 #63
 def remove_duplicate_elements(items, key=None):
     """
-    去除序列中的重复元素，使得剩下的元素仍然保持顺序不变，对于不可哈希的对象，需要指定key，说明去重元素
+    去除序列中的重复元素，使得剩下的元素仍然保持顺序不变，对于不可哈希的对象，需要指定 key ，说明去重元素
 
     :param:
         * items: (list) 需要去重的列表
@@ -867,7 +833,7 @@ def sorted_objs_by_attr(objs, key, reverse=False):
     :param:
         * objs: (list) 需要排序的对象列表
         * key: (string) 需要进行排序的对象属性
-        * reverse: (bool) 排序结果是否进行反转，默认为False，不进行反转
+        * reverse: (bool) 排序结果是否进行反转，默认为 False，不进行反转
 
     :return:
         * result: (list) 排序后的对象列表
@@ -908,13 +874,13 @@ def sorted_objs_by_attr(objs, key, reverse=False):
 # v1.0.15 edit by Hu Jun, #79
 def get_query_param_from_url(url):
     """
-    从url中获取query参数字典
+    从 url 中获取 query 参数字典
 
     :param:
-        * url: (string) 需要获取参数字典的url
+        * url: (string) 需要获取参数字典的 url
 
     :return:
-        * query_dict: (dict) query参数的有序字典，字典的值为query值组成的列表
+        * query_dict: (dict) query 参数的有序字典，字典的值为 query 值组成的列表
 
     举例如下::
 
@@ -944,8 +910,8 @@ def get_group_list_data(data_list, group_number=1, group_size=10):
 
     :param:
         * data_list: (list) 需要获取分组的数据列表
-        * group_number: (int) 分组信息，默认为1
-        * group_size: (int) 分组大小，默认为10
+        * group_number: (int) 分组信息，默认为 1
+        * group_size: (int) 分组大小，默认为 10
 
     :return:
         * group_data: (list) 分组数据
@@ -1034,10 +1000,10 @@ def transform_hump_to_underline(param_dict):
     将驼峰命名的参数字典键转换为下划线参数
 
     :param:
-        * param_dict(dict): 请求参数字典
+        * param_dict: (dict) 请求参数字典
 
     :return:
-        * temp_dict(dict): 转换后的参数字典
+        * temp_dict: (dict) 转换后的参数字典
 
     举例如下::
 
@@ -1066,22 +1032,23 @@ def transform_hump_to_underline(param_dict):
 
 
 # v1.1.2 edit by Hu Jun, #80
-def find_duplicated_between_dicts(dict1, dict2):
+def find_same_between_dicts(dict1, dict2):
     """
-    查找两个字典中的相同点，包括键、值、项，仅支持hashable对象
+    查找两个字典中的相同点，包括键、值、项，仅支持 hashable 对象
+
     :param:
-        * dict1(dict): 比较的字典1
-        * dict2(dict): 比较的字典2
+        * dict1: (dict) 比较的字典 1
+        * dict2: (dict) 比较的字典 2
 
     :return:
-        * dup_info(namedtuple): 返回两个字典中相同的信息组成的具名元组
+        * dup_info: (namedtuple) 返回两个字典中相同的信息组成的具名元组
     
     举例如下::
 
-        print('--- find_duplicated_between_dicts demo---')
+        print('--- find_same_between_dicts demo---')
         dict1 = {'x':1, 'y':2, 'z':3}
         dict2 = {'w':10, 'x':1, 'y':2}
-        res = find_duplicated_between_dicts(dict1, dict2)
+        res = find_same_between_dicts(dict1, dict2)
         print(res.item)
         print(res.key)
         print(res.value)
@@ -1089,14 +1056,131 @@ def find_duplicated_between_dicts(dict1, dict2):
 
     执行结果::
 
-        --- find_duplicated_between_dicts demo---
+        --- find_same_between_dicts demo---
         set([('x', 1)])
         {'x', 'y'}
         {1}
         ---
+
     """
-    Duplicated_info = namedtuple('Duplicated_info', ['item', 'key', 'value'])
-    duplicated_info = Duplicated_info(set(dict1.items()) & set(dict2.items()),
-                                      set(dict1.keys()) & set(dict2.keys()),
-                                      set(dict1.values()) & set(dict2.values()))
-    return duplicated_info
+    Same_info = namedtuple('Same_info', ['item', 'key', 'value'])
+    same_info = Same_info(set(dict1.items()) & set(dict2.items()),
+                          set(dict1.keys()) & set(dict2.keys()),
+                          set(dict1.values()) & set(dict2.values()))
+    return same_info
+
+
+# v1.1.3 edit by Hu Jun, #94
+def yaml_conf_as_dict(file_path, encoding=None):
+    """
+    读入 yaml 配置文件，返回根据配置文件内容生成的字典类型变量
+
+    :param:
+        * file_path: (string) 需要读入的 yaml 配置文件长文件名
+        * encoding: (string) 文件编码
+        * msg: (string) 读取配置信息
+
+    :return:
+        * flag: (bool) 读取配置文件是否正确，正确返回 True，错误返回 False
+        * d: (dict) 如果读取配置文件正确返回的包含配置文件内容的字典，字典内容顺序与配置文件顺序保持一致
+
+    举例如下::
+
+        print('--- yaml_conf_as_dict demo---')
+        # 定义配置文件名
+        conf_filename = 'test_conf.yaml'
+        # 读取配置文件
+        ds = yaml_conf_as_dict(conf_filename, encoding='utf-8')
+        # 显示是否成功，所有 dict 的内容，dict 的 key 数量
+        print('flag:', ds[0])
+        print('dict length:', len(ds[1]))
+        print('msg:', len(ds[1]))
+        print('conf info: ', ds[1].get('tree'))
+        print('---')
+
+    执行结果::
+
+        --- yaml_conf_as_dict demo---
+        flag: True
+        dict length: 2
+        msg: Success
+        conf info:  ['README.md', 'requirements.txt', {'hellopackage': ['__init__.py']},
+        {'test': ['__init__.py']}, {'doc': ['doc.rst']}]
+        ---
+
+    """
+    if not os.path.isfile(file_path):
+        return False, {}, 'File not exist'
+    
+    try:
+        if sys.version > '3':
+            with open(file_path, 'r', encoding=encoding) as f:
+                d = OrderedDict(yaml.load(f.read()))
+                return True, d, 'Success'
+        else:
+            with open(file_path, 'r') as f:
+                d = OrderedDict(yaml.load(f.read()))
+                return True, d, 'Success'
+    except:
+        return False, {}, 'Unknow error'
+
+
+# v1.1.3 edit by Hu Jun, #100
+class GetSha256(object):
+    """
+    计算字符串和密钥的 sha256 算法哈希值
+
+    举例如下::
+
+        print('--- GetSha256 demo ---')
+        # 定义哈希字符串
+        message = 'Hello HMAC'
+        # 定义密钥
+        secret = '12345678'
+        print('hmac_sha256:', GetSha256.hmac_sha256(secret, message))
+        print('hashlib_sha256:', GetSha256.hashlib_sha256(message))
+        print('---')
+
+    执行结果::
+
+        --- GetSha256 demo ---
+        hmac_sha256: 5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f
+        hashlib_sha256: 4a1601381dfb85d6e713853a414f6b43daa76a82956911108512202f5a1c0ce4
+        ---
+
+    """
+    @staticmethod
+    def hmac_sha256(secret, message):
+        """
+        获取一个字符串的在密钥 secret 加密下的 sha256 哈希值
+
+        :param:
+            * secret: (string) 哈希算法的密钥
+            * message: (string) 需要进行哈希的字符串
+        :return:
+            * hashed_str: sha256 算法哈希值
+        """
+        hashed_str = hmac.new(secret.encode('utf-8'),
+                              message.encode('utf-8'),
+                              digestmod=hashlib.sha256).hexdigest()
+        return hashed_str
+
+    @staticmethod
+    def hashlib_sha256(message):
+        """
+        获取一个字符串的 sha256 哈希值
+
+        :param:
+            * message: (string) 需要进行哈希的字符串
+        :return:
+            * hashed_str: sha256 算法哈希值
+        """
+        hashlib_sha256 = hashlib.sha256()
+        hashlib_sha256.update(message.encode('utf-8'))
+        hashed_str = hashlib_sha256.hexdigest()
+        return hashed_str
+
+
+# v1.0.14 original by Jia Chunying, edit by Hu Jun, #27
+# v1.1.3 edit by Hu Jun, #100 move hmac_sha256 to GetSha256
+hmac_sha256 = GetSha256.hmac_sha256

@@ -209,11 +209,25 @@ class TestFishCommon(object):
 
         assert len(find_files(path)) >= len(find_files(path, exts=exts_list))
 
-    # test find_files() tc
+    # test hmac_sha256() tc
     def test_hmac_sha256_01(self):
         message = 'Hello HMAC'
         secret = '12345678'
-        assert hmac_sha256(secret, message) == '5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f'
+        assert (hmac_sha256(secret, message) ==
+                '5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f')
+
+    # test GetSha256.hmac_sha256() tc
+    def test_hmac_sha256_02(self):
+        message = 'Hello HMAC'
+        secret = '12345678'
+        assert (GetSha256.hmac_sha256(secret, message) ==
+                '5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f')
+
+    # test GetSha256.hashlib_sha256() tc
+    def test_hashlib_sha256_01(self):
+        message = 'Hello HMAC'
+        assert (GetSha256.hashlib_sha256(message) ==
+                '4a1601381dfb85d6e713853a414f6b43daa76a82956911108512202f5a1c0ce4')
 
     # test Base64() tc
     def test_base64_01(self):
@@ -251,8 +265,8 @@ class TestFishCommon(object):
     
         letter_str = get_random_str(6)
         assert letters_pattern.match(letter_str)
-    
-        letter_digits_str = get_random_str(6, digits=True)
+
+        letter_digits_str = get_random_str(80, digits=True)
         assert letters_digits_pattern.match(letter_digits_str)
     
         digits_str = get_random_str(6, letters=False, digits=True)
@@ -380,12 +394,51 @@ class TestFishCommon(object):
         assert 'firstName' not in underline_param_dict
         assert 'first_name' in underline_param_dict
 
-    # test find_duplicated_between_dicts() tc
-    def test_find_duplicated_between_dicts_01(self):
+    # test find_same_between_dicts() tc
+    def test_find_same_between_dicts_01(self):
         dict1 = {'x': 1, 'y': 2, 'z': 3}
         dict2 = {'w': 10, 'x': 1, 'y': 4}
     
-        info = find_duplicated_between_dicts(dict1, dict2)
+        info = find_same_between_dicts(dict1, dict2)
         assert dict(info.item) == {'x': 1}
         assert info.key == {'x', 'y'}
         assert info.value == {1}
+
+    # 测试 yaml_conf_as_dict()  tc
+    def test_yaml_conf_as_dict_01(self):
+        # 定义配置文件名
+        conf_filename = './test/test_conf.ymal'
+
+        # 读取配置文件
+        if sys.version > '3':
+            ds = yaml_conf_as_dict(conf_filename, encoding='utf-8')
+        else:
+            ds = yaml_conf_as_dict(conf_filename)
+
+        # 返回结果
+        assert ds[0] is True
+        assert len(ds[1]) == 2
+        assert ds[-1] == 'Success'
+
+    # 测试 yaml_conf_as_dict()  tc
+    def test_yaml_conf_as_dict_02(self):
+        # 定义配置文件名
+        conf_filename = './test/test_conf1.ymal'
+
+        # 读取配置文件
+        if sys.version > '3':
+            ds = yaml_conf_as_dict(conf_filename, encoding='utf-8')
+        else:
+            ds = yaml_conf_as_dict(conf_filename)
+
+        # 返回结果
+        assert ds[0] is False
+        assert ds[-1] == 'File not exist'
+
+    # 测试 if_any_elements_is_letter() tc
+    def test_if_any_elements_is_letter(self):
+        letter_str = 'test'
+        mix_str = 'mix123'
+
+        assert if_any_elements_is_letter(letter_str)
+        assert not if_any_elements_is_letter(mix_str)
