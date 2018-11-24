@@ -261,7 +261,7 @@ def if_any_elements_is_space(source):
         * source: (list, set, dict) 需要检查的对象
 
     :return:
-        * result: (bool) 存在None或空字符串或空格字符串返回 True， 否则返回 False
+        * result: (bool) 存在 None 或空字符串或空格字符串返回 True， 否则返回 False
 
     举例如下::
 
@@ -388,7 +388,7 @@ class GetMD5(object):
     @staticmethod
     def string(s, salt=None):
         """
-        获取一个字符串的MD5值
+        获取一个字符串的 MD5 值
 
         :param:
             * s: (string) 需要进行 hash 的字符串

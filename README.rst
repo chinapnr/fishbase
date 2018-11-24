@@ -54,7 +54,7 @@ A Simple Example
 
     from fishbase.fish_common import GetMD5
 
-    # 获取字符换的 MD5 值
+    # 获取字符串的 MD5 值
     md5_string = GetMD5.string('hello world!')
     print('md5_string : ', md5_string)
     # 获取文件的 MD5 值
