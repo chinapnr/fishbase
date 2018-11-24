@@ -1,11 +1,31 @@
 language: python
-python:
-  - "2.7"
-  - "3.5"
-  - "3.6"
-  - "3.7-dev"
-# PyPy versions
-  - "pypy3.5"
+sudo: false
+matrix:
+  include:
+    - os: linux
+      python:
+        - "nightly"
+        - "3.8-dev"
+        - "pypy3.5"
+        - "3.7"
+        - "3.6"
+        - "3.5"
+        - "3.4"
+        - "2.7"
+    - os: windows
+      python:
+        - "nightly"
+        - "3.8-dev"
+        - "pypy3.5"
+        - "3.7"
+        - "3.6"
+        - "3.5"
+        - "3.4"
+        - "2.7"
+  allow_failures:
+    - python: nightly
+    - python: 3.8-dev
+
 # command to install dependencies
 install:
   - pip install -r requirements.txt
