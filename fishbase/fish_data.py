@@ -75,3 +75,10 @@ def is_valid_id_number(id_number):
     check = check_codes[copulas % 11].upper() == id_number[-1].upper()
 
     return check,
+
+
+#
+# ---
+# 2018.12.9 create by David Yi, add in v1.1.3, github issue #139
+def query_id_area():
+    print('ok')
