@@ -59,7 +59,7 @@ def is_valid_id_number(id_number):
         id_number = str(id_number)
 
     if not re.match(id_regex, id_number):
-        return False
+        return False,
 
     items = [int(item) for item in id_number[:-1]]
 

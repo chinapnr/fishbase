@@ -2,10 +2,10 @@
 # fish_file.py 单元测试
 # 2018.5.28 create by David Yi
 
-import sys
-
-sys.path.append('../fishbase')
 from fishbase.fish_file import *
+
+# 定义当前路径
+current_path = os.path.dirname(os.path.abspath(__file__))
 
 
 # 2018.5.28 v1.0.13 #19040,#19042, create by David Yi, fish_file unittest
@@ -15,8 +15,8 @@ class TestFishFile(object):
     def test_get_abs_filename_with_sub_path_01(self):
 
         # 定义子路径名称
-        path_name_0 = 'test'
-        path_name_1 = 'test1'
+        path_name_0 = os.path.join(current_path, '..', 'test')
+        path_name_1 = os.path.join(current_path, '..', 'test01')
         # 定义文件名称
         filename_0 = 'readme.111'
         filename_1 = 'test_file.py'
@@ -64,6 +64,5 @@ class TestFishFile(object):
         assert result[0] is True
         assert result[1] is False
 
-
-
-
+        # 删除临时文件
+        os.rmdir(abs_path)
