@@ -3,9 +3,17 @@
 # 2018.5.15 create by David Yi
 
 import pytest
-import sys
-sys.path.append('../fishbase')
+
 from fishbase.fish_common import *
+
+# 定义当前路径
+current_path = os.path.dirname(os.path.abspath(__file__))
+# 定义配置文件名
+conf_filename = os.path.join(current_path, 'test_conf.ini')
+error_conf_filename = os.path.join(current_path, 'test_conf1.ini')
+# 定义 yaml 文件名
+yaml_filename = os.path.join(current_path, 'test_conf.yaml')
+error_yaml_filename = os.path.join(current_path, 'test_conf1.yaml')
 
 
 # 2018.5.14 v1.0.11 #19027 create by David Yi, 开始进行单元测试
@@ -14,9 +22,6 @@ class TestFishCommon(object):
 
     # 测试 conf_as_dict()  tc
     def test_config_dict_01(self):
-        # 定义配置文件名
-        conf_filename = './test/test_conf.ini'
-
         # 读取配置文件
         ds = conf_as_dict(conf_filename)
         d = ds[1]
@@ -30,11 +35,8 @@ class TestFishCommon(object):
 
     # 测试 conf_as_dict()  tc
     def test_config_dict_02(self):
-        # 定义配置文件名
-        conf_filename = './test/test_conf1.ini'
-
-        # 读取配置文件
-        ds = conf_as_dict(conf_filename)
+        # 读取不存在的配置文件
+        ds = conf_as_dict(error_conf_filename)
 
         # 返回结果
         assert ds[0] is False
@@ -44,9 +46,6 @@ class TestFishCommon(object):
             d = ds[1]
 
     def test_config_dict_03(self):
-        # 定义配置文件名
-        conf_filename = './test/test_conf.ini'
-    
         # 读取配置文件
         ds = conf_as_dict(conf_filename)
         d = ds[1]
@@ -58,9 +57,6 @@ class TestFishCommon(object):
         assert list(d.keys()) == list1
 
     def test_config_dict_04(self):
-        # 定义配置文件名
-        conf_filename = './test/test_conf.ini'
-    
         # 读取配置文件, 中文编码
         ds = conf_as_dict(conf_filename, encoding='utf-8')
         d = ds[1]
@@ -75,8 +71,8 @@ class TestFishCommon(object):
     def test_md5_01(self):
         
         assert GetMD5.string('hello world!') == 'fc3ff98e8c6a0d3087d515c0473f8677'
-        assert GetMD5.file('./test/test_conf.ini') == 'c73ec5050bbff26ade9330bbe0bd7a25'
-        assert GetMD5.big_file('./test/test_conf.ini') == 'c73ec5050bbff26ade9330bbe0bd7a25'
+        assert GetMD5.file(conf_filename) == 'c73ec5050bbff26ade9330bbe0bd7a25'
+        assert GetMD5.big_file(conf_filename) == 'c73ec5050bbff26ade9330bbe0bd7a25'
 
     # 测试 GetMD5()  tc
     def test_md5_02(self):
@@ -85,12 +81,12 @@ class TestFishCommon(object):
 
         if sys.version > '3':
             with pytest.raises(FileNotFoundError):
-                GetMD5.file('./test/test_conf1.ini')
+                GetMD5.file(error_conf_filename)
         else:
             with pytest.raises(IOError):
-                GetMD5.file('./test/test_conf1.ini')
+                GetMD5.file(error_conf_filename)
 
-        assert GetMD5.file('./test/test_conf.ini') != 'bb7528c9778b2377e30b0f7e4c26fef0'
+        assert GetMD5.file(conf_filename) != 'bb7528c9778b2377e30b0f7e4c26fef0'
 
     # 测试 GetMD5()  tc
     def test_md5_03(self):
@@ -233,7 +229,7 @@ class TestFishCommon(object):
     def test_base64_01(self):
         assert Base64.string('hello world') == b'aGVsbG8gd29ybGQ='
     
-        assert len(Base64.file('./test/test_conf.ini')) != 0
+        assert len(Base64.file(conf_filename)) != 0
     
         assert Base64.decode(b'aGVsbG8gd29ybGQ=') == b'hello world'
 
@@ -245,12 +241,12 @@ class TestFishCommon(object):
     
         if sys.version > '3':
             with pytest.raises(FileNotFoundError):
-                GetMD5.file('./test/test_conf1.ini')
+                GetMD5.file(error_conf_filename)
         else:
             with pytest.raises(IOError):
-                GetMD5.file('./test/test_conf1.ini')
+                GetMD5.file(error_conf_filename)
     
-        assert GetMD5.file('./test/test_conf.ini') != b'bb7528c9778b2377e30b0f7e4c26fef0'
+        assert GetMD5.file(conf_filename) != b'bb7528c9778b2377e30b0f7e4c26fef0'
     
     # test get_random_str() tc
     def test_get_random_str_01(self):
@@ -406,14 +402,11 @@ class TestFishCommon(object):
 
     # 测试 yaml_conf_as_dict()  tc
     def test_yaml_conf_as_dict_01(self):
-        # 定义配置文件名
-        conf_filename = './test/test_conf.ymal'
-
         # 读取配置文件
         if sys.version > '3':
-            ds = yaml_conf_as_dict(conf_filename, encoding='utf-8')
+            ds = yaml_conf_as_dict(yaml_filename, encoding='utf-8')
         else:
-            ds = yaml_conf_as_dict(conf_filename)
+            ds = yaml_conf_as_dict(yaml_filename)
 
         # 返回结果
         assert ds[0] is True
@@ -422,14 +415,11 @@ class TestFishCommon(object):
 
     # 测试 yaml_conf_as_dict()  tc
     def test_yaml_conf_as_dict_02(self):
-        # 定义配置文件名
-        conf_filename = './test/test_conf1.ymal'
-
         # 读取配置文件
         if sys.version > '3':
-            ds = yaml_conf_as_dict(conf_filename, encoding='utf-8')
+            ds = yaml_conf_as_dict(error_yaml_filename, encoding='utf-8')
         else:
-            ds = yaml_conf_as_dict(conf_filename)
+            ds = yaml_conf_as_dict(error_yaml_filename)
 
         # 返回结果
         assert ds[0] is False

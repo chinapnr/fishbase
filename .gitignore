@@ -111,3 +111,4 @@ test/.test_cache_data/*
 test/.test_cache_data
 
 .idea
+.vscode

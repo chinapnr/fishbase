@@ -3,9 +3,7 @@
 # 2018.6.11 create by Hu Jun
 
 import pytest
-import sys
-import time
-sys.path.append('../fishbase')
+
 from fishbase.fish_date import *
 import datetime
 

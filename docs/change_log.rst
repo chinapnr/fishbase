@@ -1,7 +1,8 @@
 更新记录
 ===========================
-2018.11.23 v1.1.3
+2018.12.10 v1.1.3
 ---------------------------
+* `#98 <https://github.com/chinapnr/fishbase/issues/98>`_, common, add function :meth:`fish_common.yaml_conf_as_dict`, doc and unittest;
 * `#98 <https://github.com/chinapnr/fishbase/issues/98>`_, common, add function :meth:`fish_common.yaml_conf_as_dict`, doc and unittest;
 * `#100 <https://github.com/chinapnr/fishbase/issues/100>`_, common, add class :meth:`fish_common.GetSha256`, doc and unittest;
 * `#116 <https://github.com/chinapnr/fishbase/issues/116>`_, date, add class :meth:`fish_date.FishDateTimeFormat`, doc and unittest;
