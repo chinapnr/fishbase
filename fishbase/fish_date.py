@@ -67,7 +67,7 @@ def get_years(months=0, refer=None):
 
     :param:
         * months: (int) 月份增量，正数为往后年月，整数为往前年月
-        * refer: (datetime obj) datetime 对象，或者有month和year属性的实例，默认为当前时间
+        * refer: (datetime obj) datetime 对象，或者有 month 和 year 属性的实例，默认为当前时间
     :return:
         * result: (string) 年月字符串
 
@@ -135,7 +135,7 @@ class GetRandomTime(object):
         获取当前月的随机日期
 
         :return:
-            * date_this_month(datetime) 当前月份的随机时间
+            * date_this_month: (datetime) 当前月份的随机时间
 
         举例如下::
 
@@ -164,7 +164,7 @@ class GetRandomTime(object):
         获取当前年的随机日期
         
         :return:
-            * date_this_year(datetime) 当前月份的随机时间
+            * date_this_year: (datetime) 当前月份的随机时间
 
         举例如下::
 
@@ -193,8 +193,8 @@ def get_time_interval(start_time, end_time):
     获取两个unix时间戳之间的时间间隔
 
     :param:
-        * start_time: (int) 开始时间，unix时间戳
-        * end_time: (int) 结束时间，unix时间戳
+        * start_time: (int) 开始时间，unix 时间戳
+        * end_time: (int) 结束时间，unix 时间戳
     :return:
         * interval_dict: (dict) 时间间隔字典
 
@@ -240,12 +240,12 @@ def get_time_interval(start_time, end_time):
 # v1.1.0 edit by Hu Jun #93
 def transform_unix_to_datetime(timestamp):
     """
-    将unix时间戳转换成datetime类型
+    将 unix 时间戳转换成 datetime 类型
 
     :param:
-        * timestamp: (int) unix时间戳
+        * timestamp: (int) unix 时间戳
     :return:
-        * data_type: (datetime) datetime类型实例
+        * data_type: (datetime) datetime 类型实例
 
     举例如下::
 
@@ -276,12 +276,12 @@ def transform_unix_to_datetime(timestamp):
 # v1.1.1 edit by Hu Jun #101
 def transform_datetime_to_unix(dtime=None):
     """
-    将datetime类型转换成unix时间戳
+    将 datetime 类型转换成 unix 时间戳
 
     :param:
-        * dtime: (datetime) datetime类型实例,默认为当前时间
+        * dtime: (datetime) datetime 类型实例,默认为当前时间
     :return:
-        * data_type: (datetime) datetime类型实例
+        * data_type: (datetime) datetime 类型实例
 
     举例如下::
 
@@ -305,3 +305,64 @@ def transform_datetime_to_unix(dtime=None):
         raise TypeError('dtime should be datetime, but we got {}'.format(type(dtime)))
 
     return time.mktime(dtime.timetuple())
+
+
+# v1.1.3 edit by Hu Jun #116
+class FishDateTimeFormat(object):
+    """
+    实现 datetime 和 str 之间相互转换，基于 Python 的 datetime.datetime 进行封装和扩展；
+
+    举例如下::
+
+        print('--- FishDateTimeFormat demo ---')
+        datetime_obj = date(year=2018, month=11, day=23)
+        print(FishDateTimeFormat.strftime(datetime_obj, '%Y-%m-%d'))
+        date_time_str = '2018-11-23 23:17:20'
+        time_format = '%Y-%m-%d %H:%M:%S'
+        print(FishDateTimeFormat.strptime(date_time_str, time_format))
+        print('---')
+
+    执行结果::
+
+        --- FishDateTimeFormat demo ---
+        2018-11-23
+        2018-11-23 23:17:20
+        <class 'datetime.datetime'>
+        ---
+
+        """
+    @staticmethod
+    def strftime(date_time=None, time_format=None):
+        """
+        将 datetime 对象转换为 str
+
+        :param:
+            * date_time: (obj) datetime 对象
+            * time_format: (sting) 日期格式字符串
+        :return:
+            * date_time_str: (string) 日期字符串
+        """
+        if not date_time:
+            datetime_now = datetime.now()
+        else:
+            datetime_now = date_time
+        if not time_format:
+            time_format = '%Y/%m/%d %H:%M:%S'
+        return datetime.strftime(datetime_now, time_format)
+
+    @staticmethod
+    def strptime(time_str, time_format):
+        """
+        将 str 转换为 datetime 对象
+
+        :param:
+            * time_str: (string) 日期字符串
+            * time_format: (sting) 日期格式字符串
+        :return:
+            * datetime_obj: (obj) datetime 对象
+        """
+        try:
+            datetime_obj = datetime.strptime(time_str, time_format)
+            return datetime_obj
+        except ValueError as ex:
+            raise ValueError(ex)

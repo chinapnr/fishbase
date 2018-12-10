@@ -63,11 +63,11 @@ tree:
 # create 2018.8.3 by Jia ChunYing
 def init_project_by_yml(project_config=None, dist=None):
     """
-        通过配置文件初始化一个project；
+        通过配置文件初始化一个 project
 
         :param:
-            * project_config: (string) 用来生成project的配置文件
-            * dist: (string) project位置
+            * project_config: (string) 用来生成 project 的配置文件
+            * dist: (string) project 位置
 
         举例如下::
 

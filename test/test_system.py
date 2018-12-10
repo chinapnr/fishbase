@@ -2,10 +2,8 @@
 # fish_system.py 单元测试
 # 2018.5.26 create by David Yi
 
-import sys
 import platform
 
-sys.path.append('../fishbase')
 from fishbase.fish_system import *
 
 

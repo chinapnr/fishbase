@@ -1,8 +1,15 @@
 更新记录
 ===========================
+2018.12.10 v1.1.3
+---------------------------
+* `#137 <https://github.com/chinapnr/fishbase/issues/137>`_, data, add function :meth:`fish_data.is_valid_id_number`, doc and unittest;
+* `#98 <https://github.com/chinapnr/fishbase/issues/98>`_, common, add function :meth:`fish_common.yaml_conf_as_dict`, doc and unittest;
+* `#100 <https://github.com/chinapnr/fishbase/issues/100>`_, common, add class :meth:`fish_common.GetSha256`, doc and unittest;
+* `#116 <https://github.com/chinapnr/fishbase/issues/116>`_, date, add class :meth:`fish_date.FishDateTimeFormat`, doc and unittest;
+* `#80 <https://github.com/chinapnr/fishbase/issues/80>`_, common, add function :meth:`fish_common.find_same_between_dicts`, doc and unittest;
+
 2018.10.27 v1.1.2
 ---------------------------
-* `#80 <https://github.com/chinapnr/fishbase/issues/80>`_, common, add function :meth:`fish_common.find_common_between_dicts`, doc and unittest;
 * `#99 <https://github.com/chinapnr/fishbase/issues/99>`_, common, add function :meth:`fish_common.GetMD5.hmac_md5`, doc and unittest;
 
 

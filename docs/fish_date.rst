@@ -8,6 +8,7 @@
     fish_date.get_time_interval
     fish_date.transform_unix_to_datetime
     fish_date.transform_datetime_to_unix
+    fish_date.FishDateTimeFormat
 
 .. automodule:: fish_date
     :members:

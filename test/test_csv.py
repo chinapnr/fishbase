@@ -3,6 +3,7 @@ import io
 import os
 import sys
 import shutil
+
 from fishbase.fish_csv import csv_file_to_list
 
 
@@ -10,7 +11,7 @@ from fishbase.fish_csv import csv_file_to_list
 class TestCsv(object):
     @staticmethod
     def get_test_file(csv_content):
-        # 创建csv测试文件
+        # 创建 csv 测试文件
         csv_file_name = '.test_cache_data/test_file.csv'
         if os.path.isfile(csv_file_name):
             os.remove(csv_file_name)

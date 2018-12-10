@@ -3,9 +3,7 @@
 # 2018.6.11 create by Hu Jun
 
 import pytest
-import sys
-import time
-sys.path.append('../fishbase')
+
 from fishbase.fish_date import *
 import datetime
 
@@ -105,3 +103,30 @@ class TestFishDate(object):
 
         with pytest.raises(TypeError):
             transform_datetime_to_unix(dtime=dtime)
+
+    # test FishDateTimeFormat.strftime() tc
+    def test_fish_datetime_format_01(self):
+        this_month = datetime.date(year=2018, month=11, day=23)
+
+        assert FishDateTimeFormat.strftime(this_month, '%Y-%m-%d') == '2018-11-23'
+
+    # test FishDateTimeFormat.strftime() tc
+    def test_fish_datetime_format_02(self):
+        assert isinstance(FishDateTimeFormat.strftime(), str)
+
+    # test FishDateTimeFormat.strptime() tc
+    def test_fish_datetime_format_03(self):
+        date_time_str = '2018-11-23 23:17:20'
+        time_format = '%Y-%m-%d %H:%M:%S'
+
+        datetime_obj = FishDateTimeFormat.strptime(date_time_str, time_format)
+        assert isinstance(datetime_obj, datetime.datetime)
+        assert datetime_obj.day == 23
+
+    # test FishDateTimeFormat.strptime() tc
+    def test_fish_datetime_format_04(self):
+        date_time_str = '2018-11-23 23:17:20'
+        time_format = '%Y/%m-%d %H:%M:%S'
+
+        with pytest.raises(ValueError):
+            FishDateTimeFormat.strptime(date_time_str, time_format)
