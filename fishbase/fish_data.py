@@ -79,6 +79,6 @@ def is_valid_id_number(id_number):
 
 #
 # ---
-# 2018.12.9 create by David Yi, add in v1.1.3, github issue #139
+# 2018.12.9 create by David Yi, add in v1.1.4, github issue #139
 def query_id_area():
     print('ok')
