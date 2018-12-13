@@ -3,6 +3,19 @@
 
 from fishbase.fish_data import *
 
+print('--- fish_data get_idcard_checkcode demo ---')
+
+# id number
+id1 = '32012419870101001'
+print(id1, get_idcard_checkcode(id1)[1])
+
+# id number
+id2 = '13052219840731647'
+print(id2, get_idcard_checkcode(id2)[1])
+
+print('---')
+
+
 print('--- fish_data is_valid_id_number demo ---')
 
 # id number false

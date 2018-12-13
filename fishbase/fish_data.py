@@ -14,54 +14,55 @@ fish_data 中的函数就是用在这样的场景。注意，这些函数不会�
 import re
 
 
-# 检查身份证号码是否能通过校验规则
+# 计算身份证号码的校验位
 # ---
-# 2018.12.9 create by David Yi, add in v1.1.3, github issue #137
-# original source: https://zhuanlan.zhihu.com/p/24449773
-def is_valid_id_number(id_number):
+# 2018.12.12 create by David.Yi, add in v1.1.4 github issue #143
+def get_idcard_checkcode(id_number_str):
     """
-        生成当前路径下一级路径某文件的完整文件名；
+    计算身份证号码的校验位；
 
-        :param:
-            * id_number: (string) 身份证号，比如 32012419870101001
-        :returns:
-            * 返回类型 (tuple)，当前有一个值，第一个为 flag，以后第二个值会返回具体校验不通过的详细错误
-            * flag: (bool) 如果身份证号码校验通过，返回 True；如果身份证校验不通过，返回 False
+    :param:
+        * id_number_str: (string) 身份证号的前17位，比如 3201241987010100
+    :returns:
+        * 返回类型 (tuple)
+        * flag: (bool) 如果身份证号格式正确，返回 True；格式错误，返回 False
+        * checkcode: 计算身份证前17位的校验码
 
-        举例如下::
+    举例如下::
 
-            from fishbase.fish_data import *
+        from fishbase.fish_data import *
 
-            print('--- fish_data is_valid_id_number demo ---')
+        print('--- fish_data get_idcard_checkcode demo ---')
 
-            # id number false
-            id1 = '320124198701010012'
-            print(id1, is_valid_id_number(id1)[0])
+        # id number
+        id1 = '32012419870101001'
+        print(id1, get_idcard_checkcode(id1)[1])
 
-            # id number true
-            id2 = '130522198407316471'
-            print(id2, is_valid_id_number(id2)[0])
+        # id number
+        id2 = '13052219840731647'
+        print(id2, get_idcard_checkcode(id2)[1])
 
-            print('---')
+        print('---')
 
-        输出结果::
 
-            --- fish_data is_valid_id_number demo ---
-            320124198701010012 False
-            130522198407316471 True
-            ---
+    输出结果::
+        --- fish_data get_idcard_checkcode demo ---
+        32012419870101001 5
+        13052219840731647 1
+        ---
 
     """
+
+    # 判断长度，如果不是 17 位，直接返回失败
+    if len(id_number_str) != 17:
+        return False, -1
 
     id_regex = '[1-9][0-9]{14}([0-9]{2}[0-9X])?'
 
-    if isinstance(id_number, int):
-        id_number = str(id_number)
+    if not re.match(id_regex, id_number_str):
+        return False, -1
 
-    if not re.match(id_regex, id_number):
-        return False,
-
-    items = [int(item) for item in id_number[:-1]]
+    items = [int(item) for item in id_number_str]
 
     # 加权因子表
     factors = (7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2)
@@ -72,6 +73,69 @@ def is_valid_id_number(id_number):
     # 校验码表
     check_codes = ('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2')
 
-    check = check_codes[copulas % 11].upper() == id_number[-1].upper()
+    checkcode = check_codes[copulas % 11].upper()
 
-    return check,
+    return True, checkcode
+
+
+# 检查身份证号码是否能通过校验规则
+# ---
+# 2018.12.9 create by David Yi, add in v1.1.3, github issue #137
+# 2018.12.13 edit, v1.1.4 github issue #145
+# original source: https://zhuanlan.zhihu.com/p/24449773
+def is_valid_id_number(id_number):
+    """
+    检查身份证号码是否符合校验规则；
+
+    :param:
+        * id_number: (string) 身份证号，比如 32012419870101001
+    :returns:
+        * 返回类型 (tuple)，当前有一个值，第一个为 flag，以后第二个值会返回具体校验不通过的详细错误
+        * flag: (bool) 如果身份证号码校验通过，返回 True；如果身份证校验不通过，返回 False
+
+    举例如下::
+
+        from fishbase.fish_data import *
+
+        print('--- fish_data is_valid_id_number demo ---')
+
+        # id number false
+        id1 = '320124198701010012'
+        print(id1, is_valid_id_number(id1)[0])
+
+        # id number true
+        id2 = '130522198407316471'
+        print(id2, is_valid_id_number(id2)[0])
+
+        print('---')
+
+    输出结果::
+
+        --- fish_data is_valid_id_number demo ---
+        320124198701010012 False
+        130522198407316471 True
+        ---
+
+    """
+    if isinstance(id_number, int):
+        id_number = str(id_number)
+
+    # 调用函数计算身份证前面17位的 checkcode
+    result = get_idcard_checkcode(id_number[0:17])
+
+    # 返回第一个 flag 是错误的话，表示身份证格式错误，直接透传返回，第二个为获得的校验码
+    flag = result[0]
+    checkcode = result[1]
+
+    if not flag:
+        return flag,
+
+    # 判断校验码是否正确
+    return checkcode == id_number[-1].upper(),
+
+
+#
+# ---
+# 2018.12.9 create by David Yi, add in v1.1.4, github issue #139
+def query_id_area():
+    print('ok')
