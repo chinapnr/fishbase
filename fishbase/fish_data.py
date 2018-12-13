@@ -19,7 +19,7 @@ import re
 # 2018.12.12 create by David.Yi, add in v1.1.4 github issue #143
 def get_idcard_checkcode(id_number_str):
     """
-    检查身份证号码是否符合校验规则；
+    计算身份证号码的校验位；
 
     :param:
         * id_number_str: (string) 身份证号的前17位，比如 3201241987010100
@@ -30,18 +30,37 @@ def get_idcard_checkcode(id_number_str):
 
     举例如下::
 
+        from fishbase.fish_data import *
+
+        print('--- fish_data get_idcard_checkcode demo ---')
+
+        # id number
+        id1 = '32012419870101001'
+        print(id1, get_idcard_checkcode(id1)[1])
+
+        # id number
+        id2 = '13052219840731647'
+        print(id2, get_idcard_checkcode(id2)[1])
+
+        print('---')
 
 
     输出结果::
-
-
+        --- fish_data get_idcard_checkcode demo ---
+        32012419870101001 5
+        13052219840731647 1
+        ---
 
     """
+
+    # 判断长度，如果不是 17 位，直接返回失败
+    if len(id_number_str) != 17:
+        return False, -1
 
     id_regex = '[1-9][0-9]{14}([0-9]{2}[0-9X])?'
 
     if not re.match(id_regex, id_number_str):
-        return False,
+        return False, -1
 
     items = [int(item) for item in id_number_str]
 
@@ -62,6 +81,7 @@ def get_idcard_checkcode(id_number_str):
 # 检查身份证号码是否能通过校验规则
 # ---
 # 2018.12.9 create by David Yi, add in v1.1.3, github issue #137
+# 2018.12.13 edit, v1.1.4 github issue #145
 # original source: https://zhuanlan.zhihu.com/p/24449773
 def is_valid_id_number(id_number):
     """
@@ -97,6 +117,8 @@ def is_valid_id_number(id_number):
         ---
 
     """
+    if isinstance(id_number, int):
+        id_number = str(id_number)
 
     # 调用函数计算身份证前面17位的 checkcode
     result = get_idcard_checkcode(id_number[0:17])
