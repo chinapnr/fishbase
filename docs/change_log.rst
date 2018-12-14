@@ -1,5 +1,9 @@
 更新记录
 ===========================
+2018.12.14 v1.1.4
+---------------------------
+* `#142 <https://github.com/chinapnr/fishbase/issues/142>`_, common, add function :meth:`fish_date.GetRandomTime.random_date_str`, doc and unittest;
+
 2018.11.23 v1.1.3
 ---------------------------
 * `#98 <https://github.com/chinapnr/fishbase/issues/98>`_, common, add function :meth:`fish_common.yaml_conf_as_dict`, doc and unittest;

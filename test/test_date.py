@@ -54,6 +54,20 @@ class TestFishDate(object):
         assert now.year == this_month.year
         assert now.day <= this_year_days
 
+    # 测试 GetRandomTime()  tc
+    def test_random_date_str_01(self):
+        date_str = GetRandomTime.random_date_str(2018)
+
+        assert date_str[:4] == '2018'
+
+    # 测试 GetRandomTime()  tc
+    def test_random_date_str_02(self):
+        with pytest.raises(ValueError):
+            GetRandomTime.random_date_str('201812')
+
+        with pytest.raises(ValueError):
+            GetRandomTime.random_date_str(18)
+
     #  测试 get_time_interval()  tc
     def test_get_time_interval_01(self):
         start = int(time.time())
