@@ -76,3 +76,7 @@ print(result)
 
 
 print('---')
+
+
+result = get_cardbin_by_bank('ICBC', 'CC')
+print(result)

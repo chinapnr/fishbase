@@ -198,15 +198,15 @@ def get_zonecode_by_area(area_str, match_type='EXACT', result_type='LIST'):
     """
     dir_path = os.path.dirname(os.path.abspath(__file__))
 
-    conn = sqlite3.connect(os.path.join(dir_path, 'db', 'id.sqlite'))
+    conn = sqlite3.connect(os.path.join(dir_path, 'db', 'fish_data.sqlite'))
 
     cursor = conn.cursor()
 #   print('open db ok')
 
     if match_type == 'EXACT':
-        cursor.execute('select zone, note from chinese_id_info where note = ?', [area_str])
+        cursor.execute('select zone, note from cn_idcard where note = ?', [area_str])
     if match_type == 'FUZZY':
-        cursor.execute('select zone, note from chinese_id_info where note like ?', ['%'+area_str+'%'])
+        cursor.execute('select zone, note from cn_idcard where note like ?', ['%'+area_str+'%'])
 
     values = cursor.fetchall()
 
@@ -228,3 +228,81 @@ def get_zonecode_by_area(area_str, match_type='EXACT', result_type='LIST'):
         if len(values) > 0:
             value_str = values[0][0]
             return value_str
+
+
+# 输入银行、借记贷记卡种类，返回有效的卡 bin
+# ---
+# 2018.12.17 create by David Yi, add in v1.1.4, github issue #149
+def get_cardbin_by_bank(bank, card_type):
+    """
+    输入银行、借记贷记卡种类，返回有效的卡 bin；
+
+    :param:
+        * area_str: (string) 要查询的区域，省份、城市、地区信息，比如 北京市
+        * match_type: (string) 查询匹配模式，默认值 'EXACT'，表示精确匹配，可选 'FUZZY'，表示模糊查询
+        * result_type: (string) 返回结果数量类型，默认值 'LIST'，表示返回列表，可选 'SINGLE_STR'，返回结果的第一个地区编号字符串
+    :returns:
+        * 返回类型 根据 resule_type 决定返回类型是列表或者单一字符串，列表中包含元组
+        比如：[('110000', '北京市')]，元组中的第一个元素是地区码，第二个元素是对应的区域内容
+        结果最多返回 20 个。
+
+    举例如下::
+
+        from fishbase.fish_data import *
+
+        print('--- fish_data get_zonecode_by_area demo ---')
+
+        result = get_zonecode_by_area(area_str='北京市')
+        print(result)
+
+        # 模糊查询
+        result = get_zonecode_by_area(area_str='西安市', match_type='FUZZY')
+        print(result)
+
+        result0 = []
+        for i in result:
+            result0.append(i[0])
+
+        print('---西安市---')
+        print(len(result0))
+        print(result0)
+
+        # 模糊查询, 结果返回设定 single_str
+        result = get_zonecode_by_area(area_str='西安市', match_type='FUZZY', result_type='SINGLE_STR')
+        print(result)
+
+        # 模糊查询, 结果返回设定 single_str，西安市 和 西安 的差别
+        result = get_zonecode_by_area(area_str='西安', match_type='FUZZY', result_type='SINGLE_STR')
+        print(result)
+
+    输出结果::
+
+        --- fish_data get_zonecode_by_area demo ---
+        [('110000', '北京市')]
+        130522198407316471 True
+
+        ---西安市---
+        11
+        ['610100', '610101', '610102', '610103', '610104', '610111', '610112', '610113', '610114', '610115', '610116']
+
+        610100
+        220403
+        ---
+
+    """
+    dir_path = os.path.dirname(os.path.abspath(__file__))
+
+    conn = sqlite3.connect(os.path.join(dir_path, 'db', 'fish_data.sqlite'))
+
+    cursor = conn.cursor()
+#   print('open db ok')
+
+    cursor.execute('select bin,bank,card_type,length from cn_cardbin where bank=:bank and card_type=:card_type',
+                   {"bank": bank, "card_type": card_type})
+
+    values = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return values
