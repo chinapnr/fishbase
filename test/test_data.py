@@ -3,7 +3,7 @@ from fishbase.fish_data import *
 
 
 # 2018.12.10 v1.1.3 create by Jia ChunYing
-# 2018.12.13 12.16 v1.1.4 edit by David Yi
+# 2018.12.13 12.16 12.17v1.1.4 edit by David Yi
 class TestData(object):
 
     def test_get_idcard_checkcode(self):
@@ -80,6 +80,18 @@ class TestData(object):
         # area_str, match_type 精确, result_type=SINGLE_STR 字符串, 无结果返回
         result = get_zonecode_by_area(area_str='美国', match_type='EXACT', result_type='SINGLE_STR')
         values = ''
+        assert result == values
+
+    # 2018.12.17 edit by David Yi
+    def test_get_cardbin_by_bank(self):
+        # 基本测试，检查返回的结果集的第一个结果
+        values = ('370247', 'ICBC', 'CC', 15)
+        result = get_cardbin_by_bank('ICBC', 'CC')[0]
+        assert result == values
+
+        # 测试完整的返回 list
+        values = [('356889', 'CMB', 'CC', 16), ('439188', 'CMB', 'CC', 16), ('439225', 'CMB', 'CC', 16), ('439226', 'CMB', 'CC', 16), ('439227', 'CMB', 'CC', 16), ('518710', 'CMB', 'CC', 16), ('518718', 'CMB', 'CC', 16), ('622575', 'CMB', 'CC', 16), ('622576', 'CMB', 'CC', 16), ('622577', 'CMB', 'CC', 16), ('622578', 'CMB', 'CC', 16), ('622579', 'CMB', 'CC', 16), ('622581', 'CMB', 'CC', 16), ('622582', 'CMB', 'CC', 16)]
+        result = get_cardbin_by_bank('CMB', 'CC')
         assert result == values
 
 

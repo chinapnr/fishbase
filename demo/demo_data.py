@@ -78,5 +78,16 @@ print(result)
 print('---')
 
 
+# 2018.12.17 edit by David Yi
+print('--- fish_data get_cardbin_by_bank demo ---')
+
 result = get_cardbin_by_bank('ICBC', 'CC')
 print(result)
+
+result = get_cardbin_by_bank('CMB', 'CC')
+print(result)
+
+result = get_cardbin_by_bank('CMB', 'DC')
+print(result)
+
+print('---')
