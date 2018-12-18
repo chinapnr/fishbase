@@ -108,3 +108,10 @@ print('--- fish_data check_bank_card demo ---')
 print(check_bankcard('4391880006990100'))
 
 print('---')
+
+# 2018.12.18 edit by David Yi
+print('--- fish_data get_bank_by_name demo ---')
+
+print(get_bank_by_name('招商银行'))
+
+print('---')

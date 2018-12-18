@@ -16,6 +16,25 @@ import sqlite3
 import os
 
 
+# 2018.12.18
+def sqlite_query(db, sql, params):
+
+    dir_path = os.path.dirname(os.path.abspath(__file__))
+
+    conn = sqlite3.connect(os.path.join(dir_path, 'db', db))
+
+    cursor = conn.cursor()
+
+    cursor.execute(sql, params)
+
+    values = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return values
+
+
 # 计算身份证号码的校验位
 # ---
 # 2018.12.12 create by David.Yi, add in v1.1.4 github issue #143
@@ -198,22 +217,14 @@ def get_zonecode_by_area(area_str, match_type='EXACT', result_type='LIST'):
         ---
 
     """
-    dir_path = os.path.dirname(os.path.abspath(__file__))
-
-    conn = sqlite3.connect(os.path.join(dir_path, 'db', 'fish_data.sqlite'))
-
-    cursor = conn.cursor()
-#   print('open db ok')
+    values = []
 
     if match_type == 'EXACT':
-        cursor.execute('select zone, note from cn_idcard where note = ?', [area_str])
+        values = sqlite_query('fish_data.sqlite',
+                              'select zone, note from cn_idcard where note = :area', {"area": area_str})
     if match_type == 'FUZZY':
-        cursor.execute('select zone, note from cn_idcard where note like ?', ['%'+area_str+'%'])
-
-    values = cursor.fetchall()
-
-    cursor.close()
-    conn.close()
+        values = sqlite_query('fish_data.sqlite',
+                              'select zone, note from cn_idcard where note like :area', {"area": '%' + area_str + '%'})
 
     # result_type 结果数量判断处理
 
@@ -265,19 +276,9 @@ def get_cardbin_by_bank(bank, card_type):
         ---
 
     """
-    dir_path = os.path.dirname(os.path.abspath(__file__))
-
-    conn = sqlite3.connect(os.path.join(dir_path, 'db', 'fish_data.sqlite'))
-
-    cursor = conn.cursor()
-
-    cursor.execute('select bin,bank,card_type,length from cn_cardbin where bank=:bank and card_type=:card_type',
-                   {"bank": bank, "card_type": card_type})
-
-    values = cursor.fetchall()
-
-    cursor.close()
-    conn.close()
+    values = sqlite_query('fish_data.sqlite',
+                          'select bin,bank,card_type,length from cn_cardbin where bank=:bank and card_type=:card_type',
+                          {"bank": bank, "card_type": card_type})
 
     return values
 
@@ -368,3 +369,43 @@ def check_bankcard(card_number_str):
     result = get_bankcard_checkcode(card_number_str[0:-1])
 
     return checkcode == result
+
+
+# 输入银行名称，返回银行代码
+# ---
+# 2018.12.18 create by David Yi, add in v1.1.4, github issue #159
+def get_bank_by_name(bankname):
+    """
+    输入银行、借记贷记卡种类，返回有效的卡 bin；
+
+    :param:
+        * bank: (string) 要查询的银行代号，比如 ICBC, CMB
+        * card_type: (string) 银行卡类型，比如 CC 表示信用卡
+    :returns:
+        * 返回 cardbin, bank, 银行卡类型type, 银行卡长度 length，
+        一条记录为一个 tuple (a, b, c, d)，然后组成 list 返回
+
+    举例如下::
+
+        from fishbase.fish_data import *
+
+        print('--- fish_data get_cardbin_by_bank demo ---')
+
+        result = get_cardbin_by_bank('CMB', 'DC')
+        print(result)
+
+        print('---')
+
+    输出结果::
+
+        --- fish_data get_cardbin_by_bank demo ---
+
+        [('410062', 'CMB', 'DC', 16), ('468203', 'CMB', 'DC', 16), ...
+        ---
+
+    """
+    values = sqlite_query('fish_data.sqlite',
+                          'select bank,bankname from cn_bankname where bankname=:bankname',
+                          {"bankname": bankname})
+
+    return values
