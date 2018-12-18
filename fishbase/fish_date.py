@@ -193,7 +193,7 @@ class GetRandomTime(object):
         获取当前年的随机时间字符串
 
         :param:
-        * year: (string) 长度为 4 位的年份字符串
+            * year: (string) 长度为 4 位的年份字符串
 
         :return:
             * date_str: (string) 传入年份的随机合法的日期

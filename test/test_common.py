@@ -23,7 +23,7 @@ class TestFishCommon(object):
     # 测试 conf_as_dict()  tc
     def test_config_dict_01(self):
         # 读取配置文件
-        ds = conf_as_dict(conf_filename)
+        ds = conf_as_dict(conf_filename, encoding='utf-8')
         d = ds[1]
 
         # 返回结果
@@ -47,7 +47,7 @@ class TestFishCommon(object):
 
     def test_config_dict_03(self):
         # 读取配置文件
-        ds = conf_as_dict(conf_filename)
+        ds = conf_as_dict(conf_filename, encoding='utf-8')
         d = ds[1]
 
         list1 = ['show_opt', 'show_opt_common', 'show_opt_common2', 'get_args', 'show_rule_pattern',
