@@ -85,7 +85,7 @@ def get_idcard_checkcode(id_number_str):
 # 2018.12.9 create by David Yi, add in v1.1.3, github issue #137
 # 2018.12.13 edit, v1.1.4 github issue #145
 # original source: https://zhuanlan.zhihu.com/p/24449773
-def is_valid_id_number(id_number):
+def check_id_number(id_number):
     """
     检查身份证号码是否符合校验规则；
 
@@ -181,6 +181,8 @@ def get_zonecode_by_area(area_str, match_type='EXACT', result_type='LIST'):
         result = get_zonecode_by_area(area_str='西安', match_type='FUZZY', result_type='SINGLE_STR')
         print(result)
 
+        print('---')
+
     输出结果::
 
         --- fish_data get_zonecode_by_area demo ---
@@ -253,6 +255,7 @@ def get_cardbin_by_bank(bank, card_type):
         result = get_cardbin_by_bank('CMB', 'DC')
         print(result)
 
+        print('---')
 
     输出结果::
 
@@ -277,3 +280,91 @@ def get_cardbin_by_bank(bank, card_type):
     conn.close()
 
     return values
+
+
+# 计算银行卡校验位
+# ---
+# 2018.12.18 create by David Yi, v1.1.4, github issue #154
+def get_bankcard_checkcode(card_number_str):
+    """
+    计算银行卡校验位；
+
+    :param:
+        * card_number_str: (string) 要查询的银行卡号
+    :returns:
+        checkcode: (string) 银行卡的校验位
+
+    举例如下::
+
+        from fishbase.fish_data import *
+
+        print('--- fish_data get_bankcard_checkcode demo ---')
+
+        # 不能放真的卡信息，有风险
+        print(get_bankcard_checkcode('439188000699010'))
+
+        print('---')
+
+    输出结果::
+
+        --- fish_data get_bankcard_checkcode demo ---
+        9
+        ---
+
+    """
+    total = 0
+    even = True
+
+    for item in card_number_str[-1::-1]:
+        item = int(item)
+        if even:
+            item <<= 1
+        if item > 9:
+            item -= 9
+        total += item
+        even = not even
+
+    checkcode = (10 - (total % 10)) % 10
+
+    return str(checkcode)
+
+
+# 检查银行卡校验位是否正确
+# ---
+# 2018.12.18 create by David Yi, v1.1.4, github issue #155
+def check_bankcard(card_number_str):
+    """
+    检查银行卡校验位是否正确；
+
+    :param:
+        * card_number_str: (string) 要查询的银行卡号
+    :returns:
+        返回结果：(bool) True or False
+
+    举例如下::
+
+        from fishbase.fish_data import *
+
+        print('--- fish_data check_bank_card demo ---')
+
+        # 不能放真的卡信息，有风险
+        print(check_bankcard('4391880006990100'))
+
+        print('---')
+
+    输出结果::
+
+        --- fish_data check_bank_card demo ---
+        False
+        ---
+
+    """
+
+    if isinstance(card_number_str, int):
+        card_number_str = str(card_number_str)
+
+    checkcode = card_number_str[-1]
+
+    result = get_bankcard_checkcode(card_number_str[0:-1])
+
+    return checkcode == result
