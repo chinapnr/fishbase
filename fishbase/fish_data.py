@@ -365,6 +365,6 @@ def check_bankcard(card_number_str):
 
     checkcode = card_number_str[-1]
 
-    result = get_bankcard_checkcode(card_number_str[0:len(card_number_str)-1])
+    result = get_bankcard_checkcode(card_number_str[0:-1])
 
     return checkcode == result
