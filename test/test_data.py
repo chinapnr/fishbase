@@ -3,7 +3,7 @@ from fishbase.fish_data import *
 
 
 # 2018.12.10 v1.1.3 create by Jia ChunYing
-# 2018.12.13 12.16 12.17 12.18 v1.1.4 edit by David Yi
+# 2018.12.13 12.16 12.17 12.18 12.19 v1.1.4 edit by David Yi
 class TestData(object):
 
     def test_get_idcard_checkcode(self):
@@ -115,4 +115,20 @@ class TestData(object):
         result = check_bankcard('4391880006990109')
         assert result is True
 
+    # 2018.12.19 edit by David Yi
+    def test_get_bank_by_name(self):
+        # 测试银行卡名称查询
+        values = [('CMB', '招商银行')]
+        result = get_bank_by_name('招商银行')
+        assert result == values
+
+        # 测试银行卡名称查询
+        values = 'HSB'
+        result = get_bank_by_name('恒生银行')
+        assert result[0][0] == values
+
+        # 测试不存在银行卡名称
+        values = []
+        result = get_bank_by_name('招银行')
+        assert result == values
 
