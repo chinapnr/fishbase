@@ -376,31 +376,28 @@ def check_bankcard(card_number_str):
 # 2018.12.18 create by David Yi, add in v1.1.4, github issue #159
 def get_bank_by_name(bankname):
     """
-    输入银行、借记贷记卡种类，返回有效的卡 bin；
+    银行名称，返回银行代码；
 
     :param:
-        * bank: (string) 要查询的银行代号，比如 ICBC, CMB
-        * card_type: (string) 银行卡类型，比如 CC 表示信用卡
+        * bankname: (string) 要查询的银行 名称，比如 招商银行
     :returns:
-        * 返回 cardbin, bank, 银行卡类型type, 银行卡长度 length，
-        一条记录为一个 tuple (a, b, c, d)，然后组成 list 返回
+        * 返回 银行代号bank , 银行名称 bankname，
+        一条记录为一个 tuple (a, b)，然后组成 list 返回
 
     举例如下::
 
         from fishbase.fish_data import *
 
-        print('--- fish_data get_cardbin_by_bank demo ---')
+        print('--- fish_data get_bank_by_name demo ---')
 
-        result = get_cardbin_by_bank('CMB', 'DC')
-        print(result)
+        print(get_bank_by_name('招商银行'))
 
         print('---')
 
     输出结果::
 
-        --- fish_data get_cardbin_by_bank demo ---
-
-        [('410062', 'CMB', 'DC', 16), ('468203', 'CMB', 'DC', 16), ...
+        --- fish_data get_bank_by_name demo ---
+        [('CMB', '招商银行')]
         ---
 
     """
