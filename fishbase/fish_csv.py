@@ -162,13 +162,13 @@ def dict2csv(data_dict, csv_filename='./dict2csv.csv', key_is_header=False):
         csv_writer = csv.writer(csv_file)
         if key_is_header:
             if isinstance(data_dict, dict):
-                csv_writer.writerow(data_dict.keys())
-                csv_writer.writerow(data_dict.values())
+                csv_writer.writerow(list(data_dict.keys()))
+                csv_writer.writerow(list(data_dict.values()))
             elif isinstance(data_dict, list) and all([isinstance(item, dict) for
                                                       item in data_dict]):
                 for item in data_dict:
-                    csv_writer.writerow(item.keys())
-                    csv_writer.writerow(item.values())
+                    csv_writer.writerow(list(item.keys()))
+                    csv_writer.writerow(list(item.values()))
             else:
                 raise ValueError('data_dict should be a dict or list which member is dict, '
                                  'but we got {}'.format(data_dict))
