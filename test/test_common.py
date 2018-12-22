@@ -69,10 +69,12 @@ class TestFishCommon(object):
 
     # 测试 GetMD5()  tc
     def test_md5_01(self):
-        
         assert GetMD5.string('hello world!') == 'fc3ff98e8c6a0d3087d515c0473f8677'
-        assert GetMD5.file(conf_filename) == 'c73ec5050bbff26ade9330bbe0bd7a25'
-        assert GetMD5.big_file(conf_filename) == 'c73ec5050bbff26ade9330bbe0bd7a25'
+        # different line separator will get different md5 value
+        assert GetMD5.file(conf_filename) in ['c73ec5050bbff26ade9330bbe0bd7a25',
+                                              '8d4f03dc6b223bd199be6aa53d5d4f5c']
+        assert GetMD5.big_file(conf_filename) in ['c73ec5050bbff26ade9330bbe0bd7a25',
+                                                  '8d4f03dc6b223bd199be6aa53d5d4f5c']
 
     # 测试 GetMD5()  tc
     def test_md5_02(self):

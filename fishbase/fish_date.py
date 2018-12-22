@@ -42,7 +42,7 @@ def get_date_range(dates, separator='-'):
     if isinstance(dates, str) and dates.isdigit():
         y = dates[:4]
         m = dates[4:]
-        if (len(y) != 4) or (not 1 < int(m) < 12):
+        if (len(y) != 4) or (not 1 <= int(m) <= 12):
             raise (ValueError("date must be a date string like '201806', but get {}".format(dates)))
     elif hasattr(dates, 'year') and hasattr(dates, 'month'):
         y = str(dates.year)
