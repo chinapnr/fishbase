@@ -20,11 +20,11 @@ print('--- fish_data is_valid_id_number demo ---')
 
 # id number false
 id1 = '320124198701010012'
-print(id1, is_valid_id_number(id1)[0])
+print(id1, check_id_number(id1)[0])
 
 # id number true
 id2 = '130522198407316471'
-print(id2, is_valid_id_number(id2)[0])
+print(id2, check_id_number(id2)[0])
 
 print('---')
 
@@ -89,5 +89,29 @@ print(result)
 
 result = get_cardbin_by_bank('CMB', 'DC')
 print(result)
+
+print('---')
+
+
+# 2018.12.18 edit by David Yi
+print('--- fish_data get_bankcard_checkcode demo ---')
+
+# 不能放真的卡信息，有风险
+print(get_bankcard_checkcode('439188000699010'))
+
+print('---')
+
+# 2018.12.18 edit by David Yi
+print('--- fish_data check_bank_card demo ---')
+
+# 不能放真的卡信息，有风险
+print(check_bankcard('4391880006990100'))
+
+print('---')
+
+# 2018.12.18 edit by David Yi
+print('--- fish_data get_bank_by_name demo ---')
+
+print(get_bank_by_name('招商银行'))
 
 print('---')
