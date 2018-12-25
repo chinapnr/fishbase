@@ -6,7 +6,8 @@ from fishbase.fish_data import *
 # 2018.12.13 12.16 12.17 12.18 12.19 v1.1.4 edit by David Yi
 class TestData(object):
 
-    def test_get_idcard_checkcode(self):
+    @classmethod
+    def test_get_idcard_checkcode(cls):
         # id number <= 17
         id1 = '32012419870101'
         assert get_idcard_checkcode(id1)[0] is False
@@ -20,7 +21,8 @@ class TestData(object):
         id1 = '62010519941220163'
         assert get_idcard_checkcode(id1)[1] != '2'  # is 9
 
-    def test_is_valid_id_number(self):
+    @classmethod
+    def test_is_valid_id_number(cls):
         # id number false
         id1 = '320124198701010012'
         assert check_id_number(id1)[0] is False
@@ -38,7 +40,8 @@ class TestData(object):
         assert check_id_number(id3)[0] is True
 
     # 2018.12.16 edit by David Yi
-    def test_get_zonecode_by_area(self):
+    @classmethod
+    def test_get_zonecode_by_area(cls):
         # area_str，基本测试
         values = [('110000', '北京市')]
         assert get_zonecode_by_area('北京市') == values
@@ -83,7 +86,8 @@ class TestData(object):
         assert result == values
 
     # 2018.12.17 edit by David Yi
-    def test_get_cardbin_by_bank(self):
+    @classmethod
+    def test_get_cardbin_by_bank(cls):
         # 基本测试，检查返回的结果集的第一个结果
         values = ('370247', 'ICBC', 'CC', 15)
         result = get_cardbin_by_bank('ICBC', 'CC')[0]
@@ -95,7 +99,8 @@ class TestData(object):
         assert result == values
 
     # 2018.12.18 edit by David Yi
-    def test_get_bankcard_checkcode(self):
+    @classmethod
+    def test_get_bankcard_checkcode(cls):
         # 测试校验码不正确
         values = '0'
         result = get_bankcard_checkcode('439188000699010')
@@ -107,7 +112,8 @@ class TestData(object):
         assert result == values
 
     # 2018.12.18 edit by David Yi
-    def test_check_bankcard(self):
+    @classmethod
+    def test_check_bankcard(cls):
         # 测试银行卡校验码是否正确
         result = check_bankcard('4391880006990100')
         assert result is False
@@ -116,7 +122,8 @@ class TestData(object):
         assert result is True
 
     # 2018.12.19 edit by David Yi
-    def test_get_bank_by_name(self):
+    @classmethod
+    def test_get_bank_by_name(cls):
         # 测试银行卡名称查询
         values = [('CMB', '招商银行')]
         result = get_bank_by_name('招商银行')
