@@ -6,23 +6,19 @@
 .. image:: https://readthedocs.org/projects/fishbase/badge/?version=latest
     :target: https://fishbase.readthedocs.io/en/latest/?badge=latest
 
-fishbase
-========
+简介
+====
 
-fishbase 是我们自己开发和整理的一套 Python 基础函数库。 从这几年的
-Python
-开发中抽象了很多常见的通用的业务逻辑，以希望减少日常开发中的一些重复的工作量。
+fishbase 是由我们自主开发、整理的一套 Python 基础函数库。
 
-我们从2016年左右逐渐开始用 Python
-开发一些项目，还不能算很有经验，但是也经常碰到一些问题， fishbase
-库并不是用来解决很复杂的问题，并且有些是对系统函数的进一步封装，以简化应用程序开发中的工作量和引用的复杂度。
+从多年的 Python 开发经验中，我们抽象出了很多通用的方法，为日常的开发工作带来极大的便利。
 
-目前，我们正在加快 fishbase
-库的建设，包括完善文档和加入单元测试、示例代码、文档等。希望能够帮助到所有的
-Python 爱好者和应用开发人员。
+fishbase 设计的初衷，并不是用来解决复杂问题，而是对系统函数进一步封装，从而减少程序开发工作量、降低引用复杂度。
 
-Installing
-==========
+目前，我们正在加速 fishbase 的完善，涵盖单元测试、示例代码、文档等内容优化。希望借此帮助到更多 Python 爱好者和应用开发人员。
+
+安装
+====
 
 Install and update using `pip`_:
 
@@ -30,8 +26,8 @@ Install and update using `pip`_:
 
     pip install -U fishbase
 
-Modules
-=======
+模块
+====
 
 目前主要分为以下模块：
 
@@ -47,36 +43,36 @@ Modules
 
 -  fish_project project 目录结构生成函数包
 
-A Simple Example
-================
+使用示例
+========
 
 .. code-block:: python
 
-    from fishbase.fish_common import GetMD5
+    from fishbase.fish_common import *
 
-    # 获取字符串的 MD5 值
-    md5_string = GetMD5.string('hello world!')
-    print('md5_string : ', md5_string)
-    # 获取文件的 MD5 值
-    file_path = './test_conf.ini'
-    md5_file = GetMD5.file(file_path)
-    print('md5_file : ', md5_file)
-    # 获取 hmac 算法 MD5 值
-    hmac_md5_string = GetMD5.hmac_md5('hello world!', 'salt')
-    print('hmac_md5_string : ', hmac_md5_string)
+    # 获取当前路径下的 py 文件
+    print(find_files(".", [".py"]))
 
-.. code-block:: text
+    # 获取字符串 "hello world" 的 MD5 值
+    print(GetMD5.string('hello world'))
 
-    md5_string : fc3ff98e8c6a0d3087d515c0473f8677
-    md5_file : fb7528c9778b2377e30b0f7e4c26fef0
-    hmac_md5_string: 191f82804523bfdafe0188bbbddd6587
+    # 获取长度为 10 的随机字符串
+    print(get_random_str(10))
 
-Links
+
+.. code-block:: python
+
+    from fishbase.fish_data import *
+
+    # 验证身份证号是否合法
+    print(is_valid_id_number("320124198701010012"))
+
+
+更多
 =====
 
 详细帮助文档：http://fishbase.readthedocs.io/
 
-测试覆盖率：https://coveralls.io/github/chinapnr/fishbase?branch=master
 
 
 .. _pip: https://pip.pypa.io/en/stable/quickstart/

@@ -28,6 +28,7 @@ matrix:
   allow_failures:
     - python: nightly
     - python: 3.8-dev
+    - python: "2.7"
 
 # command to install dependencies
 install:

@@ -1,5 +1,10 @@
 更新记录
 ===========================
+2018.12.14 v1.1.4
+---------------------------
+* `#142 <https://github.com/chinapnr/fishbase/issues/142>`_, common, add function :meth:`fish_date.GetRandomTime.random_date_str`, doc and unittest;
+* `#126 <https://github.com/chinapnr/fishbase/issues/126>`_, csv, add function :meth:`fish_csv.dict2csv`, :meth:`fish_csv.csv2dict`, :meth:`fish_csv.list2csv`,  doc and unittest;
+
 2018.12.10 v1.1.3
 ---------------------------
 * `#137 <https://github.com/chinapnr/fishbase/issues/137>`_, data, add function :meth:`fish_data.is_valid_id_number`, doc and unittest;

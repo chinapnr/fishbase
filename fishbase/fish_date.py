@@ -5,6 +5,8 @@ from datetime import datetime, timedelta
 import calendar
 import random
 
+A_DAY_SECONDS = 24 * 60 * 60
+
 
 # 2016.4.26
 # 输入: date_kind, eg 'last month', 'this month'
@@ -40,7 +42,7 @@ def get_date_range(dates, separator='-'):
     if isinstance(dates, str) and dates.isdigit():
         y = dates[:4]
         m = dates[4:]
-        if (len(y) != 4) or (not 1 < int(m) < 12):
+        if (len(y) != 4) or (not 1 <= int(m) <= 12):
             raise (ValueError("date must be a date string like '201806', but get {}".format(dates)))
     elif hasattr(dates, 'year') and hasattr(dates, 'month'):
         y = str(dates.year)
@@ -107,6 +109,7 @@ def get_years(months=0, refer=None):
     return ''.join(['%04d' % y, '%02d' % m])
 
 
+# v1.1.14 edit by Hu Jun #142
 # v1.0.16 edit by Hu Jun #87
 class GetRandomTime(object):
     """
@@ -127,12 +130,10 @@ class GetRandomTime(object):
         ---
 
     """
-    a_day_seconds = 24*60*60
-
     @staticmethod
     def date_time_this_month():
         """
-        获取当前月的随机日期
+        获取当前月的随机时间
 
         :return:
             * date_this_month: (datetime) 当前月份的随机时间
@@ -154,14 +155,14 @@ class GetRandomTime(object):
         this_month_start = now.replace(
             day=1, hour=0, minute=0, second=0, microsecond=0)
         this_month_days = calendar.monthrange(now.year, now.month)
-        random_seconds = random.randint(0, this_month_days[1]*GetRandomTime.a_day_seconds)
+        random_seconds = random.randint(0, this_month_days[1]*A_DAY_SECONDS)
 
         return this_month_start + timedelta(seconds=random_seconds)
 
     @staticmethod
     def date_time_this_year():
         """
-        获取当前年的随机日期
+        获取当前年的随机时间字符串
         
         :return:
             * date_this_year: (datetime) 当前月份的随机时间
@@ -182,9 +183,57 @@ class GetRandomTime(object):
         this_year_start = now.replace(
             month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
         this_year_days = sum(calendar.mdays)
-        random_seconds = random.randint(0, this_year_days*GetRandomTime.a_day_seconds)
-        
+        random_seconds = random.randint(0, this_year_days*A_DAY_SECONDS)
+
         return this_year_start + timedelta(seconds=random_seconds)
+
+    @staticmethod
+    def random_date_str(year):
+        """
+        获取当前年的随机时间字符串
+
+        :param:
+            * year: (string) 长度为 4 位的年份字符串
+
+        :return:
+            * date_str: (string) 传入年份的随机合法的日期
+        
+        举例如下::
+        
+            print('--- GetRandomTime.random_date_str demo ---')
+            print(GetRandomTime.random_date_str(2010))
+            print('---')
+        
+        执行结果::
+        
+            --- GetRandomTime.date_time_this_year demo demo ---
+            20101008
+            ---
+        """
+        if isinstance(year, int) and len(str(year)) != 4:
+            raise ValueError("year should be int year like 2018, but we got {}, {}".
+                             format(year, type(year)))
+        if isinstance(year, str) and len(year) != 4:
+            raise ValueError("year should be string year like '2018', but we got {}, {}".
+                             format(year, type(year)))
+
+        # 设置开始日期时间元组(1980-01-01 00:00:00)
+        start_time_tuple = (year, 1, 1, 0, 0, 0, 0, 0, 0)
+        # 设置结束日期时间元组(1980-12-31 23:59:59)
+        end_time_tuple = (year, 12, 31, 23, 59, 59, 0, 0, 0)
+
+        # 生成开始时间戳
+        start_timestamp = time.mktime(start_time_tuple)
+        # 生成结束时间戳
+        end_timestamp = time.mktime(end_time_tuple)
+
+        # 在开始和结束时间戳中随机取出一个
+        rand_timedelta = random.randint(start_timestamp, end_timestamp)
+        # 将时间戳生成时间元组
+        date_tuple = time.localtime(rand_timedelta)
+        # 将时间元组转成格式化字符串
+        date_str = time.strftime("%Y%m%d", date_tuple)
+        return date_str
 
 
 # v1.1.0 edit by Hu Jun #90
