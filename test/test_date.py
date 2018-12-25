@@ -54,17 +54,17 @@ class TestFishDate(object):
 
     # 测试 GetRandomTime()  tc
     def test_random_date_str_01(self):
-        date_str = GetRandomTime.gen_random_date(2018)
+        date_str = GetRandomTime.gen_date_by_year(2018)
 
         assert date_str[:4] == '2018'
 
     # 测试 GetRandomTime()  tc
     def test_random_date_str_02(self):
         with pytest.raises(ValueError):
-            GetRandomTime.gen_random_date('201812')
+            GetRandomTime.gen_date_by_year('201812')
 
         with pytest.raises(ValueError):
-            GetRandomTime.gen_random_date(18)
+            GetRandomTime.gen_date_by_year(18)
 
     #  测试 get_time_interval()  tc
     def test_get_time_interval_01(self):
