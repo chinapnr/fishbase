@@ -22,6 +22,8 @@ setup(
     description='some useful functions for python',
     long_description=readme,
     packages=['fishbase'],
+    package_data={'db': ['fishbase/db/*']},
+    include_package_data=True,
 
     # packages=['fishbase', 'fishbase.naive_bayes'],
     # package_data={'': ['stopwords.txt']},
