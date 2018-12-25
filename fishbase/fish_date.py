@@ -42,7 +42,7 @@ def get_date_range(dates, separator='-'):
     if isinstance(dates, str) and dates.isdigit():
         y = dates[:4]
         m = dates[4:]
-        if (len(y) != 4) or (not 1 < int(m) < 12):
+        if (len(y) != 4) or (not 1 <= int(m) <= 12):
             raise (ValueError("date must be a date string like '201806', but get {}".format(dates)))
     elif hasattr(dates, 'year') and hasattr(dates, 'month'):
         y = str(dates.year)
@@ -193,7 +193,7 @@ class GetRandomTime(object):
         获取当前年的随机时间字符串
 
         :param:
-        * year: (string) 长度为 4 位的年份字符串
+            * year: (string) 长度为 4 位的年份字符串
 
         :return:
             * date_str: (string) 传入年份的随机合法的日期
