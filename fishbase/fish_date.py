@@ -109,6 +109,7 @@ def get_years(months=0, refer=None):
     return ''.join(['%04d' % y, '%02d' % m])
 
 
+# v1.1.15 edit by Jia Chunying #142
 # v1.1.14 edit by Hu Jun #142
 # v1.0.16 edit by Hu Jun #87
 class GetRandomTime(object):
@@ -188,7 +189,7 @@ class GetRandomTime(object):
         return this_year_start + timedelta(seconds=random_seconds)
 
     @staticmethod
-    def random_date_str(year):
+    def gen_random_date(year):
         """
         获取当前年的随机时间字符串
 
@@ -200,13 +201,13 @@ class GetRandomTime(object):
         
         举例如下::
         
-            print('--- GetRandomTime.random_date_str demo ---')
-            print(GetRandomTime.random_date_str(2010))
+            print('--- GetRandomTime.gen_random_date demo ---')
+            print(GetRandomTime.gen_random_date(2010))
             print('---')
         
         执行结果::
         
-            --- GetRandomTime.date_time_this_year demo demo ---
+            --- GetRandomTime.gen_random_date  demo ---
             20101008
             ---
         """
