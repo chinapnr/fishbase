@@ -112,3 +112,5 @@ test/.test_cache_data
 
 .idea
 .vscode
+dict2csv.csv
+list2csv.csv
