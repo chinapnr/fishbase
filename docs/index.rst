@@ -48,6 +48,8 @@ Install and update using `pip`_:
 
 -  fish_project project 目录结构生成函数包
 
+-  fish_random 生成随机值函数包
+
 使用示例
 ========
 
@@ -95,6 +97,7 @@ API 函数列表
    fish_logger
    fish_project
    fish_system
+   fish_random
 
 
 
