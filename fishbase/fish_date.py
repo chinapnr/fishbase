@@ -109,6 +109,7 @@ def get_years(months=0, refer=None):
     return ''.join(['%04d' % y, '%02d' % m])
 
 
+# v1.1.15 edit by Jia Chunying #142 #164
 # v1.1.14 edit by Hu Jun #142
 # v1.0.16 edit by Hu Jun #87
 class GetRandomTime(object):
@@ -188,7 +189,7 @@ class GetRandomTime(object):
         return this_year_start + timedelta(seconds=random_seconds)
 
     @staticmethod
-    def random_date_str(year):
+    def gen_date_by_year(year):
         """
         获取当前年的随机时间字符串
 
@@ -200,14 +201,14 @@ class GetRandomTime(object):
         
         举例如下::
         
-            print('--- GetRandomTime.random_date_str demo ---')
-            print(GetRandomTime.random_date_str(2010))
+            print('--- GetRandomTime.gen_date_by_year demo ---')
+            print(GetRandomTime.gen_date_by_year("2010"))
             print('---')
         
         执行结果::
         
-            --- GetRandomTime.date_time_this_year demo demo ---
-            20101008
+            --- GetRandomTime.gen_date_by_year demo ---
+            20100505
             ---
         """
         if isinstance(year, int) and len(str(year)) != 4:
@@ -216,23 +217,66 @@ class GetRandomTime(object):
         if isinstance(year, str) and len(year) != 4:
             raise ValueError("year should be string year like '2018', but we got {}, {}".
                              format(year, type(year)))
+        if isinstance(year, int):
+            year = str(year)
 
-        # 设置开始日期时间元组(1980-01-01 00:00:00)
-        start_time_tuple = (year, 1, 1, 0, 0, 0, 0, 0, 0)
-        # 设置结束日期时间元组(1980-12-31 23:59:59)
-        end_time_tuple = (year, 12, 31, 23, 59, 59, 0, 0, 0)
+        date_str = GetRandomTime.gen_date_by_range(year + "-01-01", year + "-12-31", "%Y%m%d")
 
-        # 生成开始时间戳
-        start_timestamp = time.mktime(start_time_tuple)
-        # 生成结束时间戳
-        end_timestamp = time.mktime(end_time_tuple)
+        return date_str
+
+    @staticmethod
+    def gen_date_by_range(begin_date, end_date, date_format="%Y-%m-%d"):
+        """
+
+        指定一个日期范围，随机生成区间内的某一个日期，该区间为闭区间
+
+        :param:
+            * begin_date: (string) 范围的起始日期，字符串 yyyy-MM-dd eg. 2018-01-01
+            * end_date: (string) 范围的结束日期，字符串 yyyy-MM-dd eg. 2018-12-31
+            * date_format: 返回的日期格式，字符串：默认格式yyyyMMdd default: "%Y%m%d"
+
+        :return:
+            * date_str
+            日期区间内的一个指定格式的合法的随机日期
+
+        举例如下::
+
+            print('--- GetRandomTime.gen_date_by_range demo ---')
+            print(GetRandomTime.gen_date_by_range("2010-01-01","2010-12-31"))
+            print('---')
+
+        执行结果::
+
+            --- GetRandomTime.gen_date_by_range demo ---
+            20100124
+            ---
+        """
+        # 设置开始日期
+        begin_date_info = begin_date.split("-")
+        begin_date_info = [int(x) for x in begin_date_info]
+        begin_date_info.extend([0, 0, 0, 0, 0, 0])
+        begin_date_tuple = tuple(begin_date_info)
+        # 设置结束日期
+        end_date_info = end_date.split("-")
+        end_date_info = [int(x) for x in end_date_info]
+        end_date_info.extend([23, 59, 59, 59, 0, 0])
+        end_date_tuple = tuple(end_date_info)
+
+        try:
+            # 生成开始时间戳
+            start_timestamp = time.mktime(begin_date_tuple)
+            # 生成结束时间戳
+            end_timestamp = time.mktime(end_date_tuple)
+        except TypeError as e:
+            raise TypeError(e, "begin_date/end_date format error")
 
         # 在开始和结束时间戳中随机取出一个
         rand_timedelta = random.randint(start_timestamp, end_timestamp)
         # 将时间戳生成时间元组
         date_tuple = time.localtime(rand_timedelta)
+
         # 将时间元组转成格式化字符串
-        date_str = time.strftime("%Y%m%d", date_tuple)
+        date_str = time.strftime(date_format, date_tuple)
         return date_str
 
 
