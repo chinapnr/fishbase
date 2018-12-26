@@ -2,6 +2,7 @@
 ===========================
 2018.12.25 v1.1.5
 ---------------------------
+* `#163 <https://github.com/chinapnr/fishbase/issues/163>`_, random, add function :meth:`fish_random.gen_string_by_range`, doc and unittest;
 * `#164 <https://github.com/chinapnr/fishbase/issues/164>`_, common, add function :meth:`fish_date.GetRandomTime.gen_date_by_range`, doc and unittest;
 * `#142 <https://github.com/chinapnr/fishbase/issues/142>`_, common, edit function :meth:`fish_date.GetRandomTime.gen_date_by_year`, doc and unittest;
 
