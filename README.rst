@@ -5,6 +5,10 @@
     :target: https://coveralls.io/github/chinapnr/fishbase?branch=master
 .. image:: https://readthedocs.org/projects/fishbase/badge/?version=latest
     :target: https://fishbase.readthedocs.io/en/latest/?badge=latest
+.. image:: https://ci.appveyor.com/api/projects/status/ecskod12wy8fvkxu?svg=true
+    :target: https://ci.appveyor.com/project/itaa/fishbase
+
+
 
 简介
 ====
