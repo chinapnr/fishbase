@@ -78,6 +78,7 @@ def gen_name(family_name=None, gender=None, length=None):
         print('---')
 
     执行结果::
+
         --- gen_name demo ---
         师艺
         赵群腾
@@ -119,9 +120,6 @@ def gen_mobile():
     """
     随机生成一个手机号
 
-    :param:
-
-
     :return:
         * str: (string) 手机号
 
@@ -133,6 +131,7 @@ def gen_mobile():
         print('---')
 
     执行结果::
+
         --- gen_mobile demo ---
         16706146773
         14402633925
