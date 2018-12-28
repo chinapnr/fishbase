@@ -22,3 +22,12 @@ class TestFishRandom(object):
         
         with pytest.raises(ValueError):
             gen_string_by_range(10, 4, prefix='fishbase_')
+
+    def test_gen_name(self):
+        full_name = gen_name()
+        assert isinstance(full_name, str)
+        assert 2 <= len(full_name) <= 3
+        full_name_2 = gen_name("赵", "01", 3)
+        assert isinstance(full_name_2, str)
+        assert len(full_name_2) == 3
+        assert full_name_2.startswith("赵")
