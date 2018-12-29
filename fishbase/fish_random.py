@@ -68,7 +68,7 @@ def gen_name(family_name=None, gender=None, length=None):
         * length: (int) 大于等于 2 小于等于 10 的整数, 默认 None: 随机 2 或者 3
 
     :return:
-        * random_str: (string) 随机人名
+        * full_name: (string) 随机人名
 
     举例如下::
 
@@ -78,6 +78,7 @@ def gen_name(family_name=None, gender=None, length=None):
         print('---')
 
     执行结果::
+
         --- gen_name demo ---
         师艺
         赵群腾
@@ -112,3 +113,37 @@ def gen_name(family_name=None, gender=None, length=None):
     name = "".join([random.choice(name_dict[gender]) for _ in range(length - 1)])
     full_name = "{family_name}{name}".format(family_name=family_name, name=name)
     return full_name
+
+
+# v1.1.5 add by Jia Chunying #166
+def gen_mobile():
+    """
+    随机生成一个手机号
+
+    :return:
+        * str: (string) 手机号
+
+    举例如下::
+
+        print('--- gen_mobile demo ---')
+        print(gen_mobile())
+        print(gen_mobile())
+        print('---')
+
+    执行结果::
+
+        --- gen_mobile demo ---
+        16706146773
+        14402633925
+        ---
+
+    """
+    prefix_list = ["13",
+                   "1400", "1410", "1440", "145", "146", "147", "148",
+                   "15",
+                   "162", "165", "166", "167",
+                   "170", "171", "172", "173", "175", "176", "177", "178", "1740",
+                   "18",
+                   "191", "198", "199"]
+    prefix_str = random.choice(prefix_list)
+    return prefix_str + "".join(random.choice("0123456789") for _ in range(11 - len(prefix_str)))

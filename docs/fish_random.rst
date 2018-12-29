@@ -2,7 +2,9 @@
 =============================
 
 .. autosummary::
-    gen_string_by_range.get_date_range
+    fish_random.gen_mobile
+    fish_random.gen_name
+    fish_random.gen_string_by_range
 
 .. automodule:: fish_random
     :members:

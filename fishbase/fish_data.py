@@ -18,7 +18,6 @@ import os
 
 # 2018.12.18
 def sqlite_query(db, sql, params):
-
     dir_path = os.path.dirname(os.path.abspath(__file__))
 
     conn = sqlite3.connect(os.path.join(dir_path, 'db', db))
@@ -65,8 +64,8 @@ def get_idcard_checkcode(id_number_str):
 
         print('---')
 
-
     输出结果::
+
         --- fish_data get_idcard_checkcode demo ---
         32012419870101001 5
         13052219840731647 1
@@ -166,10 +165,9 @@ def get_zonecode_by_area(area_str, match_type='EXACT', result_type='LIST'):
         * area_str: (string) 要查询的区域，省份、城市、地区信息，比如 北京市
         * match_type: (string) 查询匹配模式，默认值 'EXACT'，表示精确匹配，可选 'FUZZY'，表示模糊查询
         * result_type: (string) 返回结果数量类型，默认值 'LIST'，表示返回列表，可选 'SINGLE_STR'，返回结果的第一个地区编号字符串
+
     :returns:
-        * 返回类型 根据 resule_type 决定返回类型是列表或者单一字符串，列表中包含元组
-        比如：[('110000', '北京市')]，元组中的第一个元素是地区码，第二个元素是对应的区域内容
-        结果最多返回 20 个。
+        * 返回类型 根据 resule_type 决定返回类型是列表或者单一字符串，列表中包含元组 比如：[('110000', '北京市')]，元组中的第一个元素是地区码，第二个元素是对应的区域内容 结果最多返回 20 个。
 
     举例如下::
 
@@ -254,8 +252,7 @@ def get_cardbin_by_bank(bank, card_type):
         * bank: (string) 要查询的银行代号，比如 ICBC, CMB
         * card_type: (string) 银行卡类型，比如 CC 表示信用卡
     :returns:
-        * 返回 cardbin, bank, 银行卡类型type, 银行卡长度 length，
-        一条记录为一个 tuple (a, b, c, d)，然后组成 list 返回
+        * 返回 cardbin, bank, 银行卡类型type, 银行卡长度 length，一条记录为一个 tuple (a, b, c, d)，然后组成 list 返回
 
     举例如下::
 
@@ -381,8 +378,7 @@ def get_bank_by_name(bankname):
     :param:
         * bankname: (string) 要查询的银行 名称，比如 招商银行
     :returns:
-        * 返回 银行代号bank , 银行名称 bankname，
-        一条记录为一个 tuple (a, b)，然后组成 list 返回
+        * 返回 银行代号bank , 银行名称 bankname，一条记录为一个 tuple (a, b)，然后组成 list 返回
 
     举例如下::
 

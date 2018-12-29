@@ -23,6 +23,7 @@ class TestFishRandom(object):
         with pytest.raises(ValueError):
             gen_string_by_range(10, 4, prefix='fishbase_')
 
+    # test gen_name() tc
     def test_gen_name(self):
         full_name = gen_name()
         assert isinstance(full_name, str)
@@ -31,3 +32,9 @@ class TestFishRandom(object):
         assert isinstance(full_name_2, str)
         assert len(full_name_2) == 3
         assert full_name_2.startswith("赵")
+
+    # test gen_mobile() tc
+    def test_gen_mobile(self):
+        mobile = gen_mobile()
+        assert isinstance(mobile, str)
+        assert len(mobile) == 11

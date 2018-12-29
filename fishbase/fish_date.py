@@ -236,8 +236,7 @@ class GetRandomTime(object):
             * date_format: 返回的日期格式，字符串：默认格式yyyyMMdd default: "%Y%m%d"
 
         :return:
-            * date_str
-            日期区间内的一个指定格式的合法的随机日期
+            * date_str 日期区间内的一个指定格式的合法的随机日期
 
         举例如下::
 
