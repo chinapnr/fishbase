@@ -186,10 +186,14 @@ def gen_float_by_range(min, max, decimals=2):
                          format(type(min), type(max)))
     if not isinstance(decimals, int):
         raise ValueError('param decimals should be a int, but we got {}'.format(type(decimals)))
-    random_float = random.uniform(min, max)
     # 精度目前只支持最大 15 位
     decimals = 15 if decimals > 15 else decimals
-    return round(random_float, decimals)
+    # 存在 round 之后四舍五入之后位的情况，新加判断
+    while True:
+        random_float = random.uniform(min, max)
+        random_float = round(random_float, decimals)
+        if len(str(random_float).split('.')[-1]) == decimals:
+            return random_float
 
 
 # v1.1.5 edit by Hu Jun #173

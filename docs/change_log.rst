@@ -1,6 +1,6 @@
 更新记录
 ===========================
-2018.12.29 v1.1.5
+2018.12.30 v1.1.5
 ---------------------------
 * `#173 <https://github.com/chinapnr/fishbase/issues/173>`_, random, add function :meth:`fish_random.get_random_zone_name`, doc and unittest;
 * `#162 <https://github.com/chinapnr/fishbase/issues/162>`_, random, add function :meth:`fish_random.gen_float_by_range`, doc and unittest;
