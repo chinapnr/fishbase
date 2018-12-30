@@ -38,3 +38,28 @@ class TestFishRandom(object):
         mobile = gen_mobile()
         assert isinstance(mobile, str)
         assert len(mobile) == 11
+
+    # test gen_float_by_range() tc
+    def test_gen_float_by_range_01(self):
+        assert 1.0 <= gen_float_by_range(1.0, 9.0) <= 9.0
+        assert len(str(gen_float_by_range(1.0, 9.0, decimals=4)).split('.')[-1]) == 4
+
+    # test gen_float_by_range() tc
+    def test_gen_float_by_range_02(self):
+        with pytest.raises(ValueError):
+            gen_float_by_range(1, '9')
+        with pytest.raises(ValueError):
+            gen_float_by_range(1, 9, decimals='12')
+
+    # test get_random_zone_name() tc
+    def test_get_random_zone_name_01(self):
+        zone_name = get_random_zone_name(310000)
+        assert zone_name in ['市辖区', '黄浦区', '南市区', '卢湾区', '徐汇区', '长宁区', '静安区',
+                             '普陀区', '闸北区', '虹口区', '扬浦区', '闵行区', '宝山区', '嘉定区',
+                             '浦东新区', '金山区', '松江区', '青浦区', '南汇区', '奉贤区', '市辖县',
+                             '南汇县', '奉贤县', '松江县', '金山县', '青浦县', '崇明县']
+
+    # test get_random_zone_name() tc
+    def test_get_random_zone_name_02(self):
+        with pytest.raises(ValueError):
+            get_random_zone_name('123456')

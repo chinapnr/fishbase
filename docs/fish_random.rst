@@ -5,6 +5,9 @@
     fish_random.gen_mobile
     fish_random.gen_name
     fish_random.gen_string_by_range
+    fish_random.get_random_zone_name
+    fish_random.gen_float_by_range
+
 
 .. automodule:: fish_random
     :members:

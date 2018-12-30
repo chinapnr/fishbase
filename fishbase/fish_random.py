@@ -8,6 +8,7 @@
 # 2018.12.26 v1.1.5 created
 import random
 from fishbase.fish_common import get_random_str
+from fishbase.fish_data import sqlite_query
 
 
 # v1.1.5 edit by Hu Jun #163
@@ -147,3 +148,87 @@ def gen_mobile():
                    "191", "198", "199"]
     prefix_str = random.choice(prefix_list)
     return prefix_str + "".join(random.choice("0123456789") for _ in range(11 - len(prefix_str)))
+
+
+# v1.1.5 edit by Hu Jun #162
+def gen_float_by_range(min, max, decimals=2):
+    """
+    指定一个浮点数范围，随机生成并返回区间内的一个浮点数，区间为闭区间
+    受限于 random.random 精度限制，支持最大 15 位精度
+
+    :param:
+        * min: (float) 浮点数最小取值
+        * max: (float) 浮点数最大取值
+        * decimals: (int) 小数位数，默认为 2 位
+
+    :return:
+        * random_float: (float) 随机浮点数
+
+    举例如下::
+
+        print('--- gen_float_by_range demo ---')
+        print(gen_float_by_range(1.0, 9.0))
+        print(gen_float_by_range(1.0, 9.0, decimals=10))
+        print(gen_float_by_range(1.0, 9.0, decimals=20))
+        print('---')
+
+    执行结果::
+
+        --- gen_float_by_range demo ---
+        6.08
+        6.8187342239
+        2.137902497554043
+        ---
+
+    """
+    if not (isinstance(min, float) and isinstance(max, float)):
+        raise ValueError('param min and max should be float, but we got min: {} max: {}'.
+                         format(type(min), type(max)))
+    if not isinstance(decimals, int):
+        raise ValueError('param decimals should be a int, but we got {}'.format(type(decimals)))
+    random_float = random.uniform(min, max)
+    # 精度目前只支持最大 15 位
+    decimals = 15 if decimals > 15 else decimals
+    return round(random_float, decimals)
+
+
+# v1.1.5 edit by Hu Jun #173
+def get_random_zone_name(province_zone):
+    """
+    省份行政区划代码，返回下辖的随机地区名称：
+
+    :param:
+        * province_zone: (int) 省份行政区划代码 比如 310000
+
+    :returns:
+        * random_zone_name: (string) 省份下辖随机地区名称
+
+    举例如下::
+
+        print('--- fish_data get_random_zone_name demo ---')
+        print(get_bank_by_name(310000))
+        print('---')
+
+    输出结果::
+
+        --- fish_data get_random_zone_name demo ---
+        徐汇区
+        ---
+
+    """
+    province_num = str(province_zone)[:2]
+    values = sqlite_query('fish_data.sqlite',
+                          'select zone, note from cn_idcard where province = :province_num '
+                          'and zone != :zone',
+                          {"province_num": province_num, 'zone': province_zone})
+    # 获取省份名称
+    province_name = sqlite_query('fish_data.sqlite',
+                                 'select note from cn_idcard where zone = :zone', {"zone": province_zone})
+    if not (values and province_name):
+        raise ValueError('province_zone error, please check and try again')
+
+    # 只选取下辖区域
+    province_name = province_name[0][0]
+    random_zone_info = random.choice(values)
+    full_zone_name = random_zone_info[-1]
+    return full_zone_name.split(province_name)[-1]
