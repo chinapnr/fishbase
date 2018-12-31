@@ -1,7 +1,11 @@
 更新记录
 ===========================
-2018.12.30 v1.1.5
+2018.12.31 v1.1.5
 ---------------------------
+* `#171 <https://github.com/chinapnr/fishbase/issues/171>`_, random, add function :meth:`fish_random.gen_company_name`, doc and unittest;
+* `#165 <https://github.com/chinapnr/fishbase/issues/165>`_, random, add function :meth:`fish_random.gen_id`, doc and unittest;
+* `#172 <https://github.com/chinapnr/fishbase/issues/172>`_, random, add function :meth:`fish_random.gen_bank_card`, doc and unittest;
+* `#170 <https://github.com/chinapnr/fishbase/issues/170>`_, random, add function :meth:`fish_random.gen_address`, doc and unittest;
 * `#173 <https://github.com/chinapnr/fishbase/issues/173>`_, random, add function :meth:`fish_random.get_random_zone_name`, doc and unittest;
 * `#162 <https://github.com/chinapnr/fishbase/issues/162>`_, random, add function :meth:`fish_random.gen_float_by_range`, doc and unittest;
 * `#166 <https://github.com/chinapnr/fishbase/issues/166>`_, random, add function :meth:`fish_random.gen_mobile`, doc and unittest;

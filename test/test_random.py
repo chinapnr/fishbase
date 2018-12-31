@@ -1,13 +1,15 @@
 # coding=utf-8
-# fish_date.py 单元测试
-# 2018.6.11 create by Hu Jun
+# fish_random.py 单元测试
+# 2018.12.26 create by Hu Jun
 
 import pytest
+import datetime
 
+from fishbase.fish_data import check_bankcard, check_id_number
 from fishbase.fish_random import *
 
 
-# 2018.6.11 v1.1.5 #163 create by Hu Jun
+# 2018.12.26 v1.1.5 #163 create by Hu Jun
 class TestFishRandom(object):
     # test gen_string_by_range() tc
     def test_gen_string_by_range_01(self):
@@ -63,3 +65,73 @@ class TestFishRandom(object):
     def test_get_random_zone_name_02(self):
         with pytest.raises(ValueError):
             get_random_zone_name('123456')
+
+    # test gen_address() tc
+    def test_gen_address_01(self):
+        random_address = gen_address('310000')
+        assert random_address.startswith('上海市')
+
+    # test gen_address() tc
+    def test_gen_address_02(self):
+        with pytest.raises(ValueError):
+            gen_address('123456')
+
+    # test gen_bank_card() tc
+    def test_gen_bank_card_01(self):
+        random_bank_card = gen_bank_card('中国银行', 'CC')
+        assert check_bankcard(random_bank_card)
+
+    # test gen_bank_card() tc
+    def test_gen_bank_card_02(self):
+        with pytest.raises(ValueError):
+            gen_bank_card('fishbase银行', 'CC')
+
+    # test gen_id() tc
+    def test_gen_id_01(self):
+        random_id_list = gen_id()
+        assert len(random_id_list[0]) == 18
+        # 测试身份证是否合法
+        assert check_id_number(random_id_list[0])
+
+        random_id_list_1 = gen_id('310000')
+        assert (random_id_list_1[0]).startswith('310')
+        # 测试身份证是否合法
+        assert check_id_number(random_id_list_1[0])
+
+        random_id_list_2 = gen_id('310000', age=30)
+        year_now = datetime.datetime.now().year
+        id_card_year = int(year_now) - 30
+        # 测试身份证是否合法
+        assert check_id_number(random_id_list_2[0])
+        assert (random_id_list_2[0]).startswith('310')
+        assert int((random_id_list_2[0][6:10])) == id_card_year
+
+        random_id_list_3 = gen_id('110000', age=20, gender='01', result_type='LIST')
+        # 测试身份证是否合法
+        check_valid_list = list(map(check_id_number, random_id_list_3))
+        assert all(check_valid_list)
+
+        # 测试 province
+        check_province_list = list(map(lambda item: item.startswith('110'), random_id_list_3))
+        assert all(check_province_list)
+
+        assert len(random_id_list_3) > 1
+        # 测试性别选项
+        check_gender_list = list(map(lambda item: int(item[16]) % 2 == 1, random_id_list_3))
+        assert all(check_gender_list)
+        # 测试 age
+        year_now = datetime.datetime.now().year
+        id_card_year = int(year_now) - 20
+        check_age_list = list(map(lambda item: int(item[6:10]) == id_card_year, random_id_list_3))
+        assert all(check_age_list)
+
+    # test gen_id() tc
+    def test_gen_id_02(self):
+        with pytest.raises(ValueError):
+            gen_id('123456')
+
+    # test gen_company_name() tc
+    def test_gen_company_name_01(self):
+        random_name = gen_company_name()
+        assert len(random_name) > 1
+        assert random_name.endswith('公司')
