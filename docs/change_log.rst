@@ -1,5 +1,19 @@
 更新记录
 ===========================
+2018.12.31 v1.1.5
+---------------------------
+* `#171 <https://github.com/chinapnr/fishbase/issues/171>`_, random, add function :meth:`fish_random.gen_company_name`, doc and unittest;
+* `#165 <https://github.com/chinapnr/fishbase/issues/165>`_, random, add function :meth:`fish_random.gen_id`, doc and unittest;
+* `#172 <https://github.com/chinapnr/fishbase/issues/172>`_, random, add function :meth:`fish_random.gen_bank_card`, doc and unittest;
+* `#170 <https://github.com/chinapnr/fishbase/issues/170>`_, random, add function :meth:`fish_random.gen_address`, doc and unittest;
+* `#173 <https://github.com/chinapnr/fishbase/issues/173>`_, random, add function :meth:`fish_random.get_random_zone_name`, doc and unittest;
+* `#162 <https://github.com/chinapnr/fishbase/issues/162>`_, random, add function :meth:`fish_random.gen_float_by_range`, doc and unittest;
+* `#166 <https://github.com/chinapnr/fishbase/issues/166>`_, random, add function :meth:`fish_random.gen_mobile`, doc and unittest;
+* `#171 <https://github.com/chinapnr/fishbase/issues/171>`_, random, add function :meth:`fish_random.gen_name`, doc and unittest;
+* `#163 <https://github.com/chinapnr/fishbase/issues/163>`_, random, add function :meth:`fish_random.gen_string_by_range`, doc and unittest;
+* `#164 <https://github.com/chinapnr/fishbase/issues/164>`_, common, add function :meth:`fish_date.GetRandomTime.gen_date_by_range`, doc and unittest;
+* `#142 <https://github.com/chinapnr/fishbase/issues/142>`_, common, edit function :meth:`fish_date.GetRandomTime.gen_date_by_year`, doc and unittest;
+
 2018.12.14 v1.1.4
 ---------------------------
 * `#142 <https://github.com/chinapnr/fishbase/issues/142>`_, common, add function :meth:`fish_date.GetRandomTime.random_date_str`, doc and unittest;
