@@ -12,7 +12,7 @@
 fishbase 是什么？
 =================
 
-fishbase 是由我们自主开发、整理的一套 Python 基础函数库。有点懵？往下看！
+fishbase 是由我们自主开发、整理的一套 Python 基础函数库。
 
 
 怎么用？
@@ -28,6 +28,17 @@ fishbase 能干什么？
 ===================
 
 
+生成手机号
+----------
+
+.. code:: python
+
+   >>> from fishbase.fish_random import gen_mobile
+   >>> # 随机生成一个手机号 
+   >>> print(gen_mobile())
+   188****3925
+
+
 取名字
 ------
 
@@ -40,17 +51,6 @@ fishbase 能干什么？
    >>> # 随机生成一个姓名，姓赵/男孩/3个字
    >>> gen_name("赵","01", 3)
    赵**
-
-
-生成手机号
-----------
-
-.. code:: python
-
-   >>> from fishbase.fish_random import gen_mobile
-   >>> # 随机生成一个手机号 
-   >>> print(gen_mobile())
-   188****3925
 
 
 找电影
@@ -68,6 +68,7 @@ fishbase 能干什么？
 
 .. code:: python
 
+   >>> import os
    >>> from fishbase.fish_project import init_project_by_yml
    >>> package_yml = '''
    ... project: hellopackage
