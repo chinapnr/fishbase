@@ -79,15 +79,15 @@ print('---')
 
 
 # 2018.12.17 edit by David Yi
-print('--- fish_data get_cardbin_by_bank demo ---')
+print('--- fish_data cardbin_cardbin_get_bank_by_name demo ---')
 
-result = get_cardbin_by_bank('ICBC', 'CC')
+result = cardbin_cardbin_get_bank_by_name('ICBC', 'CC')
 print(result)
 
-result = get_cardbin_by_bank('CMB', 'CC')
+result = cardbin_cardbin_get_bank_by_name('CMB', 'CC')
 print(result)
 
-result = get_cardbin_by_bank('CMB', 'DC')
+result = cardbin_cardbin_get_bank_by_name('CMB', 'DC')
 print(result)
 
 print('---')
@@ -105,13 +105,13 @@ print('---')
 print('--- fish_data check_bank_card demo ---')
 
 # 不能放真的卡信息，有风险
-print(check_bankcard('4391880006990100'))
+print(cardbin_check_bankcard()('4391880006990100'))
 
 print('---')
 
 # 2018.12.18 edit by David Yi
-print('--- fish_data get_bank_by_name demo ---')
+print('--- fish_data cardbin_get_bank_by_name demo ---')
 
-print(get_bank_by_name('招商银行'))
+print(cardbin_get_bank_by_name('招商银行'))
 
 print('---')

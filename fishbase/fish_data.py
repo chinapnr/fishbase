@@ -37,7 +37,8 @@ def sqlite_query(db, sql, params):
 # 计算身份证号码的校验位
 # ---
 # 2018.12.12 create by David.Yi, add in v1.1.4 github issue #143
-def get_idcard_checkcode(id_number_str):
+# 2019.1.5 edit, v1.1.6 github issue #187, 修改函数名称
+def idcard_get_checkcode(id_number_str):
     """
     计算身份证号码的校验位；
 
@@ -52,21 +53,21 @@ def get_idcard_checkcode(id_number_str):
 
         from fishbase.fish_data import *
 
-        print('--- fish_data get_idcard_checkcode demo ---')
+        print('--- fish_data idcard_get_checkcode demo ---')
 
         # id number
         id1 = '32012419870101001'
-        print(id1, get_idcard_checkcode(id1)[1])
+        print(id1, idcard_get_checkcode(id1)[1])
 
         # id number
         id2 = '13052219840731647'
-        print(id2, get_idcard_checkcode(id2)[1])
+        print(id2, idcard_get_checkcode(id2)[1])
 
         print('---')
 
     输出结果::
 
-        --- fish_data get_idcard_checkcode demo ---
+        --- fish_data idcard_get_checkcode demo ---
         32012419870101001 5
         13052219840731647 1
         ---
@@ -102,8 +103,9 @@ def get_idcard_checkcode(id_number_str):
 # ---
 # 2018.12.9 create by David Yi, add in v1.1.3, github issue #137
 # 2018.12.13 edit, v1.1.4 github issue #145
-# original source: https://zhuanlan.zhihu.com/p/24449773
-def check_id_number(id_number):
+# 2019.1.5 edit, v1.1.6 github issue #187, 修改函数名称
+# some original source: https://zhuanlan.zhihu.com/p/24449773
+def idcard_check_number(id_number):
     """
     检查身份证号码是否符合校验规则；
 
@@ -141,7 +143,7 @@ def check_id_number(id_number):
         id_number = str(id_number)
 
     # 调用函数计算身份证前面17位的 checkcode
-    result = get_idcard_checkcode(id_number[0:17])
+    result = idcard_get_checkcode(id_number[0:17])
 
     # 返回第一个 flag 是错误的话，表示身份证格式错误，直接透传返回，第二个为获得的校验码
     flag = result[0]
@@ -157,7 +159,7 @@ def check_id_number(id_number):
 # 输入包含省份、城市、地区信息的内容，返回地区编号，也就是身份证编码中的前6位内容
 # ---
 # 2018.12.14 12.16 create by David Yi, add in v1.1.4, github issue #139
-def get_zonecode_by_area(area_str, match_type='EXACT', result_type='LIST'):
+def idcard_get_zonecode_by_area(area_str, match_type='EXACT', result_type='LIST'):
     """
     输入包含省份、城市、地区信息的内容，返回地区编号；
 
@@ -173,13 +175,13 @@ def get_zonecode_by_area(area_str, match_type='EXACT', result_type='LIST'):
 
         from fishbase.fish_data import *
 
-        print('--- fish_data get_zonecode_by_area demo ---')
+        print('--- fish_data idcard_get_zonecode_by_area demo ---')
 
-        result = get_zonecode_by_area(area_str='北京市')
+        result = idcard_get_zonecode_by_area(area_str='北京市')
         print(result)
 
         # 模糊查询
-        result = get_zonecode_by_area(area_str='西安市', match_type='FUZZY')
+        result = idcard_get_zonecode_by_area(area_str='西安市', match_type='FUZZY')
         print(result)
 
         result0 = []
@@ -191,18 +193,18 @@ def get_zonecode_by_area(area_str, match_type='EXACT', result_type='LIST'):
         print(result0)
 
         # 模糊查询, 结果返回设定 single_str
-        result = get_zonecode_by_area(area_str='西安市', match_type='FUZZY', result_type='SINGLE_STR')
+        result = idcard_get_zonecode_by_area(area_str='西安市', match_type='FUZZY', result_type='SINGLE_STR')
         print(result)
 
         # 模糊查询, 结果返回设定 single_str，西安市 和 西安 的差别
-        result = get_zonecode_by_area(area_str='西安', match_type='FUZZY', result_type='SINGLE_STR')
+        result = idcard_get_zonecode_by_area(area_str='西安', match_type='FUZZY', result_type='SINGLE_STR')
         print(result)
 
         print('---')
 
     输出结果::
 
-        --- fish_data get_zonecode_by_area demo ---
+        --- fish_data idcard_get_zonecode_by_area demo ---
         [('110000', '北京市')]
         130522198407316471 True
 
@@ -244,7 +246,8 @@ def get_zonecode_by_area(area_str, match_type='EXACT', result_type='LIST'):
 # 输入银行、借记贷记卡种类，返回有效的卡 bin
 # ---
 # 2018.12.17 create by David Yi, add in v1.1.4, github issue #149
-def get_cardbin_by_bank(bank, card_type):
+# 2019.1.5 edit, v1.1.6 github issue #188, 修改函数名称
+def cardbin_get_cardbin_bank(bank, card_type):
     """
     输入银行、借记贷记卡种类，返回有效的卡 bin；
 
@@ -258,16 +261,16 @@ def get_cardbin_by_bank(bank, card_type):
 
         from fishbase.fish_data import *
 
-        print('--- fish_data get_cardbin_by_bank demo ---')
+        print('--- fish_data cardbin_get_cardbin_bank demo ---')
 
-        result = get_cardbin_by_bank('CMB', 'DC')
+        result = cardbin_get_cardbin_bank('CMB', 'DC')
         print(result)
 
         print('---')
 
     输出结果::
 
-        --- fish_data get_cardbin_by_bank demo ---
+        --- fish_data cardbin_get_cardbin_bank demo ---
 
         [('410062', 'CMB', 'DC', 16), ('468203', 'CMB', 'DC', 16), ...
         ---
@@ -283,7 +286,8 @@ def get_cardbin_by_bank(bank, card_type):
 # 计算银行卡校验位
 # ---
 # 2018.12.18 create by David Yi, v1.1.4, github issue #154
-def get_bankcard_checkcode(card_number_str):
+# 2019.1.5 edit, v1.1.6 github issue #188, 修改函数名称
+def cardbin_get_checkcode(card_number_str):
     """
     计算银行卡校验位；
 
@@ -296,16 +300,16 @@ def get_bankcard_checkcode(card_number_str):
 
         from fishbase.fish_data import *
 
-        print('--- fish_data get_bankcard_checkcode demo ---')
+        print('--- fish_data cardbin_get_checkcode demo ---')
 
         # 不能放真的卡信息，有风险
-        print(get_bankcard_checkcode('439188000699010'))
+        print(cardbin_get_checkcode('439188000699010'))
 
         print('---')
 
     输出结果::
 
-        --- fish_data get_bankcard_checkcode demo ---
+        --- fish_data cardbin_get_checkcode demo ---
         9
         ---
 
@@ -330,7 +334,8 @@ def get_bankcard_checkcode(card_number_str):
 # 检查银行卡校验位是否正确
 # ---
 # 2018.12.18 create by David Yi, v1.1.4, github issue #155
-def check_bankcard(card_number_str):
+# 2019.1.5 edit, v1.1.6 github issue #188, 修改函数名称
+def cardbin_check_bankcard(card_number_str):
     """
     检查银行卡校验位是否正确；
 
@@ -346,7 +351,7 @@ def check_bankcard(card_number_str):
         print('--- fish_data check_bank_card demo ---')
 
         # 不能放真的卡信息，有风险
-        print(check_bankcard('4391880006990100'))
+        print(cardbin_check_bankcard()('4391880006990100'))
 
         print('---')
 
@@ -363,7 +368,7 @@ def check_bankcard(card_number_str):
 
     checkcode = card_number_str[-1]
 
-    result = get_bankcard_checkcode(card_number_str[0:-1])
+    result = cardbin_get_checkcode(card_number_str[0:-1])
 
     return checkcode == result
 
@@ -371,7 +376,8 @@ def check_bankcard(card_number_str):
 # 输入银行名称，返回银行代码
 # ---
 # 2018.12.18 create by David Yi, add in v1.1.4, github issue #159
-def get_bank_by_name(bankname):
+# 2019.1.5 edit, v1.1.6 github issue #188, 修改函数名称
+def cardbin_get_bank_by_name(bankname):
     """
     银行名称，返回银行代码；
 
@@ -384,15 +390,15 @@ def get_bank_by_name(bankname):
 
         from fishbase.fish_data import *
 
-        print('--- fish_data get_bank_by_name demo ---')
+        print('--- fish_data cardbin_get_bank_by_name demo ---')
 
-        print(get_bank_by_name('招商银行'))
+        print(cardbin_get_bank_by_name('招商银行'))
 
         print('---')
 
     输出结果::
 
-        --- fish_data get_bank_by_name demo ---
+        --- fish_data cardbin_get_bank_by_name demo ---
         [('CMB', '招商银行')]
         ---
 
