@@ -20,6 +20,8 @@ import os
 import base64
 import string
 import random
+import warnings
+
 import yaml
 from collections import OrderedDict, namedtuple
 from operator import attrgetter
@@ -251,9 +253,19 @@ def get_uuid(kind):
 get_time_uuid = functools.partial(get_uuid, udTime)
 
 
+# 2019.01.05 v1.1.6 edit by Hu Jun, #152
+def if_any_elements_is_space(dic):
+    warnings.simplefilter('always')
+    warnings.warn('if_any_elements_is_space is deprecated, and in 2.x it will stop working. '
+                  'Use has_space_element instead.',
+                  DeprecationWarning, stacklevel=2)
+    return has_space_element(dic)
+
+
 # 2017.2.22 edit by David.Yi, #19007
 # 2018.6.29 v1.0.14 edit by Hu Jun，#62
-def if_any_elements_is_space(source):
+# 2019.01.05 v1.1.6 edit by Hu Jun, #152
+def has_space_element(source):
     """
     判断对象中的元素，如果存在 None 或空字符串或空格字符串，则返回 True, 否则返回 False, 支持字典、列表和元组
 
@@ -328,11 +340,20 @@ def if_any_elements_is_number(source):
     return True
 
 
+# 2019.01.05 v1.1.6 edit by Hu Jun, #152
+def if_any_elements_is_letter(source):
+    warnings.simplefilter('always')
+    warnings.warn('if_any_elements_is_letter is deprecated, and in 2.x it will stop working. '
+                  'Use fish_isalpha instead.',
+                  DeprecationWarning, stacklevel=2)
+    return fish_isalpha(source)
+
+
 # 2017.3.30 create by Leo #11004
 # 功能：监测list或者元素是否只包含英文
 # 输入：source 是参数列表或元组
 # 输出：True：只包含英文；False：不只包含英文
-def if_any_elements_is_letter(source):
+def fish_isalpha(source):
 
     for i in source:
 
@@ -358,10 +379,34 @@ class FishCache:
         return self.__cache[temp_key]
 
 
+# 2019.01.06 edit by Hu Jun, #152
+class GetMD5(object):
+    warnings.simplefilter('always')
+    warnings.warn('GetMD5 is deprecated, and in 2.0 it will stop working. Use FishMD5 instead.',
+                  DeprecationWarning)
+
+    @staticmethod
+    def string(s, salt=None):
+        return FishMD5.string(s, salt=salt)
+
+    @staticmethod
+    def file(filename):
+        return FishMD5.file(filename)
+
+    @staticmethod
+    def big_file(filename):
+        return FishMD5.big_file(filename)
+
+    @staticmethod
+    def hmac_md5(s, salt):
+        return FishMD5.hmac_md5(s, salt)
+
+
 # 2018.5.8 edit by David Yi, edit from Jia Chunying，#19026
 # 2018.6.12 edit by Hu Jun, edit from Jia Chunying，#37
-# 2018.10.28 edit by Hu Jun #99
-class GetMD5(object):
+# 2018.10.28 edit by Hu Jun, #99
+# 2019.01.06 edit by Hu Jun, #152
+class FishMD5(object):
     """
     计算普通字符串和一般的文件，对于大文件采取逐步读入的方式，也可以快速计算；基于 Python 的 hashlib.md5() 进行封装和扩展；
 
@@ -490,10 +535,20 @@ def if_json_contain(left_json, right_json, op='strict'):
         return True
 
 
+# 2019.01.05 v1.1.6 edit by Hu Jun, #152
+def splice_url_params(dic):
+    warnings.simplefilter('always')
+    warnings.warn('splice_url_params is deprecated, and in 2.x it will stop working. '
+                  'Use join_url_params instead.',
+                  DeprecationWarning, stacklevel=2)
+    return join_url_params(dic)
+
+
 # 2018.3.8 edit by Xiang qinqin
 # 2018.5.15 edit by David Yi, #19030
 # v1.0.15 edit by Hu Jun, #67
-def splice_url_params(dic):
+# 2019.01.05 v1.1.6 edit by Hu Jun, #152
+def join_url_params(dic):
     """
     根据传入的键值对，拼接 url 后面 ? 的参数，比如 ?key1=value1&key2=value2
 
@@ -569,9 +624,19 @@ def sorted_list_from_dict(p_dict, order=odASC):
         return o_list[::-1]
 
 
+# 2019.01.05 v1.1.6 edit by Hu Jun, #152
+def is_contain_special_char(p_str, check_style=charChinese):
+    warnings.simplefilter('always')
+    warnings.warn('is_contain_special_char is deprecated, and in 2.x it will stop working. '
+                  'Use has_special_char instead.',
+                  DeprecationWarning, stacklevel=2)
+    return has_special_char(p_str, check_style=check_style)
+
+
 # v1.0.13 edit by David Yi, edit by Hu Jun，#36
 # v1.0.14 edit by Hu Jun #38
-def is_contain_special_char(p_str, check_style=charChinese):
+# 2019.01.05 v1.1.6 edit by Hu Jun, #152
+def has_special_char(p_str, check_style=charChinese):
     """
     检查字符串是否含有指定类型字符
     
@@ -780,8 +845,17 @@ def get_random_str(length, letters=True, digits=False, punctuation=False):
     return random_str
 
 
-# v1.0.15 edit by Hu Jun, #77 #63
+# 2019.01.05 v1.1.6 edit by Hu Jun, #152
 def remove_duplicate_elements(items, key=None):
+    warnings.simplefilter('always')
+    warnings.warn('remove_duplicate_elements is deprecated, and in 2.x it will stop working. '
+                  'Use get_distinct_elements instead.',
+                  DeprecationWarning, stacklevel=2)
+    return get_distinct_elements(items, key=key)
+
+
+# v1.0.15 edit by Hu Jun, #77 #63
+def get_distinct_elements(items, key=None):
     """
     去除序列中的重复元素，使得剩下的元素仍然保持顺序不变，对于不可哈希的对象，需要指定 key ，说明去重元素
 
@@ -824,8 +898,17 @@ def remove_duplicate_elements(items, key=None):
             seen.add(val)
 
 
-# v1.0.15 edit by Hu Jun, #64
+# 2019.01.05 v1.1.6 edit by Hu Jun, #152
 def sorted_objs_by_attr(objs, key, reverse=False):
+    warnings.simplefilter('always')
+    warnings.warn('splice_url_params is deprecated, and in 2.x it will stop working. '
+                  'Use sorted_objs_by_attr instead.',
+                  DeprecationWarning, stacklevel=2)
+    return sort_objs_by_attr(objs, key, reverse=reverse)
+
+
+# v1.0.15 edit by Hu Jun, #64
+def sort_objs_by_attr(objs, key, reverse=False):
     """
     对原生不支持比较操作的对象根据属性排序
 
@@ -900,6 +983,15 @@ def get_query_param_from_url(url):
     query_dict = parse_qs(url_obj.query)
 
     return OrderedDict(query_dict)
+
+
+# 2019.01.05 v1.1.6 edit by Hu Jun, #152
+def paging(data_list, group_number=1, group_size=10):
+    warnings.simplefilter('always')
+    warnings.warn('get_group_list_data is deprecated, and in 2.x it will stop working. '
+                  'Use paging instead.',
+                  DeprecationWarning, stacklevel=2)
+    return get_group_list_data(data_list, group_number=group_number, group_size=group_size)
 
 
 # v1.1.0 edit by Hu Jun, #74
@@ -993,8 +1085,17 @@ def get_sub_dict(data_dict, key_list, default_value='default_value'):
     return sub_dict
 
 
-# v1.1.1 edit by Hu Jun, #114
+# 2019.01.05 v1.1.6 edit by Hu Jun, #152
 def transform_hump_to_underline(param_dict):
+    warnings.simplefilter('always')
+    warnings.warn('transform_hump_to_underline is deprecated, and in 2.x it will stop working. '
+                  'Use camelcase_to_underline instead.',
+                  DeprecationWarning, stacklevel=2)
+    return camelcase_to_underline(param_dict)
+
+
+# v1.1.1 edit by Hu Jun, #114
+def camelcase_to_underline(param_dict):
     """
     将驼峰命名的参数字典键转换为下划线参数
 
@@ -1124,8 +1225,25 @@ def yaml_conf_as_dict(file_path, encoding=None):
         return False, {}, 'Unknow error'
 
 
-# v1.1.3 edit by Hu Jun, #100
+# 2019.01.06 edit by Hu Jun, #152
 class GetSha256(object):
+    warnings.simplefilter('always')
+    warnings.warn('GetSha256 is deprecated, and in 2.0 it will stop working. '
+                  'Use FishSha256 instead.',
+                  DeprecationWarning)
+
+    @staticmethod
+    def hmac_sha256(secret, message):
+        return FishSha256.hmac_sha256(secret, message)
+
+    @staticmethod
+    def hashlib_sha256(message):
+        return FishSha256.hashlib_sha256(message)
+
+
+# v1.1.3 edit by Hu Jun, #100
+# 2019.01.06 v1.1.6 edit by Hu Jun, #152
+class FishSha256(object):
     """
     计算字符串和密钥的 sha256 算法哈希值
 
@@ -1182,4 +1300,4 @@ class GetSha256(object):
 
 # v1.0.14 original by Jia Chunying, edit by Hu Jun, #27
 # v1.1.3 edit by Hu Jun, #100 move hmac_sha256 to GetSha256
-hmac_sha256 = GetSha256.hmac_sha256
+hmac_sha256 = FishSha256.hmac_sha256

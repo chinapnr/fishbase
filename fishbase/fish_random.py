@@ -155,14 +155,15 @@ def gen_mobile():
 
 
 # v1.1.5 edit by Hu Jun #162
-def gen_float_by_range(min, max, decimals=2):
+# v1.1.6 edit by Hu Jun #190
+def gen_float_by_range(minimum, maximum, decimals=2):
     """
     指定一个浮点数范围，随机生成并返回区间内的一个浮点数，区间为闭区间
     受限于 random.random 精度限制，支持最大 15 位精度
 
     :param:
-        * min: (float) 浮点数最小取值
-        * max: (float) 浮点数最大取值
+        * minimum: (float) 浮点数最小取值
+        * maximum: (float) 浮点数最大取值
         * decimals: (int) 小数位数，默认为 2 位
 
     :return:
@@ -185,16 +186,16 @@ def gen_float_by_range(min, max, decimals=2):
         ---
 
     """
-    if not (isinstance(min, float) and isinstance(max, float)):
-        raise ValueError('param min and max should be float, but we got min: {} max: {}'.
-                         format(type(min), type(max)))
+    if not (isinstance(minimum, float) and isinstance(maximum, float)):
+        raise ValueError('param minimum, maximum should be float, but got minimum: {} maximum: {}'.
+                         format(type(minimum), type(maximum)))
     if not isinstance(decimals, int):
         raise ValueError('param decimals should be a int, but we got {}'.format(type(decimals)))
     # 精度目前只支持最大 15 位
     decimals = 15 if decimals > 15 else decimals
     # 存在 round 之后四舍五入之后，精度不匹配的情况，新加判断
     while True:
-        random_float = random.uniform(min, max)
+        random_float = random.uniform(minimum, maximum)
         random_float = round(random_float, decimals)
         if len(str(random_float).split('.')[-1]) == decimals:
             return random_float
@@ -231,7 +232,8 @@ def get_random_zone_name(province_zone):
                           {"province_num": province_num, 'zone': province_zone})
     # 获取省份名称
     province_name = sqlite_query('fish_data.sqlite',
-                                 'select note from cn_idcard where zone = :zone', {"zone": province_zone})
+                                 'select note from cn_idcard where zone = :zone',
+                                 {"zone": province_zone})
     if not (values and province_name):
         raise ValueError('province_zone error, please check and try again')
 

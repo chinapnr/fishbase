@@ -1,5 +1,15 @@
 更新记录
 ===========================
+2019.01.06 v1.1.6
+---------------------------
+* `#190 <https://github.com/chinapnr/fishbase/issues/190>`_, random, edit function :meth:`fish_random.gen_float_by_range`, optimize;
+* `#152 <https://github.com/chinapnr/fishbase/issues/152>`_, random, edit function :meth:`fish_common.GetMD5` :meth:`fish_common.GetSha256`
+:meth:`fish_common.splice_url_params` :meth:`fish_common.sorted_list_from_dict` :meth:`fish_common.is_contain_special_char`
+:meth:`fish_common.if_any_elements_is_space` :meth:`fish_common.remove_duplicate_elements` :meth:`fish_common.sorted_objs_by_attr`
+:meth:`fish_common.get_group_list_data` :meth:`fish_common.if_any_elements_is_letter` :meth:`fish_common.transform_hump_to_underline`,
+optimize;
+
+
 2018.12.31 v1.1.5
 ---------------------------
 * `#171 <https://github.com/chinapnr/fishbase/issues/171>`_, random, add function :meth:`fish_random.gen_company_name`, doc and unittest;

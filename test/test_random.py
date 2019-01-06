@@ -5,7 +5,6 @@
 import pytest
 import datetime
 
-from fishbase.fish_data import CardBin, IdCard
 from fishbase.fish_random import *
 
 
