@@ -5,14 +5,14 @@
 
 """
 
+# 2019.1.6 edit by David Yi, #187 #188 修改 IdCard 和 CardBin 两个类，对这里有修改
+
 # 2018.12.26 v1.1.5 created
 import random
 from itertools import groupby
 from fishbase.fish_date import GetRandomTime, FishDateTimeFormat
 from fishbase.fish_common import get_random_str
-from fishbase.fish_data import (
-    sqlite_query, get_bank_by_name, get_cardbin_by_bank, get_bankcard_checkcode,
-    get_idcard_checkcode)
+from fishbase.fish_data import (sqlite_query, CardBin, IdCard)
 
 
 # v1.1.5 edit by Hu Jun #163
@@ -214,7 +214,7 @@ def get_random_zone_name(province_zone):
     举例如下::
 
         print('--- fish_data get_random_zone_name demo ---')
-        print(get_bank_by_name(310000))
+        print(cardbin_get_bank_by_name(310000))
         print('---')
 
     输出结果::
@@ -368,7 +368,7 @@ def gen_bank_card(bank_name, card_type):
         ---
 
     """
-    bank = get_bank_by_name(bank_name)
+    bank = CardBin.get_bank_by_name(bank_name)
     if not bank:
         raise ValueError('bank_name {} error, check and try again'.format(bank_name))
 
@@ -376,7 +376,7 @@ def gen_bank_card(bank_name, card_type):
     bank_code = bank[0][0]
 
     # 获取 cardbin
-    all_card_bin = get_cardbin_by_bank(bank_code, card_type)
+    all_card_bin = CardBin.get_cardbin_bank(bank_code, card_type)
     random_cardbin_info = random.choice(all_card_bin)
 
     card_bin = random_cardbin_info[0]
@@ -388,7 +388,7 @@ def gen_bank_card(bank_name, card_type):
         card_prefix += str(random.randint(0, 9))
 
     # 获取校验位
-    check_code = get_bankcard_checkcode(card_prefix)
+    check_code = CardBin.get_checkcode(card_prefix)
     return card_prefix + check_code
 
 
@@ -474,7 +474,7 @@ def gen_id(province=None, gender=None, age=None, result_type='SINGLE_STR'):
         zone = random.choice(zone_list)
         random_str = str(random.randint(10, 99))
         gender_str = str(random.choice(gender_dict.get(gender)))
-        _, check_code = get_idcard_checkcode(zone + birth + random_str + gender_str)
+        _, check_code = IdCard.get_checkcode(zone + birth + random_str + gender_str)
         random_id = ("{zone}{birth_date}{random_str}{gender}{check_code}".
                      format(zone=zone,
                             birth_date=birth,
