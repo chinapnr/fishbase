@@ -228,11 +228,11 @@ def get_random_zone_name(province_zone):
     # 获取省份下的地区信息
     province_num = str(province_zone)[:2]
     values = IdCard.get_note_by_province(province_num)
-    if not values:
-        raise ValueError('province_zone error, please check and try again')
-
     # 选出省份名称
-    province_name_item = [item for item in values if item[0] == province_zone]
+    province_name_item = [item for item in values if item[0] == str(province_zone)]
+
+    if not (values and province_name_item):
+        raise ValueError('province_zone error, please check and try again')
 
     # 只选取下辖区域
     values.remove(province_name_item[0])
