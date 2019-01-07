@@ -12,7 +12,7 @@ import random
 from itertools import groupby
 from fishbase.fish_date import GetRandomTime, FishDateTimeFormat
 from fishbase.fish_common import get_random_str
-from fishbase.fish_data import (sqlite_query, CardBin, IdCard)
+from fishbase.fish_data import CardBin, IdCard
 
 
 # v1.1.5 edit by Hu Jun #163
@@ -225,20 +225,19 @@ def get_random_zone_name(province_zone):
         ---
 
     """
+    # 获取省份下的地区信息
     province_num = str(province_zone)[:2]
-    values = sqlite_query('fish_data.sqlite',
-                          'select zone, note from cn_idcard where province = :province_num '
-                          'and zone != :zone',
-                          {"province_num": province_num, 'zone': province_zone})
-    # 获取省份名称
-    province_name = sqlite_query('fish_data.sqlite',
-                                 'select note from cn_idcard where zone = :zone',
-                                 {"zone": province_zone})
-    if not (values and province_name):
+    values = IdCard.get_note_by_province(province_num)
+    if not values:
         raise ValueError('province_zone error, please check and try again')
 
+    # 选出省份名称
+    province_name_item = [item for item in values if item[0] == province_zone]
+
     # 只选取下辖区域
-    province_name = province_name[0][0]
+    values.remove(province_name_item[0])
+
+    province_name = province_name_item[0][-1]
     random_zone_info = random.choice(values)
     full_zone_name = random_zone_info[-1]
     return full_zone_name.split(province_name)[-1]
@@ -268,12 +267,13 @@ def gen_address(province):
         ---
 
     """
-    note = sqlite_query('fish_data.sqlite',
-                        'select note from cn_idcard where zone == :zone',
-                        {'zone': province})
+    # 获取省份下的地区信息
+    province_num = str(province)[:2]
+    note = IdCard.get_note_by_province(province_num)
     if not note:
         raise ValueError('province_zone error, please check and try again')
-    province_name = note[0][0]
+    # 第一项是省份名称
+    province_name = note[0][-1]
     area_info = get_random_zone_name(province)
     address_word = ("重庆大厦,黑龙江路,十梅庵街,遵义路,湘潭街,瑞金广场,仙山街,仙山东路,仙山西大厦,白沙河路,"
                     "赵红广场,机场路,民航街,长城南路,流亭立交桥,虹桥广场,长城大厦,礼阳路,风岗街,中川路,"
@@ -432,16 +432,14 @@ def gen_id(province=None, gender=None, age=None, result_type='SINGLE_STR'):
         ---
 
     """
-    province_records = sqlite_query('fish_data.sqlite',
-                                    'select province, zone, note from cn_idcard',
-                                    {})
+    province_records = IdCard.get_cn_idcard()
     # 根据省份进行升序，便于后续 group_by 处理
     sorted(province_records, key=lambda item: item[0])
     # 获取以省份代码为键，省份内行政区划代码组成的列表为值的字典
     records_dict = dict()
     for _, records in groupby(province_records, key=lambda item: item[0]):
         records_list = [item for item in records]
-        records_dict.update({records_list[0][1]: [i[1] for i in records_list[1:]]})
+        records_dict.update({records_list[0][2]: [i[2] for i in records_list[1:]]})
 
     if not province:
         province = random.choice(list(records_dict.keys()))
