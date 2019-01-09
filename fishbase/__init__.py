@@ -26,5 +26,5 @@ from .fish_project import *
 from .fish_data import *
 from .fish_random import *
 
-__version__ = '1.1.5'  # type: str
+__version__ = '1.1.6'  # type: str
 

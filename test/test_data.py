@@ -143,3 +143,14 @@ class TestData(object):
         values = []
         result = CardBin.get_bank_by_name('招银行')
         assert result == values
+
+    # 2019.01.07 edit by Hu Jun
+    def test_get_note_by_province(self):
+        values = IdCard.get_note_by_province('11')
+        assert values[0][0].startswith('11')
+
+    # 2019.01.07 edit by Hu Jun
+    def test_get_cn_idcard(self):
+        values = IdCard.get_cn_idcard()
+        assert len(values) > 0
+        assert ('11', '1101', '110100', '北京市市辖区') in values

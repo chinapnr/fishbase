@@ -34,7 +34,7 @@ def sqlite_query(db, sql, params):
     return values
 
 
-class IdCard:
+class IdCard(object):
 
     # 计算身份证号码的校验位
     # ---
@@ -248,6 +248,87 @@ class IdCard:
                 value_str = values[0][0]
                 return value_str
 
+    # 2019.01.07 create by Hu Jun, add in v1.1.6, github issue #192
+    @classmethod
+    def get_note_by_province(cls, province_code):
+        """
+        输入省份代码，返回地区信息；
+
+        :param:
+            * province_code: (string) 省份代码 比如：11
+
+        :returns:
+            * note_list: (list) 地区信息列表
+
+        举例如下::
+
+            from fishbase.fish_data import *
+
+            print('--- fish_data get_note_by_provice demo ---')
+
+            print(IdCard.get_note_by_provice('11'))
+
+            print('---')
+
+        输出结果::
+
+            --- fish_data get_note_by_provice demo ---
+            [('110000', '北京市'), ('110100', '北京市市辖区'), ('110101', '北京市东城区'),
+            ('110102', '北京市西城区'), ('110103', '北京市崇文区'), ('110104', '北京市宣武区'),
+            ('110105', '北京市朝阳区'), ('110106', '北京市丰台区'), ('110107', '北京市石景山区'),
+            ('110108', '北京市海淀区'), ('110109', '北京市门头沟区'), ('110111', '北京市房山区'),
+            ('110112', '北京市通州区'), ('110113', '北京市顺义区'), ('110114', '北京市昌平区'),
+            ('110115', '北京市大兴区'), ('110116', '北京市怀柔区'), ('110117', '北京市平谷区'),
+            ('110200', '北京市市辖县'), ('110221', '北京市昌平县'), ('110222', '北京市顺义县'),
+            ('110223', '北京市通县'), ('110224', '北京市大兴县'), ('110226', '北京市平谷县'),
+            ('110227', '北京市怀柔县'), ('110228', '北京市密云县'), ('110229', '北京市延庆县')]
+
+            ---
+
+        """
+        values = sqlite_query('fish_data.sqlite',
+                              'select zone, note from cn_idcard where province = :province_code ',
+                              {"province_code": province_code})
+        return values
+
+    # 2019.01.07 create by Hu Jun, add in v1.1.6, github issue #192
+    @classmethod
+    def get_cn_idcard(cls):
+        """
+        返回所有身份证信息；
+
+        :param:
+
+        :returns:
+            * idcard_list: (list) 身份证信息列表
+
+        举例如下::
+
+            from fishbase.fish_data import *
+
+            print('--- fish_data get_cn_idcard demo ---')
+
+            print(IdCard.get_note_by_provice('11'))
+
+            print('---')
+
+        输出结果::
+
+            --- fish_data get_cn_idcard demo ---
+            [('11', '1100', '110000', '北京市'), ('11', '1101', '110100', '北京市市辖区'),
+            ('11', '1101', '110101', '北京市东城区') ...
+            ('65', '6590', '659001', '新疆石河子市'),
+            ('65', '6590', '659002', '新疆维吾尔自治区阿拉尔市'),
+            ('65', '6590', '659003', '新疆维吾尔自治区图木舒克市')]
+
+            ---
+
+        """
+        values = sqlite_query('fish_data.sqlite',
+                              'select province, city, zone, note from cn_idcard',
+                              {})
+        return values
+
 
 # 2019.1.6 create by David Yi, #188 用 class CardBin 方法实现
 class CardBin(object):
@@ -414,22 +495,8 @@ class CardBin(object):
 
         """
         values = sqlite_query('fish_data.sqlite',
-                              'select bin,bank,card_type,length from cn_cardbin where bank=:bank and card_type=:card_type',
+                              'select bin,bank,card_type,length from cn_cardbin where bank=:bank '
+                              'and card_type=:card_type',
                               {"bank": bank, "card_type": card_type})
 
         return values
-
-
-# class CardBin(object):
-#
-#     @classmethod
-#     def a(cls):
-#         return 'hello'
-#
-#     @classmethod
-#     def b(cls):
-#         return CardBin.a() + ' world'
-#
-#
-# print(CardBin.a())
-# print(CardBin.b())

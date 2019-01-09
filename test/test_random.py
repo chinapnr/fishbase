@@ -5,7 +5,6 @@
 import pytest
 import datetime
 
-from fishbase.fish_data import CardBin, IdCard
 from fishbase.fish_random import *
 
 
@@ -64,7 +63,7 @@ class TestFishRandom(object):
     # test get_random_zone_name() tc
     def test_get_random_zone_name_02(self):
         with pytest.raises(ValueError):
-            get_random_zone_name('123456')
+            get_random_zone_name('aa1234')
 
     # test gen_address() tc
     def test_gen_address_01(self):
@@ -74,7 +73,7 @@ class TestFishRandom(object):
     # test gen_address() tc
     def test_gen_address_02(self):
         with pytest.raises(ValueError):
-            gen_address('123456')
+            gen_address('aa1234')
 
     # test gen_bank_card() tc
     def test_gen_bank_card_01(self):
