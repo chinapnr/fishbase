@@ -27,6 +27,30 @@ fishbase 设计的初衷，并不是用来解决复杂问题，而是对系统�
 目前，我们正在加速 fishbase 的完善，涵盖单元测试、示例代码、文档等内容优化。希望借此帮助到更多 Python 爱好者和应用开发人员。
 
 
+模块
+========
+
+目前主要分为以下模块：
+
+-  fish_common 基本函数包
+
+-  fish_csv csv 处理增强函数包
+
+-  fish_data 数据信息处理函数包，含银行卡、身份证等
+
+-  fish_date 日期处理函数包
+
+-  fish_file 文件处理增强函数包
+
+-  fish_logger 日志记录增强函数包
+
+-  fish_project project 目录结构生成函数包
+
+-  fish_random 随机数据生成函数包
+
+-  fish_system 系统增强函数包
+
+
 怎么用？
 ========
 
