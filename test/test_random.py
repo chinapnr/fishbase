@@ -5,7 +5,6 @@
 import pytest
 import datetime
 
-from fishbase.fish_data import check_bankcard, check_id_number
 from fishbase.fish_random import *
 
 
@@ -64,7 +63,7 @@ class TestFishRandom(object):
     # test get_random_zone_name() tc
     def test_get_random_zone_name_02(self):
         with pytest.raises(ValueError):
-            get_random_zone_name('123456')
+            get_random_zone_name('aa1234')
 
     # test gen_address() tc
     def test_gen_address_01(self):
@@ -74,12 +73,12 @@ class TestFishRandom(object):
     # test gen_address() tc
     def test_gen_address_02(self):
         with pytest.raises(ValueError):
-            gen_address('123456')
+            gen_address('aa1234')
 
     # test gen_bank_card() tc
     def test_gen_bank_card_01(self):
         random_bank_card = gen_bank_card('中国银行', 'CC')
-        assert check_bankcard(random_bank_card)
+        assert CardBin.check_bankcard(random_bank_card)
 
     # test gen_bank_card() tc
     def test_gen_bank_card_02(self):
@@ -91,24 +90,24 @@ class TestFishRandom(object):
         random_id_list = gen_id()
         assert len(random_id_list[0]) == 18
         # 测试身份证是否合法
-        assert check_id_number(random_id_list[0])
+        assert IdCard.check_number(random_id_list[0])
 
         random_id_list_1 = gen_id('310000')
         assert (random_id_list_1[0]).startswith('310')
         # 测试身份证是否合法
-        assert check_id_number(random_id_list_1[0])
+        assert IdCard.check_number(random_id_list_1[0])
 
         random_id_list_2 = gen_id('310000', age=30)
         year_now = datetime.datetime.now().year
         id_card_year = int(year_now) - 30
         # 测试身份证是否合法
-        assert check_id_number(random_id_list_2[0])
+        assert IdCard.check_number(random_id_list_2[0])
         assert (random_id_list_2[0]).startswith('310')
         assert int((random_id_list_2[0][6:10])) == id_card_year
 
         random_id_list_3 = gen_id('110000', age=20, gender='01', result_type='LIST')
         # 测试身份证是否合法
-        check_valid_list = list(map(check_id_number, random_id_list_3))
+        check_valid_list = list(map(IdCard.check_number, random_id_list_3))
         assert all(check_valid_list)
 
         # 测试 province

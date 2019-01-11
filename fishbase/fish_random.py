@@ -5,14 +5,14 @@
 
 """
 
+# 2019.1.6 edit by David Yi, #187 #188 修改 IdCard 和 CardBin 两个类，对这里有修改
+
 # 2018.12.26 v1.1.5 created
 import random
 from itertools import groupby
 from fishbase.fish_date import GetRandomTime, FishDateTimeFormat
 from fishbase.fish_common import get_random_str
-from fishbase.fish_data import (
-    sqlite_query, get_bank_by_name, get_cardbin_by_bank, get_bankcard_checkcode,
-    get_idcard_checkcode)
+from fishbase.fish_data import CardBin, IdCard
 
 
 # v1.1.5 edit by Hu Jun #163
@@ -155,14 +155,15 @@ def gen_mobile():
 
 
 # v1.1.5 edit by Hu Jun #162
-def gen_float_by_range(min, max, decimals=2):
+# v1.1.6 edit by Hu Jun #190
+def gen_float_by_range(minimum, maximum, decimals=2):
     """
     指定一个浮点数范围，随机生成并返回区间内的一个浮点数，区间为闭区间
     受限于 random.random 精度限制，支持最大 15 位精度
 
     :param:
-        * min: (float) 浮点数最小取值
-        * max: (float) 浮点数最大取值
+        * minimum: (float) 浮点数最小取值
+        * maximum: (float) 浮点数最大取值
         * decimals: (int) 小数位数，默认为 2 位
 
     :return:
@@ -185,16 +186,16 @@ def gen_float_by_range(min, max, decimals=2):
         ---
 
     """
-    if not (isinstance(min, float) and isinstance(max, float)):
-        raise ValueError('param min and max should be float, but we got min: {} max: {}'.
-                         format(type(min), type(max)))
+    if not (isinstance(minimum, float) and isinstance(maximum, float)):
+        raise ValueError('param minimum, maximum should be float, but got minimum: {} maximum: {}'.
+                         format(type(minimum), type(maximum)))
     if not isinstance(decimals, int):
         raise ValueError('param decimals should be a int, but we got {}'.format(type(decimals)))
     # 精度目前只支持最大 15 位
     decimals = 15 if decimals > 15 else decimals
     # 存在 round 之后四舍五入之后，精度不匹配的情况，新加判断
     while True:
-        random_float = random.uniform(min, max)
+        random_float = random.uniform(minimum, maximum)
         random_float = round(random_float, decimals)
         if len(str(random_float).split('.')[-1]) == decimals:
             return random_float
@@ -214,7 +215,7 @@ def get_random_zone_name(province_zone):
     举例如下::
 
         print('--- fish_data get_random_zone_name demo ---')
-        print(get_bank_by_name(310000))
+        print(cardbin_get_bank_by_name(310000))
         print('---')
 
     输出结果::
@@ -224,19 +225,19 @@ def get_random_zone_name(province_zone):
         ---
 
     """
+    # 获取省份下的地区信息
     province_num = str(province_zone)[:2]
-    values = sqlite_query('fish_data.sqlite',
-                          'select zone, note from cn_idcard where province = :province_num '
-                          'and zone != :zone',
-                          {"province_num": province_num, 'zone': province_zone})
-    # 获取省份名称
-    province_name = sqlite_query('fish_data.sqlite',
-                                 'select note from cn_idcard where zone = :zone', {"zone": province_zone})
-    if not (values and province_name):
+    values = IdCard.get_note_by_province(province_num)
+    # 选出省份名称
+    province_name_item = [item for item in values if item[0] == str(province_zone)]
+
+    if not (values and province_name_item):
         raise ValueError('province_zone error, please check and try again')
 
     # 只选取下辖区域
-    province_name = province_name[0][0]
+    values.remove(province_name_item[0])
+
+    province_name = province_name_item[0][-1]
     random_zone_info = random.choice(values)
     full_zone_name = random_zone_info[-1]
     return full_zone_name.split(province_name)[-1]
@@ -266,12 +267,13 @@ def gen_address(province):
         ---
 
     """
-    note = sqlite_query('fish_data.sqlite',
-                        'select note from cn_idcard where zone == :zone',
-                        {'zone': province})
+    # 获取省份下的地区信息
+    province_num = str(province)[:2]
+    note = IdCard.get_note_by_province(province_num)
     if not note:
         raise ValueError('province_zone error, please check and try again')
-    province_name = note[0][0]
+    # 第一项是省份名称
+    province_name = note[0][-1]
     area_info = get_random_zone_name(province)
     address_word = ("重庆大厦,黑龙江路,十梅庵街,遵义路,湘潭街,瑞金广场,仙山街,仙山东路,仙山西大厦,白沙河路,"
                     "赵红广场,机场路,民航街,长城南路,流亭立交桥,虹桥广场,长城大厦,礼阳路,风岗街,中川路,"
@@ -368,7 +370,7 @@ def gen_bank_card(bank_name, card_type):
         ---
 
     """
-    bank = get_bank_by_name(bank_name)
+    bank = CardBin.get_bank_by_name(bank_name)
     if not bank:
         raise ValueError('bank_name {} error, check and try again'.format(bank_name))
 
@@ -376,7 +378,7 @@ def gen_bank_card(bank_name, card_type):
     bank_code = bank[0][0]
 
     # 获取 cardbin
-    all_card_bin = get_cardbin_by_bank(bank_code, card_type)
+    all_card_bin = CardBin.get_cardbin_bank(bank_code, card_type)
     random_cardbin_info = random.choice(all_card_bin)
 
     card_bin = random_cardbin_info[0]
@@ -388,7 +390,7 @@ def gen_bank_card(bank_name, card_type):
         card_prefix += str(random.randint(0, 9))
 
     # 获取校验位
-    check_code = get_bankcard_checkcode(card_prefix)
+    check_code = CardBin.get_checkcode(card_prefix)
     return card_prefix + check_code
 
 
@@ -430,16 +432,14 @@ def gen_id(province=None, gender=None, age=None, result_type='SINGLE_STR'):
         ---
 
     """
-    province_records = sqlite_query('fish_data.sqlite',
-                                    'select province, zone, note from cn_idcard',
-                                    {})
+    province_records = IdCard.get_cn_idcard()
     # 根据省份进行升序，便于后续 group_by 处理
     sorted(province_records, key=lambda item: item[0])
     # 获取以省份代码为键，省份内行政区划代码组成的列表为值的字典
     records_dict = dict()
     for _, records in groupby(province_records, key=lambda item: item[0]):
         records_list = [item for item in records]
-        records_dict.update({records_list[0][1]: [i[1] for i in records_list[1:]]})
+        records_dict.update({records_list[0][2]: [i[2] for i in records_list[1:]]})
 
     if not province:
         province = random.choice(list(records_dict.keys()))
@@ -474,7 +474,7 @@ def gen_id(province=None, gender=None, age=None, result_type='SINGLE_STR'):
         zone = random.choice(zone_list)
         random_str = str(random.randint(10, 99))
         gender_str = str(random.choice(gender_dict.get(gender)))
-        _, check_code = get_idcard_checkcode(zone + birth + random_str + gender_str)
+        _, check_code = IdCard.get_checkcode(zone + birth + random_str + gender_str)
         random_id = ("{zone}{birth_date}{random_str}{gender}{check_code}".
                      format(zone=zone,
                             birth_date=birth,
