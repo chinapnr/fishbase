@@ -6,6 +6,7 @@
 """
 
 # 2019.1.6 edit by David Yi, #187 #188 修改 IdCard 和 CardBin 两个类，对这里有修改
+# 2019.1.13 edit by David Yi, #202 优化 class CardBin(), class IdCard()
 
 # 2018.12.26 v1.1.5 created
 import random
@@ -227,7 +228,7 @@ def get_random_zone_name(province_zone):
     """
     # 获取省份下的地区信息
     province_num = str(province_zone)[:2]
-    values = IdCard.get_note_by_province(province_num)
+    values = IdCard.get_areanote_info(province_num)
     # 选出省份名称
     province_name_item = [item for item in values if item[0] == str(province_zone)]
 
@@ -269,7 +270,7 @@ def gen_address(province):
     """
     # 获取省份下的地区信息
     province_num = str(province)[:2]
-    note = IdCard.get_note_by_province(province_num)
+    note = IdCard.get_areanote_info(province_num)
     if not note:
         raise ValueError('province_zone error, please check and try again')
     # 第一项是省份名称
@@ -370,7 +371,7 @@ def gen_bank_card(bank_name, card_type):
         ---
 
     """
-    bank = CardBin.get_bank_by_name(bank_name)
+    bank = CardBin.get_bank_info(bank_name)
     if not bank:
         raise ValueError('bank_name {} error, check and try again'.format(bank_name))
 
@@ -378,7 +379,7 @@ def gen_bank_card(bank_name, card_type):
     bank_code = bank[0][0]
 
     # 获取 cardbin
-    all_card_bin = CardBin.get_cardbin_bank(bank_code, card_type)
+    all_card_bin = CardBin.get_cardbin_info(bank_code, card_type)
     random_cardbin_info = random.choice(all_card_bin)
 
     card_bin = random_cardbin_info[0]
