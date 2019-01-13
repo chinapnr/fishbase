@@ -9,7 +9,8 @@ fish_data 中的函数就是用在这样的场景。注意，这些函数不会�
 
 """
 
-# 2018.12.9 v1.1.3 created
+# 2018.12.9 v1.1.3 created by David Yi
+# 2019.1.13 edit by David Yi, #202 优化 class CardBin(), class IdCard()
 
 import re
 import sqlite3
@@ -162,7 +163,7 @@ class IdCard(object):
     # ---
     # 2018.12.14 12.16 create by David Yi, add in v1.1.4, github issue #139
     @classmethod
-    def get_zonecode_by_area(cls, area_str, match_type='EXACT', result_type='LIST'):
+    def get_zone_info(cls, area_str, match_type='EXACT', result_type='LIST'):
         """
         输入包含省份、城市、地区信息的内容，返回地区编号；
 
@@ -226,10 +227,10 @@ class IdCard(object):
 
         if match_type == 'EXACT':
             values = sqlite_query('fish_data.sqlite',
-                                  'select zone, note from cn_idcard where note = :area', {"area": area_str})
+                                  'select zone, areanote from cn_idcard where areanote = :area', {"area": area_str})
         if match_type == 'FUZZY':
             values = sqlite_query('fish_data.sqlite',
-                                  'select zone, note from cn_idcard where note like :area',
+                                  'select zone, areanote from cn_idcard where areanote like :area',
                                   {"area": '%' + area_str + '%'})
 
         # result_type 结果数量判断处理
@@ -250,7 +251,7 @@ class IdCard(object):
 
     # 2019.01.07 create by Hu Jun, add in v1.1.6, github issue #192
     @classmethod
-    def get_note_by_province(cls, province_code):
+    def get_areanote_info(cls, province):
         """
         输入省份代码，返回地区信息；
 
@@ -287,8 +288,8 @@ class IdCard(object):
 
         """
         values = sqlite_query('fish_data.sqlite',
-                              'select zone, note from cn_idcard where province = :province_code ',
-                              {"province_code": province_code})
+                              'select zone, areanote from cn_idcard where province = :province_code ',
+                              {"province_code": province})
         return values
 
     # 2019.01.07 create by Hu Jun, add in v1.1.6, github issue #192
@@ -325,7 +326,7 @@ class IdCard(object):
 
         """
         values = sqlite_query('fish_data.sqlite',
-                              'select province, city, zone, note from cn_idcard',
+                              'select province, city, zone, areanote from cn_idcard',
                               {})
         return values
 
@@ -428,7 +429,7 @@ class CardBin(object):
     # 2018.12.18 create by David Yi, add in v1.1.4, github issue #159
     # 2019.1.5 edit, v1.1.6 github issue #188, 修改函数名称
     @classmethod
-    def get_bank_by_name(cls, bankname):
+    def get_bank_info(cls, bankname):
         """
         银行名称，返回银行代码；
 
@@ -455,7 +456,7 @@ class CardBin(object):
 
         """
         values = sqlite_query('fish_data.sqlite',
-                              'select bank,bankname from cn_bankname where bankname=:bankname',
+                              'select bankcode,bankname from cn_bank where bankname=:bankname',
                               {"bankname": bankname})
 
         return values
@@ -465,7 +466,7 @@ class CardBin(object):
     # 2018.12.17 create by David Yi, add in v1.1.4, github issue #149
     # 2019.1.5 edit, v1.1.6 github issue #188, 修改函数名称
     @classmethod
-    def get_cardbin_bank(cls, bank, card_type):
+    def get_cardbin_info(cls, bank, card_type):
         """
         输入银行、借记贷记卡种类，返回有效的卡 bin；
 
@@ -495,8 +496,8 @@ class CardBin(object):
 
         """
         values = sqlite_query('fish_data.sqlite',
-                              'select bin,bank,card_type,length from cn_cardbin where bank=:bank '
-                              'and card_type=:card_type',
+                              'select bin,bankcode,cardtype,length from cn_cardbin where bankcode=:bank '
+                              'and cardtype=:card_type',
                               {"bank": bank, "card_type": card_type})
 
         return values
