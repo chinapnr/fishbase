@@ -10,7 +10,6 @@
 
 # 2018.12.26 v1.1.5 created
 import random
-from itertools import groupby
 from fishbase.fish_date import GetRandomTime, FishDateTimeFormat
 from fishbase.fish_common import get_random_str
 from fishbase.fish_data import CardBin, IdCard
@@ -203,54 +202,54 @@ def gen_float_by_range(minimum, maximum, decimals=2):
 
 
 # v1.1.5 edit by Hu Jun #173
-def get_random_zone_name(province_zone):
+def get_random_areanote(zone):
     """
     省份行政区划代码，返回下辖的随机地区名称
 
     :param:
-        * province_zone: (string) 省份行政区划代码 比如 '310000'
+        * zone: (string) 省份行政区划代码 比如 '310000'
 
     :returns:
-        * random_zone_name: (string) 省份下辖随机地区名称
+        * random_areanote: (string) 省份下辖随机地区名称
 
     举例如下::
 
-        print('--- fish_data get_random_zone_name demo ---')
+        print('--- fish_data get_random_areanote demo ---')
         print(cardbin_get_bank_by_name(310000))
         print('---')
 
     输出结果::
 
-        --- fish_data get_random_zone_name demo ---
+        --- fish_data get_random_areanote demo ---
         徐汇区
         ---
 
     """
     # 获取省份下的地区信息
-    province_num = str(province_zone)[:2]
-    values = IdCard.get_areanote_info(province_num)
+    province = str(zone)[:2]
+    areanote_list = IdCard.get_areanote_info(province)
     # 选出省份名称
-    province_name_item = [item for item in values if item[0] == str(province_zone)]
+    province_name_list = [item for item in areanote_list if item[0] == str(zone)]
 
-    if not (values and province_name_item):
+    if not (areanote_list and province_name_list):
         raise ValueError('province_zone error, please check and try again')
 
     # 只选取下辖区域
-    values.remove(province_name_item[0])
+    areanote_list.remove(province_name_list[0])
 
-    province_name = province_name_item[0][-1]
-    random_zone_info = random.choice(values)
-    full_zone_name = random_zone_info[-1]
-    return full_zone_name.split(province_name)[-1]
+    province_name = province_name_list[0][-1]
+    random_areanote = random.choice(areanote_list)
+    full_areanote = random_areanote[-1]
+    return full_areanote.split(province_name)[-1]
 
 
 # v1.1.5 edit by Hu Jun #170
-def gen_address(province):
+def gen_address(zone):
     """
     通过省份行政区划代码，返回该省份的随机地址
 
     :param:
-        * province: (string) 省份行政区划代码 比如 '310000'
+        * zone: (string) 省份行政区划代码 比如 '310000'
 
     :returns:
         * random_addr: (string) 省份下辖随机地区名称
@@ -269,13 +268,13 @@ def gen_address(province):
 
     """
     # 获取省份下的地区信息
-    province_num = str(province)[:2]
-    note = IdCard.get_areanote_info(province_num)
-    if not note:
+    province = str(zone)[:2]
+    areanote = IdCard.get_areanote_info(province)
+    if not areanote:
         raise ValueError('province_zone error, please check and try again')
     # 第一项是省份名称
-    province_name = note[0][-1]
-    area_info = get_random_zone_name(province)
+    province_name = areanote[0][-1]
+    areanote_info = get_random_areanote(zone)
     address_word = ("重庆大厦,黑龙江路,十梅庵街,遵义路,湘潭街,瑞金广场,仙山街,仙山东路,仙山西大厦,白沙河路,"
                     "赵红广场,机场路,民航街,长城南路,流亭立交桥,虹桥广场,长城大厦,礼阳路,风岗街,中川路,"
                     "白塔广场,兴阳路,文阳街,绣城路,河城大厦,锦城广场,崇阳街,华城路,康城街,正阳路,和阳广场,"
@@ -340,7 +339,7 @@ def gen_address(province):
         random_addr = ''.join([random_addr, str(random.randint(1, 1000)), '号'])
     address_pattern = '{province_name}{area_info}{random_addr}'
     return address_pattern.format(province_name=province_name,
-                                  area_info=area_info,
+                                  area_info=areanote_info,
                                   random_addr=random_addr)
 
 
@@ -396,14 +395,14 @@ def gen_bank_card(bank_name, card_type):
 
 
 # v1.1.5 edit by Hu Jun #165
-def gen_id(province=None, gender=None, age=None, result_type='SINGLE_STR'):
+def gen_random_id_card(zone=None, gender=None, age=None, result_type='SINGLE_STR'):
     """
     根据指定的省份编号、性别或年龄，随机生成一个身份证号
 
     :param:
-        * province: (string) 省份编号 eg. 310000, 默认 None: 随机
+        * zone: (string) 省份编号 eg. 310000, 默认 None: 随机
         * gender：(string) 性别 "01" 男性， "00" 女性, 默认 None: 随机
-        * age：(int) 年龄 默认 None：随机 身份证最大年龄为 1970
+        * age：(int) 年龄 默认 None：随机 身份证最早出生年份为 1970
         * result_type: (string) 返回结果数量类型，默认值 'SINGLE_STR'，表示随机返回一个身份证号，可选 'LIST'，返回一个随机身份证列表
 
     :returns:
@@ -411,7 +410,7 @@ def gen_id(province=None, gender=None, age=None, result_type='SINGLE_STR'):
 
     举例如下::
 
-        print('--- gen_id demo ---')
+        print('--- gen_random_id_card demo ---')
         print(gen_id('310000'))
         print(gen_id('310000', age=100))
         print(gen_id('310000', age=30, gender='00'))
@@ -420,7 +419,7 @@ def gen_id(province=None, gender=None, age=None, result_type='SINGLE_STR'):
 
     输出结果::
 
-        --- gen_id demo ---
+        --- gen_random_id_card demo ---
         ['310109198610243547']
         ['310101197006245479']
         ['310101198808249062']
@@ -433,22 +432,22 @@ def gen_id(province=None, gender=None, age=None, result_type='SINGLE_STR'):
         ---
 
     """
-    province_records = IdCard.get_cn_idcard()
-    # 根据省份进行升序，便于后续 group_by 处理
-    sorted(province_records, key=lambda item: item[0])
-    # 获取以省份代码为键，省份内行政区划代码组成的列表为值的字典
-    records_dict = dict()
-    for _, records in groupby(province_records, key=lambda item: item[0]):
-        records_list = [item for item in records]
-        records_dict.update({records_list[0][2]: [i[2] for i in records_list[1:]]})
+    if zone:
+        province = zone[:2]
+    else:
+        province_list = IdCard.get_province_info()
+        province = random.choice(province_list)[0]
+        zone = province + '0000'
+    areanote_list = IdCard.get_areanote_info(province)
 
-    if not province:
-        province = random.choice(list(records_dict.keys()))
+    # 判断 zone 是否合法
+    if zone and (zone not in set([item[0] for item in areanote_list])):
+        raise ValueError('zone {} error, check and try again'.format(zone))
 
-    # 获取行政区划代码列表
-    zone_list = records_dict.get(province, [])
-    if not zone_list:
-        raise ValueError('province {} error, check and try again'.format(province))
+    # 删除省份编号，身份证前缀不包含省份编号
+    areanote_list.remove([item for item in areanote_list if item[0] == zone][0])
+
+    zone_list = [item[0] for item in areanote_list]
 
     total_num = 1 if result_type == 'SINGLE_STR' else 20
 

@@ -54,7 +54,7 @@ class TestFishRandom(object):
 
     # test get_random_zone_name() tc
     def test_get_random_zone_name_01(self):
-        zone_name = get_random_zone_name(310000)
+        zone_name = get_random_areanote(310000)
         assert zone_name in ['市辖区', '黄浦区', '南市区', '卢湾区', '徐汇区', '长宁区', '静安区',
                              '普陀区', '闸北区', '虹口区', '扬浦区', '闵行区', '宝山区', '嘉定区',
                              '浦东新区', '金山区', '松江区', '青浦区', '南汇区', '奉贤区', '市辖县',
@@ -63,7 +63,7 @@ class TestFishRandom(object):
     # test get_random_zone_name() tc
     def test_get_random_zone_name_02(self):
         with pytest.raises(ValueError):
-            get_random_zone_name('aa1234')
+            get_random_areanote('aa1234')
 
     # test gen_address() tc
     def test_gen_address_01(self):
@@ -87,17 +87,17 @@ class TestFishRandom(object):
 
     # test gen_id() tc
     def test_gen_id_01(self):
-        random_id_list = gen_id()
+        random_id_list = gen_random_id_card()
         assert len(random_id_list[0]) == 18
         # 测试身份证是否合法
         assert IdCard.check_number(random_id_list[0])
 
-        random_id_list_1 = gen_id('310000')
+        random_id_list_1 = gen_random_id_card('310000')
         assert (random_id_list_1[0]).startswith('310')
         # 测试身份证是否合法
         assert IdCard.check_number(random_id_list_1[0])
 
-        random_id_list_2 = gen_id('310000', age=30)
+        random_id_list_2 = gen_random_id_card('310000', age=30)
         year_now = datetime.datetime.now().year
         id_card_year = int(year_now) - 30
         # 测试身份证是否合法
@@ -105,7 +105,7 @@ class TestFishRandom(object):
         assert (random_id_list_2[0]).startswith('310')
         assert int((random_id_list_2[0][6:10])) == id_card_year
 
-        random_id_list_3 = gen_id('110000', age=20, gender='01', result_type='LIST')
+        random_id_list_3 = gen_random_id_card('110000', age=20, gender='01', result_type='LIST')
         # 测试身份证是否合法
         check_valid_list = list(map(IdCard.check_number, random_id_list_3))
         assert all(check_valid_list)
@@ -127,7 +127,7 @@ class TestFishRandom(object):
     # test gen_id() tc
     def test_gen_id_02(self):
         with pytest.raises(ValueError):
-            gen_id('123456')
+            gen_random_id_card('123456')
 
     # test gen_company_name() tc
     def test_gen_company_name_01(self):

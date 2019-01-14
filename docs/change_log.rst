@@ -9,6 +9,7 @@
 :meth:`fish_common.if_any_elements_is_space` :meth:`fish_common.remove_duplicate_elements` :meth:`fish_common.sorted_objs_by_attr`
 :meth:`fish_common.get_group_list_data` :meth:`fish_common.if_any_elements_is_letter` :meth:`fish_common.transform_hump_to_underline`,
 optimize;
+* `#204 <https://github.com/chinapnr/fishbase/issues/204>`_, random, edit function :meth:`fish_random.gen_random_id_card`, optimize;
 
 
 2018.12.31 v1.1.5
