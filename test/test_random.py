@@ -50,7 +50,7 @@ class TestFishRandom(object):
         with pytest.raises(ValueError):
             gen_float_by_range(1, '9')
         with pytest.raises(ValueError):
-            gen_float_by_range(1, 9, decimals='12')
+            gen_float_by_range(1.0, 9.5, decimals='12')
 
     # test get_random_zone_name() tc
     def test_get_random_zone_name_01(self):
