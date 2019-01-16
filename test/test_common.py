@@ -1,7 +1,7 @@
 # coding=utf-8
 # fish_common.py 单元测试
 # 2018.5.15 create by David Yi
-
+import string
 import pytest
 
 from fishbase.fish_common import *
@@ -67,8 +67,15 @@ class TestFishCommon(object):
         # 断言是否保序
         assert list(d.keys()) == list1
 
-    # 测试 GetMD5()  tc
+    # 测试 FishMD5()  tc
     def test_md5_01(self):
+        assert FishMD5.string('hello world!') == 'fc3ff98e8c6a0d3087d515c0473f8677'
+        # different line separator will get different md5 value
+        assert FishMD5.file(conf_filename) in ['c73ec5050bbff26ade9330bbe0bd7a25',
+                                               '8d4f03dc6b223bd199be6aa53d5d4f5c']
+        assert FishMD5.big_file(conf_filename) in ['c73ec5050bbff26ade9330bbe0bd7a25',
+                                                   '8d4f03dc6b223bd199be6aa53d5d4f5c']
+
         assert GetMD5.string('hello world!') == 'fc3ff98e8c6a0d3087d515c0473f8677'
         # different line separator will get different md5 value
         assert GetMD5.file(conf_filename) in ['c73ec5050bbff26ade9330bbe0bd7a25',
@@ -76,28 +83,30 @@ class TestFishCommon(object):
         assert GetMD5.big_file(conf_filename) in ['c73ec5050bbff26ade9330bbe0bd7a25',
                                                   '8d4f03dc6b223bd199be6aa53d5d4f5c']
 
-    # 测试 GetMD5()  tc
+    # 测试 FishMD5()  tc
     def test_md5_02(self):
 
-        assert GetMD5.string('hello world') != 'fc3ff98e8c6a0d3087d515c0473f8677'
+        assert FishMD5.string('hello world') != 'fc3ff98e8c6a0d3087d515c0473f8677'
 
         if sys.version > '3':
             with pytest.raises(FileNotFoundError):
-                GetMD5.file(error_conf_filename)
+                FishMD5.file(error_conf_filename)
         else:
             with pytest.raises(IOError):
-                GetMD5.file(error_conf_filename)
+                FishMD5.file(error_conf_filename)
 
-        assert GetMD5.file(conf_filename) != 'bb7528c9778b2377e30b0f7e4c26fef0'
+        assert FishMD5.file(conf_filename) != 'bb7528c9778b2377e30b0f7e4c26fef0'
 
-    # 测试 GetMD5()  tc
+    # 测试 FishMD5()  tc
     def test_md5_03(self):
         salt = 'm4xV2yGFSn'
+        assert FishMD5.string('hello world!', salt) == '984d47991401fad7d920a30f715cfd22'
         assert GetMD5.string('hello world!', salt) == '984d47991401fad7d920a30f715cfd22'
 
-    # 测试 GetMD5()  tc
+    # 测试 FishMD5()  tc
     def test_md5_04(self):
         salt = 'salt'
+        assert FishMD5.hmac_md5('hello world!', salt) == '191f82804523bfdafe0188bbbddd6587'
         assert GetMD5.hmac_md5('hello world!', salt) == '191f82804523bfdafe0188bbbddd6587'
 
     # 测试 if_json_contain()  tc
@@ -114,13 +123,13 @@ class TestFishCommon(object):
         assert if_json_contain(json01, json11) is False
         assert if_json_contain(json01, json12) is False
 
-    # 测试 splice_url_params()  tc
-    def test_splice_url_params_01(self):
+    # 测试 join_url_params()  tc
+    def test_join_url_params_01(self):
 
         dic01 = {'key1': 'value1', 'key2': 'value2'}
         dic02 = {'key1': '1111', 'key2': 'value2'}
 
-        assert splice_url_params(dic01) == '?key1=value1&key2=value2'
+        assert join_url_params(dic01) == '?key1=value1&key2=value2'
         assert splice_url_params(dic02) != '?key1=value1&key2=value2'
 
     # test singleton() test case
@@ -182,23 +191,25 @@ class TestFishCommon(object):
 
         assert list1 == ['z_value', 'a_value', 'A_value', '1_value']
 
-    # test check_str() tc
-    def test_check_str_01(self):
+    # test has_special_char() tc
+    def test_has_special_char_01(self):
         non_chinese_str = 'meiyouzhongwen'
         chinese_str = u'有zhongwen'
         non_num_str = 'nonnumberstring'
         num_str = 'number123'
         
-        assert is_contain_special_char(non_chinese_str, check_style=charChinese) is False
-        assert is_contain_special_char(chinese_str, check_style=charChinese) is True
-        assert is_contain_special_char(non_num_str, check_style=charNum) is False
-        assert is_contain_special_char(num_str, check_style=charNum) is True
+        assert has_special_char(non_chinese_str, check_style=charChinese) is False
+        assert has_special_char(chinese_str, check_style=charChinese) is True
+        assert has_special_char(non_num_str, check_style=charNum) is False
+        assert has_special_char(num_str, check_style=charNum) is True
+        assert has_special_char(non_num_str, check_style=10020) is False
+
         assert is_contain_special_char(non_num_str, check_style=10020) is False
 
         if sys.version > '3':
             chinese_str1 = u'有zhongwen'.encode('gbk')
             with pytest.raises(TypeError):
-                is_contain_special_char(chinese_str1, check_style=charChinese)
+                has_special_char(chinese_str1, check_style=charChinese)
 
     # test find_files() tc
     def test_find_files_01(self):
@@ -214,16 +225,20 @@ class TestFishCommon(object):
         assert (hmac_sha256(secret, message) ==
                 '5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f')
 
-    # test GetSha256.hmac_sha256() tc
+    # test FishSha256.hmac_sha256() tc
     def test_hmac_sha256_02(self):
         message = 'Hello HMAC'
         secret = '12345678'
+        assert (FishSha256.hmac_sha256(secret, message) ==
+                '5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f')
         assert (GetSha256.hmac_sha256(secret, message) ==
                 '5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f')
 
-    # test GetSha256.hashlib_sha256() tc
+    # test FishSha256.hashlib_sha256() tc
     def test_hashlib_sha256_01(self):
         message = 'Hello HMAC'
+        assert (FishSha256.hashlib_sha256(message) ==
+                '4a1601381dfb85d6e713853a414f6b43daa76a82956911108512202f5a1c0ce4')
         assert (GetSha256.hashlib_sha256(message) ==
                 '4a1601381dfb85d6e713853a414f6b43daa76a82956911108512202f5a1c0ce4')
 
@@ -255,7 +270,7 @@ class TestFishCommon(object):
         assert len(get_random_str(6)) == 6
     
         import re
-    
+
         digits_pattern = re.compile('[0-9]+')
         letters_pattern = re.compile('[a-zA-Z]+')
         letters_digits_pattern = re.compile('[0-9a-zA-Z]+')
@@ -276,54 +291,60 @@ class TestFishCommon(object):
     
         assert len(get_random_str(12, letters=False, digits=True, punctuation=True)) == 12
 
-    # test if_any_elements_is_space() tc
-    def test_if_any_elements_is_space_01(self):
-
+    # test has_space_element() tc
+    def test_has_space_element_01(self):
         assert if_any_elements_is_space([1, 2, 'test_str']) is False
 
-        assert if_any_elements_is_space([0, 2]) is False
+        assert has_space_element([1, 2, 'test_str']) is False
 
-        assert if_any_elements_is_space([1, 2, None]) is True
+        assert has_space_element([0, 2]) is False
 
-        assert if_any_elements_is_space((1, [1, 2], 3, '')) is True
+        assert has_space_element([1, 2, None]) is True
 
-        assert if_any_elements_is_space({'a': 1, 'b': 0}) is False
+        assert has_space_element((1, [1, 2], 3, '')) is True
 
-        assert if_any_elements_is_space({'a': 1, 'b': []}) is True
+        assert has_space_element({'a': 1, 'b': 0}) is False
+
+        assert has_space_element({'a': 1, 'b': []}) is True
         
         with pytest.raises(TypeError):
-            if_any_elements_is_space("test_str")
+            has_space_element("test_str")
 
-    # test remove_duplicate_elements() tc
-    def test_remove_duplicate_elements_01(self):
+    # test get_distinct_elements() tc
+    def test_get_distinct_elements_01(self):
         list1 = [1, 5, 2, 1, 9, 1, 5, 10]
+        assert list(get_distinct_elements(list1)) == [1, 5, 2, 9, 10]
         assert list(remove_duplicate_elements(list1)) == [1, 5, 2, 9, 10]
-    
+
         list2 = [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 1, 'y': 2}, {'x': 2, 'y': 4}]
     
-        dict_demo1 = remove_duplicate_elements(list2, key=lambda d: (d['x'], d['y']))
+        dict_demo1 = get_distinct_elements(list2, key=lambda d: (d['x'], d['y']))
         assert (list(dict_demo1)) == [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 2, 'y': 4}]
     
-        dict_demo2 = remove_duplicate_elements(list2, key=lambda d: d['x'])
+        dict_demo2 = get_distinct_elements(list2, key=lambda d: d['x'])
         assert (list(dict_demo2)) == [{'x': 1, 'y': 2}, {'x': 2, 'y': 4}]
     
-        dict_demo3 = remove_duplicate_elements(list2, key=lambda d: d['y'])
+        dict_demo3 = get_distinct_elements(list2, key=lambda d: d['y'])
         assert (list(dict_demo3)) == [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 2, 'y': 4}]
 
-    # test sorted_objs_by_attr() tc
-    def test_sorted_objs_by_attr_01(self):
+    # test sort_objs_by_attr() tc
+    def test_sort_objs_by_attr_01(self):
         class User(object):
             def __init__(self, user_id):
                 self.user_id = user_id
     
         users = [User(23), User(3), User(99)]
-        result = sorted_objs_by_attr(users, key='user_id')
-        assert result[0].user_id == 3
-        reverse_result = sorted_objs_by_attr(users, key='user_id', reverse=True)
+        result_0 = sort_objs_by_attr(users, key='user_id')
+        assert result_0[0].user_id == 3
+
+        result_1 = sorted_objs_by_attr(users, key='user_id')
+        assert result_1[0].user_id == 3
+        
+        reverse_result = sort_objs_by_attr(users, key='user_id', reverse=True)
         assert reverse_result[0].user_id == 99
 
-    # test sorted_objs_by_attr() tc
-    def test_sorted_objs_by_attr_02(self):
+    # test sort_objs_by_attr() tc
+    def test_sort_objs_by_attr_02(self):
         class User(object):
             def __init__(self, user_id):
                 self.user_id = user_id
@@ -331,9 +352,9 @@ class TestFishCommon(object):
         users = [User(23), User(3), User(99)]
     
         with pytest.raises(AttributeError):
-            sorted_objs_by_attr(users, key='user_id1')
+            sort_objs_by_attr(users, key='user_id1')
     
-        assert len(sorted_objs_by_attr([], key='user_id')) == 0
+        assert len(sort_objs_by_attr([], key='user_id')) == 0
 
     # test get_query_param_from_url() tc
     def test_get_query_param_from_url_01(self):
@@ -343,22 +364,25 @@ class TestFishCommon(object):
         assert 'page_number' in query_dict
         assert '20180515' in query_dict['start_time']
 
-    # test get_group_list_data() tc
-    def test_get_group_list_data_01(self):
+    # test paging() tc
+    def test_paging_01(self):
         all_records = list(range(100))
-        res = get_group_list_data(all_records, group_number=7, group_size=15)
-        assert res == [90, 91, 92, 93, 94, 95, 96, 97, 98, 99]
+        result_0 = paging(all_records, group_number=7, group_size=15)
+        assert result_0 == [90, 91, 92, 93, 94, 95, 96, 97, 98, 99]
 
-    # test get_group_list_data() tc
-    def test_get_group_list_data_02(self):
+        result_1 = get_group_list_data(all_records, group_number=7, group_size=15)
+        assert result_1 == [90, 91, 92, 93, 94, 95, 96, 97, 98, 99]
+
+    # test paging() tc
+    def test_paging_02(self):
         with pytest.raises(TypeError):
-            get_group_list_data('test')
-    
+            paging('test')
+
         with pytest.raises(TypeError):
-            get_group_list_data(list(range(10)), group_number='asdsa')
+            paging(list(range(10)), group_number='asdsa')
     
         with pytest.raises(ValueError):
-            get_group_list_data(list(range(10)), group_number=-4)
+            paging(list(range(10)), group_number=-4)
 
     # test get_sub_dict() tc
     def test_get_sub_dict_01(self):
@@ -384,13 +408,15 @@ class TestFishCommon(object):
         with pytest.raises(TypeError):
             get_sub_dict('test_dict', list1)
 
-    # test transform_hump_to_underline() tc
-    def test_transform_hump_to_underline(self):
+    # test camelcase_to_underline() tc
+    def test_camelcase_to_underline(self):
         hump_param_dict = {'firstName': 'Python', 'Second_Name': 'zhangshan', 'right_name': 'name'}
-        underline_param_dict = transform_hump_to_underline(hump_param_dict)
+        result_0 = camelcase_to_underline(hump_param_dict)
+        result_1 = transform_hump_to_underline(hump_param_dict)
 
-        assert 'firstName' not in underline_param_dict
-        assert 'first_name' in underline_param_dict
+        assert 'firstName' not in result_0
+        assert 'first_name' in result_0
+        assert 'first_name' in result_1
 
     # test find_same_between_dicts() tc
     def test_find_same_between_dicts_01(self):
@@ -427,10 +453,11 @@ class TestFishCommon(object):
         assert ds[0] is False
         assert ds[-1] == 'File not exist'
 
-    # 测试 if_any_elements_is_letter() tc
-    def test_if_any_elements_is_letter(self):
+    # 测试 fish_isalpha() tc
+    def test_fish_isalpha(self):
         letter_str = 'test'
         mix_str = 'mix123'
 
-        assert if_any_elements_is_letter(letter_str)
+        assert fish_isalpha(letter_str)
+        assert not fish_isalpha(mix_str)
         assert not if_any_elements_is_letter(mix_str)

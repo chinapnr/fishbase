@@ -9,14 +9,16 @@
 # 2019.1.13 edit by David Yi, #202 优化 class CardBin(), class IdCard()
 
 # 2018.12.26 v1.1.5 created
+import string
 import random
 from fishbase.fish_date import GetRandomTime, FishDateTimeFormat
-from fishbase.fish_common import get_random_str
 from fishbase.fish_data import CardBin, IdCard
 
 
+# v1.1.6 edit by Hu Jun #200 合并 fish_common.get_random_str 为 gen_random_str
 # v1.1.5 edit by Hu Jun #163
-def gen_string_by_range(min_length, max_length, prefix=None, suffix=None):
+def gen_random_str(min_length, max_length, prefix=None, suffix=None,
+                   has_letter=True, has_digit=False, has_punctuation=False):
     """
     指定一个前后缀以及字符串长度，返回随机生成带有前后缀及指定长度的字符串
 
@@ -25,16 +27,21 @@ def gen_string_by_range(min_length, max_length, prefix=None, suffix=None):
         * max_length: (int) 字符串最小长度
         * prefix: (string) 字符串前缀
         * suffix: (string) 字符串后缀
+        * has_letter: (bool) 字符串时候包含字母，默认为 True
+        * has_digit: (bool) 字符串是否包含数字，默认为 False
+        * has_punctuation: (bool) 字符串是否包含标点符号，默认为 False
 
     :return:
         * random_str: (string) 指定长度、前后缀的随机字符串
-    
+
     举例如下::
 
-        print('--- gen_string_by_range demo ---')
-        print(gen_string_by_range(5, 7))
-        print(gen_string_by_range(5, 7, prefix='FISHBASE_'))
-        print(gen_string_by_range(5, 7, prefix='FISHBASE_', suffix='.py'))
+        print('--- gen_random_str demo ---')
+        print(gen_random_str(5, 7))
+        print(gen_random_str(5, 7, prefix='FISHBASE_'))
+        print(gen_random_str(5, 7, prefix='FISHBASE_', suffix='.py'))
+        print(gen_random_str(5, 7, has_digit=True, has_punctuation=True))
+        print(gen_random_str(5, 7, prefix='FISHBASE_', has_digit=True, has_punctuation=True))
         print('---')
 
     执行结果::
@@ -43,6 +50,8 @@ def gen_string_by_range(min_length, max_length, prefix=None, suffix=None):
         q4uo6E8
         FISHBASE_8uCBEUH
         FISHBASE_D4wRX2.py
+        FISHBASE_65nqlNs
+        FISHBASE_3"uFm$s
         ---
     """
     if not all([isinstance(min_length, int), isinstance(max_length, int)]):
@@ -52,18 +61,34 @@ def gen_string_by_range(min_length, max_length, prefix=None, suffix=None):
     if min_length > max_length:
         raise ValueError('min_length should less than or equal to max_length')
 
+    # 避免随机源为空
+    if not any([has_letter, has_digit, has_punctuation]):
+        raise ValueError('At least one value is True in has_letter, has_digit and has_punctuation')
+
     random_str_len = random.randint(min_length, max_length)
-    init_rand_str = get_random_str(random_str_len, digits=True)
+
+    random_source = ''
+    random_source += string.ascii_letters if has_letter else ''
+    random_source += string.digits if has_digit else ''
+    random_source += string.punctuation if has_punctuation else ''
+
+    # 避免出现 ValueError: Sample larger than population or is negative
+    if random_str_len > len(random_source):
+        random_source *= (random_str_len // len(random_source) + 1)
+
+    mid_random_str = ''.join(random.sample(random_source, random_str_len))
+
     prefix = prefix if prefix else ''
     suffix = suffix if suffix else ''
 
-    random_str = ''.join([prefix, init_rand_str, suffix])
+    random_str = ''.join([prefix, mid_random_str, suffix])
 
     return random_str
 
 
+# v1.1.6 add by Hu Jun #204
 # v1.1.5 add by Jia Chunying #171
-def gen_name(family_name=None, gender=None, length=None):
+def gen_random_name(family_name=None, gender=None, length=None):
     """
     指定姓氏、性别、长度，返回随机人名，也可不指定生成随机人名
 
@@ -77,37 +102,41 @@ def gen_name(family_name=None, gender=None, length=None):
 
     举例如下::
 
-        print('--- gen_name demo ---')
+        print('--- gen_random_name demo ---')
         print(gen_name())
         print(gen_name("赵","01", 3))
         print('---')
 
     执行结果::
 
-        --- gen_name demo ---
+        --- gen_random_name demo ---
         师艺
         赵群腾
         ---
 
     """
-    family_word = "赵钱孙李周吴郑王冯陈褚卫蒋沈韩杨朱秦尤许何吕施张孔曹严华金魏陶姜戚谢邹喻柏水窦章云苏潘葛奚范彭郎鲁韦昌马苗凤花" \
-                  "方俞任袁柳酆鲍史唐费廉岑薛雷贺倪汤滕殷罗毕郝邬安常乐于时傅皮卞齐康伍余元卜顾孟平黄和穆萧尹姚邵湛汪祁毛禹狄米贝" \
-                  "明臧计伏成戴谈宋茅庞熊纪舒屈项祝董梁杜阮蓝闵席季麻强贾路娄危江童颜郭梅盛林刁钟徐邱骆高夏蔡田樊胡凌霍虞万支柯咎" \
-                  "管卢莫经房裘缪干解应宗宣丁贲邓郁单杭洪包诸左石崔吉钮龚程嵇邢滑裴陆荣翁荀羊於惠甄魏加封芮羿储靳汲邴糜松井段富巫" \
-                  "乌焦巴弓牧隗山谷车侯宓蓬全郗班仰秋仲伊宫宁仇栾暴甘钭厉戎祖武符刘姜詹束龙叶幸司韶郜黎蓟薄印宿白怀蒲台从鄂索咸籍" \
-                  "赖卓蔺屠蒙池乔阴郁胥能苍双闻莘党翟谭贡劳逄姬申扶堵冉宰郦雍却璩桑桂濮牛寿通边扈燕冀郏浦尚农温别庄晏柴瞿阎充慕连" \
-                  "茹习宦艾鱼容向古易慎戈廖庚终暨居衡步都耿满弘匡国文寇广禄阙东殴殳沃利蔚越夔隆师巩厍聂晁勾敖融冷訾辛阚那简饶空曾" \
-                  "毋沙乜养鞠须丰巢关蒯相查后江红游竺权逯盖益桓公万俟司马上官欧阳夏侯诸葛闻人东方赫连皇甫尉迟公羊澹台公冶宗政濮阳" \
-                  "淳于仲孙太叔申屠公孙乐正轩辕令狐钟离闾丘长孙慕容鲜于宇文司徒司空亓官司寇仉督子车颛孙端木巫马公西漆雕乐正壤驷公" \
-                  "良拓拔夹谷宰父谷粱晋楚阎法汝鄢涂钦段干百里东郭南门呼延归海羊舌微生岳帅缑亢况后有琴梁丘左丘东门西门商牟佘佴伯赏" \
-                  "南宫墨哈谯笪年爱阳佟第五言福百家姓续"
+    family_word = ("赵钱孙李周吴郑王冯陈褚卫蒋沈韩杨朱秦尤许何吕施张孔曹严华金魏陶姜戚谢邹喻柏水窦章云苏潘葛"
+                   "奚范彭郎鲁韦昌马苗凤花方俞任袁柳酆鲍史唐费廉岑薛雷贺倪汤滕殷罗毕郝邬安常乐于时傅皮卞齐康"
+                   "伍余元卜顾孟平黄和穆萧尹姚邵湛汪祁毛禹狄米贝明臧计伏成戴谈宋茅庞熊纪舒屈项祝董梁杜阮蓝闵"
+                   "席季麻强贾路娄危江童颜郭梅盛林刁钟徐邱骆高夏蔡田樊胡凌霍虞万支柯咎管卢莫经房裘缪干解应宗"
+                   "宣丁贲邓郁单杭洪包诸左石崔吉钮龚程嵇邢滑裴陆荣翁荀羊於惠甄魏加封芮羿储靳汲邴糜松井段富巫"
+                   "乌焦巴弓牧隗山谷车侯宓蓬全郗班仰秋仲伊宫宁仇栾暴甘钭厉戎祖武符刘姜詹束龙叶幸司韶郜黎蓟薄"
+                   "印宿白怀蒲台从鄂索咸籍赖卓蔺屠蒙池乔阴郁胥能苍双闻莘党翟谭贡劳逄姬申扶堵冉宰郦雍却璩桑桂"
+                   "濮牛寿通边扈燕冀郏浦尚农温别庄晏柴瞿阎充慕连茹习宦艾鱼容向古易慎戈廖庚终暨居衡步都耿满弘"
+                   "匡国文寇广禄阙东殴殳沃利蔚越夔隆师巩厍聂晁勾敖融冷訾辛阚那简饶空曾毋沙乜养鞠须丰巢关蒯相"
+                   "查后江红游竺权逯盖益桓公万俟司马上官欧阳夏侯诸葛闻人东方赫连皇甫尉迟公羊澹台公冶宗政濮阳"
+                   "淳于仲孙太叔申屠公孙乐正轩辕令狐钟离闾丘长孙慕容鲜于宇文司徒司空亓官司寇仉督子车颛孙端木"
+                   "巫马公西漆雕乐正壤驷公良拓拔夹谷宰父谷粱晋楚阎法汝鄢涂钦段干百里东郭南门呼延归海羊舌微生"
+                   "岳帅缑亢况后有琴梁丘左丘东门西门商牟佘佴伯赏南宫墨哈谯笪年爱阳佟第五言福百家姓续")
 
-    name_dict = {"00": "秀娟英华慧巧美娜静淑惠珠翠雅芝玉萍红娥玲芬芳燕彩春菊兰凤洁梅琳素云莲真环雪荣爱妹霞香月莺媛艳瑞凡佳嘉琼勤珍"
-                       "贞莉桂娣叶璧璐娅琦晶妍茜秋珊莎锦黛青倩婷姣婉娴瑾颖露瑶怡婵雁蓓纨仪荷丹蓉眉君琴蕊薇菁梦岚苑婕馨瑗琰韵融园艺"
-                       "咏卿聪澜纯毓悦昭冰爽琬茗羽希宁欣飘育滢馥筠柔竹霭凝晓欢霄枫芸菲寒伊亚宜可姬舒影荔枝思丽",
-                 "01": "伟刚勇毅俊峰强军平保东文辉力明永健世广志义兴良海山仁波宁贵福生龙元全国胜学祥才发武新利清飞彬富顺信子杰涛昌"
-                       "成康星光天达安岩中茂进林有坚和彪博诚先敬震振壮会思群豪心邦承乐绍功松善厚庆磊民友裕河哲江超浩亮政谦亨奇固之"
-                       "轮翰朗伯宏言若鸣朋斌梁栋维启克伦翔旭鹏泽晨辰士以建家致树炎德行时泰盛雄琛钧冠策腾楠榕风航弘"}
+    name_dict = {"00": ("秀娟英华慧巧美娜静淑惠珠翠雅芝玉萍红娥玲芬芳燕彩春菊兰凤洁梅琳素云莲真环雪荣爱妹霞"
+                        "香月莺媛艳瑞凡佳嘉琼勤珍贞莉桂娣叶璧璐娅琦晶妍茜秋珊莎锦黛青倩婷姣婉娴瑾颖露瑶怡婵"
+                        "雁蓓纨仪荷丹蓉眉君琴蕊薇菁梦岚苑婕馨瑗琰韵融园艺咏卿聪澜纯毓悦昭冰爽琬茗羽希宁欣飘"
+                        "育滢馥筠柔竹霭凝晓欢霄枫芸菲寒伊亚宜可姬舒影荔枝思丽"),
+                 "01": ("伟刚勇毅俊峰强军平保东文辉力明永健世广志义兴良海山仁波宁贵福生龙元全国胜学祥才发武"
+                        "新利清飞彬富顺信子杰涛昌成康星光天达安岩中茂进林有坚和彪博诚先敬震振壮会思群豪心邦"
+                        "承乐绍功松善厚庆磊民友裕河哲江超浩亮政谦亨奇固之轮翰朗伯宏言若鸣朋斌梁栋维启克伦翔"
+                        "旭鹏泽晨辰士以建家致树炎德行时泰盛雄琛钧冠策腾楠榕风航弘")}
 
     if family_name is None:
         family_name = random.choice(family_word)
@@ -120,8 +149,9 @@ def gen_name(family_name=None, gender=None, length=None):
     return full_name
 
 
+# v1.1.6 add by Hu Jun #204
 # v1.1.5 add by Jia Chunying #166
-def gen_mobile():
+def gen_random_mobile():
     """
     随机生成一个手机号
 
@@ -130,14 +160,14 @@ def gen_mobile():
 
     举例如下::
 
-        print('--- gen_mobile demo ---')
-        print(gen_mobile())
-        print(gen_mobile())
+        print('--- gen_random_mobile demo ---')
+        print(gen_random_mobile())
+        print(gen_random_mobile())
         print('---')
 
     执行结果::
 
-        --- gen_mobile demo ---
+        --- gen_random_mobile demo ---
         16706146773
         14402633925
         ---
@@ -154,9 +184,10 @@ def gen_mobile():
     return prefix_str + "".join(random.choice("0123456789") for _ in range(11 - len(prefix_str)))
 
 
-# v1.1.5 edit by Hu Jun #162
+# v1.1.6 edit by Hu Jun #204
 # v1.1.6 edit by Hu Jun #190
-def gen_float_by_range(minimum, maximum, decimals=2):
+# v1.1.5 edit by Hu Jun #162
+def gen_random_float(minimum, maximum, decimals=2):
     """
     指定一个浮点数范围，随机生成并返回区间内的一个浮点数，区间为闭区间
     受限于 random.random 精度限制，支持最大 15 位精度
@@ -171,15 +202,15 @@ def gen_float_by_range(minimum, maximum, decimals=2):
 
     举例如下::
 
-        print('--- gen_float_by_range demo ---')
-        print(gen_float_by_range(1.0, 9.0))
-        print(gen_float_by_range(1.0, 9.0, decimals=10))
-        print(gen_float_by_range(1.0, 9.0, decimals=20))
+        print('--- gen_random_float demo ---')
+        print(gen_random_float(1.0, 9.0))
+        print(gen_random_float(1.0, 9.0, decimals=10))
+        print(gen_random_float(1.0, 9.0, decimals=20))
         print('---')
 
     执行结果::
 
-        --- gen_float_by_range demo ---
+        --- gen_random_float demo ---
         6.08
         6.8187342239
         2.137902497554043
@@ -201,6 +232,7 @@ def gen_float_by_range(minimum, maximum, decimals=2):
             return random_float
 
 
+# v1.1.6 edit by Hu Jun #204
 # v1.1.5 edit by Hu Jun #173
 def get_random_areanote(zone):
     """
@@ -232,7 +264,7 @@ def get_random_areanote(zone):
     province_name_list = [item for item in areanote_list if item[0] == str(zone)]
 
     if not (areanote_list and province_name_list):
-        raise ValueError('province_zone error, please check and try again')
+        raise ValueError('zone error, please check and try again')
 
     # 只选取下辖区域
     areanote_list.remove(province_name_list[0])
@@ -243,8 +275,9 @@ def get_random_areanote(zone):
     return full_areanote.split(province_name)[-1]
 
 
+# v1.1.6 edit by Hu Jun #204
 # v1.1.5 edit by Hu Jun #170
-def gen_address(zone):
+def gen_random_address(zone):
     """
     通过省份行政区划代码，返回该省份的随机地址
 
@@ -271,7 +304,7 @@ def gen_address(zone):
     province = str(zone)[:2]
     areanote = IdCard.get_areanote_info(province)
     if not areanote:
-        raise ValueError('province_zone error, please check and try again')
+        raise ValueError('zone error, please check and try again')
     # 第一项是省份名称
     province_name = areanote[0][-1]
     areanote_info = get_random_areanote(zone)
@@ -337,19 +370,19 @@ def gen_address(zone):
     random_addr = random.choice(address_word.split(','))
     if random_addr.endswith('路') or random_addr.endswith('街'):
         random_addr = ''.join([random_addr, str(random.randint(1, 1000)), '号'])
-    address_pattern = '{province_name}{area_info}{random_addr}'
+    address_pattern = '{province_name}{areanote_info}{random_addr}'
     return address_pattern.format(province_name=province_name,
-                                  area_info=areanote_info,
+                                  areanote_info=areanote_info,
                                   random_addr=random_addr)
 
 
 # v1.1.5 edit by Hu Jun #172
-def gen_bank_card(bank_name, card_type):
+def gen_random_bank_card(bankname, card_type):
     """
     通过指定的银行名称，随机生成该银行的卡号
 
     :param:
-        * bank_name: (string) 银行名称 eg. 中国银行
+        * bankname: (string) 银行名称 eg. 中国银行
         * card_type：(string) 卡种类，可选 CC(信用卡)、DC(借记卡)
 
     :returns:
@@ -357,41 +390,46 @@ def gen_bank_card(bank_name, card_type):
 
     举例如下::
 
-        print('--- gen_bank_card demo ---')
+        print('--- gen_random_bank_card demo ---')
         print(gen_bank_card('中国银行', 'CC'))
         print(gen_bank_card('中国银行', 'DC'))
         print('---')
 
     输出结果::
 
-        --- gen_bank_card demo ---
+        --- gen_random_bank_card demo ---
         6259073791134721
         6212836989522229131
         ---
 
     """
-    bank = CardBin.get_bank_info(bank_name)
-    if not bank:
-        raise ValueError('bank_name {} error, check and try again'.format(bank_name))
+    bank_info = CardBin.get_bank_info(bankname)
+    if not bank_info:
+        raise ValueError('bankname {} error, check and try again'.format(bankname))
 
     # 获取银行代码
-    bank_code = bank[0][0]
+    bank = bank_info[0][0]
 
     # 获取 cardbin
-    all_card_bin = CardBin.get_cardbin_info(bank_code, card_type)
-    random_cardbin_info = random.choice(all_card_bin)
+    cardbin_info = CardBin.get_cardbin_info(bank, card_type)
+    if not cardbin_info:
+        raise ValueError('card_type {} error, check and try again'.format(card_type))
 
-    card_bin = random_cardbin_info[0]
-    card_len = random_cardbin_info[-1]
-    card_prefix = card_bin
+    random_cardbin = random.choice(cardbin_info)
+
+    cardbin = random_cardbin[0]
+    card_len = random_cardbin[-1]
+
+    # 银行卡前缀
+    card_number_str = cardbin
 
     # 随机生成前N-1位
-    while len(card_prefix) < card_len - 1:
-        card_prefix += str(random.randint(0, 9))
+    while len(card_number_str) < card_len - 1:
+        card_number_str += str(random.randint(0, 9))
 
     # 获取校验位
-    check_code = CardBin.get_checkcode(card_prefix)
-    return card_prefix + check_code
+    check_code = CardBin.get_checkcode(card_number_str)
+    return card_number_str + check_code
 
 
 # v1.1.5 edit by Hu Jun #165
@@ -485,8 +523,9 @@ def gen_random_id_card(zone=None, gender=None, age=None, result_type='SINGLE_STR
     return id_num_list
 
 
+# v1.1.6 edit by Hu Jun #204
 # v1.1.5 edit by Hu Jun #171
-def gen_company_name():
+def gen_random_company_name():
     """
     随机生成一个公司名称
 
@@ -495,13 +534,13 @@ def gen_company_name():
 
     举例如下::
 
-        print('--- gen_company_name demo ---')
-        print(gen_company_name())
+        print('--- gen_random_company_name demo ---')
+        print(gen_random_company_name())
         print('---')
 
     输出结果::
 
-        --- gen_company_name demo ---
+        --- gen_random_company_name demo ---
         上海大升旅游质询有限责任公司
         ---
 

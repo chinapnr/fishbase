@@ -18,8 +18,6 @@ import hashlib
 import hmac
 import os
 import base64
-import string
-import random
 import warnings
 
 import yaml
@@ -47,6 +45,14 @@ odDES = 10012
 # character kind const
 charChinese = 10021
 charNum = 10022
+
+
+# v1.1.6 edit by Hu Jun
+def show_deprecation_warn(old_fun, suggest_fun):
+    warnings.simplefilter('always')
+    warnings.warn('{} is deprecated, and in 2.x it will stop working. '
+                  'Use {} instead.'.format(old_fun, suggest_fun),
+                  DeprecationWarning, stacklevel=2)
 
 
 # 读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
@@ -255,10 +261,7 @@ get_time_uuid = functools.partial(get_uuid, udTime)
 
 # 2019.01.05 v1.1.6 edit by Hu Jun, #152
 def if_any_elements_is_space(dic):
-    warnings.simplefilter('always')
-    warnings.warn('if_any_elements_is_space is deprecated, and in 2.x it will stop working. '
-                  'Use has_space_element instead.',
-                  DeprecationWarning, stacklevel=2)
+    show_deprecation_warn('if_any_elements_is_space', 'has_space_element')
     return has_space_element(dic)
 
 
@@ -342,10 +345,7 @@ def if_any_elements_is_number(source):
 
 # 2019.01.05 v1.1.6 edit by Hu Jun, #152
 def if_any_elements_is_letter(source):
-    warnings.simplefilter('always')
-    warnings.warn('if_any_elements_is_letter is deprecated, and in 2.x it will stop working. '
-                  'Use fish_isalpha instead.',
-                  DeprecationWarning, stacklevel=2)
+    show_deprecation_warn('if_any_elements_is_letter', 'fish_isalpha')
     return fish_isalpha(source)
 
 
@@ -381,24 +381,24 @@ class FishCache:
 
 # 2019.01.06 edit by Hu Jun, #152
 class GetMD5(object):
-    warnings.simplefilter('always')
-    warnings.warn('GetMD5 is deprecated, and in 2.0 it will stop working. Use FishMD5 instead.',
-                  DeprecationWarning)
-
     @staticmethod
     def string(s, salt=None):
+        show_deprecation_warn('GetMD5.sting', 'FishMD5.string')
         return FishMD5.string(s, salt=salt)
 
     @staticmethod
     def file(filename):
+        show_deprecation_warn('GetMD5.file', 'FishMD5.file')
         return FishMD5.file(filename)
 
     @staticmethod
     def big_file(filename):
+        show_deprecation_warn('GetMD5.big_file', 'FishMD5.big_file')
         return FishMD5.big_file(filename)
 
     @staticmethod
     def hmac_md5(s, salt):
+        show_deprecation_warn('GetMD5.hmac_md5', 'FishMD5.hmac_md5')
         return FishMD5.hmac_md5(s, salt)
 
 
@@ -537,10 +537,7 @@ def if_json_contain(left_json, right_json, op='strict'):
 
 # 2019.01.05 v1.1.6 edit by Hu Jun, #152
 def splice_url_params(dic):
-    warnings.simplefilter('always')
-    warnings.warn('splice_url_params is deprecated, and in 2.x it will stop working. '
-                  'Use join_url_params instead.',
-                  DeprecationWarning, stacklevel=2)
+    show_deprecation_warn('splice_url_params', 'join_url_params')
     return join_url_params(dic)
 
 
@@ -626,10 +623,7 @@ def sorted_list_from_dict(p_dict, order=odASC):
 
 # 2019.01.05 v1.1.6 edit by Hu Jun, #152
 def is_contain_special_char(p_str, check_style=charChinese):
-    warnings.simplefilter('always')
-    warnings.warn('is_contain_special_char is deprecated, and in 2.x it will stop working. '
-                  'Use has_special_char instead.',
-                  DeprecationWarning, stacklevel=2)
+    show_deprecation_warn('is_contain_special_char', 'has_special_char')
     return has_special_char(p_str, check_style=check_style)
 
 
@@ -796,8 +790,9 @@ class Base64:
         return base64.b64decode(s)
 
 
-# v1.0.14 edit by Hu Jun, #51
+# v1.1.6 edit by Hu Jun, #200
 # v1.1.1 edit by Hu Jun, #115
+# v1.0.14 edit by Hu Jun, #51
 def get_random_str(length, letters=True, digits=False, punctuation=False):
     """
     获得指定长度，不同规则的随机字符串，可以包含数字，字母和标点符号
@@ -832,25 +827,15 @@ def get_random_str(length, letters=True, digits=False, punctuation=False):
         ---
 
     """
-    random_source = ''
-    random_source += string.ascii_letters if letters else ''
-    random_source += string.digits if digits else ''
-    random_source += string.punctuation if punctuation else ''
-
-    # 避免出现 ValueError: Sample larger than population or is negative
-    if length > len(random_source):
-        random_source *= (length//len(random_source) + 1)
-
-    random_str = ''.join(random.sample(random_source, length))
-    return random_str
+    show_deprecation_warn('get_random_str', 'fish_random.gen_random_str')
+    from fishbase.fish_random import gen_random_str
+    return gen_random_str(length, length, has_letter=letters, has_digit=digits,
+                          has_punctuation=punctuation)
 
 
 # 2019.01.05 v1.1.6 edit by Hu Jun, #152
 def remove_duplicate_elements(items, key=None):
-    warnings.simplefilter('always')
-    warnings.warn('remove_duplicate_elements is deprecated, and in 2.x it will stop working. '
-                  'Use get_distinct_elements instead.',
-                  DeprecationWarning, stacklevel=2)
+    show_deprecation_warn('remove_duplicate_elements', 'get_distinct_elements')
     return get_distinct_elements(items, key=key)
 
 
@@ -900,10 +885,7 @@ def get_distinct_elements(items, key=None):
 
 # 2019.01.05 v1.1.6 edit by Hu Jun, #152
 def sorted_objs_by_attr(objs, key, reverse=False):
-    warnings.simplefilter('always')
-    warnings.warn('splice_url_params is deprecated, and in 2.x it will stop working. '
-                  'Use sorted_objs_by_attr instead.',
-                  DeprecationWarning, stacklevel=2)
+    show_deprecation_warn('sorted_objs_by_attr', 'sort_objs_by_attr')
     return sort_objs_by_attr(objs, key, reverse=reverse)
 
 
@@ -986,16 +968,13 @@ def get_query_param_from_url(url):
 
 
 # 2019.01.05 v1.1.6 edit by Hu Jun, #152
-def paging(data_list, group_number=1, group_size=10):
-    warnings.simplefilter('always')
-    warnings.warn('get_group_list_data is deprecated, and in 2.x it will stop working. '
-                  'Use paging instead.',
-                  DeprecationWarning, stacklevel=2)
-    return get_group_list_data(data_list, group_number=group_number, group_size=group_size)
+def get_group_list_data(data_list, group_number=1, group_size=10):
+    show_deprecation_warn('get_group_list_data', 'paging')
+    return paging(data_list, group_number=group_number, group_size=group_size)
 
 
 # v1.1.0 edit by Hu Jun, #74
-def get_group_list_data(data_list, group_number=1, group_size=10):
+def paging(data_list, group_number=1, group_size=10):
     """
     获取分组列表数据
 
@@ -1009,7 +988,7 @@ def get_group_list_data(data_list, group_number=1, group_size=10):
 
     举例如下::
 
-        print('--- get_group_list_data demo---')
+        print('--- paging demo---')
         all_records = [1, 2, 3, 4, 5]
         print(get_group_list_data(all_records))
         
@@ -1020,7 +999,7 @@ def get_group_list_data(data_list, group_number=1, group_size=10):
 
     执行结果::
 
-        --- get_group_list_data demo---
+        --- paging demo---
         [1, 2, 3, 4, 5]
         [60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74]
         [90, 91, 92, 93, 94, 95, 96, 97, 98, 99]
@@ -1087,10 +1066,7 @@ def get_sub_dict(data_dict, key_list, default_value='default_value'):
 
 # 2019.01.05 v1.1.6 edit by Hu Jun, #152
 def transform_hump_to_underline(param_dict):
-    warnings.simplefilter('always')
-    warnings.warn('transform_hump_to_underline is deprecated, and in 2.x it will stop working. '
-                  'Use camelcase_to_underline instead.',
-                  DeprecationWarning, stacklevel=2)
+    show_deprecation_warn('transform_hump_to_underline', 'camelcase_to_underline')
     return camelcase_to_underline(param_dict)
 
 
@@ -1227,17 +1203,14 @@ def yaml_conf_as_dict(file_path, encoding=None):
 
 # 2019.01.06 edit by Hu Jun, #152
 class GetSha256(object):
-    warnings.simplefilter('always')
-    warnings.warn('GetSha256 is deprecated, and in 2.0 it will stop working. '
-                  'Use FishSha256 instead.',
-                  DeprecationWarning)
-
     @staticmethod
     def hmac_sha256(secret, message):
+        show_deprecation_warn('GetSha256.hmac_sha256', 'FishSha256.hmac_sha256')
         return FishSha256.hmac_sha256(secret, message)
 
     @staticmethod
     def hashlib_sha256(message):
+        show_deprecation_warn('GetSha256.hashlib_sha256', 'FishSha256.hashlib_sha256')
         return FishSha256.hashlib_sha256(message)
 
 
