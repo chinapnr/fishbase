@@ -7,6 +7,7 @@
 
 # 2019.1.6 edit by David Yi, #187 #188 修改 IdCard 和 CardBin 两个类，对这里有修改
 # 2019.1.13 edit by David Yi, #202 优化 class CardBin(), class IdCard()
+# 2019.1.18 edit by Hu Jun, #204 优化函数名称, #200 remove fish_common.get_random_str to gen_random_str
 
 # 2018.12.26 v1.1.5 created
 import string
@@ -20,7 +21,7 @@ from fishbase.fish_data import CardBin, IdCard
 def gen_random_str(min_length, max_length, prefix=None, suffix=None,
                    has_letter=True, has_digit=False, has_punctuation=False):
     """
-    指定一个前后缀以及字符串长度，返回随机生成带有前后缀及指定长度的字符串
+    指定一个前后缀、字符串长度以及字符串包含字符类型，返回随机生成带有前后缀及指定长度的字符串
 
     :param:
         * min_length: (int) 字符串最小长度
@@ -32,7 +33,7 @@ def gen_random_str(min_length, max_length, prefix=None, suffix=None,
         * has_punctuation: (bool) 字符串是否包含标点符号，默认为 False
 
     :return:
-        * random_str: (string) 指定长度、前后缀的随机字符串
+        * random_str: (string) 指定规则的随机字符串
 
     举例如下::
 

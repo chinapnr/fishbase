@@ -10,6 +10,7 @@
 # 2016.4.7 v1.0.6, v1.0.7  add get_long_filename_with_sub_dir()
 # 2016.10.4 v1.0.9 add #19001 check_sub_path_create()
 # 2017.1.8 v1.0.9 #19003, remove file related functions to fish_file.py
+# 2019.1.18 v1.1.6 #200, remove function get_random_str to fish_random.py
 import sys
 import uuid
 import copy
