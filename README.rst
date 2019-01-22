@@ -44,6 +44,8 @@ fishbase 设计的初衷，并不是用来解决复杂问题，而是对系统�
 
 -  fish_system 系统增强函数包
 
+-  fish_crypt 加密数据函数包
+
 
 
 怎么用？
@@ -59,29 +61,23 @@ fishbase 能干什么？
 ===================
 
 
-生成手机号
+伪造数据
 ----------
 
 .. code:: python
 
-   >>> from fishbase.fish_random import gen_mobile
-   >>> # 随机生成一个手机号 
-   >>> print(gen_mobile())
+   >>> from fishbase.fish_random import gen_random_id_card
+   >>> # 随机生成一个身份证号
+   >>> print(gen_random_id_card())
+   ['310109198610243547']
+   >>> from fishbase.fish_random import gen_random_bank_card
+   >>> # 随机生成一个中国银行的信用卡卡号
+   >>> print(gen_random_bank_card('中国银行', 'CC'))
+   625907379******1
+   >>> from fishbase.fish_random import gen_random_mobile
+   >>> # 随机生成一个手机号
+   >>> print(gen_random_mobile())
    188****3925
-
-
-取名字
-------
-
-.. code:: python
-
-   >>> from fishbase.fish_random import gen_name
-   >>> # 随机生成一个姓名
-   >>> print(gen_name())
-   师*
-   >>> # 随机生成一个姓名，姓赵/男孩/3个字
-   >>> gen_name("赵","01", 3)
-   赵**
 
 
 找文件
@@ -114,15 +110,15 @@ fishbase 能干什么？
    ['requirements.txt', 'README.md', 'setup.py']
 
 
-校验身份证号
+获取文件的 MD5 值
 ----------------
 
 .. code:: python
 
-   >>> from fishbase.fish_data import check_id_number
-   >>> # 简单校验身份证号
-   >>> print(check_id_number('320124198701010012'))
-   (False,)
+   >>> from fishbase.fish_crypt import FishMD5
+   >>> # 获取文件的 MD5 值
+   >>> print(FishMD5.file('./test_md5.txt'))
+   fb7528c9778b2377e30b0f7e4c26fef0
 
 
 更多

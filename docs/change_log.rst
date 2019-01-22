@@ -1,6 +1,6 @@
 更新记录
 ===========================
-2019.01.16 v1.1.6
+2019.01.22 v1.1.6
 ---------------------------
 * `#192 <https://github.com/chinapnr/fishbase/issues/192>`_, data, add function :meth:`fish_data.IdCard.get_cn_idcard`, :meth:`fish_data.IdCard.get_note_by_province`, doc and unittest;
 * `#190 <https://github.com/chinapnr/fishbase/issues/190>`_, random, edit function :meth:`fish_random.gen_float_by_range`, optimize;
@@ -14,6 +14,7 @@ optimize;
  :meth:`fish_random.gen_random_float`,:meth:`fish_random.gen_random_mobile`,
  :meth:`fish_random.gen_random_name`,optimize;
 * `#200 <https://github.com/chinapnr/fishbase/issues/200>`_, random, edit function :meth:`fish_random.gen_random_str`, optimize;
+* `#200 <https://github.com/chinapnr/fishbase/issues/200>`_, crypt, move fish_common.FishMD5 to :meth:`fish_crypt.FishMD5`, move fish_common.Base64 to :meth:`fish_crypt.Base64`, move fish_common.FishSha256 to :meth:`fish_crypt.FishSha256`
 
 
 2018.12.31 v1.1.5
