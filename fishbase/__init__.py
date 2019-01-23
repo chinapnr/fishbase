@@ -27,4 +27,3 @@ from .fish_data import *
 from .fish_random import *
 
 __version__ = '1.1.6'  # type: str
-

@@ -30,7 +30,6 @@ else:
     import ConfigParser as configparser
     from urllib import urlencode
     from urlparse import parse_qs, urlsplit
-    
 
 # uuid kind const
 udTime = 10001
@@ -115,7 +114,7 @@ def conf_as_dict(conf_filename, encoding=None):
     flag = False
 
     # 检查文件是否存在
-    if not(os.path.isfile(conf_filename)):
+    if not os.path.isfile(conf_filename):
         return flag,
 
     cf = configparser.ConfigParser()
@@ -305,13 +304,11 @@ def has_space_element(source):
         check_list = list(source)
     else:
         raise TypeError('source except list, tuple or dict, but got {}'.format(type(source)))
-    
     for i in check_list:
         if i is 0:
             continue
         if not (i and str(i).strip()):
             return True
-    
     return False
 
 
@@ -322,8 +319,7 @@ def has_space_element(source):
 def if_any_elements_is_special(source):
 
     if not re.match('^[a-zA-Z0-9_,-.|]+$', "".join(source)):
-            return False
-
+        return False
     return True
 
 
@@ -371,9 +367,8 @@ class FishCache:
         # 生成 key，用于 dict
         temp_key = section + '_' + key
 
-        if not (temp_key in self.__cache):
+        if temp_key not in self.__cache:
             self.__cache[temp_key] = cf[section][key]
-
         return self.__cache[temp_key]
 
 
@@ -620,8 +615,8 @@ def find_files(path, exts=None):
     执行结果::
 
         --- find_files demo ---
-        ['/root/fishbase_issue/test.png', '/root/fishbase_issue/head.jpg', '/root/fishbase_issue/py/man.png', '/root/fishbase_issue/py/issue.py']
-        ['/root/fishbase_issue/test.png', '/root/fishbase_issue/py/man.png', '/root/fishbase_issue/py/issue.py']
+        ['/root/fishbase_issue/test.png', '/root/fishbase_issue/head.jpg','/root/fishbase_issue/py/man.png'
+        ['/root/fishbase_issue/test.png', '/root/fishbase_issue/py/man.png']
         ---
 
         """
@@ -795,7 +790,7 @@ def get_query_param_from_url(url):
     举例如下::
 
         print('--- get_query_param_from_url demo---')
-        url = 'http://localhost:8811/mytest?page_number=1&page_size=10&start_time=20180515&end_time=20180712'
+        url = 'http://localhost:8811/mytest?page_number=1&page_size=10'
         query_dict = get_query_param_from_url(url)
         print(query_dict['page_size'])
         print('---')

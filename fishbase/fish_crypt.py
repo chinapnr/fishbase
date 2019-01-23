@@ -26,8 +26,10 @@ class FishMD5(object):
 
         print('--- md5 demo ---')
         print('string md5:', GetMD5.string('hello world!'))
-        print('file md5:', GetMD5.file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
-        print('big file md5:', GetMD5.big_file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
+        file_path = get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1])
+        print('file md5:', GetMD5.file(file_path)
+        big_file_path = get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1])
+        print('big file md5:', GetMD5.big_file(big_file_path)
         print('string hmac_md5:', GetMD5.hmac_md5('hello world!', 'salt'))
         print('---')
 
@@ -41,7 +43,6 @@ class FishMD5(object):
         ---
 
     """
-    
     @staticmethod
     def string(s, salt=None):
         """
@@ -112,28 +113,29 @@ class FishMD5(object):
 
 # v1.0.14 edit by Hu Jun, #59
 # 2019.01.21 v1.1.6 edit by Hu Jun, #200 move fish_common.Base64 to fish_crypt.Base64
-class Base64:
+class FishBase64(object):
     """
     计算返回文件和字符串的 base64 编码字符串
 
     举例如下::
 
-        print('--- Base64 demo ---')
-        print('string base64:', Base64.string('hello world!'))
-        print('file base64:', Base64.file(get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1]))
+        print('--- FishBase64 demo ---')
+        print('string base64:', FishBase64.string('hello world!'))
+        file_path = get_abs_filename_with_sub_path('test_conf', 'test_conf.ini')[1])
+        print('file base64:', FishBase64.file(file_path)
         print('decode base64:', Base64.decode(b'aGVsbG8gd29ybGQ='))
         print('---')
 
     执行结果::
 
-        --- Base64 demo ---
+        --- FishBase64 demo ---
         string base64: b'aGVsbG8gd29ybGQ='
-        file base64: b'IyEvYmluL2Jhc2gKCmNkIC9yb290L3d3dy9zaW5nbGVfcWEKCm5vaHVwIC9yb290L2FwcC9weXRob24zNjIvYmluL2d1bmljb3JuIC1jIGd1bmljb3JuLmNvbmYgc2luZ2xlX3NlcnZlcjphcHAK'
+        file base64: (b'IyEvYmluL2Jhc2gKCmNkIC9yb290L3d3dy9zaW5nbGVfcWEKCm5vaHVwIC9yb2
+        90L2FwcC9weXRob24zNjIvYmluL2d1bmljb3JuIC1jIGd1bmljb3JuLmNvbmYgc2luZ2xlX3NlcnZlcjphcHAK')
         decode base64: b'hello world'
         ---
 
     """
-    
     @staticmethod
     def string(s):
         """

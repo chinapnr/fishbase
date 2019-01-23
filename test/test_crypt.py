@@ -49,13 +49,13 @@ class TestCrypt(object):
 
     # test Base64() tc
     def test_base64_01(self):
-        assert Base64.string('hello world') == b'aGVsbG8gd29ybGQ='
+        assert FishBase64.string('hello world') == b'aGVsbG8gd29ybGQ='
     
-        assert len(Base64.file(conf_filename)) != 0
+        assert len(FishBase64.file(conf_filename)) != 0
     
-        assert Base64.decode(b'aGVsbG8gd29ybGQ=') == b'hello world'
+        assert FishBase64.decode(b'aGVsbG8gd29ybGQ=') == b'hello world'
     
-        assert Base64.decode(b'aGVsbG8gd29ybGQ=') != b'hello'
+        assert FishBase64.decode(b'aGVsbG8gd29ybGQ=') != b'hello'
     
     # test FishSha256.hmac_sha256() tc
     def test_hmac_sha256_02(self):

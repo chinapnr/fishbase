@@ -61,25 +61,6 @@ fishbase 能干什么？
 ===================
 
 
-伪造数据
-----------
-
-.. code:: python
-
-   >>> from fishbase.fish_random import gen_random_id_card
-   >>> # 随机生成一个身份证号
-   >>> print(gen_random_id_card())
-   ['310109198610243547']
-   >>> from fishbase.fish_random import gen_random_bank_card
-   >>> # 随机生成一个中国银行的信用卡卡号
-   >>> print(gen_random_bank_card('中国银行', 'CC'))
-   625907379******1
-   >>> from fishbase.fish_random import gen_random_mobile
-   >>> # 随机生成一个手机号
-   >>> print(gen_random_mobile())
-   188****3925
-
-
 找文件
 ------
 
@@ -119,6 +100,21 @@ fishbase 能干什么？
    >>> # 获取文件的 MD5 值
    >>> print(FishMD5.file('./test_md5.txt'))
    fb7528c9778b2377e30b0f7e4c26fef0
+
+
+生成随机数据
+-----------
+
+.. code:: python
+
+   >>> from fishbase.fish_random import gen_random_id_card
+   >>> # 随机生成一个身份证号
+   >>> print(gen_random_id_card())
+   ['3101091986******47']
+   >>> from fishbase.fish_random import gen_random_bank_card
+   >>> # 随机生成一个中国银行的信用卡卡号
+   >>> print(gen_random_bank_card('中国银行', 'CC'))
+   625907379******1
 
 
 更多
