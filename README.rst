@@ -63,8 +63,23 @@ fishbase 能干什么？
    current os: osx
 
 
+生成假数据
+---------
+
+.. code:: python
+
+   >>> from fishbase.fish_data import IdCard
+   >>> # 校验身份证号
+   >>> print(IdCard.check_number('130522198407316471')[0])
+   True
+   >>> from fishbase.fish_data import CardBin
+   >>> # 计算银行卡校验位
+   >>> print(CardBin.get_checkcode('439188000699010'))
+   9
+
+
 获取文件的绝对路径
-------
+----------------
 
 .. code:: python
 
@@ -74,7 +89,7 @@ fishbase 能干什么？
 
 
 根据时间戳获取时间间隔
-------------------------
+--------------------
 
 .. code:: python
 
@@ -83,8 +98,8 @@ fishbase 能干什么？
    {'days': 1, 'hours': 3, 'minutes': 28, 'seconds': 28}
 
 
-生成假数据
----------
+生成随机数据
+-----------
 
 .. code:: python
 
@@ -121,6 +136,6 @@ fishbase 能干什么？
 更多
 ====
 
-更多功能说明，请参阅：http://fishbase.readthedocs.io/
+更多详细文档，请参见：http://fishbase.readthedocs.io/
 
-建议与问题，请访问：https://github.com/chinapnr/fishbase/issues
+如有好的建议，欢迎提 issue：https://github.com/chinapnr/fishbase/issues
