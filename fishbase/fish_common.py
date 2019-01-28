@@ -267,7 +267,7 @@ def if_any_elements_is_space(dic):
 # 2019.01.05 v1.1.6 edit by Hu Jun, #152
 def has_space_element(source):
     """
-    判断对象中的元素，如果存在 None 或空字符串或空格字符串，则返回 True, 否则返回 False, 支持字典、列表和元组
+    判断对象中的元素，如果存在 None 或空字符串，则返回 True, 否则返回 False, 支持字典、列表和元组
 
     :param:
         * source: (list, set, dict) 需要检查的对象
@@ -277,18 +277,18 @@ def has_space_element(source):
 
     举例如下::
 
-        print('--- if_any_elements_is_space demo---')
-        print(if_any_elements_is_space([1, 2, 'test_str']))
-        print(if_any_elements_is_space([0, 2]))
-        print(if_any_elements_is_space([1, 2, None]))
-        print(if_any_elements_is_space((1, [1, 2], 3, '')))
-        print(if_any_elements_is_space({'a': 1, 'b': 0}))
-        print(if_any_elements_is_space({'a': 1, 'b': []}))
+        print('--- has_space_element demo---')
+        print(has_space_element([1, 2, 'test_str']))
+        print(has_space_element([0, 2]))
+        print(has_space_element([1, 2, None]))
+        print(has_space_element((1, [1, 2], 3, '')))
+        print(has_space_element({'a': 1, 'b': 0}))
+        print(has_space_element({'a': 1, 'b': []}))
         print('---')
 
     执行结果::
 
-        --- if_any_elements_is_space demo---
+        --- has_space_element demo---
         False
         False
         True
@@ -546,27 +546,27 @@ def has_special_char(p_str, check_style=charChinese):
 
     举例如下::
         
-        print('--- is_contain_special_char demo ---')
+        print('--- has_special_char demo ---')
         p_str1 = 'meiyouzhongwen'
-        non_chinese_result = check_str(p_str1, check_style=charChinese)
+        non_chinese_result = has_special_char(p_str1, check_style=charChinese)
         print(non_chinese_result)
         
         p_str2 = u'有zhongwen'
-        chinese_result = check_str(p_str2, check_style=charChinese)
+        chinese_result = has_special_char(p_str2, check_style=charChinese)
         print(chinese_result)
         
         p_str3 = 'nonnumberstring'
-        non_number_result = check_str(p_str3, check_style=charNum)
+        non_number_result = has_special_char(p_str3, check_style=charNum)
         print(non_number_result)
         
         p_str4 = 'number123'
-        number_result = check_str(p_str4, check_style=charNum)
+        number_result = has_special_char(p_str4, check_style=charNum)
         print(number_result)
         print('---')
 
     执行结果::
         
-        --- is_contain_special_char demo ---
+        --- has_special_char demo ---
         False
         True
         False
