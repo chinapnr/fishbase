@@ -9,7 +9,7 @@
     :target: https://ci.appveyor.com/project/itaa/fishbase
 
 
-fishbase 是什么？
+fishbase 简介
 =================
 
 fishbase 是由我们自主开发、整理的一套 Python 基础函数库，每月更新 1 到 2 个版本。
@@ -61,21 +61,6 @@ fishbase 能干什么？
    >>> from fishbase.fish_system import get_platform
    >>> print('current os:', get_platform())
    current os: osx
-
-
-生成假数据
----------
-
-.. code:: python
-
-   >>> from fishbase.fish_data import IdCard
-   >>> # 校验身份证号
-   >>> print(IdCard.check_number('130522198407316471')[0])
-   True
-   >>> from fishbase.fish_data import CardBin
-   >>> # 计算银行卡校验位
-   >>> print(CardBin.get_checkcode('439188000699010'))
-   9
 
 
 获取文件的绝对路径
@@ -138,4 +123,4 @@ fishbase 能干什么？
 
 更多详细文档，请参见：http://fishbase.readthedocs.io/
 
-如有好的建议，欢迎提 issue：https://github.com/chinapnr/fishbase/issues
+如有好的建议，欢迎提 issue ：https://github.com/chinapnr/fishbase/issues
