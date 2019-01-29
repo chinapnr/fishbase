@@ -15,40 +15,38 @@
     :target: https://ci.appveyor.com/project/itaa/fishbase
 
 
-fishbase 是什么？
+fishbase 简介
 =================
 
-fishbase 是由我们自主开发、整理的一套 Python 基础函数库。
+fishbase 是由我们自主开发和整理的一套 Python 基础函数库。
 
-从多年的 Python 开发经验中，我们抽象出了很多通用的方法，为日常的开发工作带来极大的便利。
-
-fishbase 设计的初衷，并不是用来解决复杂问题，而是对系统函数进一步封装，从而减少程序开发工作量、降低引用复杂度。
-
-目前，我们正在加速 fishbase 的完善，涵盖单元测试、示例代码、文档等内容优化。希望借此帮助到更多 Python 爱好者和应用开发人员。
+自 2016/3 初次发布以来，我们坚持不断更新，先后发布了 20 余个版本。近一年来，我们逐步形成每月更新 1 到 2 个版本的频率，抽象出了很多通用的方法，主要分为以下模块：
 
 
-模块
-========
++----------------------------------------------------------------------------------+----------------------------------------+
+|       模块                                                                       | 功能函数                               |
++==================================================================================+========================================+
+| `fish_common <https://fishbase.readthedocs.io/en/latest/fish_common.html>`_      | 基本函数包                             |
++----------------------------------------------------------------------------------+----------------------------------------+
+| `fish_crypt <https://fishbase.readthedocs.io/en/latest/fish_crypt.html>`_        | 加密数据函数包                         |
++----------------------------------------------------------------------------------+----------------------------------------+
+| `fish_csv <https://fishbase.readthedocs.io/en/latest/fish_csv.html>`_            | csv 处理增强函数包                     |
++----------------------------------------------------------------------------------+----------------------------------------+
+| `fish_data <https://fishbase.readthedocs.io/en/latest/fish_data.html>`_          | 数据信息处理函数包，含银行卡、身份证等 |
++----------------------------------------------------------------------------------+----------------------------------------+
+| `fish_date <https://fishbase.readthedocs.io/en/latest/fish_date.html>`_          | 日期处理增强函数包                     |
++----------------------------------------------------------------------------------+----------------------------------------+
+| `fish_file <https://fishbase.readthedocs.io/en/latest/fish_file.html>`_          | 文件处理增强函数包                     |
++----------------------------------------------------------------------------------+----------------------------------------+
+| `fish_logger <https://fishbase.readthedocs.io/en/latest/fish_logger.html>`_      | 日志记录增强函数包                     |
++----------------------------------------------------------------------------------+----------------------------------------+
+| `fish_project <https://fishbase.readthedocs.io/en/latest/fish_project.html>`_    | project 目录结构生成函数包             |
++----------------------------------------------------------------------------------+----------------------------------------+
+| `fish_random <https://fishbase.readthedocs.io/en/latest/fish_random.html>`_      | 随机数据生成函数包                     |
++----------------------------------------------------------------------------------+----------------------------------------+
+| `fish_system <https://fishbase.readthedocs.io/en/latest/fish_system.html>`_      | 系统增强函数包                         |
++----------------------------------------------------------------------------------+----------------------------------------+
 
-目前主要分为以下模块：
-
--  fish_common 基本函数包
-
--  fish_csv csv 处理增强函数包
-
--  fish_data 数据信息处理函数包，含银行卡、身份证等
-
--  fish_date 日期处理函数包
-
--  fish_file 文件处理增强函数包
-
--  fish_logger 日志记录增强函数包
-
--  fish_project project 目录结构生成函数包
-
--  fish_random 随机数据生成函数包
-
--  fish_system 系统增强函数包
 
 
 怎么用？
@@ -64,39 +62,49 @@ fishbase 能干什么？
 ===================
 
 
-生成手机号
-----------
+获取当前系统类型
+--------------
 
 .. code:: python
 
-   >>> from fishbase.fish_random import gen_mobile
-   >>> # 随机生成一个手机号
-   >>> print(gen_mobile())
-   188****3925
+   >>> from fishbase.fish_system import get_platform
+   >>> print('current os:', get_platform())
+   current os: osx
 
 
-取名字
-------
-
-.. code:: python
-
-   >>> from fishbase.fish_random import gen_name
-   >>> # 随机生成一个姓名
-   >>> print(gen_name())
-   师*
-   >>> # 随机生成一个姓名，姓赵/男孩/3个字
-   >>> gen_name("赵","01", 3)
-   赵**
-
-
-找文件
-------
+获取文件的绝对路径
+----------------
 
 .. code:: python
 
    >>> from fishbase.fish_common import find_files
-   >>> # 获取当前路径下的 mp4 文件
-   >>> print(find_files(".", [".mp4"]))
+   >>> print(get_abs_filename_with_sub_path('/etc', 'hosts'))
+   (True, '/etc/hosts')
+
+
+根据时间戳获取时间间隔
+--------------------
+
+.. code:: python
+
+   >>> from fishbase.fish_date import get_time_interval
+   >>> print(get_time_interval(1548575829,1548476921))
+   {'days': 1, 'hours': 3, 'minutes': 28, 'seconds': 28}
+
+
+生成随机数据
+-----------
+
+.. code:: python
+
+   >>> from fishbase.fish_random import gen_random_id_card
+   >>> # 随机生成一个身份证号
+   >>> print(gen_random_id_card())
+   ['3101091986******47']
+   >>> from fishbase.fish_random import gen_random_bank_card
+   >>> # 随机生成一个中国银行的信用卡卡号
+   >>> print(gen_random_bank_card('中国银行', 'CC'))
+   625907379******1
 
 
 创建项目结构
@@ -119,17 +127,6 @@ fishbase 能干什么？
    ['requirements.txt', 'README.md', 'setup.py']
 
 
-校验身份证号
-----------------
-
-.. code:: python
-
-   >>> from fishbase.fish_data import check_id_number
-   >>> # 简单校验身份证号
-   >>> print(check_id_number('320124198701010012'))
-   (False,)
-
-
 .. toctree::
    :maxdepth: 1
 
@@ -145,6 +142,7 @@ API 函数列表
    :maxdepth: 2
 
    fish_common
+   fish_crypt
    fish_csv
    fish_data
    fish_date
@@ -153,3 +151,9 @@ API 函数列表
    fish_project
    fish_system
    fish_random
+
+
+更多
+====
+
+如有好的建议，欢迎提 issue ：https://github.com/chinapnr/fishbase/issues

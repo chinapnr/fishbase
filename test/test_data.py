@@ -149,8 +149,7 @@ class TestData(object):
         values = IdCard.get_areanote_info('11')
         assert values[0][0].startswith('11')
 
-    # 2019.01.07 edit by Hu Jun
-    def test_get_cn_idcard(self):
-        values = IdCard.get_cn_idcard()
+    # 2019.01.14 edit by Hu Jun
+    def test_get_province_info(self):
+        values = IdCard.get_province_info()
         assert len(values) > 0
-        assert ('11', '1101', '110100', '北京市市辖区') in values

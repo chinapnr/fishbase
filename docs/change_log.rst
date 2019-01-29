@@ -1,14 +1,14 @@
 更新记录
 ===========================
-2019.01.06 v1.1.6
+
+2019.01.22 v1.1.6
 ---------------------------
 * `#192 <https://github.com/chinapnr/fishbase/issues/192>`_, data, add function :meth:`fish_data.IdCard.get_cn_idcard`, :meth:`fish_data.IdCard.get_note_by_province`, doc and unittest;
 * `#190 <https://github.com/chinapnr/fishbase/issues/190>`_, random, edit function :meth:`fish_random.gen_float_by_range`, optimize;
-* `#152 <https://github.com/chinapnr/fishbase/issues/152>`_, random, edit function :meth:`fish_common.GetMD5` :meth:`fish_common.GetSha256`
-:meth:`fish_common.splice_url_params` :meth:`fish_common.sorted_list_from_dict` :meth:`fish_common.is_contain_special_char`
-:meth:`fish_common.if_any_elements_is_space` :meth:`fish_common.remove_duplicate_elements` :meth:`fish_common.sorted_objs_by_attr`
-:meth:`fish_common.get_group_list_data` :meth:`fish_common.if_any_elements_is_letter` :meth:`fish_common.transform_hump_to_underline`,
-optimize;
+* `#152 <https://github.com/chinapnr/fishbase/issues/152>`_, random, edit function :meth:`fish_common.GetMD5` :meth:`fish_common.GetSha256` :meth:`fish_common.splice_url_params` :meth:`fish_common.sorted_list_from_dict` :meth:`fish_common.is_contain_special_char` :meth:`fish_common.if_any_elements_is_space` :meth:`fish_common.remove_duplicate_elements` :meth:`fish_common.sorted_objs_by_attr` :meth:`fish_common.get_group_list_data` :meth:`fish_common.if_any_elements_is_letter` :meth:`fish_common.transform_hump_to_underline`, optimize;
+* `#204 <https://github.com/chinapnr/fishbase/issues/204>`_, random, edit function :meth:`fish_random.gen_random_id_card`, :meth:`fish_random.gen_random_address`, :meth:`fish_random.gen_random_bank_card`, :meth:`fish_random.gen_random_company_name`, :meth:`fish_random.gen_random_float`, :meth:`fish_random.gen_random_mobile`, :meth:`fish_random.gen_random_name`,optimize;
+* `#200 <https://github.com/chinapnr/fishbase/issues/200>`_, random, edit function :meth:`fish_random.gen_random_str`, optimize;
+* `#200 <https://github.com/chinapnr/fishbase/issues/200>`_, crypt, move fish_common.FishMD5 to :meth:`fish_crypt.FishMD5`, move fish_common.Base64 to :meth:`fish_crypt.Base64`, move fish_common.FishSha256 to :meth:`fish_crypt.FishSha256`
 
 
 2018.12.31 v1.1.5
