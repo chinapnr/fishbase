@@ -9,7 +9,7 @@
     :target: https://ci.appveyor.com/project/itaa/fishbase
 
 
-fishbase 是什么？
+fishbase 简介
 =================
 
 fishbase 是由我们自主开发、整理的一套 Python 基础函数库，每月更新 1 到 2 个版本。
@@ -121,6 +121,6 @@ fishbase 能干什么？
 更多
 ====
 
-想看看我们还实现了些啥？请戳这里：http://fishbase.readthedocs.io/
+更多详细文档，请参见：http://fishbase.readthedocs.io/
 
-如果您有好点子，希望我们帮忙实现，请戳这里：https://github.com/chinapnr/fishbase/issues
+如有好的建议，欢迎提 issue ：https://github.com/chinapnr/fishbase/issues
