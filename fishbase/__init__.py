@@ -17,13 +17,14 @@
 
 
 from .fish_common import *
+from .fish_crypt import *
 from .fish_csv import *
+from .fish_data import *
 from .fish_date import *
 from .fish_file import *
 from .fish_logger import *
 from .fish_system import *
 from .fish_project import *
-from .fish_data import *
 from .fish_random import *
 
 __version__ = '1.1.6'  # type: str

@@ -6,7 +6,6 @@
 在我们进行一些开发测试、功能测试、自动化测试、压力测试等场景下，都需要模拟身份证、银行卡等信息。
 fish_data 中的函数就是用在这样的场景。注意，这些函数不会生成真实的身份证和银行卡号。
 
-
 """
 
 # 2018.12.9 v1.1.3 created by David Yi
@@ -36,6 +35,38 @@ def sqlite_query(db, sql, params):
 
 
 class IdCard(object):
+    """
+    校验身份证号、获取身份证校验位，获取随机生成身份证号所需身份代码等函数；
+
+    举例如下::
+
+        print('--- IdCard demo ---')
+
+        print('get_checkcode of "32012419870101001":', IdCard.get_checkcode('32012419870101001')[1])
+
+        print('check_number of "130522198407316471":', IdCard.check_number('130522198407316471')[0])
+
+        print('get_zone_info of "北京市":', IdCard.get_zone_info(area_str='北京市')
+
+        print('get_areanote_info of "北京(11)":', IdCard.get_areanote_info('11'))
+
+        print('---')
+
+    执行结果::
+
+        --- IdCard demo ---
+
+        get_checkcode of "32012419870101001": 5
+
+        check_number of "130522198407316471": True
+
+        get_zone_info of "北京市": [('110000', '北京市')]
+
+        get_areanote_info of "北京(11)": ([('110000', '北京市'), ('110100', '北京市市辖区'), ('110101', '北京市东城区'), ...
+
+        ---
+
+    """
 
     # 计算身份证号码的校验位
     # ---
@@ -274,15 +305,7 @@ class IdCard(object):
         输出结果::
 
             --- fish_data get_areanote_info demo ---
-            [('110000', '北京市'), ('110100', '北京市市辖区'), ('110101', '北京市东城区'),
-            ('110102', '北京市西城区'), ('110103', '北京市崇文区'), ('110104', '北京市宣武区'),
-            ('110105', '北京市朝阳区'), ('110106', '北京市丰台区'), ('110107', '北京市石景山区'),
-            ('110108', '北京市海淀区'), ('110109', '北京市门头沟区'), ('110111', '北京市房山区'),
-            ('110112', '北京市通州区'), ('110113', '北京市顺义区'), ('110114', '北京市昌平区'),
-            ('110115', '北京市大兴区'), ('110116', '北京市怀柔区'), ('110117', '北京市平谷区'),
-            ('110200', '北京市市辖县'), ('110221', '北京市昌平县'), ('110222', '北京市顺义县'),
-            ('110223', '北京市通县'), ('110224', '北京市大兴县'), ('110226', '北京市平谷县'),
-            ('110227', '北京市怀柔县'), ('110228', '北京市密云县'), ('110229', '北京市延庆县')]
+            [('110000', '北京市'), ('110100', '北京市市辖区'), ('110101', '北京市东城区'), ...
 
             ---
 
@@ -308,17 +331,14 @@ class IdCard(object):
             from fishbase.fish_data import *
 
             print('--- fish_data get_province_info demo ---')
-
             print(IdCard.get_province_info())
-
             print('---')
 
         输出结果::
 
-            --- fish_data get_province_info demo ---
-            
-
-            ---
+        --- fish_data get_province_info demo ---
+        [('11',), ('12',), ('13',), ('14',), ('15',), ...
+        ---
 
         """
         values = sqlite_query('fish_data.sqlite',
@@ -329,6 +349,38 @@ class IdCard(object):
 
 # 2019.1.6 create by David Yi, #188 用 class CardBin 方法实现
 class CardBin(object):
+    """
+    校验银行卡号、获取银行卡校验位，获取银行卡、银行信息；
+
+    举例如下::
+
+        print('--- CardBin demo ---')
+
+        print('get_checkcode of "439188000699010":', CardBin.get_checkcode('439188000699010'))
+
+        print('check_bankcard of "4391880006990100":', CardBin.check_number('4391880006990100'))
+
+        print('get_bank_info of "招商银行":', CardBin.get_bank_info('招商银行')
+
+        print('get_cardbin_info of "CMB", "DC":', CardBin.get_cardbin_info('CMB', 'DC'))
+
+        print('---')
+
+    执行结果::
+
+        --- CardBin demo ---
+
+        get_checkcode of "439188000699010": 9
+
+        check_bankcard of "4391880006990100": False
+
+        get_bank_info of "招商银行": [('CMB', '招商银行')]
+
+        get_cardbin_info of "CMB", "DC": [('410062', 'CMB', 'DC', 16), ('468203', 'CMB', 'DC', 16), ...
+
+        ---
+
+    """
 
     # 计算银行卡校验位
     # ---
