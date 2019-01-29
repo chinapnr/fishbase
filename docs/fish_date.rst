@@ -1,5 +1,5 @@
-``fish_date`` 基本函数包
-=============================
+``fish_date`` 日期处理增强函数包
+===============================
 
 .. autosummary::
     fish_date.get_date_range

@@ -6,10 +6,10 @@
 在我们进行一些开发测试、功能测试、自动化测试、压力测试等场景下，都需要模拟身份证、银行卡等信息。
 fish_data 中的函数就是用在这样的场景。注意，这些函数不会生成真实的身份证和银行卡号。
 
-
 """
 
-# 2018.12.9 v1.1.3 created
+# 2018.12.9 v1.1.3 created by David Yi
+# 2019.1.13 edit by David Yi, #202 优化 class CardBin(), class IdCard()
 
 import re
 import sqlite3
@@ -35,6 +35,38 @@ def sqlite_query(db, sql, params):
 
 
 class IdCard(object):
+    """
+    校验身份证号、获取身份证校验位，获取随机生成身份证号所需身份代码等函数；
+
+    举例如下::
+
+        print('--- IdCard demo ---')
+
+        print('get_checkcode of "32012419870101001":', IdCard.get_checkcode('32012419870101001')[1])
+
+        print('check_number of "130522198407316471":', IdCard.check_number('130522198407316471')[0])
+
+        print('get_zone_info of "北京市":', IdCard.get_zone_info(area_str='北京市')
+
+        print('get_areanote_info of "北京(11)":', IdCard.get_areanote_info('11'))
+
+        print('---')
+
+    执行结果::
+
+        --- IdCard demo ---
+
+        get_checkcode of "32012419870101001": 5
+
+        check_number of "130522198407316471": True
+
+        get_zone_info of "北京市": [('110000', '北京市')]
+
+        get_areanote_info of "北京(11)": ([('110000', '北京市'), ('110100', '北京市市辖区'), ('110101', '北京市东城区'), ...
+
+        ---
+
+    """
 
     # 计算身份证号码的校验位
     # ---
@@ -56,21 +88,21 @@ class IdCard(object):
 
             from fishbase.fish_data import *
 
-            print('--- fish_data idcard_get_checkcode demo ---')
+            print('--- fish_data get_checkcode demo ---')
 
             # id number
             id1 = '32012419870101001'
-            print(id1, idcard_get_checkcode(id1)[1])
+            print(id1, IdCard.get_checkcode(id1)[1])
 
             # id number
             id2 = '13052219840731647'
-            print(id2, idcard_get_checkcode(id2)[1])
+            print(id2, IdCard.get_checkcode(id2)[1])
 
             print('---')
 
         输出结果::
 
-            --- fish_data idcard_get_checkcode demo ---
+            --- fish_data get_checkcode demo ---
             32012419870101001 5
             13052219840731647 1
             ---
@@ -122,21 +154,21 @@ class IdCard(object):
 
             from fishbase.fish_data import *
 
-            print('--- fish_data is_valid_id_number demo ---')
+            print('--- fish_data check_number demo ---')
 
             # id number false
             id1 = '320124198701010012'
-            print(id1, is_valid_id_number(id1)[0])
+            print(id1, IdCard.check_number(id1)[0])
 
             # id number true
             id2 = '130522198407316471'
-            print(id2, is_valid_id_number(id2)[0])
+            print(id2, IdCard.check_number(id2)[0])
 
             print('---')
 
         输出结果::
 
-            --- fish_data is_valid_id_number demo ---
+            --- fish_data check_number demo ---
             320124198701010012 False
             130522198407316471 True
             ---
@@ -162,7 +194,7 @@ class IdCard(object):
     # ---
     # 2018.12.14 12.16 create by David Yi, add in v1.1.4, github issue #139
     @classmethod
-    def get_zonecode_by_area(cls, area_str, match_type='EXACT', result_type='LIST'):
+    def get_zone_info(cls, area_str, match_type='EXACT', result_type='LIST'):
         """
         输入包含省份、城市、地区信息的内容，返回地区编号；
 
@@ -179,13 +211,13 @@ class IdCard(object):
 
             from fishbase.fish_data import *
 
-            print('--- fish_data idcard_get_zonecode_by_area demo ---')
+            print('--- fish_data get_zone_info demo ---')
 
-            result = idcard_get_zonecode_by_area(area_str='北京市')
+            result = IdCard.get_zone_info(area_str='北京市')
             print(result)
 
             # 模糊查询
-            result = idcard_get_zonecode_by_area(area_str='西安市', match_type='FUZZY')
+            result = IdCard.get_zone_info(area_str='西安市', match_type='FUZZY')
             print(result)
 
             result0 = []
@@ -197,18 +229,18 @@ class IdCard(object):
             print(result0)
 
             # 模糊查询, 结果返回设定 single_str
-            result = idcard_get_zonecode_by_area(area_str='西安市', match_type='FUZZY', result_type='SINGLE_STR')
+            result = IdCard.get_zone_info(area_str='西安市', match_type='FUZZY', result_type='SINGLE_STR')
             print(result)
 
             # 模糊查询, 结果返回设定 single_str，西安市 和 西安 的差别
-            result = idcard_get_zonecode_by_area(area_str='西安', match_type='FUZZY', result_type='SINGLE_STR')
+            result = IdCard.get_zone_info(area_str='西安', match_type='FUZZY', result_type='SINGLE_STR')
             print(result)
 
             print('---')
 
         输出结果::
 
-            --- fish_data idcard_get_zonecode_by_area demo ---
+            --- fish_data get_zone_info demo ---
             [('110000', '北京市')]
             130522198407316471 True
 
@@ -226,10 +258,10 @@ class IdCard(object):
 
         if match_type == 'EXACT':
             values = sqlite_query('fish_data.sqlite',
-                                  'select zone, note from cn_idcard where note = :area', {"area": area_str})
+                                  'select zone, areanote from cn_idcard where areanote = :area', {"area": area_str})
         if match_type == 'FUZZY':
             values = sqlite_query('fish_data.sqlite',
-                                  'select zone, note from cn_idcard where note like :area',
+                                  'select zone, areanote from cn_idcard where areanote like :area',
                                   {"area": '%' + area_str + '%'})
 
         # result_type 结果数量判断处理
@@ -250,7 +282,7 @@ class IdCard(object):
 
     # 2019.01.07 create by Hu Jun, add in v1.1.6, github issue #192
     @classmethod
-    def get_note_by_province(cls, province_code):
+    def get_areanote_info(cls, province):
         """
         输入省份代码，返回地区信息；
 
@@ -264,74 +296,91 @@ class IdCard(object):
 
             from fishbase.fish_data import *
 
-            print('--- fish_data get_note_by_provice demo ---')
+            print('--- fish_data get_areanote_info demo ---')
 
-            print(IdCard.get_note_by_provice('11'))
+            print(IdCard.get_areanote_info('11'))
 
             print('---')
 
         输出结果::
 
-            --- fish_data get_note_by_provice demo ---
-            [('110000', '北京市'), ('110100', '北京市市辖区'), ('110101', '北京市东城区'),
-            ('110102', '北京市西城区'), ('110103', '北京市崇文区'), ('110104', '北京市宣武区'),
-            ('110105', '北京市朝阳区'), ('110106', '北京市丰台区'), ('110107', '北京市石景山区'),
-            ('110108', '北京市海淀区'), ('110109', '北京市门头沟区'), ('110111', '北京市房山区'),
-            ('110112', '北京市通州区'), ('110113', '北京市顺义区'), ('110114', '北京市昌平区'),
-            ('110115', '北京市大兴区'), ('110116', '北京市怀柔区'), ('110117', '北京市平谷区'),
-            ('110200', '北京市市辖县'), ('110221', '北京市昌平县'), ('110222', '北京市顺义县'),
-            ('110223', '北京市通县'), ('110224', '北京市大兴县'), ('110226', '北京市平谷县'),
-            ('110227', '北京市怀柔县'), ('110228', '北京市密云县'), ('110229', '北京市延庆县')]
+            --- fish_data get_areanote_info demo ---
+            [('110000', '北京市'), ('110100', '北京市市辖区'), ('110101', '北京市东城区'), ...
 
             ---
 
         """
         values = sqlite_query('fish_data.sqlite',
-                              'select zone, note from cn_idcard where province = :province_code ',
-                              {"province_code": province_code})
+                              'select zone, areanote from cn_idcard where province = :province ',
+                              {"province": province})
         return values
 
-    # 2019.01.07 create by Hu Jun, add in v1.1.6, github issue #192
+    # 2019.01.14 create by Hu Jun, add in v1.1.6, github issue #192
     @classmethod
-    def get_cn_idcard(cls):
+    def get_province_info(cls):
         """
-        返回所有身份证信息；
+        获取省份代码
 
         :param:
 
         :returns:
-            * idcard_list: (list) 身份证信息列表
-
+            * province_list: (list) 省份代码列表
+            
         举例如下::
 
             from fishbase.fish_data import *
 
-            print('--- fish_data get_cn_idcard demo ---')
-
-            print(IdCard.get_note_by_provice('11'))
-
+            print('--- fish_data get_province_info demo ---')
+            print(IdCard.get_province_info())
             print('---')
 
         输出结果::
 
-            --- fish_data get_cn_idcard demo ---
-            [('11', '1100', '110000', '北京市'), ('11', '1101', '110100', '北京市市辖区'),
-            ('11', '1101', '110101', '北京市东城区') ...
-            ('65', '6590', '659001', '新疆石河子市'),
-            ('65', '6590', '659002', '新疆维吾尔自治区阿拉尔市'),
-            ('65', '6590', '659003', '新疆维吾尔自治区图木舒克市')]
-
-            ---
+        --- fish_data get_province_info demo ---
+        [('11',), ('12',), ('13',), ('14',), ('15',), ...
+        ---
 
         """
         values = sqlite_query('fish_data.sqlite',
-                              'select province, city, zone, note from cn_idcard',
+                              'select distinct(province) from cn_idcard',
                               {})
         return values
 
 
 # 2019.1.6 create by David Yi, #188 用 class CardBin 方法实现
 class CardBin(object):
+    """
+    校验银行卡号、获取银行卡校验位，获取银行卡、银行信息；
+
+    举例如下::
+
+        print('--- CardBin demo ---')
+
+        print('get_checkcode of "439188000699010":', CardBin.get_checkcode('439188000699010'))
+
+        print('check_bankcard of "4391880006990100":', CardBin.check_number('4391880006990100'))
+
+        print('get_bank_info of "招商银行":', CardBin.get_bank_info('招商银行')
+
+        print('get_cardbin_info of "CMB", "DC":', CardBin.get_cardbin_info('CMB', 'DC'))
+
+        print('---')
+
+    执行结果::
+
+        --- CardBin demo ---
+
+        get_checkcode of "439188000699010": 9
+
+        check_bankcard of "4391880006990100": False
+
+        get_bank_info of "招商银行": [('CMB', '招商银行')]
+
+        get_cardbin_info of "CMB", "DC": [('410062', 'CMB', 'DC', 16), ('468203', 'CMB', 'DC', 16), ...
+
+        ---
+
+    """
 
     # 计算银行卡校验位
     # ---
@@ -351,16 +400,16 @@ class CardBin(object):
 
             from fishbase.fish_data import *
 
-            print('--- fish_data cardbin_get_checkcode demo ---')
+            print('--- fish_data get_checkcode demo ---')
 
             # 不能放真的卡信息，有风险
-            print(cardbin_get_checkcode('439188000699010'))
+            print(CardBin.get_checkcode('439188000699010'))
 
             print('---')
 
         输出结果::
 
-            --- fish_data cardbin_get_checkcode demo ---
+            --- fish_data get_checkcode demo ---
             9
             ---
 
@@ -399,16 +448,16 @@ class CardBin(object):
 
             from fishbase.fish_data import *
 
-            print('--- fish_data check_bank_card demo ---')
+            print('--- fish_data check_bankcard demo ---')
 
             # 不能放真的卡信息，有风险
-            print(cardbin_check_bankcard()('4391880006990100'))
+            print(CardBin.check_bankcard('4391880006990100'))
 
             print('---')
 
         输出结果::
 
-            --- fish_data check_bank_card demo ---
+            --- fish_data check_bankcard demo ---
             False
             ---
 
@@ -428,7 +477,7 @@ class CardBin(object):
     # 2018.12.18 create by David Yi, add in v1.1.4, github issue #159
     # 2019.1.5 edit, v1.1.6 github issue #188, 修改函数名称
     @classmethod
-    def get_bank_by_name(cls, bankname):
+    def get_bank_info(cls, bankname):
         """
         银行名称，返回银行代码；
 
@@ -441,21 +490,21 @@ class CardBin(object):
 
             from fishbase.fish_data import *
 
-            print('--- fish_data cardbin_get_bank_by_name demo ---')
+            print('--- fish_data get_bank_info demo ---')
 
-            print(cardbin_get_bank_by_name('招商银行'))
+            print(CardBin.get_bank_info('招商银行'))
 
             print('---')
 
         输出结果::
 
-            --- fish_data cardbin_get_bank_by_name demo ---
+            --- fish_data get_bank_info demo ---
             [('CMB', '招商银行')]
             ---
 
         """
         values = sqlite_query('fish_data.sqlite',
-                              'select bank,bankname from cn_bankname where bankname=:bankname',
+                              'select bankcode,bankname from cn_bank where bankname=:bankname',
                               {"bankname": bankname})
 
         return values
@@ -465,7 +514,7 @@ class CardBin(object):
     # 2018.12.17 create by David Yi, add in v1.1.4, github issue #149
     # 2019.1.5 edit, v1.1.6 github issue #188, 修改函数名称
     @classmethod
-    def get_cardbin_bank(cls, bank, card_type):
+    def get_cardbin_info(cls, bank, card_type):
         """
         输入银行、借记贷记卡种类，返回有效的卡 bin；
 
@@ -479,24 +528,24 @@ class CardBin(object):
 
             from fishbase.fish_data import *
 
-            print('--- fish_data cardbin_get_cardbin_bank demo ---')
+            print('--- fish_data get_cardbin_info demo ---')
 
-            result = cardbin_get_cardbin_bank('CMB', 'DC')
+            result = CardBin.get_cardbin_info('CMB', 'DC')
             print(result)
 
             print('---')
 
         输出结果::
 
-            --- fish_data cardbin_get_cardbin_bank demo ---
+            --- fish_data get_cardbin_info demo ---
 
             [('410062', 'CMB', 'DC', 16), ('468203', 'CMB', 'DC', 16), ...
             ---
 
         """
         values = sqlite_query('fish_data.sqlite',
-                              'select bin,bank,card_type,length from cn_cardbin where bank=:bank '
-                              'and card_type=:card_type',
+                              'select bin,bankcode,cardtype,length from cn_cardbin where bankcode=:bank '
+                              'and cardtype=:card_type',
                               {"bank": bank, "card_type": card_type})
 
         return values
