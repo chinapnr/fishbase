@@ -1,6 +1,11 @@
 更新记录
 ===========================
 
+2019.02.27 v1.1.7
+---------------------------
+* `#212 <https://github.com/chinapnr/fishbase/issues/212>`_, common, edit function :meth:`fish_common.conf_as_dict`, :meth:`fish_common.find_files`, :meth:`fish_common.yaml_conf_as_dict`, optimize
+
+
 2019.01.22 v1.1.6
 ---------------------------
 * `#192 <https://github.com/chinapnr/fishbase/issues/192>`_, data, add function :meth:`fish_data.IdCard.get_cn_idcard`, :meth:`fish_data.IdCard.get_note_by_province`, doc and unittest;
