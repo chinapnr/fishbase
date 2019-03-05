@@ -22,6 +22,7 @@ import yaml
 from collections import OrderedDict, namedtuple
 from operator import attrgetter
 import functools
+import pathlib
 
 if sys.version > '3':
     import configparser
@@ -59,6 +60,7 @@ def show_deprecation_warn(old_fun, suggest_fun):
 # 2018.5.14 v1.0.11 #19028 逻辑修改，更加严密
 # v1.0.15 edit by Hu Jun, #83
 # v1.0.16 edit by Hu Jun, #94
+# v1.0.17 edit by Hu Jun, #212
 def conf_as_dict(conf_filename, encoding=None):
     """
     读入 ini 配置文件，返回根据配置文件内容生成的字典类型变量；
@@ -114,7 +116,7 @@ def conf_as_dict(conf_filename, encoding=None):
     flag = False
 
     # 检查文件是否存在
-    if not os.path.isfile(conf_filename):
+    if not pathlib.Path(conf_filename).is_file():
         return flag,
 
     cf = configparser.ConfigParser()
@@ -591,6 +593,7 @@ def has_special_char(p_str, check_style=charChinese):
 
 
 # v1.0.14 edit by Hu Jun, edit from Jia Chunying，#38
+# v1.0.17 edit by Hu Jun, #212
 def find_files(path, exts=None):
     """
     查找路径下的文件，返回指定类型的文件列表
@@ -626,7 +629,7 @@ def find_files(path, exts=None):
             files_list.append(os.path.join(root, name))
     
     if exts is not None:
-        return [file for file in files_list if os.path.splitext(file)[-1] in exts]
+        return [file for file in files_list if pathlib.Path(file).suffix in exts]
         
     return files_list
 
@@ -988,6 +991,7 @@ def find_same_between_dicts(dict1, dict2):
 
 
 # v1.1.3 edit by Hu Jun, #94
+# v1.0.17 edit by Hu Jun, #212
 def yaml_conf_as_dict(file_path, encoding=None):
     """
     读入 yaml 配置文件，返回根据配置文件内容生成的字典类型变量
@@ -1026,9 +1030,9 @@ def yaml_conf_as_dict(file_path, encoding=None):
         ---
 
     """
-    if not os.path.isfile(file_path):
+    if not pathlib.Path(file_path).is_file():
         return False, {}, 'File not exist'
-    
+
     try:
         if sys.version > '3':
             with open(file_path, 'r', encoding=encoding) as f:
