@@ -405,3 +405,24 @@ class TestFishCommon(object):
         assert fish_isalpha(letter_str)
         assert not fish_isalpha(mix_str)
         assert not if_any_elements_is_letter(mix_str)
+
+    # 测试 serialize_instance() tc
+    def test_serialize_instance(self):
+        # 定义两个对象
+        class ObjA(object):
+            def __init__(self, a, b):
+                self.a = a
+                self.b = b
+    
+        class ObjB(object):
+            def __init__(self, x, y):
+                self.x = x
+                self.y = y
+
+        obj_b = ObjB('string', [item for item in range(10)])
+        obj_a = ObjA(1, obj_b)
+        obj_attr_dict = serialize_instance(obj_a)
+
+        assert '__classname__' in obj_attr_dict
+        assert obj_attr_dict.get('__classname__') == 'ObjA'
+        assert isinstance(obj_attr_dict.get('b'), dict)
