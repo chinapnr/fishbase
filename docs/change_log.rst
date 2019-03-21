@@ -1,9 +1,9 @@
 更新记录
 ===========================
-
-2019.02.27 v1.1.7
+2019.03.19 v1.1.7
 ---------------------------
 * `#212 <https://github.com/chinapnr/fishbase/issues/212>`_, common, edit function :meth:`fish_common.conf_as_dict`, :meth:`fish_common.find_files`, :meth:`fish_common.yaml_conf_as_dict`, optimize
+* `#215 <https://github.com/chinapnr/fishbase/issues/215>`_, common, edit function :meth:`fish_common.serialize_instance`, optimize doc and add unittest
 
 
 2019.01.22 v1.1.6

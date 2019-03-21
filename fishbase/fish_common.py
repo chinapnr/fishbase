@@ -44,6 +44,9 @@ odDES = 10012
 charChinese = 10021
 charNum = 10022
 
+# common data type
+commonDataType = tuple([int, float, bool, complex, str, set, list, tuple, dict])
+
 
 # v1.1.6 edit by Hu Jun
 def show_deprecation_warn(old_fun, suggest_fun):
@@ -190,12 +193,55 @@ class SingleTon(object):
         return ob
 
 
-# 对象序列化
 # 2015.6.14  edit by david.yi
+# 2019.03.19 v1.1.7 edit by Hu Jun, edit from Jia Chunying，#215
 def serialize_instance(obj):
-    d = {'__classname__': type(obj).__name__}
-    d.update(vars(obj))
-    return d
+    """
+    对象序列化
+
+    :param:
+        * obj: (object) 对象实例
+
+    :return:
+        * obj_dict: (dict) 对象序列化字典
+
+    举例如下::
+
+        print('--- serialize_instance demo ---')
+        # 定义两个对象
+        class Obj(object):
+            def __init__(self, a, b):
+                self.a = a
+                self.b = b
+
+        class ObjB(object):
+            def __init__(self, x, y):
+                self.x = x
+                self.y = y
+
+        # 对象序列化
+        b = ObjB('string', [item for item in range(10)])
+        obj_ = Obj(1, b)
+        print(serialize_instance(obj_))
+        print('---')
+
+    执行结果::
+
+        --- serialize_instance demo ---
+        {'__classname__': 'Obj', 'a': 1,
+        'b': {'__classname__': 'ObjB', 'x': 'string', 'y': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]}}
+        ---
+
+    """
+    obj_dict = {'__classname__': type(obj).__name__}
+    obj_dict.update(obj.__dict__)
+    for key, value in obj_dict.items():
+        if not isinstance(value, commonDataType):
+            sub_dict = serialize_instance(value)
+            obj_dict.update({key: sub_dict})
+        else:
+            continue
+    return obj_dict
 
 
 # 2018.5.26 v1.0.13 edit by David Yi，#19038
