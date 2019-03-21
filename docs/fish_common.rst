@@ -21,6 +21,7 @@
     fish_common.camelcase_to_underline
     fish_common.find_same_between_dicts
     fish_common.yaml_conf_as_dict
+    fish_common.serialize_instance
 
 .. automodule:: fish_common
     :members:
