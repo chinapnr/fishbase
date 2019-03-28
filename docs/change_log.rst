@@ -1,5 +1,10 @@
 更新记录
 ===========================
+2019.03.28 v1.1.8
+---------------------------
+* `#215 <https://github.com/chinapnr/fishbase/issues/215>`_, common, add function :meth:`fish_common.DeserializeInstance, doc and unittest;
+
+
 2019.03.19 v1.1.7
 ---------------------------
 * `#212 <https://github.com/chinapnr/fishbase/issues/212>`_, common, edit function :meth:`fish_common.conf_as_dict`, :meth:`fish_common.find_files`, :meth:`fish_common.yaml_conf_as_dict`, optimize
