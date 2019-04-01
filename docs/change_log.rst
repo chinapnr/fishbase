@@ -1,7 +1,8 @@
 更新记录
 ===========================
-2019.03.28 v1.1.8
+2019.04.01 v1.1.8
 ---------------------------
+* `#218 <https://github.com/chinapnr/fishbase/issues/218>`_, file, edit function :meth:`fish_file.get_abs_filename_with_sub_path`, :meth:`fish_file.check_sub_path_create`, optimize
 * `#215 <https://github.com/chinapnr/fishbase/issues/215>`_, common, add function :meth:`fish_common.DeserializeInstance, doc and unittest;
 
 
