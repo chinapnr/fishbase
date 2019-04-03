@@ -2,6 +2,7 @@
 # fish_file.py 单元测试
 # 2018.5.28 create by David Yi
 
+import os
 from fishbase.fish_file import *
 
 # 定义当前路径

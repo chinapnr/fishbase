@@ -426,3 +426,11 @@ class TestFishCommon(object):
         assert '__classname__' in obj_attr_dict
         assert obj_attr_dict.get('__classname__') == 'ObjA'
         assert isinstance(obj_attr_dict.get('b'), dict)
+
+    def test_deserialize_instance(self):
+        temp_dict = {'user': {'name': {'last_name': 'zhang', 'first_name': 'san'}, 'address': 'Beijing'}}
+        new_obj = DeserializeInstance(temp_dict)
+        assert hasattr(new_obj, 'user')
+        assert hasattr(new_obj.user, 'name')
+        assert new_obj.user.name.last_name == 'zhang'
+        assert new_obj.user.address == 'Beijing'
