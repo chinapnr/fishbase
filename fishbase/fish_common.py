@@ -244,6 +244,44 @@ def serialize_instance(obj):
     return obj_dict
 
 
+# 2019.03.28 v1.1.8 edit by Hu Jun, edit from Jia Chunying，#215
+class DeserializeInstance(object):
+    """
+    字典对象反序列化
+
+    :param:
+        * obj_dict: (dict) 对象序列化字典
+ 
+    :return:
+        * obj: (object) 对象
+        
+    举例如下::
+
+        print('--- DeserializeInstance demo ---')
+        temp_dict = {'user': {'name': {'last_name': 'zhang', 'first_name': 'san'}, 'address': 'Beijing'}}
+        new_obj = DeserializeInstance(temp_dict)
+        print('last_name is: ', new_obj.user.name.last_name)
+        print('first_name is: ', new_obj.user.name.first_name)
+        print('address is: ', new_obj.user.address)
+        print('---')
+
+    执行结果::
+
+        --- DeserializeInstance demo ---
+        last_name is:  zhang
+        first_name is:  san
+        address is:  Beijing
+        ---
+
+    """
+    def __init__(self, obj_dict):
+        for key, value in obj_dict.items():
+            if isinstance(value, dict):
+                setattr(self, key, DeserializeInstance(value) if isinstance(value, dict) else value)
+            else:
+                setattr(self, key, value)
+
+
 # 2018.5.26 v1.0.13 edit by David Yi，#19038
 def get_uuid(kind):
     """

@@ -9,7 +9,7 @@
 
 # 2017.1.8 v1.0.9 created
 
-import os
+import pathlib
 
 
 # 生成当前路径下一级路径某文件的完整文件名
@@ -19,6 +19,7 @@ import os
 # 2018.1.30 1.31 v1.0.10 代码优化, #11004
 # 2018.4.24 v1.0.11 加入 docstring
 # 2018.5.28 v1.0.13 edit, #19040
+# 2019.4.1 v1.1.8 edit by Hu Jun, #218
 def get_abs_filename_with_sub_path(sub_path, filename):
 
     """
@@ -61,12 +62,12 @@ def get_abs_filename_with_sub_path(sub_path, filename):
     """
 
     try:
-        cur_path = os.getcwd()
-        abs_filename = os.path.join(cur_path, sub_path, filename)
+        cur_path = pathlib.Path.cwd()
+        abs_filename = cur_path / pathlib.Path(sub_path) / filename
+        flag = pathlib.Path.is_file(abs_filename)
 
-        flag = os.path.isfile(abs_filename)
-
-        return flag, abs_filename
+        # 将 path 对象转换成字符串
+        return flag, str(abs_filename)
 
     except:
 
@@ -89,6 +90,7 @@ def get_abs_filename_with_sub_path(sub_path, filename):
 # 检查当前路径下的某个子路径是否存在, 不存在则创建
 # 2016.10.4 v1.0.9 #19001, edit by David Yi
 # 2018.5.28 v1.0.13 #19042, edit by David Yi
+# 2019.4.1 v1.1.8 edit by Hu Jun, #218
 def check_sub_path_create(sub_path):
 
     """
@@ -122,17 +124,18 @@ def check_sub_path_create(sub_path):
     """
 
     # 获得当前路径
-    cur_path = os.path.abspath('')
+    temp_path = pathlib.Path()
+    cur_path = temp_path.resolve()
 
     # 生成 带有 sub_path_name 的路径
-    path = os.path.join(cur_path, sub_path)
+    path = cur_path / pathlib.Path(sub_path)
 
     # 判断是否存在带有 sub_path 路径
-    if os.path.exists(path):
+    if path.exists():
         # 返回 True: 路径存在, False: 不需要创建
         return True, False
     else:
-        os.makedirs(path)
+        path.mkdir(parents=True)
         # 返回 False: 路径不存在  True: 路径已经创建
         return False, True
 
