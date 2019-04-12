@@ -12,6 +12,7 @@
 # 2017.6.20 edit by aoran.xue #14109
 # 2017.8.14 move to fish_base
 
+import sys
 import logging
 from logging import FileHandler
 import codecs
@@ -100,7 +101,8 @@ class SafeFileHandler(FileHandler):
 # 2018.2.11 edit, log 相关代码优化简化; #11010
 # 2018.2.13 edit, remove thread watch
 # 2018.4.23 edit，#19023 增加 docstring
-def set_log_file(local_file=None):
+# 2019.4.12 edit by jun.hu #221
+def set_log_file(local_file=None, is_stdout=False):
 
     """
     设置日志记录，按照每天一个文件，记录包括 info 以及以上级别的内容；
@@ -108,6 +110,7 @@ def set_log_file(local_file=None):
 
     :param:
         * local_fie: (string) 日志文件名
+        * is_stdout: (bool) 是否输出到标准输出 stdout 中 默认为 False
     :return: 无
 
     举例如下::
@@ -142,4 +145,9 @@ def set_log_file(local_file=None):
     _tfh.setFormatter(_formatter)
 
     logger.setLevel(logging.INFO)
+
+    if is_stdout:
+        stdout_handler = logging.StreamHandler(sys.stdout)
+        logger.addHandler(stdout_handler)
+
     logger.addHandler(_tfh)

@@ -1,18 +1,23 @@
 更新记录
 ===========================
-2019.04.01 v1.1.8
+2019.4.12 v1.1.8
+---------------------------
+* `#221 <https://github.com/chinapnr/fishbase/issues/221>`_, logger, edit function :meth:`fish_logger.set_log_file`, optimize
+
+
+2019.4.1 v1.1.8
 ---------------------------
 * `#218 <https://github.com/chinapnr/fishbase/issues/218>`_, file, edit function :meth:`fish_file.get_abs_filename_with_sub_path`, :meth:`fish_file.check_sub_path_create`, optimize
 * `#215 <https://github.com/chinapnr/fishbase/issues/215>`_, common, add function :meth:`fish_common.DeserializeInstance, doc and unittest;
 
 
-2019.03.19 v1.1.7
+2019.3.19 v1.1.7
 ---------------------------
 * `#212 <https://github.com/chinapnr/fishbase/issues/212>`_, common, edit function :meth:`fish_common.conf_as_dict`, :meth:`fish_common.find_files`, :meth:`fish_common.yaml_conf_as_dict`, optimize
 * `#215 <https://github.com/chinapnr/fishbase/issues/215>`_, common, edit function :meth:`fish_common.serialize_instance`, optimize doc and add unittest
 
 
-2019.01.22 v1.1.6
+2019.1.22 v1.1.6
 ---------------------------
 * `#192 <https://github.com/chinapnr/fishbase/issues/192>`_, data, add function :meth:`fish_data.IdCard.get_cn_idcard`, :meth:`fish_data.IdCard.get_note_by_province`, doc and unittest;
 * `#190 <https://github.com/chinapnr/fishbase/issues/190>`_, random, edit function :meth:`fish_random.gen_float_by_range`, optimize;
