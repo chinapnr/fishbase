@@ -17,10 +17,10 @@ class TestCrypt(object):
     def test_md5_01(self):
         assert FishMD5.string('hello world!') == 'fc3ff98e8c6a0d3087d515c0473f8677'
         # different line separator will get different md5 value
-        assert FishMD5.file(conf_filename) in ['a0a36ccf1bce193658559e092ac43b6d',
-                                               'd0c640cee2e58141c83ac807a734dcf3']
-        assert FishMD5.big_file(conf_filename) in ['a0a36ccf1bce193658559e092ac43b6d',
-                                                   'd0c640cee2e58141c83ac807a734dcf3']
+        assert FishMD5.file(conf_filename) in ['79e1a2614f1afc8297856b7ffdaf4c47',
+                                               'a0a36ccf1bce193658559e092ac43b6d']
+        assert FishMD5.big_file(conf_filename) in ['79e1a2614f1afc8297856b7ffdaf4c47',
+                                                   'a0a36ccf1bce193658559e092ac43b6d']
     
     # 测试 FishMD5()  tc
     def test_md5_02(self):
