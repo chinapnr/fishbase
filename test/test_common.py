@@ -67,6 +67,14 @@ class TestFishCommon(object):
         # 断言是否保序
         assert list(d.keys()) == list1
 
+    def test_config_dict_05(self):
+        # 读取配置文件, 大小写敏感
+        ds = conf_as_dict(conf_filename, encoding='utf-8', case_sensitive=True)
+        d = ds[1]
+    
+        for item in ['Short_Opt', 'Long_Opt']:
+            assert item in d.get('show_opt')
+
     # 测试 FishMD5()  tc
     def test_md5_01(self):
         assert GetMD5.string('hello world!') == 'fc3ff98e8c6a0d3087d515c0473f8677'

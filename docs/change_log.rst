@@ -1,7 +1,8 @@
 更新记录
 ===========================
-2019.4.12 v1.1.8
+2019.4.15 v1.1.9
 ---------------------------
+* `#222 <https://github.com/chinapnr/fishbase/issues/222>`_, common, edit function :meth:`fish_logger.conf_as_dict`, optimize
 * `#221 <https://github.com/chinapnr/fishbase/issues/221>`_, logger, edit function :meth:`fish_logger.set_log_file`, optimize
 
 
