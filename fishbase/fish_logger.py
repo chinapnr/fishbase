@@ -12,6 +12,7 @@
 # 2017.6.20 edit by aoran.xue #14109
 # 2017.8.14 move to fish_base
 
+import sys
 import logging
 from logging import FileHandler
 import codecs
@@ -142,4 +143,35 @@ def set_log_file(local_file=None):
     _tfh.setFormatter(_formatter)
 
     logger.setLevel(logging.INFO)
+
     logger.addHandler(_tfh)
+
+
+# 2019.4.16 edit by jun.hu #221
+def set_log_stdout():
+    """
+    设置输出到标准输出中
+
+    :param: 无
+    :return: 无
+
+    举例如下::
+
+        from fishbase.fish_logger import *
+
+        set_log_stdout()
+
+        logger.info('test fish base log')
+        logger.warn('test fish base log')
+        logger.error('test fish base log')
+
+        print('log ok')
+    """
+    _formatter = logging.Formatter(
+        '%(asctime)s %(levelname)s %(filename)s[ln:%(lineno)d] %(message)s')
+
+    logger.setLevel(logging.INFO)
+    stdout_handler = logging.StreamHandler(sys.stdout)
+    stdout_handler.setFormatter(_formatter)
+
+    logger.addHandler(stdout_handler)

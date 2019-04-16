@@ -56,6 +56,19 @@ def show_deprecation_warn(old_fun, suggest_fun):
                   DeprecationWarning, stacklevel=2)
 
 
+# v1.1.9 edit by Hu Jun, #222
+class MyConfigParser(configparser.ConfigParser):
+    """
+    自定义 MyConfigParser，重写 optionxform 方法，以便读取大小写敏感的配置文件
+    """
+    
+    def __init__(self, defaults=None):
+        configparser.ConfigParser.__init__(self, defaults=None)
+    
+    def optionxform(self, optionstr):
+        return optionstr
+
+
 # 读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
 # 2017.2.23 #19008 create by David Yi
 # 2018.2.12 #11014 edit by David Yi, 增加返回内容，字典长度,
@@ -64,13 +77,15 @@ def show_deprecation_warn(old_fun, suggest_fun):
 # v1.0.15 edit by Hu Jun, #83
 # v1.0.16 edit by Hu Jun, #94
 # v1.0.17 edit by Hu Jun, #212
-def conf_as_dict(conf_filename, encoding=None):
+# v1.1.9 edit by Hu Jun, #222
+def conf_as_dict(conf_filename, encoding=None, case_sensitive=False):
     """
     读入 ini 配置文件，返回根据配置文件内容生成的字典类型变量；
 
     :param:
         * conf_filename: (string) 需要读入的 ini 配置文件长文件名
         * encoding: (string) 文件编码
+        * case_sensitive: (bool) 是否大小写敏感，默认为 False
     :return:
         * flag: (bool) 读取配置文件是否正确，正确返回 True，错误返回 False
         * d: (dict) 如果读取配置文件正确返回的包含配置文件内容的字典，字典内容顺序与配置文件顺序保持一致
@@ -83,15 +98,19 @@ def conf_as_dict(conf_filename, encoding=None):
         conf_filename = 'test_conf.ini'
         # 读取配置文件
         ds = conf_as_dict(conf_filename)
+        ds1 = conf_as_dict(conf_filename, case_sensitive=True)
         # 显示是否成功，所有 dict 的内容，dict 的 key 数量
         print('flag:', ds[0])
         print('dict:', ds[1])
         print('length:', ds[2])
 
         d = ds[1]
+        d1 = ds1[1]
 
         # 显示一个 section 下的所有内容
         print('section show_opt:', d['show_opt'])
+        # 显示一个 section 下的所有内容，大小写敏感
+        print('section show_opt:', d1['show_opt'])
         # 显示一个 section 下面的 key 的 value 内容
         print('section show_opt, key short_opt:', d['show_opt']['short_opt'])
 
@@ -109,6 +128,7 @@ def conf_as_dict(conf_filename, encoding=None):
         dict: (omit)
         length: 7
         section show_opt: {'short_opt': 'b:d:v:p:f:', 'long_opt': 'region=,prov=,mer_id=,mer_short_name=,web_status='}
+        section show_opt: {'Short_Opt': 'b:d:v:p:f:', 'Long_Opt': 'region=,prov=,mer_id=,mer_short_name=,web_status='}
         section show_opt, key short_opt: b:d:v:p:f:
         section get_extra_rules, key erule_count: 2
         section get_extra_rules, key erule_type: extra_rule_1
@@ -117,13 +137,14 @@ def conf_as_dict(conf_filename, encoding=None):
 
     """
     flag = False
-
+    
     # 检查文件是否存在
     if not pathlib.Path(conf_filename).is_file():
         return flag,
-
-    cf = configparser.ConfigParser()
-
+    
+    # 判断是否对大小写敏感
+    cf = configparser.ConfigParser() if not case_sensitive else MyConfigParser()
+    
     # 读入 config 文件
     try:
         if sys.version > '3':
@@ -133,17 +154,17 @@ def conf_as_dict(conf_filename, encoding=None):
     except:
         flag = False
         return flag,
-
+    
     d = OrderedDict(cf._sections)
     for k in d:
         d[k] = OrderedDict(cf._defaults, **d[k])
         d[k].pop('__name__', None)
-
+    
     flag = True
-
+    
     # 计算有多少 key
     count = len(d.keys())
-
+    
     return flag, d, count
 
 
@@ -183,9 +204,9 @@ class SingleTon(object):
         ---
 
     """
-
+    
     _state = {}
-
+    
     def __new__(cls, *args, **kwargs):
         ob = super(SingleTon, cls).__new__(cls)
         # 类维护所有实例的共享属性
@@ -251,10 +272,10 @@ class DeserializeInstance(object):
 
     :param:
         * obj_dict: (dict) 对象序列化字典
- 
+
     :return:
         * obj: (object) 对象
-        
+
     举例如下::
 
         print('--- DeserializeInstance demo ---')
@@ -274,6 +295,7 @@ class DeserializeInstance(object):
         ---
 
     """
+    
     def __init__(self, obj_dict):
         for key, value in obj_dict.items():
             if isinstance(value, dict):
@@ -329,7 +351,7 @@ def get_uuid(kind):
         ---
 
     """
-
+    
     if kind == udTime:
         return str(uuid.uuid1())
     elif kind == udRandom:
@@ -403,7 +425,6 @@ def has_space_element(source):
 # 输入：source 是参数列表或元组
 # 输出：True：不包含特殊字符；False：包含特殊字符
 def if_any_elements_is_special(source):
-
     if not re.match('^[a-zA-Z0-9_,-.|]+$', "".join(source)):
         return False
     return True
@@ -414,12 +435,11 @@ def if_any_elements_is_special(source):
 # 输入：source 是参数列表或元组
 # 输出：True：只包含数字；False：不只包含数字
 def if_any_elements_is_number(source):
-
     for i in source:
-
+        
         if not i.isdigit():
             return False
-
+    
     return True
 
 
@@ -434,12 +454,11 @@ def if_any_elements_is_letter(source):
 # 输入：source 是参数列表或元组
 # 输出：True：只包含英文；False：不只包含英文
 def fish_isalpha(source):
-
     for i in source:
-
+        
         if not i.isalpha():
             return False
-
+    
     return True
 
 
@@ -448,11 +467,11 @@ def fish_isalpha(source):
 # 通过conf文件。eg ini，读取值，通过字典缓存来提高读取速度
 class FishCache:
     __cache = {}
-
+    
     def get_cf_cache(self, cf, section, key):
         # 生成 key，用于 dict
         temp_key = section + '_' + key
-
+        
         if temp_key not in self.__cache:
             self.__cache[temp_key] = cf[section][key]
         return self.__cache[temp_key]
@@ -466,19 +485,19 @@ class GetMD5(object):
         from fishbase.fish_crypt import FishMD5
         show_deprecation_warn('GetMD5.sting', 'fish_crypt.FishMD5.string')
         return FishMD5.string(s, salt=salt)
-
+    
     @staticmethod
     def file(filename):
         from fishbase.fish_crypt import FishMD5
         show_deprecation_warn('GetMD5.file', 'fish_crypt.FishMD5.file')
         return FishMD5.file(filename)
-
+    
     @staticmethod
     def big_file(filename):
         from fishbase.fish_crypt import FishMD5
         show_deprecation_warn('GetMD5.big_file', 'fish_crypt.FishMD5.big_file')
         return FishMD5.big_file(filename)
-
+    
     @staticmethod
     def hmac_md5(s, salt):
         from fishbase.fish_crypt import FishMD5
@@ -507,15 +526,15 @@ def if_json_contain(left_json, right_json, op='strict'):
         print('---')
 
     执行结果::
-        
+
         --- json contain demo ---
         True
         ---
 
     """
-
+    
     key_list = left_json.keys()
-
+    
     if op == 'strict':
         for key in key_list:
             if not right_json.get(key) == left_json.get(key):
@@ -543,22 +562,22 @@ def join_url_params(dic):
         * result: (string) 拼接好的参数
 
     举例如下::
-        
+
         print('--- splice_url_params demo ---')
         dic1 = {'key1': 'value1', 'key2': 'value2'}
         print(splice_url_params(dic1))
         print('---')
 
     执行结果::
-        
+
         --- splice_url_params demo ---
         ?key1=value1&key2=value2
         ---
 
     """
-
+    
     od = OrderedDict(sorted(dic.items()))
-
+    
     url = '?'
     temp_str = urlencode(od)
     
@@ -579,7 +598,7 @@ def sorted_list_from_dict(p_dict, order=odASC):
         * o_list: (list) 排序后的 list
 
     举例如下::
-        
+
         print('--- sorted_list_from_dict demo ---')
         # 定义待处理字典
         dict1 = {'a_key': 'a_value', '1_key': '1_value', 'A_key': 'A_value', 'z_key': 'z_value'}
@@ -593,16 +612,16 @@ def sorted_list_from_dict(p_dict, order=odASC):
         print('---')
 
     执行结果::
-        
+
         --- sorted_list_from_dict demo ---
         {'a_key': 'a_value', 'A_key': 'A_value', '1_key': '1_value', 'z_key': 'z_value'}
         ascending order result is: ['1_value', 'A_value', 'a_value', 'z_value']
         descending order result is: ['z_value', 'a_value', 'A_value', '1_value']
         ---
-        
+
     """
     o_list = sorted(value for (key, value) in p_dict.items())
-
+    
     if order == odASC:
         return o_list
     elif order == odDES:
@@ -621,7 +640,7 @@ def is_contain_special_char(p_str, check_style=charChinese):
 def has_special_char(p_str, check_style=charChinese):
     """
     检查字符串是否含有指定类型字符
-    
+
     :param:
         * p_str: (string) 需要判断的字符串
         * check_style: (string) 需要判断的字符类型，默认为 charChinese (编码仅支持utf-8), 支持 charNum，该参数向后兼容
@@ -631,27 +650,27 @@ def has_special_char(p_str, check_style=charChinese):
         * False 不含有指定类型字符
 
     举例如下::
-        
+
         print('--- has_special_char demo ---')
         p_str1 = 'meiyouzhongwen'
         non_chinese_result = has_special_char(p_str1, check_style=charChinese)
         print(non_chinese_result)
-        
+
         p_str2 = u'有zhongwen'
         chinese_result = has_special_char(p_str2, check_style=charChinese)
         print(chinese_result)
-        
+
         p_str3 = 'nonnumberstring'
         non_number_result = has_special_char(p_str3, check_style=charNum)
         print(non_number_result)
-        
+
         p_str4 = 'number123'
         number_result = has_special_char(p_str4, check_style=charNum)
         print(number_result)
         print('---')
 
     执行结果::
-        
+
         --- has_special_char demo ---
         False
         True
@@ -690,7 +709,7 @@ def find_files(path, exts=None):
         * files_list: (list) 文件列表
 
     举例如下::
-        
+
         print('--- find_files demo ---')
         path1 = '/root/fishbase_issue'
         all_files = find_files(path1)
@@ -714,7 +733,7 @@ def find_files(path, exts=None):
     
     if exts is not None:
         return [file for file in files_list if pathlib.Path(file).suffix in exts]
-        
+    
     return files_list
 
 
@@ -724,7 +743,7 @@ def find_files(path, exts=None):
 def get_random_str(length, letters=True, digits=False, punctuation=False):
     """
     获得指定长度，不同规则的随机字符串，可以包含数字，字母和标点符号
-    
+
     :param:
         * length: (int) 随机字符串的长度
         * letters: (bool) 随机字符串是否包含字母，默认包含
@@ -838,8 +857,8 @@ def sort_objs_by_attr(objs, key, reverse=False):
         class User(object):
             def __init__(self, user_id):
                 self.user_id = user_id
-                
-        
+
+
         users = [User(23), User(3), User(99)]
         result = sorted_objs_by_attr(users, key='user_id')
         reverse_result = sorted_objs_by_attr(users, key='user_id', reverse=True)
@@ -891,7 +910,7 @@ def get_query_param_from_url(url):
     """
     url_obj = urlsplit(url)
     query_dict = parse_qs(url_obj.query)
-
+    
     return OrderedDict(query_dict)
 
 
@@ -919,7 +938,7 @@ def paging(data_list, group_number=1, group_size=10):
         print('--- paging demo---')
         all_records = [1, 2, 3, 4, 5]
         print(get_group_list_data(all_records))
-        
+
         all_records1 = list(range(100))
         print(get_group_list_data(all_records1, group_number=5, group_size=15))
         print(get_group_list_data(all_records1, group_number=7, group_size=15))
@@ -936,17 +955,17 @@ def paging(data_list, group_number=1, group_size=10):
     """
     if not isinstance(data_list, list):
         raise TypeError('data_list should be a list, but we got {}'.format(type(data_list)))
-        
+    
     if not isinstance(group_number, int) or not isinstance(group_size, int):
         raise TypeError('group_number and group_size should be int, but we got group_number: {0}, '
                         'group_size: {1}'.format(type(group_number), type(group_size)))
     if group_number < 0 or group_size < 0:
         raise ValueError('group_number and group_size should be positive int, but we got '
                          'group_number: {0}, group_size: {1}'.format(group_number, group_size))
-
+    
     start = (group_number - 1) * group_size
     end = group_number * group_size
-
+    
     return data_list[start:end]
 
 
@@ -982,10 +1001,10 @@ def get_sub_dict(data_dict, key_list, default_value='default_value'):
     """
     if not isinstance(data_dict, dict):
         raise TypeError('data_dict should be dict, but we got {}'.format(type(data_dict)))
-
+    
     if not isinstance(key_list, list):
         raise TypeError('key_list should be list, but we got {}'.format(type(key_list)))
-
+    
     sub_dict = dict()
     for item in key_list:
         sub_dict.update({item: data_dict.get(item, default_value)})
@@ -1025,7 +1044,7 @@ def camelcase_to_underline(param_dict):
 
     """
     temp_dict = copy.deepcopy(param_dict)
-
+    
     # 正则
     hump_to_underline = re.compile(r'([a-z]|\d)([A-Z])')
     for key in list(param_dict.keys()):
@@ -1046,7 +1065,7 @@ def find_same_between_dicts(dict1, dict2):
 
     :return:
         * dup_info: (namedtuple) 返回两个字典中相同的信息组成的具名元组
-    
+
     举例如下::
 
         print('--- find_same_between_dicts demo---')
@@ -1116,7 +1135,7 @@ def yaml_conf_as_dict(file_path, encoding=None):
     """
     if not pathlib.Path(file_path).is_file():
         return False, {}, 'File not exist'
-
+    
     try:
         if sys.version > '3':
             with open(file_path, 'r', encoding=encoding) as f:
@@ -1137,7 +1156,7 @@ class GetSha256(object):
         from fishbase.fish_crypt import FishSha256
         show_deprecation_warn('GetSha256.hmac_sha256', 'FishSha256.hmac_sha256')
         return FishSha256.hmac_sha256(secret, message)
-
+    
     @staticmethod
     def hashlib_sha256(message):
         from fishbase.fish_crypt import FishSha256
