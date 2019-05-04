@@ -1,5 +1,10 @@
 更新记录
 ===========================
+2019.4.30 v1.1.10
+---------------------------
+* `#226 <https://github.com/chinapnr/fishbase/issues/226>`_, file, add function :meth:`fish_file.get_file_encoding`, doc and unittest;
+
+
 2019.4.15 v1.1.9
 ---------------------------
 * `#222 <https://github.com/chinapnr/fishbase/issues/222>`_, common, edit function :meth:`fish_logger.conf_as_dict`, optimize

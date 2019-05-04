@@ -9,6 +9,7 @@
 
 # 2017.1.8 v1.0.9 created
 
+import chardet
 import pathlib
 
 
@@ -138,6 +139,50 @@ def check_sub_path_create(sub_path):
         path.mkdir(parents=True)
         # 返回 False: 路径不存在  True: 路径已经创建
         return False, True
+
+
+# 2019.4.1 v1.1.10 edit by Hu Jun, #226
+def get_file_encoding(file_path):
+
+    """
+    获取给定文件的编码；
+
+    :param:
+        * file_path: (string) 文件的完整路径
+    :return:
+        * file_encoding (string)，文件编码
+
+    举例如下::
+
+        print('--- get_file_encoding demo ---')
+        result = get_file_encoding(__file__)
+        print(result)
+        print('---')
+
+    输出结果::
+
+        --- get_file_encoding demo ---
+        utf-8
+        ---
+
+        """
+    # 判断给定路径是否是一个文件
+    flag = pathlib.Path(file_path).is_file()
+    if not flag:
+        raise RuntimeError('file {}, does not exist'.format(file_path))
+
+    # 读入文件
+    with open(file_path, 'rb') as f:
+        buf = f.read()
+        # 获取文件信息
+        file_info = chardet.detect(buf)
+        
+        encoding = file_info['encoding']
+        if encoding.startswith(('utf-8', 'UTF-8')):
+            file_encoding = encoding
+        else:
+            file_encoding = 'GB2312'
+        return file_encoding
 
 
 # 生成使用模块时的下一级路径某文件的完整文件名

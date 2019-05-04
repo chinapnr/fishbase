@@ -4,6 +4,7 @@
 .. autosummary::
     fish_file.check_sub_path_create
     fish_file.get_abs_filename_with_sub_path
+    fish_file.get_file_encoding
 
 .. automodule:: fish_file
    :members:
