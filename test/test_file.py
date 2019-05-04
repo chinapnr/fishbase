@@ -3,10 +3,13 @@
 # 2018.5.28 create by David Yi
 
 import os
+import pytest
 from fishbase.fish_file import *
 
 # 定义当前路径
 current_path = os.path.dirname(os.path.abspath(__file__))
+# 定义配置文件名
+test_filename = os.path.join(current_path, 'test_gb2312_encoding.txt')
 
 
 # 2018.5.28 v1.0.13 #19040,#19042, create by David Yi, fish_file unittest
@@ -67,3 +70,14 @@ class TestFishFile(object):
 
         # 删除临时文件
         os.rmdir(abs_path)
+
+    # tc for get_file_encoding()
+    def test_get_file_encoding_01(self):
+        assert get_file_encoding(__file__) == 'utf-8'
+        # 应该读不到返回的 dict 内容
+        with pytest.raises(RuntimeError):
+            temp_file = __file__ + '.for_test'
+            get_file_encoding(temp_file)
+        
+        gbk_file_path = test_filename
+        assert get_file_encoding(gbk_file_path) == 'GB2312'

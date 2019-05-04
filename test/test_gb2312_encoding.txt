@@ -1,0 +1,1 @@
+this is a test file for fish_file.get_file_encoding
