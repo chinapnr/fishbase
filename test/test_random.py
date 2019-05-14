@@ -99,6 +99,11 @@ class TestFishRandom(object):
         with pytest.raises(ValueError):
             gen_random_bank_card('中国银行', 'AA')
 
+    # test gen_random_bank_card() tc
+    def test_gen_random_bank_card_03(self):
+        random_bank_card = gen_random_bank_card()
+        assert CardBin.check_bankcard(random_bank_card)
+
     # test gen_random_id_card() tc
     def test_gen_random_id_card_01(self):
         random_id_list = gen_random_id_card()
