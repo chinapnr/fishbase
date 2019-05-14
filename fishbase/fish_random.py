@@ -413,7 +413,7 @@ def gen_random_bank_card(bank_name=None, card_type=None):
     """
     if not bank_name:
         # 不指定银行名称时，银行名称从 中国工商银行、中国农业银行、中国银行、中国建设银行 中选取
-        bank_name = random.choice(['中国农业银行', '中国农业银行', '中国银行', '中国建设银行'])
+        bank_name = random.choice(['中国工商银行', '中国农业银行', '中国银行', '中国建设银行'])
     if not card_type:
         card_type = random.choice(['DC', 'CC'])
 
