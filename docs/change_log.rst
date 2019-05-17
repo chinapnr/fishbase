@@ -1,5 +1,10 @@
 更新记录
 ===========================
+2019.5.14 v1.1.11
+---------------------------
+* `#229 <https://github.com/chinapnr/fishbase/issues/229>`_, random, edit function :meth:`fish_random.gen_random_bank_card` optimize;
+
+
 2019.4.30 v1.1.10
 ---------------------------
 * `#226 <https://github.com/chinapnr/fishbase/issues/226>`_, file, add function :meth:`fish_file.get_file_encoding`, doc and unittest;

@@ -382,12 +382,13 @@ def gen_random_address(zone):
 
 
 # v1.1.5 edit by Hu Jun #172
-def gen_random_bank_card(bankname, card_type):
+# v1.1.11 edit by Hu Jun #229
+def gen_random_bank_card(bank_name=None, card_type=None):
     """
     通过指定的银行名称，随机生成该银行的卡号
 
     :param:
-        * bankname: (string) 银行名称 eg. 中国银行
+        * bank_name: (string) 银行名称 eg. 中国银行
         * card_type：(string) 卡种类，可选 CC(信用卡)、DC(借记卡)
 
     :returns:
@@ -396,6 +397,7 @@ def gen_random_bank_card(bankname, card_type):
     举例如下::
 
         print('--- gen_random_bank_card demo ---')
+        print(gen_bank_card())
         print(gen_bank_card('中国银行', 'CC'))
         print(gen_bank_card('中国银行', 'DC'))
         print('---')
@@ -403,14 +405,21 @@ def gen_random_bank_card(bankname, card_type):
     输出结果::
 
         --- gen_random_bank_card demo ---
+        6282689914390956
         6259073791134721
         6212836989522229131
         ---
 
     """
-    bank_info = CardBin.get_bank_info(bankname)
+    if not bank_name:
+        # 不指定银行名称时，银行名称从 中国工商银行、中国农业银行、中国银行、中国建设银行 中选取
+        bank_name = random.choice(['中国工商银行', '中国农业银行', '中国银行', '中国建设银行'])
+    if not card_type:
+        card_type = random.choice(['DC', 'CC'])
+
+    bank_info = CardBin.get_bank_info(bank_name)
     if not bank_info:
-        raise ValueError('bankname {} error, check and try again'.format(bankname))
+        raise ValueError('bankname {} error, check and try again'.format(bank_name))
 
     # 获取银行代码
     bank = bank_info[0][0]
