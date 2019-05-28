@@ -14,23 +14,24 @@ fish_data 中的函数就是用在这样的场景。注意，这些函数不会�
 import re
 import sqlite3
 import os
+from functools import lru_cache
 
 
 # 2018.12.18
 def sqlite_query(db, sql, params):
     dir_path = os.path.dirname(os.path.abspath(__file__))
-
+    
     conn = sqlite3.connect(os.path.join(dir_path, 'db', db))
-
+    
     cursor = conn.cursor()
-
+    
     cursor.execute(sql, params)
-
+    
     values = cursor.fetchall()
-
+    
     cursor.close()
     conn.close()
-
+    
     return values
 
 
@@ -67,7 +68,7 @@ class IdCard(object):
         ---
 
     """
-
+    
     # 计算身份证号码的校验位
     # ---
     # 2018.12.12 create by David.Yi, add in v1.1.4 github issue #143
@@ -108,31 +109,31 @@ class IdCard(object):
             ---
 
         """
-
+        
         # 判断长度，如果不是 17 位，直接返回失败
         if len(id_number_str) != 17:
             return False, -1
-
+        
         id_regex = '[1-9][0-9]{14}([0-9]{2}[0-9X])?'
-
+        
         if not re.match(id_regex, id_number_str):
             return False, -1
-
+        
         items = [int(item) for item in id_number_str]
-
+        
         # 加权因子表
         factors = (7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2)
-
+        
         # 计算17位数字各位数字与对应的加权因子的乘积
         copulas = sum([a * b for a, b in zip(factors, items)])
-
+        
         # 校验码表
         check_codes = ('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2')
-
+        
         checkcode = check_codes[copulas % 11].upper()
-
+        
         return True, checkcode
-
+    
     # 检查身份证号码是否能通过校验规则
     # ---
     # 2018.12.9 create by David Yi, add in v1.1.3, github issue #137
@@ -176,24 +177,25 @@ class IdCard(object):
         """
         if isinstance(id_number, int):
             id_number = str(id_number)
-
+        
         # 调用函数计算身份证前面17位的 checkcode
         result = IdCard.get_checkcode(id_number[0:17])
-
+        
         # 返回第一个 flag 是错误的话，表示身份证格式错误，直接透传返回，第二个为获得的校验码
         flag = result[0]
         checkcode = result[1]
-
+        
         if not flag:
             return flag,
-
+        
         # 判断校验码是否正确
         return checkcode == id_number[-1].upper(),
-
+    
     # 输入包含省份、城市、地区信息的内容，返回地区编号，也就是身份证编码中的前6位内容
     # ---
     # 2018.12.14 12.16 create by David Yi, add in v1.1.4, github issue #139
     @classmethod
+    @lru_cache()
     def get_zone_info(cls, area_str, match_type='EXACT', result_type='LIST'):
         """
         输入包含省份、城市、地区信息的内容，返回地区编号；
@@ -255,7 +257,7 @@ class IdCard(object):
 
         """
         values = []
-
+        
         if match_type == 'EXACT':
             values = sqlite_query('fish_data.sqlite',
                                   'select zone, areanote from cn_idcard where areanote = :area', {"area": area_str})
@@ -263,25 +265,26 @@ class IdCard(object):
             values = sqlite_query('fish_data.sqlite',
                                   'select zone, areanote from cn_idcard where areanote like :area',
                                   {"area": '%' + area_str + '%'})
-
+        
         # result_type 结果数量判断处理
-
+        
         if result_type == 'LIST':
             # 如果返回记录多，大于 20 项，只返回前面 20 个结果
             if len(values) > 20:
                 values = values[0:20]
-
+            
             return values
-
+        
         if result_type == 'SINGLE_STR':
             if len(values) == 0:
                 return ''
             if len(values) > 0:
                 value_str = values[0][0]
                 return value_str
-
+    
     # 2019.01.07 create by Hu Jun, add in v1.1.6, github issue #192
     @classmethod
+    @lru_cache()
     def get_areanote_info(cls, province):
         """
         输入省份代码，返回地区信息；
@@ -314,9 +317,10 @@ class IdCard(object):
                               'select zone, areanote from cn_idcard where province = :province ',
                               {"province": province})
         return values
-
+    
     # 2019.01.14 create by Hu Jun, add in v1.1.6, github issue #192
     @classmethod
+    @lru_cache()
     def get_province_info(cls):
         """
         获取省份代码
@@ -325,7 +329,7 @@ class IdCard(object):
 
         :returns:
             * province_list: (list) 省份代码列表
-            
+
         举例如下::
 
             from fishbase.fish_data import *
@@ -381,7 +385,7 @@ class CardBin(object):
         ---
 
     """
-
+    
     # 计算银行卡校验位
     # ---
     # 2018.12.18 create by David Yi, v1.1.4, github issue #154
@@ -416,7 +420,7 @@ class CardBin(object):
         """
         total = 0
         even = True
-
+        
         for item in card_number_str[-1::-1]:
             item = int(item)
             if even:
@@ -425,11 +429,11 @@ class CardBin(object):
                 item -= 9
             total += item
             even = not even
-
+        
         checkcode = (10 - (total % 10)) % 10
-
+        
         return str(checkcode)
-
+    
     # 检查银行卡校验位是否正确
     # ---
     # 2018.12.18 create by David Yi, v1.1.4, github issue #155
@@ -462,21 +466,22 @@ class CardBin(object):
             ---
 
         """
-
+        
         if isinstance(card_number_str, int):
             card_number_str = str(card_number_str)
-
+        
         checkcode = card_number_str[-1]
-
+        
         result = CardBin.get_checkcode(card_number_str[0:-1])
-
+        
         return checkcode == result
-
+    
     # 输入银行名称，返回银行代码
     # ---
     # 2018.12.18 create by David Yi, add in v1.1.4, github issue #159
     # 2019.1.5 edit, v1.1.6 github issue #188, 修改函数名称
     @classmethod
+    @lru_cache()
     def get_bank_info(cls, bankname):
         """
         银行名称，返回银行代码；
@@ -506,14 +511,15 @@ class CardBin(object):
         values = sqlite_query('fish_data.sqlite',
                               'select bankcode,bankname from cn_bank where bankname=:bankname',
                               {"bankname": bankname})
-
+        
         return values
-
+    
     # 输入银行、借记贷记卡种类，返回有效的卡 bin
     # ---
     # 2018.12.17 create by David Yi, add in v1.1.4, github issue #149
     # 2019.1.5 edit, v1.1.6 github issue #188, 修改函数名称
     @classmethod
+    @lru_cache()
     def get_cardbin_info(cls, bank, card_type):
         """
         输入银行、借记贷记卡种类，返回有效的卡 bin；
@@ -547,5 +553,5 @@ class CardBin(object):
                               'select bin,bankcode,cardtype,length from cn_cardbin where bankcode=:bank '
                               'and cardtype=:card_type',
                               {"bank": bank, "card_type": card_type})
-
+        
         return values
