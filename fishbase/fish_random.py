@@ -239,6 +239,7 @@ def gen_random_float(minimum, maximum, decimals=2):
 
 # v1.1.6 edit by Hu Jun #204
 # v1.1.5 edit by Hu Jun #173
+# v1.1.12 edit by Hu Jun #232
 def get_random_areanote(zone):
     """
     省份行政区划代码，返回下辖的随机地区名称
@@ -271,11 +272,12 @@ def get_random_areanote(zone):
     if not (areanote_list and province_name_list):
         raise ValueError('zone error, please check and try again')
 
-    # 只选取下辖区域
-    areanote_list.remove(province_name_list[0])
-
     province_name = province_name_list[0][-1]
-    random_areanote = random.choice(areanote_list)
+    while True:
+        random_areanote = random.choice(areanote_list)
+        # 只选取下辖区域
+        if random_areanote != province_name_list[0]:
+            break
     full_areanote = random_areanote[-1]
     return full_areanote.split(province_name)[-1]
 
@@ -447,6 +449,7 @@ def gen_random_bank_card(bank_name=None, card_type=None):
 
 
 # v1.1.5 edit by Hu Jun #165
+# v1.1.12 edit by Hu Jun #232
 def gen_random_id_card(zone=None, gender=None, age=None, result_type='SINGLE_STR'):
     """
     根据指定的省份编号、性别或年龄，随机生成一个身份证号
@@ -488,11 +491,11 @@ def gen_random_id_card(zone=None, gender=None, age=None, result_type='SINGLE_STR
     areanote_list = IdCard.get_areanote_info(province)
 
     # 判断 zone 是否合法
-    if zone and (zone not in set([item[0] for item in areanote_list])):
+    if zone[:2] != '0000' and zone not in [item[0] for item in areanote_list]:
         raise ValueError('zone {} error, check and try again'.format(zone))
 
     # 删除省份编号，身份证前缀不包含省份编号
-    areanote_list.remove([item for item in areanote_list if item[0] == zone][0])
+    # areanote_list.remove([item for item in areanote_list if item[0] == zone][0])
 
     zone_list = [item[0] for item in areanote_list]
 
@@ -518,7 +521,12 @@ def gen_random_id_card(zone=None, gender=None, age=None, result_type='SINGLE_STR
         birth = GetRandomTime.gen_date_by_range(start_date_str, now_date_str, date_format="%Y%m%d")
         birth = str(int(year) - age) + birth[4:]
 
-        zone = random.choice(zone_list)
+        while True:
+            zone = random.choice(zone_list)
+            # 身份证前缀不包含省份编号
+            if zone[2:] != '0000':
+                break
+
         random_str = str(random.randint(10, 99))
         gender_str = str(random.choice(gender_dict.get(gender)))
         _, check_code = IdCard.get_checkcode(zone + birth + random_str + gender_str)
