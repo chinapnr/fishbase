@@ -22,6 +22,7 @@
     fish_common.yaml_conf_as_dict
     fish_common.serialize_instance
     fish_common.DeserializeInstance
+    fish_common.RMBConversion
 
 .. automodule:: fish_common
     :members:

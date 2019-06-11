@@ -1,5 +1,9 @@
 更新记录
 ===========================
+2019.6.11 v1.1.13
+---------------------------
+* `#235 <https://github.com/chinapnr/fishbase/issues/235>`_, common, add function :meth:`RMBConversion.an2cn`, :meth:`RMBConversion.cn2an` doc and unittest;
+
 2019.5.28 v1.1.12
 ---------------------------
 * `#232 <https://github.com/chinapnr/fishbase/issues/232>`_, data, edit function :meth:`IdCard.get_zone_info`, :meth:`IdCard.get_areanote_info`, :meth:`IdCard.get_province_info`, :meth:`CardBin.get_bank_info`, :meth:`CardBin.get_cardbin_info`, optimize;
