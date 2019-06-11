@@ -442,3 +442,53 @@ class TestFishCommon(object):
         assert hasattr(new_obj.user, 'name')
         assert new_obj.user.name.last_name == 'zhang'
         assert new_obj.user.address == 'Beijing'
+
+    # 测试 an2cn()  tc
+    def test_an2cn_01(self):
+        arabic_amount = '123456.78'
+        assert RMBConversion.an2cn(arabic_amount) == '壹拾贰万叁仟肆佰伍拾陆圆柒角捌分'
+        
+        arabic_amount1 = 1234567.89
+        assert RMBConversion.an2cn(arabic_amount1) == '壹佰贰拾叁万肆仟伍佰陆拾柒圆捌角玖分'
+
+        arabic_amount2 = '123456.0'
+        assert RMBConversion.an2cn(arabic_amount2) == '壹拾贰万叁仟肆佰伍拾陆圆整'
+        
+        arabic_amount3 = '123456'
+        assert RMBConversion.an2cn(arabic_amount3) == '壹拾贰万叁仟肆佰伍拾陆圆整'
+
+    # 测试 an2cn()  tc
+    def test_an2cn_02(self):
+        long_arabic_amount = '12'*10
+        
+        with pytest.raises(ValueError):
+            RMBConversion.an2cn(long_arabic_amount)
+        
+        error_arabic_amount1 = '12.123'
+        with pytest.raises(ValueError):
+            RMBConversion.an2cn(error_arabic_amount1)
+
+        error_arabic_amount2 = '12c.12'
+        with pytest.raises(ValueError):
+            RMBConversion.an2cn(error_arabic_amount2)
+
+    # 测试 cn2an()  tc
+    def test_cn2an_01(self):
+        chinese_amount = '壹拾贰万叁仟肆佰伍拾陆圆柒角捌分'
+        assert RMBConversion.cn2an(chinese_amount) == '123456.78'
+
+        chinese_amount1 = '壹佰贰拾叁万肆仟伍佰陆拾柒圆捌角'
+        assert RMBConversion.cn2an(chinese_amount1) == '1234567.80'
+        
+        chinese_amount2 = '壹佰贰拾叁万肆仟伍佰陆拾柒圆整'
+        assert RMBConversion.cn2an(chinese_amount2) == '1234567.00'
+
+    # 测试 cn2an()  tc
+    def test_cn2an_02(self):
+        error_chinese_amount = '二拾贰万叁仟肆佰伍拾陆圆柒角捌分'
+        with pytest.raises(ValueError):
+            RMBConversion.cn2an(error_chinese_amount)
+            
+        error_chinese_amount1 = '壹拾贰万叁千肆佰伍拾陆圆柒角捌分'
+        with pytest.raises(ValueError):
+            RMBConversion.cn2an(error_chinese_amount1)
