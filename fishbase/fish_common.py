@@ -1167,3 +1167,117 @@ class GetSha256(object):
 # v1.0.14 original by Jia Chunying, edit by Hu Jun, #27
 # v1.1.3 edit by Hu Jun, #100 move hmac_sha256 to GetSha256
 hmac_sha256 = GetSha256.hmac_sha256
+
+
+# 2019.06.11 edit by Hu Jun, #235
+class RMBConversion(object):
+    """
+    人民币表示格式转换，阿拉伯数字表示的人民币和中文大写相互转换；
+
+    举例如下::
+
+        print('--- RMBConversion demo ---')
+        chinese_amount = RMBConversion.an2cn('12345.67')
+        print('RMBConversion an2cn:', chinese_amount)
+        print('RMBConversion cn2an:', RMBConversion.cn2an(chinese_amount))
+        print('---')
+
+    执行结果::
+
+        --- RMBConversion demo ---
+        RMBConversion an2cn: 壹万贰仟叁佰肆拾伍圆陆角柒分
+        RMBConversion cn2an: 12345.67
+        ---
+
+    """
+    arab_number_max_len = 19
+    upper_chinese_number = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖']
+    unit_dict = {'1': '拾',
+                 '2': '佰',
+                 '3': '仟'}
+    # 需要倒序拼接，所以是 '亿万'
+    unit_list = ['万', '亿', '亿万']
+    
+    unit_list1 = ['万', '亿', '万亿']
+
+    an_2_cn_dict = {str(k): v for k, v in zip(range(10), upper_chinese_number)}
+    cn_2_an_dict = dict(zip(an_2_cn_dict.values(), an_2_cn_dict.keys()))
+    
+    @staticmethod
+    def an2cn(arabic_amount):
+        """
+        将阿拉伯数字金额转换为中文大写金额表示
+        
+        :param:
+           * arabic_amount: (string) 阿拉伯数字金额
+        :return:
+           * chinese_amount: (string) 中文大写数字金额
+        """
+        try:
+            float(arabic_amount)
+            arabic_amount = str(arabic_amount)
+        except ValueError as _:
+            raise ValueError('error arabic_amount : {}'.format(arabic_amount))
+        if len(arabic_amount) > RMBConversion.arab_number_max_len:
+            raise ValueError('len of arabic_amount should less than {}'.
+                             format(RMBConversion.arab_number_max_len))
+        if '.' not in arabic_amount:
+            arabic_amount += '.'
+        integer, decimals = arabic_amount.split('.')
+        
+        if len(decimals) > 2:
+            raise ValueError('decimals error')
+        
+        reverse_integer_str = ''
+        unit_step = 0
+        for index, item in enumerate(integer[::-1]):
+            if index != 0 and index % 4 == 0:
+                reverse_integer_str += RMBConversion.unit_list[unit_step]
+                unit_step += 1
+            if item != '0':
+                reverse_integer_str += RMBConversion.unit_dict.get(str(index % 4), '')
+            reverse_integer_str += RMBConversion.an_2_cn_dict.get(item)
+
+        chinese_amount = reverse_integer_str[::-1]
+        # 整数最后部分加 圆
+        chinese_amount += '圆'
+
+        if len(decimals) == 0 or decimals in ['0', '00']:
+            chinese_amount += '整'
+        else:
+            chinese_amount += RMBConversion.an_2_cn_dict.get(decimals[0])
+            chinese_amount += '角'
+            if len(decimals) > 1 and decimals[1] != '0':
+                chinese_amount += RMBConversion.an_2_cn_dict.get(decimals[1])
+                chinese_amount += '分'
+        return chinese_amount
+    
+    @staticmethod
+    def cn2an(chinese_amount):
+        """
+        将中文大写金额转换为阿拉伯数字金额表示
+
+        :param:
+           * chinese_amount: (string) 中文大写数字金额
+        :return:
+           * arabic_amount: (string) 阿拉伯数字金额
+        """
+        all_unit = (RMBConversion.unit_list1 +
+                    list(RMBConversion.unit_dict.values()) +
+                    ['圆', '整', '角', '分'])
+        arabic_amount = ''
+        for i in chinese_amount:
+            if i == '角':
+                arabic_amount = ''.join([arabic_amount[:-1], '.', arabic_amount[-1]])
+            if i in all_unit:
+                continue
+            try:
+                arabic_amount += RMBConversion.cn_2_an_dict[i]
+            except KeyError as _:
+                raise ValueError('error chinese_amount {}'.format(chinese_amount))
+        # 补充为两位小数表示
+        if '.' not in arabic_amount:
+            arabic_amount += '.00'
+        if len(arabic_amount.split('.')[-1]) != 2:
+            arabic_amount += '0'
+        return arabic_amount
