@@ -456,6 +456,9 @@ class TestFishCommon(object):
         
         arabic_amount3 = '123456'
         assert RMBConversion.an2cn(arabic_amount3) == '壹拾贰万叁仟肆佰伍拾陆圆整'
+        
+        arabic_amount4 = '1000000.54'
+        assert RMBConversion.an2cn(arabic_amount4) == '壹佰万圆伍角肆分'
 
     # 测试 an2cn()  tc
     def test_an2cn_02(self):
@@ -472,16 +475,39 @@ class TestFishCommon(object):
         with pytest.raises(ValueError):
             RMBConversion.an2cn(error_arabic_amount2)
 
+    # 测试 an2cn()  tc
+    def test_an2cn_03(self):
+        arabic_amount = '10310000001.54'
+        assert RMBConversion.an2cn(arabic_amount) == '壹佰零叁亿壹仟万零壹圆伍角肆分'
+
+        arabic_amount2 = '10010000001.54'
+        assert RMBConversion.an2cn(arabic_amount2) == '壹佰亿壹仟万零壹圆伍角肆分'
+
+        arabic_amount3 = '10310050001.54'
+        assert RMBConversion.an2cn(arabic_amount3) == '壹佰零叁亿壹仟零伍万零壹圆伍角肆分'
+        
+        arabic_amount3 = '10300000000.54'
+        assert RMBConversion.an2cn(arabic_amount3) == '壹佰零叁亿圆伍角肆分'
+
+        arabic_amount4 = '10301000000.54'
+        assert RMBConversion.an2cn(arabic_amount4) == '壹佰零叁亿零壹佰万圆伍角肆分'
+        
+        arabic_amount5 = '10300100000.54'
+        assert RMBConversion.an2cn(arabic_amount5) == '壹佰零叁亿零壹拾万圆伍角肆分'
+        
+        arabic_amount5 = '10300010000.54'
+        assert RMBConversion.an2cn(arabic_amount5) == '壹佰零叁亿零壹万圆伍角肆分'
+
     # 测试 cn2an()  tc
     def test_cn2an_01(self):
         chinese_amount = '壹拾贰万叁仟肆佰伍拾陆圆柒角捌分'
-        assert RMBConversion.cn2an(chinese_amount) == '123456.78'
+        assert RMBConversion.cn2an(chinese_amount) == float('123456.78')
 
         chinese_amount1 = '壹佰贰拾叁万肆仟伍佰陆拾柒圆捌角'
-        assert RMBConversion.cn2an(chinese_amount1) == '1234567.80'
+        assert RMBConversion.cn2an(chinese_amount1) == float('1234567.80')
         
         chinese_amount2 = '壹佰贰拾叁万肆仟伍佰陆拾柒圆整'
-        assert RMBConversion.cn2an(chinese_amount2) == '1234567.00'
+        assert RMBConversion.cn2an(chinese_amount2) == float('1234567.00')
 
     # 测试 cn2an()  tc
     def test_cn2an_02(self):
