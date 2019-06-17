@@ -1198,12 +1198,10 @@ class RMBConversion(object):
                  '3': '仟'}
     # 需要倒序拼接，所以是 '亿万'
     unit_list = ['万', '亿', '亿万']
-    
-    unit_list1 = ['万', '亿', '万亿']
 
     an_2_cn_dict = {str(k): v for k, v in zip(range(10), upper_chinese_number)}
     cn_2_an_dict = dict(zip(an_2_cn_dict.values(), an_2_cn_dict.keys()))
-    
+
     @staticmethod
     def an2cn(arabic_amount):
         """
@@ -1230,38 +1228,32 @@ class RMBConversion(object):
             raise ValueError('decimals error')
 
         reverse_integer_str = ''
-        unit_step = 0
-        for index, item in enumerate(integer[::-1]):
-            if index != 0 and index % 4 == 0:
-                # 万、亿单位
-                reverse_integer_str += RMBConversion.unit_list[unit_step]
-                unit_step += 1
-            if item != '0':
-                # 拾、佰、仟单位
-                reverse_integer_str += RMBConversion.unit_dict.get(str(index % 4), '')
-            reverse_integer_str += RMBConversion.an_2_cn_dict.get(item)
+        # 按照长度为 4 进行划分
+        divide_part = split_str_by_length(integer[::-1], 4)
+        for index, unit_part in enumerate(divide_part):
+            temp_part, temp_unit = '', ''
+            if unit_part == '0000':
+                continue
+            # 添加 万、亿单位
+            if index > 0:
+                temp_unit = RMBConversion.unit_list[index - 1]
+                temp_part += temp_unit
+            for unit_index, an_char in enumerate(unit_part):
+                if an_char != '0':
+                    temp_part += RMBConversion.unit_dict.get(str(unit_index % 4), '')
+                temp_part += RMBConversion.an_2_cn_dict.get(an_char)
+    
+            while temp_part.find('零零') > 0:
+                temp_part = temp_part.replace('零零', '零')
+            # 替换掉万、亿、亿万后面的零
+            if temp_unit and temp_unit + '零' in temp_part:
+                temp_part = temp_part.replace(temp_unit + '零', temp_unit)
+            reverse_integer_str += temp_part
 
-        # 中间连续多个零替换为一个零，开始的零全部去掉，如果零后面跟了单位，也需要去掉零
-        while reverse_integer_str.startswith('零'):
+        while reverse_integer_str[0] == '零':
             reverse_integer_str = reverse_integer_str[1:]
-        while reverse_integer_str.find('零零') > 0:
-            reverse_integer_str = reverse_integer_str.replace('零零', '零')
 
         chinese_amount = reverse_integer_str[::-1]
-
-        # 去掉单位后面跟的零
-        all_unit_list = list(RMBConversion.unit_dict.keys()) + RMBConversion.unit_list1
-        for unit in all_unit_list:
-            index = chinese_amount.find(unit)
-            if index > 0 and chinese_amount[index - 1] == '零':
-                chinese_amount = chinese_amount[:index - 1] + chinese_amount[index:]
-
-        # 两个相邻的单位，去掉后面一个单位
-        for unit in ['亿万', '万仟', '仟佰', '佰拾']:
-            index = chinese_amount.find(unit)
-            if index > 0:
-                chinese_amount = chinese_amount.replace(unit, unit[0])
-
         # 整数最后部分加 圆
         chinese_amount += '圆'
 
@@ -1364,3 +1356,39 @@ class RMBConversion(object):
         arabic_amount += tmp
         arabic_amount += float_amount
         return arabic_amount
+
+
+# 2019.06.17 edit by Hu Jun, #239
+def split_str_by_length(text, length):
+    """
+    将字符串切分成特定长度的数组
+
+    :param:
+        * text: (string) 需要切分的字符串
+        * length: (int) 切分子串长度
+
+    :return:
+        * str_list: (list) 按照长度切分的数组
+
+    举例如下::
+
+        print('--- split_str_by_length demo---')
+        text = '1231'*4 + '12'
+        str_list = split_str_by_length(text, 4)
+        print(str_list)
+        print('---')
+
+    执行结果::
+
+        --- split_str_by_length demo---
+        ['1231', '1231', '1231', '1231', '12']
+        ---
+
+    """
+    if not isinstance(length, int):
+        raise ValueError('{} must be int'.format(length))
+
+    str_list = re.findall('.{' + str(length) + '}', text)
+    str_list.append(text[(len(str_list) * length):])
+    str_list = [item for item in str_list if item]
+    return str_list
