@@ -460,6 +460,9 @@ class TestFishCommon(object):
         arabic_amount4 = '1000000.54'
         assert RMBConversion.an2cn(arabic_amount4) == '壹佰万圆伍角肆分'
 
+        arabic_amount5 = '1600.06'
+        assert RMBConversion.an2cn(arabic_amount5) == '壹仟陆佰圆零陆分'
+
     # 测试 an2cn()  tc
     def test_an2cn_02(self):
         long_arabic_amount = '12'*10
@@ -511,6 +514,9 @@ class TestFishCommon(object):
         
         chinese_amount3 = '壹佰零叁亿零壹万圆伍角肆分'
         assert RMBConversion.cn2an(chinese_amount3) == float('10300010000.54')
+
+        chinese_amount4 = '壹仟陆佰圆陆分'
+        assert RMBConversion.cn2an(chinese_amount4) == float('1600.06')
 
     # 测试 cn2an()  tc
     def test_cn2an_02(self):

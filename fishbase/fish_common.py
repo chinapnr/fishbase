@@ -1299,8 +1299,10 @@ class RMBConversion(object):
                     float_str = chinese_amount[-3:]
                     float_str = float_str.replace('分', '')
                 else:
+                    # 需要补全零  壹仟陆佰圆陆分 ==> 壹仟陆佰圆零陆分
                     integer_amount = chinese_amount[:-2]
                     float_str = chinese_amount[-2:]
+                    float_str = '零' + float_str
                     float_str = float_str.replace('分', '')
         elif chinese_amount.endswith('角'):
             integer_amount = chinese_amount[:-2]
