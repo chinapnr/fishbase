@@ -120,6 +120,21 @@ fishbase 能干什么？
    ['requirements.txt', 'README.md', 'setup.py']
 
 
+Changelog
+==========
+
+2019.6.25 v1.1.14
+---------------------------
+
+Bug fixes
+---------------------------
+- Fix zero error in fish_common.RMBConversion (`#238 <https://github.com/chinapnr/fishbase/issues/238>`_)
+
+New features
+---------------------------
+- split str by length (`#239 <https://github.com/chinapnr/fishbase/issues/239>`_)
+
+
 更多
 ====
 

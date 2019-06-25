@@ -23,6 +23,7 @@
     fish_common.serialize_instance
     fish_common.DeserializeInstance
     fish_common.RMBConversion
+    fish_common.split_str_by_length
 
 .. automodule:: fish_common
     :members:
