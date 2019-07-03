@@ -1,5 +1,10 @@
 更新记录
 ===========================
+2019.6.25 v1.1.14
+---------------------------
+* `#238 <https://github.com/chinapnr/fishbase/issues/238>`_, common, edit function :meth:`RMBConversion.an2cn`, :meth:`RMBConversion.cn2an` optimize;
+* `#239 <https://github.com/chinapnr/fishbase/issues/239>`_, common, add function :meth:`fish_common.split_str_by_length` doc and unittest;
+
 2019.6.11 v1.1.13
 ---------------------------
 * `#235 <https://github.com/chinapnr/fishbase/issues/235>`_, common, add function :meth:`RMBConversion.an2cn`, :meth:`RMBConversion.cn2an` doc and unittest;
