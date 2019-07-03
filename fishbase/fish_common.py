@@ -1170,6 +1170,7 @@ hmac_sha256 = GetSha256.hmac_sha256
 
 
 # 2019.06.11 edit by Hu Jun, #235
+# 2019.06.15 edit by Hu Jun, #238
 class RMBConversion(object):
     """
     人民币表示格式转换，阿拉伯数字表示的人民币和中文大写相互转换；
@@ -1197,12 +1198,10 @@ class RMBConversion(object):
                  '3': '仟'}
     # 需要倒序拼接，所以是 '亿万'
     unit_list = ['万', '亿', '亿万']
-    
-    unit_list1 = ['万', '亿', '万亿']
 
     an_2_cn_dict = {str(k): v for k, v in zip(range(10), upper_chinese_number)}
     cn_2_an_dict = dict(zip(an_2_cn_dict.values(), an_2_cn_dict.keys()))
-    
+
     @staticmethod
     def an2cn(arabic_amount):
         """
@@ -1224,19 +1223,35 @@ class RMBConversion(object):
         if '.' not in arabic_amount:
             arabic_amount += '.'
         integer, decimals = arabic_amount.split('.')
-        
+
         if len(decimals) > 2:
             raise ValueError('decimals error')
-        
+
         reverse_integer_str = ''
-        unit_step = 0
-        for index, item in enumerate(integer[::-1]):
-            if index != 0 and index % 4 == 0:
-                reverse_integer_str += RMBConversion.unit_list[unit_step]
-                unit_step += 1
-            if item != '0':
-                reverse_integer_str += RMBConversion.unit_dict.get(str(index % 4), '')
-            reverse_integer_str += RMBConversion.an_2_cn_dict.get(item)
+        # 按照长度为 4 进行划分
+        divide_part = split_str_by_length(integer[::-1], 4)
+        for index, unit_part in enumerate(divide_part):
+            temp_part, temp_unit = '', ''
+            if unit_part == '0000':
+                continue
+            # 添加 万、亿单位
+            if index > 0:
+                temp_unit = RMBConversion.unit_list[index - 1]
+                temp_part += temp_unit
+            for unit_index, an_char in enumerate(unit_part):
+                if an_char != '0':
+                    temp_part += RMBConversion.unit_dict.get(str(unit_index % 4), '')
+                temp_part += RMBConversion.an_2_cn_dict.get(an_char)
+    
+            while temp_part.find('零零') > 0:
+                temp_part = temp_part.replace('零零', '零')
+            # 替换掉万、亿、亿万后面的零
+            if temp_unit and temp_unit + '零' in temp_part:
+                temp_part = temp_part.replace(temp_unit + '零', temp_unit)
+            reverse_integer_str += temp_part
+
+        while reverse_integer_str[0] == '零':
+            reverse_integer_str = reverse_integer_str[1:]
 
         chinese_amount = reverse_integer_str[::-1]
         # 整数最后部分加 圆
@@ -1246,7 +1261,8 @@ class RMBConversion(object):
             chinese_amount += '整'
         else:
             chinese_amount += RMBConversion.an_2_cn_dict.get(decimals[0])
-            chinese_amount += '角'
+            if decimals[0] != '0':
+                chinese_amount += '角'
             if len(decimals) > 1 and decimals[1] != '0':
                 chinese_amount += RMBConversion.an_2_cn_dict.get(decimals[1])
                 chinese_amount += '分'
@@ -1262,22 +1278,119 @@ class RMBConversion(object):
         :return:
            * arabic_amount: (string) 阿拉伯数字金额
         """
-        all_unit = (RMBConversion.unit_list1 +
-                    list(RMBConversion.unit_dict.values()) +
-                    ['圆', '整', '角', '分'])
-        arabic_amount = ''
-        for i in chinese_amount:
-            if i == '角':
-                arabic_amount = ''.join([arabic_amount[:-1], '.', arabic_amount[-1]])
-            if i in all_unit:
-                continue
+        cn_unit = {
+            '拾': 10,
+            '佰': 100,
+            '仟': 1000,
+            '万': 10000,
+            '亿': 100000000
+        }
+        # 先处理小数部分
+        # 有三种情况：x 分，零 x 分，x 角 y 分，x 角
+        if chinese_amount.endswith('分'):
+            if '角' in chinese_amount:
+                dime_index = chinese_amount.index('角')
+                integer_amount = chinese_amount[:dime_index - 1]
+                float_str = chinese_amount[dime_index - 1:]
+                float_str = float_str.replace('角', '').replace('分', '')
+            else:
+                if chinese_amount[-3] == '零':
+                    integer_amount = chinese_amount[:-3]
+                    float_str = chinese_amount[-3:]
+                    float_str = float_str.replace('分', '')
+                else:
+                    # 需要补全零  壹仟陆佰圆陆分 ==> 壹仟陆佰圆零陆分
+                    integer_amount = chinese_amount[:-2]
+                    float_str = chinese_amount[-2:]
+                    float_str = '零' + float_str
+                    float_str = float_str.replace('分', '')
+        elif chinese_amount.endswith('角'):
+            integer_amount = chinese_amount[:-2]
+            float_str = chinese_amount[-2:]
+            float_str = float_str.replace('角', '')
+            float_str += '零'
+        else:
+            integer_amount = chinese_amount
+            float_str = ''
+
+        float_res = '.'
+        for float_char in float_str:
             try:
-                arabic_amount += RMBConversion.cn_2_an_dict[i]
+                float_res += RMBConversion.cn_2_an_dict[float_char]
             except KeyError as _:
                 raise ValueError('error chinese_amount {}'.format(chinese_amount))
-        # 补充为两位小数表示
-        if '.' not in arabic_amount:
-            arabic_amount += '.00'
-        if len(arabic_amount.split('.')[-1]) != 2:
-            arabic_amount += '0'
+
+        while len(float_res) != 3:
+            float_res += '0'
+
+        float_amount = float(float_res)
+        integer_amount = integer_amount.replace('圆', '')
+        integer_amount = integer_amount.replace('整', '')
+
+        # 处理整数部分
+        unit = 0  # current
+        an_list = []  # digest
+        for cn_char in reversed(integer_amount):
+            if cn_char in cn_unit:
+                unit = cn_unit.get(cn_char)
+                # 万 和 亿需要单独处理
+                if unit in [10000, 100000000]:
+                    an_list.append(unit)
+                    unit = 1
+            else:
+                try:
+                    an_num = int(RMBConversion.cn_2_an_dict[cn_char])
+                except KeyError as _:
+                    raise ValueError('error chinese_amount {}'.format(chinese_amount))
+                if unit:
+                    an_num *= unit
+                    unit = 0
+                an_list.append(an_num)
+
+        # 将数组组装成数字
+        arabic_amount, tmp = 0, 0
+        for an_item in reversed(an_list):
+            if an_item in [10000, 100000000]:
+                arabic_amount += tmp * an_item
+                tmp = 0
+            else:
+                tmp += an_item
+        arabic_amount += tmp
+        arabic_amount += float_amount
         return arabic_amount
+
+
+# 2019.06.17 edit by Hu Jun, #239
+def split_str_by_length(text, length):
+    """
+    将字符串切分成特定长度的数组
+
+    :param:
+        * text: (string) 需要切分的字符串
+        * length: (int) 切分子串长度
+
+    :return:
+        * str_list: (list) 按照长度切分的数组
+
+    举例如下::
+
+        print('--- split_str_by_length demo---')
+        text = '1231'*4 + '12'
+        str_list = split_str_by_length(text, 4)
+        print(str_list)
+        print('---')
+
+    执行结果::
+
+        --- split_str_by_length demo---
+        ['1231', '1231', '1231', '1231', '12']
+        ---
+
+    """
+    if not isinstance(length, int):
+        raise ValueError('{} must be int'.format(length))
+
+    str_list = re.findall('.{' + str(length) + '}', text)
+    str_list.append(text[(len(str_list) * length):])
+    str_list = [item for item in str_list if item]
+    return str_list

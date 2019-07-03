@@ -12,7 +12,7 @@
 fishbase 简介
 =================
 
-fishbase 是由我们自主开发和整理的一套 Python 基础函数库。
+fishbase 是由我们自主开发和整理的一套 Python 基础函数库，当前版本为 v1.1.14.
 
 自 2016/3 初次发布以来，我们坚持不断更新，先后发布了 20 余个版本。近一年来，我们逐步形成每月更新 1 到 2 个版本的频率，抽象出了很多通用的方法，主要分为以下模块：
 
@@ -118,6 +118,20 @@ fishbase 能干什么？
    >>> init_project_by_yml(package_yml, '.')
    >>> print(os.listdir('./hellopackage'))
    ['requirements.txt', 'README.md', 'setup.py']
+
+
+最近更新
+==========
+
+2019.6.25 v1.1.14
+------------------
+
+- 修复金额数字转中文大写时多个零的错误 `#238 <https://github.com/chinapnr/fishbase/issues/238>`_
+- 按照特定长度分割长文本字符 `#239 <https://github.com/chinapnr/fishbase/issues/239>`_
+
+2019.6.11 v1.1.13
+------------------
+- 数字金额和中文大写相互转换 `#235 <https://github.com/chinapnr/fishbase/issues/235>`_
 
 
 更多
