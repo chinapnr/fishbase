@@ -1,5 +1,10 @@
 更新记录
 ===========================
+2019.7.17 v1.1.15
+---------------------------
+* `#240 <https://github.com/chinapnr/fishbase/issues/240>`_, logging, edit function :meth:`set_log_file`,  optimize;
+* `#243 <https://github.com/chinapnr/fishbase/issues/243>`_, data, add function :meth:`CardBin.get_card_detail`, :meth:`IdCard.get_number_detail` doc and unittest;
+
 2019.6.25 v1.1.14
 ---------------------------
 * `#238 <https://github.com/chinapnr/fishbase/issues/238>`_, common, edit function :meth:`RMBConversion.an2cn`, :meth:`RMBConversion.cn2an` optimize;

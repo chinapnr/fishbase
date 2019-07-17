@@ -153,3 +153,33 @@ class TestData(object):
     def test_get_province_info(self):
         values = IdCard.get_province_info()
         assert len(values) > 0
+
+    # 2019.07.17 edit by Hu Jun
+    def test_get_card_detail(self):
+        values = CardBin.get_card_detail('6212836989522229131')
+        assert values[0]
+        assert values[1].get('bank_name') == '中国银行'
+        assert values[1].get('card_type') == 'DC'
+
+    # 2019.07.17 edit by Hu Jun
+    def test_get_card_detail_01(self):
+        values = CardBin.get_card_detail('123762515738129')
+        assert not values[0]
+
+    # 2019.07.17 edit by Hu Jun
+    def test_get_bank_name_by_code(self):
+        result = CardBin.get_bank_name_by_code('ABC')
+        assert result == '中国农业银行'
+
+    # 2019.07.17 edit by Hu Jun
+    def test_get_number_detail(self):
+        values = IdCard.get_number_detail('130522198407316471')
+        assert values[0]
+        assert values[1].get('province') == '130000'
+        assert values[1].get('gender') == '男'
+        assert values[1].get('birth_date') == '19840731'
+
+    # 2019.07.17 edit by Hu Jun
+    def test_get_number_detail_01(self):
+        values = IdCard.get_number_detail('130522198407316')
+        assert not values[0]

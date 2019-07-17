@@ -350,6 +350,43 @@ class IdCard(object):
                               {})
         return values
 
+    # 2019.07.17 create by Hu Jun, add in v1.1.15, github issue #243
+    @classmethod
+    def get_number_detail(cls, id_num):
+        """
+        根据身份证号获取性别、省份、出生年月日信息
+
+        :param:
+            * id_num: (string) 要查询的银行卡号
+
+        :returns:
+            * flag: (bool) 是否查询成功
+            * info: (dict) 性别信息等
+
+        举例如下::
+
+            from fishbase.fish_data import *
+
+            print('--- fish_data get_number_detail demo ---')
+            print(IdCard.get_id_num_detail('130522198407316471'))
+            print('---')
+
+        输出结果::
+
+        --- fish_data get_number_detail demo ---
+        (True, {'province': '130000', 'gender': '男', 'birth_date': '19840731'})
+        ---
+        """
+        if len(str(id_num)) != 18:
+            return False, {}
+        province = id_num[:2] + '0' * 4
+        gender = '男' if int(id_num[-2]) % 2 == 1 else '女'
+        birth_date = id_num[6:14]
+    
+        return True, {'province': province,
+                      'gender': gender,
+                      'birth_date': birth_date}
+
 
 # 2019.1.6 create by David Yi, #188 用 class CardBin 方法实现
 class CardBin(object):
@@ -555,3 +592,83 @@ class CardBin(object):
                               {"bank": bank, "card_type": card_type})
         
         return values
+
+    # 2019.07.17 create by Hu Jun, add in v1.1.15, github issue #243
+    @classmethod
+    @lru_cache()
+    def get_card_detail(cls, card_num):
+        """
+        根据银行卡卡号，获取银行名称和银行卡类型
+
+        :param:
+            * card_num: (string) 银行卡号
+        :returns:
+            * flag: (bool) 是否查询成功的标识
+            * info: (dict) 银行名称和银行卡类型字典
+
+        举例如下::
+
+            from fishbase.fish_data import *
+
+            print('--- fish_data get_card_detail demo ---')
+
+            result = CardBin.get_card_detail('6212836989522229131')
+            print(result)
+
+            print('---')
+
+        输出结果::
+
+            --- fish_data get_card_detail demo ---
+
+            (True, {'bank_name': '中国银行', 'card_type': 'DC'})
+            ---
+
+        """
+        # 根据 card_bin 以及卡号长度查询 bank_code 和 card_type
+        # card_bin 的长度从 10 - 3
+        for bin_len in list(range(10, 2, -1)):
+            value = sqlite_query('fish_data.sqlite',
+                                 'select bankcode,cardtype from cn_cardbin where bin=:bin '
+                                 'and length=:length',
+                                 {"bin": card_num[:bin_len], "length": len(card_num)})
+            if value:
+                bank_name = cls.get_bank_name_by_code(value[0][0])
+                return True, {'bank_name': bank_name,
+                              'card_type': value[0][-1]}
+        return False, {}
+
+    # 2019.07.17 create by Hu Jun, add in v1.1.15, github issue #243
+    @classmethod
+    @lru_cache()
+    def get_bank_name_by_code(cls, bank_code):
+        """
+        根据银行代号，获取银行名称
+
+        :param:
+            * bank_code: (string) 银行代号
+        :returns:
+            * info: (dict) 银行名称和银行卡类型字典
+
+        举例如下::
+
+            from fishbase.fish_data import *
+
+            print('--- fish_data get_bank_name_by_code demo ---')
+
+            result = CardBin.get_bank_name_by_code('ABC')
+            print(result)
+
+            print('---')
+
+        输出结果::
+
+            --- fish_data get_bank_name_by_code demo ---
+            中国农业银行
+            ---
+
+        """
+        value = sqlite_query('fish_data.sqlite',
+                             'select bankname from cn_bank where bankcode=:bank_code ',
+                             {"bank_code": bank_code})
+        return value[0][0]
