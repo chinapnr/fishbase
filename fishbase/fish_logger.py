@@ -26,17 +26,32 @@ logger = logging.getLogger()
 # edit from https://www.jianshu.com/p/d615bf01e37b
 class SafeFileHandler(FileHandler):
 
-    def __init__(self, filename, mode='a', encoding=None, delay=0):
+    def __init__(self, filename, mode='a', encoding=None, delay=0,
+                 file_name_format='%project_name-%log-%date'):
         """
         Use the specified filename for streamed logging
         """
         if codecs is None:
             encoding = None
         FileHandler.__init__(self, filename, mode, encoding, delay)
+
+        # 日志文件路径
+        self.file_path = os.path.split(filename)[0]
+        # 日志文件名称
+        file_name = os.path.split(filename)[1]
+
+        temp_file_name = file_name.split('.')
+        if len(temp_file_name) == 1:
+            self.project_name = temp_file_name[0]
+            self.log_suffix = 'log'
+        else:
+            self.project_name, self.log_suffix = temp_file_name[0], temp_file_name[1]
+
         self.mode = mode
         self.encoding = encoding
         self.suffix = "%Y-%m-%d"
         self.suffix_time = ""
+        self.file_name_format = file_name_format
 
     def emit(self, record):
         """
@@ -62,8 +77,11 @@ class SafeFileHandler(FileHandler):
         """
         time_tuple = time.localtime()
 
+        if self.file_name_format:
+            pass
+
         if self.suffix_time != time.strftime(self.suffix, time_tuple) or not os.path.exists(
-                self.baseFilename + '.' + self.suffix_time):
+                self._get_format_filename()):
             return 1
         else:
             return 0
@@ -79,20 +97,28 @@ class SafeFileHandler(FileHandler):
             self.stream = None
 
         # remove old suffix
-        if self.suffix_time != "":
-            index = self.baseFilename.find("." + self.suffix_time)
-            if index == -1:
-                index = self.baseFilename.rfind(".")
-            self.baseFilename = self.baseFilename[:index]
+        # if self.suffix_time != "":
+        #     index = self.baseFilename.find("." + self.suffix_time)
+        #     if index == -1:
+        #         index = self.baseFilename.rfind(".")
+        #     self.baseFilename = self.baseFilename[:index]
 
         # add new suffix
         current_time_tuple = time.localtime()
         self.suffix_time = time.strftime(self.suffix, current_time_tuple)
-        self.baseFilename = self.baseFilename + "." + self.suffix_time
+        self.baseFilename = self._get_format_filename()
 
         self.mode = 'a'
         if not self.delay:
             self.stream = self._open()
+
+    def _get_format_filename(self):
+        split_list = self.file_name_format.split('-')
+        name_mapping = {'%log': self.log_suffix,
+                        '%project_name': self.project_name,
+                        '%date': self.suffix_time}
+        new_file_name = '.'.join([name_mapping.get(i) for i in split_list])
+        return os.path.join(self.file_path, new_file_name)
 
 
 # 设置日志记录，按照每天一个文件，记录包括 info 以及以上级别的内容
@@ -101,7 +127,8 @@ class SafeFileHandler(FileHandler):
 # 2018.2.11 edit, log 相关代码优化简化; #11010
 # 2018.2.13 edit, remove thread watch
 # 2018.4.23 edit，#19023 增加 docstring
-def set_log_file(local_file=None):
+# 2019.7.16 v1.1.15 #240 edit by Hu Jun
+def set_log_file(local_file=None, file_name_format='%project_name-%log-%date'):
 
     """
     设置日志记录，按照每天一个文件，记录包括 info 以及以上级别的内容；
@@ -109,6 +136,7 @@ def set_log_file(local_file=None):
 
     :param:
         * local_fie: (string) 日志文件名
+        * file_name_format: (string) 日志文件名格式
     :return: 无
 
     举例如下::
@@ -136,9 +164,15 @@ def set_log_file(local_file=None):
     if local_file is not None:
         default_log_file = local_file
 
+    support_split = ['%project_name', '%log', '%date']
+
+    file_format_split = file_name_format.split('-')
+    if set(file_format_split) != set(support_split):
+        raise ValueError('file_name_format error, please check and try again!')
+    
     # time rotating file handler
     # _tfh = TimedRotatingFileHandler(default_log_file, when="midnight")
-    _tfh = SafeFileHandler(filename=default_log_file)
+    _tfh = SafeFileHandler(filename=default_log_file, file_name_format=file_name_format)
     _tfh.setLevel(logging.INFO)
     _tfh.setFormatter(_formatter)
 
