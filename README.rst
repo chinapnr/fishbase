@@ -123,6 +123,12 @@ fishbase 能干什么？
 最近更新
 ==========
 
+2019.7.17 v1.1.15
+------------------
+
+- 添加可选参数，定义日志文件格式 `#240 <https://github.com/chinapnr/fishbase/issues/240>`_
+- 根据银行卡、身份证获取详细信息的方法 `#243 <https://github.com/chinapnr/fishbase/issues/243>`_
+
 2019.6.25 v1.1.14
 ------------------
 
