@@ -357,7 +357,7 @@ class IdCard(object):
         根据身份证号获取性别、省份、出生年月日信息
 
         :param:
-            * id_num: (string) 要查询的银行卡号
+            * id_num: (string) 要查询的身份证号
 
         :returns:
             * flag: (bool) 是否查询成功
