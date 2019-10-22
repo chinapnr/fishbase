@@ -151,7 +151,7 @@ def conf_as_dict(conf_filename, encoding=None, case_sensitive=False):
             cf.read(conf_filename, encoding=encoding)
         else:
             cf.read(conf_filename)
-    except:
+    except Exception:
         flag = False
         return flag,
     
@@ -1145,8 +1145,8 @@ def yaml_conf_as_dict(file_path, encoding=None):
             with open(file_path, 'r') as f:
                 d = OrderedDict(yaml.load(f.read()))
                 return True, d, 'Success'
-    except:
-        return False, {}, 'Unknow error'
+    except Exception:
+        return False, {}, 'Unknown error'
 
 
 # 2019.01.06 edit by Hu Jun, #152
