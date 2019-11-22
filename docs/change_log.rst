@@ -1,5 +1,9 @@
 更新记录
 ===========================
+2019.11.22 v1.1.16
+---------------------------
+* `#249 <https://github.com/chinapnr/fishbase/issues/249>`_, add swagger module;
+
 2019.7.17 v1.1.15
 ---------------------------
 * `#240 <https://github.com/chinapnr/fishbase/issues/240>`_, logging, edit function :meth:`set_log_file`,  optimize;
