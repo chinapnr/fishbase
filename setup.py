@@ -1,4 +1,5 @@
 # from distutils.core import setup
+import setuptools
 from setuptools import setup
 import io
 import re
@@ -21,7 +22,7 @@ setup(
     author_email='wingfish@gmail.com',
     description='some useful functions for python',
     long_description=readme,
-    packages=['fishbase'],
+    packages=setuptools.find_packages(),
     package_data={'db': ['fishbase/db/*']},
     include_package_data=True,
 
