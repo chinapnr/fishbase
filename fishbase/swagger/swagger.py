@@ -1,5 +1,9 @@
 import os
+"""
 
+``swagger`` 集成 swagger 为 flask 应用生成接口文档信息。在使用 swagger 前, 应该确保你已经安装了 flask。
+
+"""
 try:
     from flask import Blueprint, jsonify, render_template
 except Exception as e:
@@ -25,14 +29,25 @@ class SwaggerHelper:
 
     @staticmethod
     def app_is_debug(app):
+        """
+        判断 flask app 是否以 debug 方式运行。;
+
+        :param:
+            * 无
+        :return:
+            * bool
+        """
         return getattr(app.config, "DEBUG", True)
 
     @staticmethod
     def get_api_method(rule):
         """
-        获取路由方法，给每种方法打分，优先级 delete -> patch -> post -> get -> options -> head
-        :param rule:
+        获取路由方法，给每种方法打分，优先级 delete -> patch -> post -> get -> options -> head;
+
+        :param:
+            * 无
         :return:
+            * str
         """
         method_option = ["delete", "put", "patch", "post", "get", "options", "head"]  # 优先级越高,索引最小，返回最高优先级方法
         return method_option[min([method_option.index(x.lower()) for x in rule.methods])]
@@ -40,8 +55,12 @@ class SwaggerHelper:
     @staticmethod
     def consumes_content_types(app, _rule_specs):
         """
-        入参类型
+        入参格式类型;
+
+        :param:
+            * 无
         :return:
+            * list(str)
         """
         api_consumes_content_types = app.config.get("API_CONSUMES_CONTENT_TYPES", ["application/json"])
         consumes_content_types = (
@@ -52,8 +71,12 @@ class SwaggerHelper:
     @staticmethod
     def app_name(app):
         """
-        入参类型
+        获取当前 flask app 的名称，默认为 API;
+
+        :param:
+            * flask app instance
         :return:
+            * str
         """
         app_name = app.config.get("NAME", "API")
         return app_name
@@ -61,10 +84,12 @@ class SwaggerHelper:
     @staticmethod
     def produces_content_types(app, _rule_specs):
         """
-        结果出参格式
-        :param app:
-        :param _rule_specs:
+        结果出参格式;
+
+        :param:
+            * flask app instance, rule
         :return:
+            * list(str)
         """
         api_produces_content_types = app.config.get("API_PRODUCES_CONTENT_TYPES", ["application/json"])
         produces_content_types = (
@@ -133,9 +158,10 @@ class SwaggerHelper:
 
 def flask_swagger(app):
     """
-    flask swagger
-    :param app:
-    :return:
+    传入 flask app 对象, flask_swagger 会自动收集当前应用的路由信息，并新增 http://ip:port/swagger 调试页面;
+
+    :param:
+        * flask app instance, rule
     """
     if not SwaggerHelper.app_is_debug(app):
         return
@@ -213,24 +239,36 @@ def flask_swagger(app):
 
 def swagger_json():
     """
-    返回 json 数据
+    返回当前 flask app 的 swagger 配置信息;
+
+    :param:
+        * 无
     :return:
+        * json
     """
     return jsonify(_swagger_json)
 
 
 def swagger_config():
     """
-    返回 config 数据
+    返回当前 flask app 的 swagger 配置信息;
+
+    :param:
+        * 无
     :return:
+        * json
     """
     return jsonify(_swagger_config)
 
 
 def swagger():
     """
-    返回页面
+    返回当前 flask app 的 swagger 页面信息;
+
+    :param:
+        * 无
     :return:
+        *
     """
     return render_template("index.html")
 
