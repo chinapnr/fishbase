@@ -29,6 +29,8 @@ matrix:
     - python: nightly
     - python: 3.8-dev
     - python: "2.7"
+    - python: "3.6"
+    - python: "3.4"
 
 # command to install dependencies
 install:
