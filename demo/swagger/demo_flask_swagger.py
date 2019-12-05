@@ -33,7 +33,7 @@ class UpdateXxReqVo:
 @doc.description("测试 Swagger 使用, 参数为 URL 参数 token, 且必传")
 @doc.consumes("token", required=True)
 def test_query():
-    pass
+    return "test_query"
 
 
 @app.route('/v1/add', methods=['POST'])
@@ -42,7 +42,7 @@ def test_query():
 @doc.consumes(AddXxReqVo, location="body")
 @doc.consumes("token", required=True)
 def test_add():
-    pass
+    return "test_add"
 
 
 @app.route('/v1/del', methods=['DELETE'])
@@ -50,7 +50,7 @@ def test_add():
 @doc.description("测试 Swagger 使用, 参数为 URL 参数 token, 且非必传")
 @doc.consumes("token", required=False)
 def test_del():
-    pass
+    return "test_del"
 
 
 @app.route('/v1/update', methods=['PUT'])
@@ -59,7 +59,7 @@ def test_del():
 @doc.consumes(UpdateXxReqVo, location="body")
 @doc.consumes("token", required=True)
 def test_update():
-    pass
+    return "test_update"
 
 
 # 将 app 对象传递给 swagger 模块

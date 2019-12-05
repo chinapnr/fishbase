@@ -5,3 +5,4 @@ pytest-cov
 coveralls
 pyyaml
 chardet
+flask
