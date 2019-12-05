@@ -1,7 +1,8 @@
 python-dateutil
 coverage
-pytest==4.0.2
+pytest>=4.6.6
 pytest-cov
 coveralls
 pyyaml
 chardet
+flask
