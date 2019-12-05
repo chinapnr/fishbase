@@ -1,6 +1,6 @@
 python-dateutil
 coverage
-pytest==4.0.2
+pytest
 pytest-cov
 coveralls
 pyyaml
