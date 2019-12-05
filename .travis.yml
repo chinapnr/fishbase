@@ -34,9 +34,10 @@ matrix:
   allow_failures:
     - python: nightly
     - python: 3.9-dev
-    - python: "2.7"
     - python: "3.5"
     - python: "3.4"
+    - python: "2.7"
+    - python: "pypy3.6"
     - python: "pypy3.5"
 
 # command to install dependencies
