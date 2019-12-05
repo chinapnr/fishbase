@@ -12,7 +12,7 @@
 fishbase 简介
 =================
 
-fishbase 是由我们自主开发和整理的一套 Python 基础函数库，当前版本为 v1.1.14.
+fishbase 是由我们自主开发和整理的一套 Python 基础函数库，当前版本为 v1.1.16.
 
 自 2016/3 初次发布以来，我们坚持不断更新，先后发布了 20 余个版本。近一年来，我们逐步形成每月更新 1 到 2 个版本的频率，抽象出了很多通用的方法，主要分为以下模块：
 
@@ -39,7 +39,8 @@ fishbase 是由我们自主开发和整理的一套 Python 基础函数库，当
 +----------------------------------------------------------------------------------+----------------------------------------+
 | `fish_system <https://fishbase.readthedocs.io/en/latest/fish_system.html>`_      | 系统增强函数包                         |
 +----------------------------------------------------------------------------------+----------------------------------------+
-
+| `swagger <https://fishbase.readthedocs.io/en/latest/swagger.html>`_              | 集成 swagger为flask应用生成接口文档信息|
++----------------------------------------------------------------------------------+----------------------------------------+
 
 
 安装
@@ -55,14 +56,32 @@ fishbase 能干什么？
 ===================
 
 
-获取当前系统类型
-----------------------------
+集成 swagger 为 flask 应用生成接口文档信息
+-----------------------------------------------
 
 .. code:: python
 
-   >>> from fishbase.fish_system import get_platform
-   >>> print('current os:', get_platform())
-   current os: osx
+   >>> from fishbase.swagger import doc
+   >>> from fishbase.swagger.swagger import flask_swagger
+   >>> from flask import Flask
+
+   >>> # 创建 Flask app
+   >>> app = Flask("Demo Server")
+
+   >>> @app.route('/v1/query', methods=['GET'])
+   >>> @doc.summary("xx业务查询接口", group="xx业务")
+   >>> @doc.description("测试 Swagger 使用, 参数为 URL 参数 token, 且必传")
+   >>> @doc.consumes("token", required=True)
+   >>> def test_query():
+   >>>     pass
+
+   >>> # 将 app 对象传递给 swagger 模块
+   >>> flask_swagger(app)
+
+   >>> if __name__ == "__main__":
+   >>>     app.run("127.0.0.1", "8899", debug=False)
+
+访问: http://127.0.0.1:8899/swagger/ 即可查看接口信息，并在线调试。更多 swagger 使用技巧，可参考 https://fishbase.readthedocs.io/en/latest/swagger.html
 
 
 获取文件的绝对路径
@@ -122,6 +141,9 @@ fishbase 能干什么？
 
 最近更新
 ==========
+2019.12.5 v1.1.16
+------------------
+- 为 flask 应用添加 swagger 模块 `#249 <https://github.com/chinapnr/fishbase/issues/249>`_
 
 2019.7.17 v1.1.15
 ------------------
