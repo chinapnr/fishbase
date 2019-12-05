@@ -18,16 +18,16 @@ class AddXxReqVo:
     """
     新增 Xx 请求 Vo
     """
-    name: str
-    age: int
+    name = ""
+    age = 0
 
 
 class UpdateXxReqVo:
     """
     更新 Xx 请求 Vo
     """
-    name: str
-    age: int
+    name = ""
+    age = 0
 
 
 @doc.summary("xx业务查询接口", group="xx业务")

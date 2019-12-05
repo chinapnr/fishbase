@@ -16,16 +16,16 @@ class AddXxReqVo:
     """
     新增 Xx 请求 Vo
     """
-    name: str
-    age: int
+    name = ""
+    age = 0
 
 
 class UpdateXxReqVo:
     """
     更新 Xx 请求 Vo
     """
-    name: str
-    age: int
+    name = ""
+    age = 0
 
 
 @app.route('/v1/query', methods=['GET'])
