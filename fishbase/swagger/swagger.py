@@ -273,6 +273,6 @@ def swagger():
     return render_template("index.html")
 
 
-swagger_blueprint.add_url_rule(f'/swagger.json', view_func=swagger_json, methods=['GET'], endpoint='swagger_json')
-swagger_blueprint.add_url_rule(f'/swagger-config', view_func=swagger_json, methods=['GET'], endpoint='swagger_config')
-swagger_blueprint.add_url_rule(f'/', view_func=swagger, methods=['GET'], endpoint='swagger')
+swagger_blueprint.add_url_rule('/swagger.json', view_func=swagger_json, methods=['GET'], endpoint='swagger_json')
+swagger_blueprint.add_url_rule('/swagger-config', view_func=swagger_json, methods=['GET'], endpoint='swagger_config')
+swagger_blueprint.add_url_rule('/', view_func=swagger, methods=['GET'], endpoint='swagger')
