@@ -61,10 +61,10 @@ def test_update():
 
 
 # 定义路由信息, 并指定路由映射的方法，请求方式等
-APPBlueprint.add_url_rule(f'/v1/query', view_func=test_query, methods=['GET'], endpoint='test_func1')
-APPBlueprint.add_url_rule(f'/v1/add', view_func=test_add, methods=['POST'], endpoint='test_func2')
-APPBlueprint.add_url_rule(f'/v1/del', view_func=test_del, methods=['DELETE'], endpoint='test_func3')
-APPBlueprint.add_url_rule(f'/v1/update', view_func=test_update, methods=['PUT'], endpoint='test_func4')
+APPBlueprint.add_url_rule('/v1/query', view_func=test_query, methods=['GET'], endpoint='test_func1')
+APPBlueprint.add_url_rule('/v1/add', view_func=test_add, methods=['POST'], endpoint='test_func2')
+APPBlueprint.add_url_rule('/v1/del', view_func=test_del, methods=['DELETE'], endpoint='test_func3')
+APPBlueprint.add_url_rule('/v1/update', view_func=test_update, methods=['PUT'], endpoint='test_func4')
 
 app.register_blueprint(APPBlueprint)
 # 将 app 对象传递给 swagger 模块
