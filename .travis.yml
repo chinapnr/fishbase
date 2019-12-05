@@ -39,5 +39,5 @@ install:
 script:
   - pytest
 after_success:
-  - pytest --cov=fishbase  --ignore=fishbase/swagger test/
+  - pytest --cov=fishbase test/
   - coveralls
