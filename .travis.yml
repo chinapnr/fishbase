@@ -6,9 +6,6 @@ matrix:
       python: "nightly"
     - os: linux
       dist: xenial
-      python: "3.9-dev"
-    - os: linux
-      dist: xenial
       python: "3.8"
     - os: linux
       dist: xenial
@@ -33,7 +30,6 @@ matrix:
       python: "pypy3.6"
   allow_failures:
     - python: nightly
-    - python: 3.9-dev
     - python: "3.5"
     - python: "3.4"
     - python: "2.7"
