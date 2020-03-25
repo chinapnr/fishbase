@@ -373,7 +373,7 @@ def if_any_elements_is_space(dic):
 # 2017.2.22 edit by David.Yi, #19007
 # 2018.6.29 v1.0.14 edit by Hu Jun，#62
 # 2019.1.5 v1.1.6 edit by Hu Jun, #152
-# 2020.3.25, #256, edit by David Yi; 
+# 2020.3.25, #256, edit by David Yi;
 def has_space_element(source):
     """
     判断对象中的元素，如果存在 None 或空字符串，则返回 True, 否则返回 False, 支持字典、列表和元组
