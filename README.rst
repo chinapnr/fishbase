@@ -12,7 +12,9 @@
 fishbase 简介
 =================
 
-fishbase 是由我们自主开发和整理的一套 Python 基础函数库，当前版本为 v1.1.16.
+fishbase 是由我们自主开发和整理的一套 Python 基础函数库，将我们平时在开发 Python 项目时候的各类工具函数汇聚到一起，方便集中管理和使用。
+
+fishbase 当前版本为 v1.2，支持 Python 3.5-3.8，绝大部分函数也能工作在 Python 2.7 下，但是我们不推荐使用 Python 2.7 .
 
 自 2016/3 初次发布以来，我们坚持不断更新，先后发布了 20 余个版本。近一年来，我们逐步形成每月更新 1 到 2 个版本的频率，抽象出了很多通用的方法，主要分为以下模块：
 
@@ -39,8 +41,6 @@ fishbase 是由我们自主开发和整理的一套 Python 基础函数库，当
 +----------------------------------------------------------------------------------+----------------------------------------+
 | `fish_system <https://fishbase.readthedocs.io/en/latest/fish_system.html>`_      | 系统增强函数包                         |
 +----------------------------------------------------------------------------------+----------------------------------------+
-| `swagger <https://fishbase.readthedocs.io/en/latest/swagger.html>`_              | 集成 swagger为flask应用生成接口文档信息|
-+----------------------------------------------------------------------------------+----------------------------------------+
 
 
 安装
@@ -55,34 +55,7 @@ fishbase 是由我们自主开发和整理的一套 Python 基础函数库，当
 fishbase 能干什么？
 ===================
 
-
-集成 swagger 为 flask 应用生成接口文档信息
------------------------------------------------
-
-.. code:: python
-
-   >>> from fishbase.swagger import doc
-   >>> from fishbase.swagger.swagger import flask_swagger
-   >>> from flask import Flask
-
-   >>> # 创建 Flask app
-   >>> app = Flask("Demo Server")
-
-   >>> @app.route('/v1/query', methods=['GET'])
-   >>> @doc.summary("xx业务查询接口", group="xx业务")
-   >>> @doc.description("测试 Swagger 使用, 参数为 URL 参数 token, 且必传")
-   >>> @doc.consumes("token", required=True)
-   >>> def test_query():
-   >>>     pass
-
-   >>> # 将 app 对象传递给 swagger 模块
-   >>> flask_swagger(app)
-
-   >>> if __name__ == "__main__":
-   >>>     app.run("127.0.0.1", "8899", debug=False)
-
-访问: http://127.0.0.1:8899/swagger/ 即可查看接口信息，并在线调试。更多 swagger 使用技巧，可参考 https://fishbase.readthedocs.io/en/latest/swagger.html
-
+举例：
 
 获取文件的绝对路径
 ------------------------------
@@ -141,6 +114,17 @@ fishbase 能干什么？
 
 最近更新
 ==========
+2020.3.28 v1.2
+------------------
+- #255 #266, 开始使用 github 的 Actions 进行 CI 集成;
+- #257, conf_as_dict() 函数移动从 common 包移动到 system 包;
+- #259, 增加 fish_object 函数包，面向对象增强函数;
+- #260, common 包，删除 sorted_objs_by_attr() 函数和 get_group_list_data() 函数;
+- #261, common 包，paging 函数名称修改为 :meth:`get_page_data()`;
+- #263, common 包，删除一些为了向前兼容的函数;
+- #263, 删除 flask swagger 支持;
+
+
 2019.12.5 v1.1.16
 ------------------
 - 为 flask 应用添加 swagger 模块 `#249 <https://github.com/chinapnr/fishbase/issues/249>`_
@@ -168,3 +152,20 @@ fishbase 能干什么？
 更多详细文档，请参见：http://fishbase.readthedocs.io/
 
 如有好的建议，欢迎提 issue ：https://github.com/chinapnr/fishbase/issues
+
+
+感谢
+====
+
+非常感谢所有在 fishbase 函数包发展过程中做出共享的朋友们：
+
+Leo
+Zhang Muqing
+Hu Jun
+Jia Chunyin
+Yan Runsha
+Miao Tianshi
+Jin Xiongwei
+Yi Jun
+
+
