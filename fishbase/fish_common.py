@@ -107,12 +107,6 @@ def get_uuid(kind):
 get_time_uuid = functools.partial(get_uuid, udTime)
 
 
-# 2019.01.05 v1.1.6 edit by Hu Jun, #152
-def if_any_elements_is_space(dic):
-    show_deprecation_warn('if_any_elements_is_space', 'has_space_element')
-    return has_space_element(dic)
-
-
 # 2017.2.22 edit by David.Yi, #19007
 # 2018.6.29 v1.0.14 edit by Hu Jun，#62
 # 2019.1.5 v1.1.6 edit by Hu Jun, #152
@@ -187,51 +181,18 @@ def if_any_elements_is_number(source):
     return True
 
 
-# 2019.01.05 v1.1.6 edit by Hu Jun, #152
-def if_any_elements_is_letter(source):
-    show_deprecation_warn('if_any_elements_is_letter', 'fish_isalpha')
-    return fish_isalpha(source)
-
-
-# 2017.3.30 create by Leo #11004
-# 功能：监测list或者元素是否只包含英文
+# 功能：检查 list 或者元素是否只包含英文
 # 输入：source 是参数列表或元组
 # 输出：True：只包含英文；False：不只包含英文
-def fish_isalpha(source):
+# 2017.3.30 create by Leo #11004
+# 2020.3.28 edit by David Yi, #263
+def is_alpha(source):
     for i in source:
         
         if not i.isalpha():
             return False
     
     return True
-
-
-# 2019.01.06 edit by Hu Jun, #152
-# 2019.01.21 edit by Hu Jun, #200
-class GetMD5(object):
-    @staticmethod
-    def string(s, salt=None):
-        from fishbase.fish_crypt import FishMD5
-        show_deprecation_warn('GetMD5.sting', 'fish_crypt.FishMD5.string')
-        return FishMD5.string(s, salt=salt)
-    
-    @staticmethod
-    def file(filename):
-        from fishbase.fish_crypt import FishMD5
-        show_deprecation_warn('GetMD5.file', 'fish_crypt.FishMD5.file')
-        return FishMD5.file(filename)
-    
-    @staticmethod
-    def big_file(filename):
-        from fishbase.fish_crypt import FishMD5
-        show_deprecation_warn('GetMD5.big_file', 'fish_crypt.FishMD5.big_file')
-        return FishMD5.big_file(filename)
-    
-    @staticmethod
-    def hmac_md5(s, salt):
-        from fishbase.fish_crypt import FishMD5
-        show_deprecation_warn('GetMD5.hmac_md5', 'fish_crypt.FishMD5.hmac_md5')
-        return FishMD5.hmac_md5(s, salt)
 
 
 # 2018.5.15 v1.0.11 original by Lu Jie, edit by David Yi, #19029
@@ -269,12 +230,6 @@ def if_json_contain(left_json, right_json, op='strict'):
             if not right_json.get(key) == left_json.get(key):
                 return False
         return True
-
-
-# 2019.01.05 v1.1.6 edit by Hu Jun, #152
-def splice_url_params(dic):
-    show_deprecation_warn('splice_url_params', 'join_url_params')
-    return join_url_params(dic)
 
 
 # 2018.3.8 edit by Xiang qinqin
@@ -355,12 +310,6 @@ def sorted_list_from_dict(p_dict, order=odASC):
         return o_list
     elif order == odDES:
         return o_list[::-1]
-
-
-# 2019.01.05 v1.1.6 edit by Hu Jun, #152
-def is_contain_special_char(p_str, check_style=charChinese):
-    show_deprecation_warn('is_contain_special_char', 'has_special_char')
-    return has_special_char(p_str, check_style=check_style)
 
 
 # v1.0.13 edit by David Yi, edit by Hu Jun，#36
@@ -464,55 +413,6 @@ def find_files(path, exts=None):
         return [file for file in files_list if pathlib.Path(file).suffix in exts]
     
     return files_list
-
-
-# v1.1.6 edit by Hu Jun, #200
-# v1.1.1 edit by Hu Jun, #115
-# v1.0.14 edit by Hu Jun, #51
-def get_random_str(length, letters=True, digits=False, punctuation=False):
-    """
-    获得指定长度，不同规则的随机字符串，可以包含数字，字母和标点符号
-
-    :param:
-        * length: (int) 随机字符串的长度
-        * letters: (bool) 随机字符串是否包含字母，默认包含
-        * digits: (bool) 随机字符串是否包含数字，默认不包含
-        * punctuation: (bool) 随机字符串是否包含特殊标点符号，默认不包含
-
-    :return:
-        * random_str: (string) 指定规则的随机字符串
-
-    举例如下::
-
-        print('--- get_random_str demo---')
-        print(get_random_str(6))
-        print(get_random_str(6, digits=True))
-        print(get_random_str(12, punctuation=True))
-        print(get_random_str(6, letters=False, digits=True))
-        print(get_random_str(12, letters=False, digits=True, punctuation=True))
-        print('---')
-
-    执行结果::
-
-        --- get_random_str demo---
-        nRBDHf
-        jXG5wR
-        )I;rz{ob&Clg
-        427681
-        *"4$0^`2}%9{
-        ---
-
-    """
-    show_deprecation_warn('get_random_str', 'fish_random.gen_random_str')
-    from fishbase.fish_random import gen_random_str
-    return gen_random_str(length, length, has_letter=letters, has_digit=digits,
-                          has_punctuation=punctuation)
-
-
-# 2019.01.05 v1.1.6 edit by Hu Jun, #152
-def remove_duplicate_elements(items, key=None):
-    show_deprecation_warn('remove_duplicate_elements', 'get_distinct_elements')
-    return get_distinct_elements(items, key=key)
 
 
 # v1.0.15 edit by Hu Jun, #77 #63
@@ -683,12 +583,6 @@ def get_sub_dict(data_dict, key_list, default_value='default_value'):
     return sub_dict
 
 
-# 2019.01.05 v1.1.6 edit by Hu Jun, #152
-def transform_hump_to_underline(param_dict):
-    show_deprecation_warn('transform_hump_to_underline', 'camelcase_to_underline')
-    return camelcase_to_underline(param_dict)
-
-
 # v1.1.1 edit by Hu Jun, #114
 def camelcase_to_underline(param_dict):
     """
@@ -819,26 +713,6 @@ def yaml_conf_as_dict(file_path, encoding=None):
                 return True, d, 'Success'
     except Exception:
         return False, {}, 'Unknown error'
-
-
-# 2019.01.06 edit by Hu Jun, #152
-class GetSha256(object):
-    @staticmethod
-    def hmac_sha256(secret, message):
-        from fishbase.fish_crypt import FishSha256
-        show_deprecation_warn('GetSha256.hmac_sha256', 'FishSha256.hmac_sha256')
-        return FishSha256.hmac_sha256(secret, message)
-    
-    @staticmethod
-    def hashlib_sha256(message):
-        from fishbase.fish_crypt import FishSha256
-        show_deprecation_warn('GetSha256.hashlib_sha256', 'FishSha256.hashlib_sha256')
-        return FishSha256.hashlib_sha256(message)
-
-
-# v1.0.14 original by Jia Chunying, edit by Hu Jun, #27
-# v1.1.3 edit by Hu Jun, #100 move hmac_sha256 to GetSha256
-hmac_sha256 = GetSha256.hmac_sha256
 
 
 # 2019.06.11 edit by Hu Jun, #235
