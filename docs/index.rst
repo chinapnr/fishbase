@@ -50,8 +50,6 @@ fishbase 当前版本为 v1.2，支持 Python 3.5-3.8，绝大部分函数也能
 +----------------------------------------------------------------------------------+----------------------------------------+
 | `fish_system <https://fishbase.readthedocs.io/en/latest/fish_system.html>`_      | 系统增强函数包                         |
 +----------------------------------------------------------------------------------+----------------------------------------+
-| `swagger <https://fishbase.readthedocs.io/en/latest/swagger.html>`_              | 集成swagger为flask应用生成接口文档信息 |
-+----------------------------------------------------------------------------------+----------------------------------------+
 
 
 安装
@@ -63,7 +61,7 @@ fishbase 当前版本为 v1.2，支持 Python 3.5-3.8，绝大部分函数也能
    pip install -U fishbase
 
 
-fishbase 能干什么？
+fishbase 能做什么？举几个例子：
 ===================
 
 
@@ -122,34 +120,6 @@ fishbase 能干什么？
    ['requirements.txt', 'README.md', 'setup.py']
 
 
-集成 swagger 为 flask 应用生成接口文档信息
------------------------------------------------
-
-.. code:: python
-
-   >>> from fishbase.swagger import doc
-   >>> from fishbase.swagger.swagger import flask_swagger
-   >>> from flask import Flask
-
-   >>> # 创建 Flask app
-   >>> app = Flask("Demo Server")
-
-   >>> @app.route('/v1/query', methods=['GET'])
-   >>> @doc.summary("xx业务查询接口", group="xx业务")
-   >>> @doc.description("测试 Swagger 使用, 参数为 URL 参数 token, 且必传")
-   >>> @doc.consumes("token", required=True)
-   >>> def test_query():
-   >>>     pass
-
-   >>> # 将 app 对象传递给 swagger 模块
-   >>> flask_swagger(app)
-
-   >>> if __name__ == "__main__":
-   >>>     app.run("127.0.0.1", "8899", debug=False)
-
-访问: http://127.0.0.1:8899/swagger/ 即可查看接口信息，并在线调试。更多 swagger 使用技巧，可参考 https://fishbase.readthedocs.io/en/latest/swagger.html
-
-
 .. toctree::
    :maxdepth: 1
 
@@ -175,7 +145,6 @@ API 函数列表
    fish_project
    fish_system
    fish_random
-   swagger
 
 
 更多

@@ -41,8 +41,6 @@ fishbase 当前版本为 v1.2，支持 Python 3.5-3.8，绝大部分函数也能
 +----------------------------------------------------------------------------------+----------------------------------------+
 | `fish_system <https://fishbase.readthedocs.io/en/latest/fish_system.html>`_      | 系统增强函数包                         |
 +----------------------------------------------------------------------------------+----------------------------------------+
-| `swagger <https://fishbase.readthedocs.io/en/latest/swagger.html>`_              | 集成 swagger为flask应用生成接口文档信息|
-+----------------------------------------------------------------------------------+----------------------------------------+
 
 
 安装
@@ -114,36 +112,19 @@ fishbase 能干什么？
    ['requirements.txt', 'README.md', 'setup.py']
 
 
-集成 swagger 为 flask 应用生成接口文档信息
------------------------------------------------
-
-.. code:: python
-
-   >>> from fishbase.swagger import doc
-   >>> from fishbase.swagger.swagger import flask_swagger
-   >>> from flask import Flask
-
-   >>> # 创建 Flask app
-   >>> app = Flask("Demo Server")
-
-   >>> @app.route('/v1/query', methods=['GET'])
-   >>> @doc.summary("xx业务查询接口", group="xx业务")
-   >>> @doc.description("测试 Swagger 使用, 参数为 URL 参数 token, 且必传")
-   >>> @doc.consumes("token", required=True)
-   >>> def test_query():
-   >>>     pass
-
-   >>> # 将 app 对象传递给 swagger 模块
-   >>> flask_swagger(app)
-
-   >>> if __name__ == "__main__":
-   >>>     app.run("127.0.0.1", "8899", debug=False)
-
-访问: http://127.0.0.1:8899/swagger/ 即可查看接口信息，并在线调试。更多 swagger 使用技巧，可参考 https://fishbase.readthedocs.io/en/latest/swagger.html
-
-
 最近更新
 ==========
+2020.3.28 v1.2
+------------------
+- #255 #266, 开始使用 github 的 Actions 进行 CI 集成;
+- #257, conf_as_dict() 函数移动从 common 包移动到 system 包;
+- #259, 增加 fish_object 函数包，面向对象增强函数;
+- #260, common 包，删除 sorted_objs_by_attr() 函数和 get_group_list_data() 函数;
+- #261, common 包，paging 函数名称修改为 :meth:`get_page_data()`;
+- #263, common 包，删除一些为了向前兼容的函数;
+- #263, 删除 flask swagger 支持;
+
+
 2019.12.5 v1.1.16
 ------------------
 - 为 flask 应用添加 swagger 模块 `#249 <https://github.com/chinapnr/fishbase/issues/249>`_
