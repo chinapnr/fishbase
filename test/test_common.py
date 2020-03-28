@@ -1,6 +1,8 @@
 # coding=utf-8
 # fish_common.py 单元测试
 # 2018.5.15 create by David Yi
+# 2020.3.27 #257, edit by David Yi
+
 import string
 import pytest
 
@@ -19,62 +21,7 @@ error_yaml_filename = os.path.join(current_path, 'test_conf1.yaml')
 # 2018.5.14 v1.0.11 #19027 create by David Yi, 开始进行单元测试
 # 2018.5.26 v1.0.13 #19038 edit, 增加 get_uuid() 的 ut
 class TestFishCommon(object):
-    
-    # 测试 conf_as_dict()  tc
-    def test_config_dict_01(self):
-        # 读取配置文件
-        ds = conf_as_dict(conf_filename, encoding='utf-8')
-        d = ds[1]
-        
-        # 返回结果
-        assert ds[0] is True
-        # 返回长度
-        assert ds[2] == 7
-        # 某个 section 下面某个 key 的 value
-        assert d['show_opt']['short_opt'] == 'b:d:v:p:f:'
-    
-    # 测试 conf_as_dict()  tc
-    def test_config_dict_02(self):
-        # 读取不存在的配置文件
-        ds = conf_as_dict(error_conf_filename)
-        
-        # 返回结果
-        assert ds[0] is False
-        
-        # 应该读不到返回的 dict 内容
-        with pytest.raises(IndexError):
-            d = ds[1]
-    
-    def test_config_dict_03(self):
-        # 读取配置文件
-        ds = conf_as_dict(conf_filename, encoding='utf-8')
-        d = ds[1]
-        
-        list1 = ['show_opt', 'show_opt_common', 'show_opt_common2', 'get_args', 'show_rule_pattern',
-                 'show_pattern', 'get_extra_rules']
-        
-        # 断言是否保序
-        assert list(d.keys()) == list1
-    
-    def test_config_dict_04(self):
-        # 读取配置文件, 中文编码
-        ds = conf_as_dict(conf_filename, encoding='utf-8')
-        d = ds[1]
-        
-        list1 = ['show_opt', 'show_opt_common', 'show_opt_common2', 'get_args', 'show_rule_pattern',
-                 'show_pattern', 'get_extra_rules']
-        
-        # 断言是否保序
-        assert list(d.keys()) == list1
-    
-    def test_config_dict_05(self):
-        # 读取配置文件, 大小写敏感
-        ds = conf_as_dict(conf_filename, encoding='utf-8', case_sensitive=True)
-        d = ds[1]
-        
-        for item in ['Short_Opt', 'Long_Opt']:
-            assert item in d.get('show_opt')
-    
+
     # 测试 FishMD5()  tc
     def test_md5_01(self):
         assert GetMD5.string('hello world!') == 'fc3ff98e8c6a0d3087d515c0473f8677'
@@ -110,20 +57,7 @@ class TestFishCommon(object):
         
         assert join_url_params(dic01) == '?key1=value1&key2=value2'
         assert splice_url_params(dic02) != '?key1=value1&key2=value2'
-    
-    # test singleton() test case
-    def test_singleton_01(self):
-        
-        t1 = SingleTon()
-        t1.x = 2
-        t2 = SingleTon()
-        t1.x += 1
-        
-        assert t2.x == t1.x
-        
-        t2.x = 5
-        assert t1.x == 5
-    
+
     # test get_uuid() tc
     def test_get_uuid_01(self):
         
@@ -278,36 +212,7 @@ class TestFishCommon(object):
         
         dict_demo3 = get_distinct_elements(list2, key=lambda d: d['y'])
         assert (list(dict_demo3)) == [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 2, 'y': 4}]
-    
-    # test sort_objs_by_attr() tc
-    def test_sort_objs_by_attr_01(self):
-        class User(object):
-            def __init__(self, user_id):
-                self.user_id = user_id
-        
-        users = [User(23), User(3), User(99)]
-        result_0 = sort_objs_by_attr(users, key='user_id')
-        assert result_0[0].user_id == 3
-        
-        result_1 = sorted_objs_by_attr(users, key='user_id')
-        assert result_1[0].user_id == 3
-        
-        reverse_result = sort_objs_by_attr(users, key='user_id', reverse=True)
-        assert reverse_result[0].user_id == 99
-    
-    # test sort_objs_by_attr() tc
-    def test_sort_objs_by_attr_02(self):
-        class User(object):
-            def __init__(self, user_id):
-                self.user_id = user_id
-        
-        users = [User(23), User(3), User(99)]
-        
-        with pytest.raises(AttributeError):
-            sort_objs_by_attr(users, key='user_id1')
-        
-        assert len(sort_objs_by_attr([], key='user_id')) == 0
-    
+
     # test get_query_param_from_url() tc
     def test_get_query_param_from_url_01(self):
         url = 'http://localhost:8811/mytest?page_number=1&page_size=10' \
@@ -319,22 +224,19 @@ class TestFishCommon(object):
     # test paging() tc
     def test_paging_01(self):
         all_records = list(range(100))
-        result_0 = paging(all_records, group_number=7, group_size=15)
+        result_0 = get_paging_data(all_records, page_number=7, page_size=15)
         assert result_0 == [90, 91, 92, 93, 94, 95, 96, 97, 98, 99]
-        
-        result_1 = get_group_list_data(all_records, group_number=7, group_size=15)
-        assert result_1 == [90, 91, 92, 93, 94, 95, 96, 97, 98, 99]
-    
+
     # test paging() tc
     def test_paging_02(self):
         with pytest.raises(TypeError):
-            paging('test')
+            get_paging_data('test')
         
         with pytest.raises(TypeError):
-            paging(list(range(10)), group_number='asdsa')
+            get_paging_data(list(range(10)), page_number='asdsa')
         
         with pytest.raises(ValueError):
-            paging(list(range(10)), group_number=-4)
+            get_paging_data(list(range(10)), page_number=-4)
     
     # test get_sub_dict() tc
     def test_get_sub_dict_01(self):
@@ -414,34 +316,6 @@ class TestFishCommon(object):
         assert not fish_isalpha(mix_str)
         assert not if_any_elements_is_letter(mix_str)
     
-    # 测试 serialize_instance() tc
-    def test_serialize_instance(self):
-        # 定义两个对象
-        class ObjA(object):
-            def __init__(self, a, b):
-                self.a = a
-                self.b = b
-        
-        class ObjB(object):
-            def __init__(self, x, y):
-                self.x = x
-                self.y = y
-        
-        obj_b = ObjB('string', [item for item in range(10)])
-        obj_a = ObjA(1, obj_b)
-        obj_attr_dict = serialize_instance(obj_a)
-        
-        assert '__classname__' in obj_attr_dict
-        assert obj_attr_dict.get('__classname__') == 'ObjA'
-        assert isinstance(obj_attr_dict.get('b'), dict)
-    
-    def test_deserialize_instance(self):
-        temp_dict = {'user': {'name': {'last_name': 'zhang', 'first_name': 'san'}, 'address': 'Beijing'}}
-        new_obj = DeserializeInstance(temp_dict)
-        assert hasattr(new_obj, 'user')
-        assert hasattr(new_obj.user, 'name')
-        assert new_obj.user.name.last_name == 'zhang'
-        assert new_obj.user.address == 'Beijing'
 
     # 测试 an2cn()  tc
     def test_an2cn_01(self):

@@ -20,17 +20,11 @@ import warnings
 
 import yaml
 from collections import OrderedDict, namedtuple
-from operator import attrgetter
 import functools
 import pathlib
 
-if sys.version > '3':
-    import configparser
-    from urllib.parse import parse_qs, urlsplit, urlencode
-else:
-    import ConfigParser as configparser
-    from urllib import urlencode
-    from urlparse import parse_qs, urlsplit
+from urllib.parse import parse_qs, urlsplit, urlencode
+
 
 # uuid kind const
 udTime = 10001
@@ -44,9 +38,6 @@ odDES = 10012
 charChinese = 10021
 charNum = 10022
 
-# common data type
-commonDataType = tuple([int, float, bool, complex, str, set, list, tuple, dict])
-
 
 # v1.1.6 edit by Hu Jun
 def show_deprecation_warn(old_fun, suggest_fun):
@@ -54,254 +45,6 @@ def show_deprecation_warn(old_fun, suggest_fun):
     warnings.warn('{} is deprecated, and in 2.x it will stop working. '
                   'Use {} instead.'.format(old_fun, suggest_fun),
                   DeprecationWarning, stacklevel=2)
-
-
-# v1.1.9 edit by Hu Jun, #222
-class MyConfigParser(configparser.ConfigParser):
-    """
-    自定义 MyConfigParser，重写 optionxform 方法，以便读取大小写敏感的配置文件
-    """
-    
-    def __init__(self, defaults=None):
-        configparser.ConfigParser.__init__(self, defaults=None)
-    
-    def optionxform(self, optionstr):
-        return optionstr
-
-
-# 读入配置文件，返回根据配置文件内容生成的字典类型变量，减少文件读取次数
-# 2017.2.23 #19008 create by David Yi
-# 2018.2.12 #11014 edit by David Yi, 增加返回内容，字典长度,
-# 2018.4.18 #19015 加入 docstring，完善文档说明
-# 2018.5.14 v1.0.11 #19028 逻辑修改，更加严密
-# v1.0.15 edit by Hu Jun, #83
-# v1.0.16 edit by Hu Jun, #94
-# v1.0.17 edit by Hu Jun, #212
-# v1.1.9 edit by Hu Jun, #222
-def conf_as_dict(conf_filename, encoding=None, case_sensitive=False):
-    """
-    读入 ini 配置文件，返回根据配置文件内容生成的字典类型变量；
-
-    :param:
-        * conf_filename: (string) 需要读入的 ini 配置文件长文件名
-        * encoding: (string) 文件编码
-        * case_sensitive: (bool) 是否大小写敏感，默认为 False
-    :return:
-        * flag: (bool) 读取配置文件是否正确，正确返回 True，错误返回 False
-        * d: (dict) 如果读取配置文件正确返回的包含配置文件内容的字典，字典内容顺序与配置文件顺序保持一致
-        * count: (int) 读取到的配置文件有多少个 key 的数量
-
-    举例如下::
-
-        print('--- conf_as_dict demo---')
-        # 定义配置文件名
-        conf_filename = 'test_conf.ini'
-        # 读取配置文件
-        ds = conf_as_dict(conf_filename)
-        ds1 = conf_as_dict(conf_filename, case_sensitive=True)
-        # 显示是否成功，所有 dict 的内容，dict 的 key 数量
-        print('flag:', ds[0])
-        print('dict:', ds[1])
-        print('length:', ds[2])
-
-        d = ds[1]
-        d1 = ds1[1]
-
-        # 显示一个 section 下的所有内容
-        print('section show_opt:', d['show_opt'])
-        # 显示一个 section 下的所有内容，大小写敏感
-        print('section show_opt:', d1['show_opt'])
-        # 显示一个 section 下面的 key 的 value 内容
-        print('section show_opt, key short_opt:', d['show_opt']['short_opt'])
-
-        # 读取一个复杂的section，先读出 key 中的 count 内容，再遍历每个 key 的 value
-        i = int(d['get_extra_rules']['erule_count'])
-        print('section get_extra_rules, key erule_count:', i)
-        for j in range(i):
-            print('section get_extra_rules, key erule_type:', d['get_extra_rules']['erule_'+str(j)])
-        print('---')
-
-    执行结果::
-
-        --- conf_as_dict demo---
-        flag: True
-        dict: (omit)
-        length: 7
-        section show_opt: {'short_opt': 'b:d:v:p:f:', 'long_opt': 'region=,prov=,mer_id=,mer_short_name=,web_status='}
-        section show_opt: {'Short_Opt': 'b:d:v:p:f:', 'Long_Opt': 'region=,prov=,mer_id=,mer_short_name=,web_status='}
-        section show_opt, key short_opt: b:d:v:p:f:
-        section get_extra_rules, key erule_count: 2
-        section get_extra_rules, key erule_type: extra_rule_1
-        section get_extra_rules, key erule_type: extra_rule_2
-        ---
-
-    """
-    flag = False
-    
-    # 检查文件是否存在
-    if not pathlib.Path(conf_filename).is_file():
-        return flag,
-    
-    # 判断是否对大小写敏感
-    cf = configparser.ConfigParser() if not case_sensitive else MyConfigParser()
-    
-    # 读入 config 文件
-    try:
-        if sys.version > '3':
-            cf.read(conf_filename, encoding=encoding)
-        else:
-            cf.read(conf_filename)
-    except Exception:
-        flag = False
-        return flag,
-    
-    d = OrderedDict(cf._sections)
-    for k in d:
-        d[k] = OrderedDict(cf._defaults, **d[k])
-        d[k].pop('__name__', None)
-    
-    flag = True
-    
-    # 计算有多少 key
-    count = len(d.keys())
-    
-    return flag, d, count
-
-
-# 申明一个单例类
-# 2018.2.13 create by David Yi, #11015
-# 2018.4.20 5.19 edit, #19019，增加 docstring
-class SingleTon(object):
-    """
-    申明一个单例类，可以作为需要单例类时候申明用的父类
-
-    :param:
-        无
-    :returns:
-        无
-
-    举例如下::
-
-        print('--- class singleton demo ---')
-        t1 = SingleTon()
-        t1.x = 2
-        print('t1.x:', t1.x)
-
-        t2 = SingleTon()
-
-        t1.x += 1
-
-        print('t1.x:', t1.x)
-        print('t2.x:', t2.x)
-        print('---')
-
-    执行结果::
-
-        --- class singleton demo ---
-        t1.x: 2
-        t1.x: 3
-        t2.x: 3
-        ---
-
-    """
-    
-    _state = {}
-    
-    def __new__(cls, *args, **kwargs):
-        ob = super(SingleTon, cls).__new__(cls)
-        # 类维护所有实例的共享属性
-        ob.__dict__ = cls._state
-        return ob
-
-
-# 2015.6.14  edit by david.yi
-# 2019.03.19 v1.1.7 edit by Hu Jun, edit from Jia Chunying，#215
-def serialize_instance(obj):
-    """
-    对象序列化
-
-    :param:
-        * obj: (object) 对象实例
-
-    :return:
-        * obj_dict: (dict) 对象序列化字典
-
-    举例如下::
-
-        print('--- serialize_instance demo ---')
-        # 定义两个对象
-        class Obj(object):
-            def __init__(self, a, b):
-                self.a = a
-                self.b = b
-
-        class ObjB(object):
-            def __init__(self, x, y):
-                self.x = x
-                self.y = y
-
-        # 对象序列化
-        b = ObjB('string', [item for item in range(10)])
-        obj_ = Obj(1, b)
-        print(serialize_instance(obj_))
-        print('---')
-
-    执行结果::
-
-        --- serialize_instance demo ---
-        {'__classname__': 'Obj', 'a': 1,
-        'b': {'__classname__': 'ObjB', 'x': 'string', 'y': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]}}
-        ---
-
-    """
-    obj_dict = {'__classname__': type(obj).__name__}
-    obj_dict.update(obj.__dict__)
-    for key, value in obj_dict.items():
-        if not isinstance(value, commonDataType):
-            sub_dict = serialize_instance(value)
-            obj_dict.update({key: sub_dict})
-        else:
-            continue
-    return obj_dict
-
-
-# 2019.03.28 v1.1.8 edit by Hu Jun, edit from Jia Chunying，#215
-class DeserializeInstance(object):
-    """
-    字典对象反序列化
-
-    :param:
-        * obj_dict: (dict) 对象序列化字典
-
-    :return:
-        * obj: (object) 对象
-
-    举例如下::
-
-        print('--- DeserializeInstance demo ---')
-        temp_dict = {'user': {'name': {'last_name': 'zhang', 'first_name': 'san'}, 'address': 'Beijing'}}
-        new_obj = DeserializeInstance(temp_dict)
-        print('last_name is: ', new_obj.user.name.last_name)
-        print('first_name is: ', new_obj.user.name.first_name)
-        print('address is: ', new_obj.user.address)
-        print('---')
-
-    执行结果::
-
-        --- DeserializeInstance demo ---
-        last_name is:  zhang
-        first_name is:  san
-        address is:  Beijing
-        ---
-
-    """
-    
-    def __init__(self, obj_dict):
-        for key, value in obj_dict.items():
-            if isinstance(value, dict):
-                setattr(self, key, DeserializeInstance(value) if isinstance(value, dict) else value)
-            else:
-                setattr(self, key, value)
 
 
 # 2018.5.26 v1.0.13 edit by David Yi，#19038
@@ -372,7 +115,8 @@ def if_any_elements_is_space(dic):
 
 # 2017.2.22 edit by David.Yi, #19007
 # 2018.6.29 v1.0.14 edit by Hu Jun，#62
-# 2019.01.05 v1.1.6 edit by Hu Jun, #152
+# 2019.1.5 v1.1.6 edit by Hu Jun, #152
+# 2020.3.25, #256, edit by David Yi;
 def has_space_element(source):
     """
     判断对象中的元素，如果存在 None 或空字符串，则返回 True, 否则返回 False, 支持字典、列表和元组
@@ -413,7 +157,7 @@ def has_space_element(source):
     else:
         raise TypeError('source except list, tuple or dict, but got {}'.format(type(source)))
     for i in check_list:
-        if i is 0:
+        if i == 0:
             continue
         if not (i and str(i).strip()):
             return True
@@ -460,21 +204,6 @@ def fish_isalpha(source):
             return False
     
     return True
-
-
-# r2c1 v1.0.1 #12089
-# 2016.4.3 edit class and function name
-# 通过conf文件。eg ini，读取值，通过字典缓存来提高读取速度
-class FishCache:
-    __cache = {}
-    
-    def get_cf_cache(self, cf, section, key):
-        # 生成 key，用于 dict
-        temp_key = section + '_' + key
-        
-        if temp_key not in self.__cache:
-            self.__cache[temp_key] = cf[section][key]
-        return self.__cache[temp_key]
 
 
 # 2019.01.06 edit by Hu Jun, #152
@@ -830,58 +559,6 @@ def get_distinct_elements(items, key=None):
             seen.add(val)
 
 
-# 2019.01.05 v1.1.6 edit by Hu Jun, #152
-def sorted_objs_by_attr(objs, key, reverse=False):
-    show_deprecation_warn('sorted_objs_by_attr', 'sort_objs_by_attr')
-    return sort_objs_by_attr(objs, key, reverse=reverse)
-
-
-# v1.0.15 edit by Hu Jun, #64
-def sort_objs_by_attr(objs, key, reverse=False):
-    """
-    对原生不支持比较操作的对象根据属性排序
-
-    :param:
-        * objs: (list) 需要排序的对象列表
-        * key: (string) 需要进行排序的对象属性
-        * reverse: (bool) 排序结果是否进行反转，默认为 False，不进行反转
-
-    :return:
-        * result: (list) 排序后的对象列表
-
-    举例如下::
-
-        print('--- sorted_objs_by_attr demo---')
-
-
-        class User(object):
-            def __init__(self, user_id):
-                self.user_id = user_id
-
-
-        users = [User(23), User(3), User(99)]
-        result = sorted_objs_by_attr(users, key='user_id')
-        reverse_result = sorted_objs_by_attr(users, key='user_id', reverse=True)
-        print([item.user_id for item in result])
-        print([item.user_id for item in reverse_result])
-        print('---')
-
-    执行结果::
-
-        --- sorted_objs_by_attr demo---
-        [3, 23, 99]
-        [99, 23, 3]
-        ---
-
-    """
-    if len(objs) == 0:
-        return []
-    if not hasattr(objs[0], key):
-        raise AttributeError('{0} object has no attribute {1}'.format(type(objs[0]), key))
-    result = sorted(objs, key=attrgetter(key), reverse=reverse)
-    return result
-
-
 # v1.0.15 edit by Hu Jun, #79
 def get_query_param_from_url(url):
     """
@@ -914,34 +591,29 @@ def get_query_param_from_url(url):
     return OrderedDict(query_dict)
 
 
-# 2019.01.05 v1.1.6 edit by Hu Jun, #152
-def get_group_list_data(data_list, group_number=1, group_size=10):
-    show_deprecation_warn('get_group_list_data', 'paging')
-    return paging(data_list, group_number=group_number, group_size=group_size)
-
-
 # v1.1.0 edit by Hu Jun, #74
-def paging(data_list, group_number=1, group_size=10):
+# v1.2, edit by David Yi; #261, 参数名称修改，帮助内容修改；
+def get_paging_data(data_list, page_number=1, page_size=10):
     """
-    获取分组列表数据
+    获取分页数据，用于快速计算获得类似 web 显示多页时的下面的页码
 
     :param:
-        * data_list: (list) 需要获取分组的数据列表
-        * group_number: (int) 分组信息，默认为 1
-        * group_size: (int) 分组大小，默认为 10
+        * data_list: (list) 需要获取分页的数据列表
+        * page_number: (int) 第几页，默认为 1
+        * page_size: (int) 每页显示多少页码，默认为 10
 
     :return:
-        * group_data: (list) 分组数据
+        * paging_data: (list)
 
     举例如下::
 
         print('--- paging demo---')
         all_records = [1, 2, 3, 4, 5]
-        print(get_group_list_data(all_records))
+        print(get_paging_data(all_records))
 
         all_records1 = list(range(100))
-        print(get_group_list_data(all_records1, group_number=5, group_size=15))
-        print(get_group_list_data(all_records1, group_number=7, group_size=15))
+        print(get_paging_data(all_records1, group_number=5, group_size=15))
+        print(get_paging_data(all_records1, group_number=7, group_size=15))
         print('---')
 
     执行结果::
@@ -956,15 +628,15 @@ def paging(data_list, group_number=1, group_size=10):
     if not isinstance(data_list, list):
         raise TypeError('data_list should be a list, but we got {}'.format(type(data_list)))
     
-    if not isinstance(group_number, int) or not isinstance(group_size, int):
+    if not isinstance(page_number, int) or not isinstance(page_size, int):
         raise TypeError('group_number and group_size should be int, but we got group_number: {0}, '
-                        'group_size: {1}'.format(type(group_number), type(group_size)))
-    if group_number < 0 or group_size < 0:
+                        'group_size: {1}'.format(type(page_number), type(page_size)))
+    if page_number < 0 or page_size < 0:
         raise ValueError('group_number and group_size should be positive int, but we got '
-                         'group_number: {0}, group_size: {1}'.format(group_number, group_size))
+                         'group_number: {0}, group_size: {1}'.format(page_number, page_size))
     
-    start = (group_number - 1) * group_size
-    end = group_number * group_size
+    start = (page_number - 1) * page_size
+    end = page_number * page_size
     
     return data_list[start:end]
 
@@ -1394,3 +1066,17 @@ def split_str_by_length(text, length):
     str_list.append(text[(len(str_list) * length):])
     str_list = [item for item in str_list if item]
     return str_list
+
+# r2c1 v1.0.1 #12089
+# 2016.4.3 edit class and function name
+# 通过conf文件。eg ini，读取值，通过字典缓存来提高读取速度
+# class FishCache:
+#    __cache = {}
+#
+#    def get_cf_cache(self, cf, section, key):
+#        # 生成 key，用于 dict
+#        temp_key = section + '_' + key
+#
+#        if temp_key not in self.__cache:
+#            self.__cache[temp_key] = cf[section][key]
+#        return self.__cache[temp_key]
