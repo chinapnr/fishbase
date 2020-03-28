@@ -22,19 +22,6 @@ error_yaml_filename = os.path.join(current_path, 'test_conf1.yaml')
 # 2018.5.26 v1.0.13 #19038 edit, 增加 get_uuid() 的 ut
 class TestFishCommon(object):
 
-    # 测试 FishMD5()  tc
-    def test_md5_01(self):
-        assert GetMD5.string('hello world!') == 'fc3ff98e8c6a0d3087d515c0473f8677'
-        # different line separator will get different md5 value
-        assert GetMD5.file(conf_filename) in ['79e1a2614f1afc8297856b7ffdaf4c47',
-                                              'a0a36ccf1bce193658559e092ac43b6d']
-        assert GetMD5.big_file(conf_filename) in ['79e1a2614f1afc8297856b7ffdaf4c47',
-                                                  'a0a36ccf1bce193658559e092ac43b6d']
-        salt_0 = 'salt'
-        assert GetMD5.hmac_md5('hello world!', salt_0) == '191f82804523bfdafe0188bbbddd6587'
-        salt_1 = 'm4xV2yGFSn'
-        assert GetMD5.string('hello world!', salt_1) == '984d47991401fad7d920a30f715cfd22'
-    
     # 测试 if_json_contain()  tc
     def test_json_contain_01(self):
         
@@ -56,7 +43,6 @@ class TestFishCommon(object):
         dic02 = {'key1': '1111', 'key2': 'value2'}
         
         assert join_url_params(dic01) == '?key1=value1&key2=value2'
-        assert splice_url_params(dic02) != '?key1=value1&key2=value2'
 
     # test get_uuid() tc
     def test_get_uuid_01(self):
@@ -117,8 +103,6 @@ class TestFishCommon(object):
         assert has_special_char(num_str, check_style=charNum) is True
         assert has_special_char(non_num_str, check_style=10020) is False
         
-        assert is_contain_special_char(non_num_str, check_style=10020) is False
-        
         if sys.version > '3':
             chinese_str1 = u'有zhongwen'.encode('gbk')
             with pytest.raises(TypeError):
@@ -131,56 +115,9 @@ class TestFishCommon(object):
         
         assert len(find_files(path)) >= len(find_files(path, exts=exts_list))
     
-    # test hmac_sha256() tc
-    def test_hmac_sha256_01(self):
-        message = 'Hello HMAC'
-        secret = '12345678'
-        assert (hmac_sha256(secret, message) ==
-                '5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f')
-    
-    # test FishSha256.hmac_sha256() tc
-    def test_hmac_sha256_02(self):
-        message = 'Hello HMAC'
-        secret = '12345678'
-        assert (GetSha256.hmac_sha256(secret, message) ==
-                '5eb8bdabdaa43f61fb220473028e49d40728444b4322f3093decd9a356afd18f')
-    
-    # test FishSha256.hashlib_sha256() tc
-    def test_hashlib_sha256_01(self):
-        message = 'Hello HMAC'
-        assert (GetSha256.hashlib_sha256(message) ==
-                '4a1601381dfb85d6e713853a414f6b43daa76a82956911108512202f5a1c0ce4')
-    
-    # test get_random_str() tc
-    def test_get_random_str_01(self):
-        assert len(get_random_str(6)) == 6
-        
-        import re
-        
-        digits_pattern = re.compile('[0-9]+')
-        letters_pattern = re.compile('[a-zA-Z]+')
-        letters_digits_pattern = re.compile('[0-9a-zA-Z]+')
-        punctuation_ord_list = [ord(item) for item in string.punctuation]
-        
-        letter_str = get_random_str(6)
-        assert letters_pattern.match(letter_str)
-        
-        letter_digits_str = get_random_str(80, digits=True)
-        assert letters_digits_pattern.match(letter_digits_str)
-        
-        digits_str = get_random_str(6, letters=False, digits=True)
-        assert digits_pattern.match(digits_str)
-        
-        punctuation_str = get_random_str(6, letters=False, punctuation=True)
-        for item in punctuation_str:
-            assert ord(item) in punctuation_ord_list
-        
-        assert len(get_random_str(12, letters=False, digits=True, punctuation=True)) == 12
-    
     # test has_space_element() tc
     def test_has_space_element_01(self):
-        assert if_any_elements_is_space([1, 2, 'test_str']) is False
-        
+
         assert has_space_element([1, 2, 'test_str']) is False
         
         assert has_space_element([0, 2]) is False
@@ -200,8 +137,7 @@ class TestFishCommon(object):
     def test_get_distinct_elements_01(self):
         list1 = [1, 5, 2, 1, 9, 1, 5, 10]
         assert list(get_distinct_elements(list1)) == [1, 5, 2, 9, 10]
-        assert list(remove_duplicate_elements(list1)) == [1, 5, 2, 9, 10]
-        
+
         list2 = [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 1, 'y': 2}, {'x': 2, 'y': 4}]
         
         dict_demo1 = get_distinct_elements(list2, key=lambda d: (d['x'], d['y']))
@@ -266,11 +202,9 @@ class TestFishCommon(object):
     def test_camelcase_to_underline(self):
         hump_param_dict = {'firstName': 'Python', 'Second_Name': 'zhangshan', 'right_name': 'name'}
         result_0 = camelcase_to_underline(hump_param_dict)
-        result_1 = transform_hump_to_underline(hump_param_dict)
-        
+
         assert 'firstName' not in result_0
         assert 'first_name' in result_0
-        assert 'first_name' in result_1
     
     # test find_same_between_dicts() tc
     def test_find_same_between_dicts_01(self):
@@ -308,14 +242,12 @@ class TestFishCommon(object):
         assert ds[-1] == 'File not exist'
     
     # 测试 fish_isalpha() tc
-    def test_fish_isalpha(self):
+    def test_is_alpha(self):
         letter_str = 'test'
         mix_str = 'mix123'
         
-        assert fish_isalpha(letter_str)
-        assert not fish_isalpha(mix_str)
-        assert not if_any_elements_is_letter(mix_str)
-    
+        assert is_alpha(letter_str)
+        assert not is_alpha(mix_str)
 
     # 测试 an2cn()  tc
     def test_an2cn_01(self):
