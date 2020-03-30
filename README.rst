@@ -114,13 +114,14 @@ fishbase 能干什么？
 
 最近更新
 ==========
+
 2020.3.28 v1.2
 ------------------
 - #255 #266, 开始使用 github 的 Actions 进行 CI 集成;
 - #257, conf_as_dict() 函数移动从 common 包移动到 system 包;
 - #259, 增加 fish_object 函数包，面向对象增强函数;
 - #260, common 包，删除 sorted_objs_by_attr() 函数和 get_group_list_data() 函数;
-- #261, common 包，paging 函数名称修改为 :meth:`get_page_data()`;
+- #261, common 包，paging 函数名称修改为 get_page_data();
 - #263, common 包，删除一些为了向前兼容的函数;
 - #263, 删除 flask swagger 支持;
 
@@ -160,12 +161,19 @@ fishbase 能干什么？
 非常感谢所有在 fishbase 函数包发展过程中做出共享的朋友们：
 
 Leo
+
 Zhang Muqing
+
 Hu Jun
-Jia Chunyin
+
+Jia Chunying
+
 Yan Runsha
+
 Miao Tianshi
+
 Jin Xiongwei
+
 Yi Jun
 
 
