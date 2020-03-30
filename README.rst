@@ -117,13 +117,13 @@ fishbase 能干什么？
 
 2020.3.28 v1.2
 ------------------
-- #255 #266, 开始使用 github 的 Actions 进行 CI 集成;
-- #257, conf_as_dict() 函数移动从 common 包移动到 system 包;
-- #259, 增加 fish_object 函数包，面向对象增强函数;
-- #260, common 包，删除 sorted_objs_by_attr() 函数和 get_group_list_data() 函数;
-- #261, common 包，paging 函数名称修改为 get_page_data();
-- #263, common 包，删除一些为了向前兼容的函数;
-- #263, 删除 flask swagger 支持;
+- `#255 <https://github.com/chinapnr/fishbase/issues/255>`_ `#266 <https://github.com/chinapnr/fishbase/issues/266>`_ , 开始使用 github 的 Actions 进行 CI 集成;
+- `#257 <https://github.com/chinapnr/fishbase/issues/257>`_ , conf_as_dict() 函数移动从 common 包移动到 system 包;
+- `#259 <https://github.com/chinapnr/fishbase/issues/259>`_ , 增加 fish_object 函数包，面向对象增强函数;
+- `#260 <https://github.com/chinapnr/fishbase/issues/260>`_ , common 包，删除 sorted_objs_by_attr() 函数和 get_group_list_data() 函数;
+- `#261 <https://github.com/chinapnr/fishbase/issues/261>`_ , common 包，paging 函数名称修改为 get_page_data();
+- `#263 <https://github.com/chinapnr/fishbase/issues/263>`_ , common 包，删除一些为了向前兼容的函数;
+- `#263 <https://github.com/chinapnr/fishbase/issues/263>`_ , 删除 flask swagger 支持;
 
 
 2019.12.5 v1.1.16
