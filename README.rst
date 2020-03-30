@@ -161,12 +161,19 @@ fishbase 能干什么？
 非常感谢所有在 fishbase 函数包发展过程中做出共享的朋友们：
 
 Leo
+
 Zhang Muqing
+
 Hu Jun
+
 Jia Chunying
+
 Yan Runsha
+
 Miao Tianshi
+
 Jin Xiongwei
+
 Yi Jun
 
 
