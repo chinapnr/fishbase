@@ -3,7 +3,7 @@
 # 2020.3.28 create by David Yi
 
 from fishbase.fish_object import *
-import pytest;
+import pytest
 
 
 # 2020.3.28 v1.2 create by David Yi; #259
