@@ -140,7 +140,6 @@ class DeserializeInstance(object):
         ---
 
     """
-    user: None
 
     def __init__(self, obj_dict):
         self.user = None
