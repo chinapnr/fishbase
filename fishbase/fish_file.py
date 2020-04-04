@@ -11,6 +11,7 @@
 
 import chardet
 import pathlib
+import os
 
 
 # 生成当前路径下一级路径某文件的完整文件名
@@ -184,6 +185,48 @@ def get_file_encoding(file_path):
             file_encoding = 'GB2312'
         return file_encoding
 
+
+# v1.0.14 edit by Hu Jun, edit by Jia Chunying, #38
+# v1.0.17 edit by Hu Jun, #212
+# v1.3 edit by David Yi, #272
+def find_files(path, exts=None):
+    """
+    查找路径下的文件，返回指定类型的文件列表
+
+    :param:
+        * path: (string) 查找路径
+        * exts: (list) 文件类型列表，默认为空
+
+    :return:
+        * files_list: (list) 文件列表
+
+    举例如下::
+
+        print('--- find_files demo ---')
+        path1 = '/root/fishbase_issue'
+        all_files = find_files(path1)
+        print(all_files)
+        exts_files = find_files(path1, exts=['.png', '.py'])
+        print(exts_files)
+        print('---')
+
+    执行结果::
+
+        --- find_files demo ---
+        ['/root/fishbase_issue/test.png', '/root/fishbase_issue/head.jpg','/root/fishbase_issue/py/man.png'
+        ['/root/fishbase_issue/test.png', '/root/fishbase_issue/py/man.png']
+        ---
+
+        """
+    files_list = []
+    for root, dirs, files in os.walk(path):
+        for name in files:
+            files_list.append(os.path.join(root, name))
+
+    if exts is not None:
+        return [file for file in files_list if pathlib.Path(file).suffix in exts]
+
+    return files_list
 
 # 生成使用模块时的下一级路径某文件的完整文件名
 # 2016.5.18 create by David Yi

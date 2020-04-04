@@ -81,3 +81,11 @@ class TestFishFile(object):
         
         gbk_file_path = test_filename
         assert get_file_encoding(gbk_file_path) == 'GB2312'
+
+    # test find_files() tc
+    def test_find_files_01(self):
+        path = './'
+        exts_list = ['.ini', '.py']
+
+        assert len(find_files(path)) >= len(find_files(path, exts=exts_list))
+

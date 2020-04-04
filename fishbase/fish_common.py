@@ -158,26 +158,24 @@ def has_space_element(source):
     return False
 
 
-# 2017.3.30 create by Leo #11001
-# 功能：监测list或者元素是否含有特殊字符
+# 功能：监测list或者元组是否含有特殊字符
 # 输入：source 是参数列表或元组
 # 输出：True：不包含特殊字符；False：包含特殊字符
+# 2017.3.30 create by Leo #11001
 def if_any_elements_is_special(source):
     if not re.match('^[a-zA-Z0-9_,-.|]+$', "".join(source)):
         return False
     return True
 
 
-# 2017.3.30 create by Leo #11003
-# 功能：监测list或者元素是否只包含数字
+# 功能：监测list或者元组是否只包含数字
 # 输入：source 是参数列表或元组
 # 输出：True：只包含数字；False：不只包含数字
+# 2017.3.30 create by Leo #11003
 def if_any_elements_is_number(source):
     for i in source:
-        
         if not i.isdigit():
             return False
-    
     return True
 
 
@@ -371,48 +369,6 @@ def has_special_char(p_str, check_style=charChinese):
             return False
     except TypeError as ex:
         raise TypeError(str(ex))
-
-
-# v1.0.14 edit by Hu Jun, edit from Jia Chunying，#38
-# v1.0.17 edit by Hu Jun, #212
-def find_files(path, exts=None):
-    """
-    查找路径下的文件，返回指定类型的文件列表
-
-    :param:
-        * path: (string) 查找路径
-        * exts: (list) 文件类型列表，默认为空
-
-    :return:
-        * files_list: (list) 文件列表
-
-    举例如下::
-
-        print('--- find_files demo ---')
-        path1 = '/root/fishbase_issue'
-        all_files = find_files(path1)
-        print(all_files)
-        exts_files = find_files(path1, exts=['.png', '.py'])
-        print(exts_files)
-        print('---')
-
-    执行结果::
-
-        --- find_files demo ---
-        ['/root/fishbase_issue/test.png', '/root/fishbase_issue/head.jpg','/root/fishbase_issue/py/man.png'
-        ['/root/fishbase_issue/test.png', '/root/fishbase_issue/py/man.png']
-        ---
-
-        """
-    files_list = []
-    for root, dirs, files in os.walk(path):
-        for name in files:
-            files_list.append(os.path.join(root, name))
-    
-    if exts is not None:
-        return [file for file in files_list if pathlib.Path(file).suffix in exts]
-    
-    return files_list
 
 
 # v1.0.15 edit by Hu Jun, #77 #63
