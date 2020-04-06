@@ -11,6 +11,7 @@ headers = {
 
 payload = {
     'region': region,
+
     'start_date': '2020-03-26',
     'end_date': '2020-04-04'
 }
@@ -64,6 +65,7 @@ for key, value in data['data']['area'].items():
 print('---')
 # load to dataframe
 df = pd.DataFrame.from_dict(data['data'])
+df = pd.DataFrame(df, index=['a', 'b'])
 print(df)
 
 print('---')
@@ -74,5 +76,9 @@ print('---')
 # rotate dataframe
 df = df.T
 print(df)
+
+print('---')
+df1 = df['a']
+print(df1)
 
 
