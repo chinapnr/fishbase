@@ -93,6 +93,7 @@ def gen_random_str(min_length, max_length, prefix=None, suffix=None,
 
 # v1.1.6 add by Hu Jun #204
 # v1.1.5 add by Jia Chunying #171
+# v1.3 edit by David Yi, #273
 def gen_random_name(family_name=None, gender=None, length=None):
     """
     指定姓氏、性别、长度，返回随机人名，也可不指定生成随机人名
@@ -108,8 +109,8 @@ def gen_random_name(family_name=None, gender=None, length=None):
     举例如下::
 
         print('--- gen_random_name demo ---')
-        print(gen_name())
-        print(gen_name("赵","01", 3))
+        print(gen_random_name())
+        print(gen_random_name("赵","01", 3))
         print('---')
 
     执行结果::
@@ -240,6 +241,7 @@ def gen_random_float(minimum, maximum, decimals=2):
 # v1.1.6 edit by Hu Jun #204
 # v1.1.5 edit by Hu Jun #173
 # v1.1.12 edit by Hu Jun #232
+# v1.3 edit by David Yi, #273
 def get_random_areanote(zone):
     """
     省份行政区划代码，返回下辖的随机地区名称
@@ -253,7 +255,7 @@ def get_random_areanote(zone):
     举例如下::
 
         print('--- fish_data get_random_areanote demo ---')
-        print(cardbin_get_bank_by_name(310000))
+        print(get_random_areanote(310000))
         print('---')
 
     输出结果::
@@ -284,6 +286,7 @@ def get_random_areanote(zone):
 
 # v1.1.6 edit by Hu Jun #204
 # v1.1.5 edit by Hu Jun #170
+# v1.3 edit by David Yi, #273
 def gen_random_address(zone):
     """
     通过省份行政区划代码，返回该省份的随机地址
@@ -297,7 +300,7 @@ def gen_random_address(zone):
     举例如下::
 
         print('--- gen_address demo ---')
-        print(gen_address('310000'))
+        print(gen_random_address('310000'))
         print('---')
 
     输出结果::
@@ -385,6 +388,7 @@ def gen_random_address(zone):
 
 # v1.1.5 edit by Hu Jun #172
 # v1.1.11 edit by Hu Jun #229
+# v1.3 edit by David Yi, #273
 def gen_random_bank_card(bank_name=None, card_type=None):
     """
     通过指定的银行名称，随机生成该银行的卡号
@@ -399,9 +403,9 @@ def gen_random_bank_card(bank_name=None, card_type=None):
     举例如下::
 
         print('--- gen_random_bank_card demo ---')
-        print(gen_bank_card())
-        print(gen_bank_card('中国银行', 'CC'))
-        print(gen_bank_card('中国银行', 'DC'))
+        print(gen_random_bank_card())
+        print(gen_random_bank_card('中国银行', 'CC'))
+        print(gen_random_bank_card('中国银行', 'DC'))
         print('---')
 
     输出结果::
@@ -450,6 +454,7 @@ def gen_random_bank_card(bank_name=None, card_type=None):
 
 # v1.1.5 edit by Hu Jun #165
 # v1.1.12 edit by Hu Jun #232
+# v1.3 edit by David Yi, #273
 def gen_random_id_card(zone=None, gender=None, age=None, result_type='SINGLE_STR'):
     """
     根据指定的省份编号、性别或年龄，随机生成一个身份证号
@@ -466,10 +471,10 @@ def gen_random_id_card(zone=None, gender=None, age=None, result_type='SINGLE_STR
     举例如下::
 
         print('--- gen_random_id_card demo ---')
-        print(gen_id('310000'))
-        print(gen_id('310000', age=100))
-        print(gen_id('310000', age=30, gender='00'))
-        print(gen_id(age=30, gender='01', result_type='LIST'))
+        print(gen_random_id_card('310000'))
+        print(gen_random_id_card('310000', age=100))
+        print(gen_random_id_card('310000', age=30, gender='00'))
+        print(gen_random_id_card(age=30, gender='01', result_type='LIST'))
         print('---')
 
     输出结果::
