@@ -455,14 +455,14 @@ def gen_random_bank_card(bank_name=None, card_type=None):
 # v1.1.5 edit by Hu Jun #165
 # v1.1.12 edit by Hu Jun #232
 # v1.3 edit by David Yi, #273
-def gen_random_id_card(zone=None, gender=None, age=None, result_type='SINGLE_STR'):
+def gen_random_id_card(zone=None, gender=None, age=None, birth_year=None, result_type='SINGLE_STR'):
     """
     根据指定的省份编号、性别或年龄，随机生成一个身份证号
 
     :param:
         * zone: (string) 省份编号 eg. 310000, 默认 None: 随机
         * gender：(string) 性别 "01" 男性， "00" 女性, 默认 None: 随机
-        * age：(int) 年龄 默认 None：随机 身份证最早出生年份为 1970
+        * age：(int) 年龄 默认 None：随机最大年龄100岁
         * result_type: (string) 返回结果数量类型，默认值 'SINGLE_STR'，表示随机返回一个身份证号，可选 'LIST'，返回一个随机身份证列表
 
     :returns:
@@ -473,6 +473,7 @@ def gen_random_id_card(zone=None, gender=None, age=None, result_type='SINGLE_STR
         print('--- gen_random_id_card demo ---')
         print(gen_random_id_card('310000'))
         print(gen_random_id_card('310000', age=100))
+        print(gen_random_id_card('310000', age=100, birth_year=1990))
         print(gen_random_id_card('310000', age=30, gender='00'))
         print(gen_random_id_card(age=30, gender='01', result_type='LIST'))
         print('---')
@@ -480,10 +481,11 @@ def gen_random_id_card(zone=None, gender=None, age=None, result_type='SINGLE_STR
     输出结果::
 
         --- gen_random_id_card demo ---
-        ['310109198610243547']
-        ['310101197006245479']
-        ['310101198808249062']
-        ['441229198805145278', '440507198812196011', '441622198805222074', '441721198801046033', ...
+        ['310108194005039404']
+        ['310225192009222639']
+        ['310114199505252156']
+        ['310102199001126142']
+        ['412822199003256855', '411330199011239176', '410102199011165210', '410328199012105337', ...
         ---
 
     """
@@ -516,11 +518,12 @@ def gen_random_id_card(zone=None, gender=None, age=None, result_type='SINGLE_STR
 
         now_date_str = FishDateTimeFormat.strftime(time_format='%Y-%m-%d')
         year, month, day = now_date_str.split('-')
-        # 年龄最大为 1970 年开始
-        if age:
-            age = min(age, int(year) - 1970)
-        else:
-            age = random.randint(0, int(year) - 1970)
+        # 年龄
+        if not age:
+            # 随机年龄最大100岁
+            age = random.randint(0, 100)
+        if birth_year:
+            age = int(year) - int(birth_year)
 
         start_date_str = '{year}-{month}-{day}'.format(year=int(year) - age, month=month, day=day)
         birth = GetRandomTime.gen_date_by_range(start_date_str, now_date_str, date_format="%Y%m%d")
