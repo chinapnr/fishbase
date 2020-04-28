@@ -3,7 +3,6 @@
 # 2018.5.15 create by David Yi
 # 2020.3.27 #257, edit by David Yi
 
-import string
 import pytest
 
 from fishbase.fish_common import *
@@ -40,8 +39,7 @@ class TestFishCommon(object):
     def test_join_url_params_01(self):
         
         dic01 = {'key1': 'value1', 'key2': 'value2'}
-        dic02 = {'key1': '1111', 'key2': 'value2'}
-        
+
         assert join_url_params(dic01) == '?key1=value1&key2=value2'
 
     # test get_uuid() tc
@@ -107,14 +105,7 @@ class TestFishCommon(object):
             chinese_str1 = u'有zhongwen'.encode('gbk')
             with pytest.raises(TypeError):
                 has_special_char(chinese_str1, check_style=charChinese)
-    
-    # test find_files() tc
-    def test_find_files_01(self):
-        path = './'
-        exts_list = ['.ini', '.py']
-        
-        assert len(find_files(path)) >= len(find_files(path, exts=exts_list))
-    
+
     # test has_space_element() tc
     def test_has_space_element_01(self):
 

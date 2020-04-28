@@ -142,6 +142,7 @@ class DeserializeInstance(object):
     """
 
     def __init__(self, obj_dict):
+        self.user = None
         for key, value in obj_dict.items():
             if isinstance(value, dict):
                 setattr(self, key, DeserializeInstance(value) if isinstance(value, dict) else value)

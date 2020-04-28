@@ -115,6 +115,12 @@ fishbase 能干什么？
 最近更新
 ==========
 
+2020.4.25 v1.3
+------------------
+- `#273 <https://github.com/chinapnr/fishbase/issues/273>`_ , 随机数包的文档举例中的函数名称错误修正;
+- `#275 <https://github.com/chinapnr/fishbase/issues/275>`_ , 随机数，gen_random_id_card() 函数优化;
+
+
 2020.3.28 v1.2
 ------------------
 - `#255 <https://github.com/chinapnr/fishbase/issues/255>`_ `#266 <https://github.com/chinapnr/fishbase/issues/266>`_ , 开始使用 github 的 Actions 进行 CI 集成;
