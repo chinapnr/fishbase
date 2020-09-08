@@ -13,8 +13,9 @@ from fishbase.fish_system import *
 current_path = os.path.dirname(os.path.abspath(__file__))
 # 定义配置文件名
 conf_filename = os.path.join(current_path, 'test_conf.ini')
-error_conf_filename = os.path.join(current_path, 'test_conf1.ini')
-
+conf_filename_not_exist = os.path.join(current_path, 'test_conf_not_exist.ini')
+conf_filename_empty = os.path.join(current_path, 'test_conf_empty.ini')
+conf_filename_bad_data = os.path.join(current_path, 'test_conf_bad_data.ini')
 
 # 2018.5.26 v1.0.13 create by David Yi, fish_system unittest
 class TestFishSystem(object):
@@ -58,14 +59,14 @@ class TestFishConfigDict(object):
     # 测试 conf_as_dict()  tc
     def test_config_dict_02(self):
         # 读取不存在的配置文件
-        ds = conf_as_dict(error_conf_filename)
+        ds = conf_as_dict(conf_filename_not_exist)
 
         # 返回结果
         assert ds[0] is False
-
-        # 应该读不到返回的 dict 内容
-        with pytest.raises(IndexError):
-            d = ds[1]
+        assert ds[1] == {}
+        # # 应该读不到返回的 dict 内容
+        # with pytest.raises(IndexError):
+        #     d = ds[1]
 
     def test_config_dict_03(self):
         # 读取配置文件
@@ -83,11 +84,8 @@ class TestFishConfigDict(object):
         ds = conf_as_dict(conf_filename, encoding='utf-8')
         d = ds[1]
 
-        list1 = ['show_opt', 'show_opt_common', 'show_opt_common2', 'get_args', 'show_rule_pattern',
-                 'show_pattern', 'get_extra_rules']
-
-        # 断言是否保序
-        assert list(d.keys()) == list1
+        # 断言正常读取中文
+        assert d['get_extra_rules']['zh_item'] == '中文'
 
     def test_config_dict_05(self):
         # 读取配置文件, 大小写敏感
@@ -96,3 +94,23 @@ class TestFishConfigDict(object):
 
         for item in ['Short_Opt', 'Long_Opt']:
             assert item in d.get('show_opt')
+
+    # 测试 conf_as_dict()  tc
+    def test_config_dict_06(self):
+        # 读取空配置文件
+        ds = conf_as_dict(conf_filename_empty)
+
+        # 返回结果
+        assert ds[0] is True
+        assert isinstance(ds[1], OrderedDict)
+        assert ds[2] == 0
+
+    # 测试 conf_as_dict()  tc
+    def test_config_dict_07(self):
+        # 读取坏的配置文件
+        ds = conf_as_dict(conf_filename_bad_data)
+
+        # 返回结果
+        assert ds[0] is False
+        assert 'errors' in ds[2]
+
