@@ -64,9 +64,6 @@ class TestFishConfigDict(object):
         # 返回结果
         assert ds[0] is False
         assert ds[1] == {}
-        # # 应该读不到返回的 dict 内容
-        # with pytest.raises(IndexError):
-        #     d = ds[1]
 
     def test_config_dict_03(self):
         # 读取配置文件
