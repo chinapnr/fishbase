@@ -55,3 +55,8 @@ class TestFishLogging(object):
     def test_format4(self):
         with pytest.raises(ValueError):
             set_log_file(self.log_filename, file_name_format='%date-%project_name-%log1')
+
+    def test_without_dir(self):
+        shutil.rmtree(self.log_path)
+        set_log_file(self.log_filename)
+        assert os.path.exists(self.log_path)
