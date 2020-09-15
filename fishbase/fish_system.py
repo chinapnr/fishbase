@@ -69,6 +69,7 @@ class MyConfigParser(configparser.ConfigParser):
 # v1.0.17 edit by Hu Jun, #212
 # v1.1.9 edit by Hu Jun, #222
 # v1.2 edit by David Yi, #257
+# v1.4 edit by wxl
 def conf_as_dict(conf_filename, encoding=None, case_sensitive=False):
     """
     读入 ini 配置文件，返回根据配置文件内容生成的字典类型变量；
@@ -131,7 +132,7 @@ def conf_as_dict(conf_filename, encoding=None, case_sensitive=False):
 
     # 检查文件是否存在
     if not pathlib.Path(conf_filename).is_file():
-        return flag,
+        return flag, {}, 'path {} is not a regular file'.format(conf_filename)
 
     # 判断是否对大小写敏感
     cf = configparser.ConfigParser() if not case_sensitive else MyConfigParser()
@@ -142,9 +143,8 @@ def conf_as_dict(conf_filename, encoding=None, case_sensitive=False):
             cf.read(conf_filename, encoding=encoding)
         else:
             cf.read(conf_filename)
-    except Exception:
-        flag = False
-        return flag,
+    except Exception as e:
+        return flag, {}, str(e)
 
     d = OrderedDict(cf._sections)
     for k in d:
