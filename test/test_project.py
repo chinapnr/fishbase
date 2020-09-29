@@ -1,11 +1,29 @@
 # coding=utf-8
 import os
 import shutil
+
+import pytest
+
 from fishbase.fish_project import init_project_by_yml
 
 
 # 2018.6.27 v1.0.14 #73 create by Jia ChunYing
 class TestProject(object):
+
+    def test_load_bad_01(self):
+        """
+        empty file
+        """
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        target_file = base_dir + os.sep + 'test_project_with_empty_file.yaml'
+        with open(target_file, 'wb') as f:
+            f.close()
+        with pytest.raises(KeyError) as e:
+            init_project_by_yml(target_file, '.')
+        exec_msg = e.value.args[0]
+        assert exec_msg == 'project config format Error: fail to load'
+        os.remove(target_file)
+
 
     def test_init_project_by_yml(self):
         # define yml string
