@@ -526,7 +526,7 @@ def gen_random_id_card(zone=None, gender=None, age=None, birth_year=None, result
             age = int(year) - int(birth_year)
 
         start_date_str = '{year}-{month}-{day}'.format(year=int(year) - age, month=month, day=day)
-        birth = GetRandomTime.gen_date_by_range(start_date_str, now_date_str, date_format="%Y%m%d")
+        birth = GetRandomTime.gen_date_by_range(start_date_str, now_date_str, date_format="%Y-%m-%d")
         birth = str(int(year) - age) + birth[4:]
 
         while True:

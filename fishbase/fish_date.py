@@ -220,7 +220,7 @@ class GetRandomTime(object):
         if isinstance(year, int):
             year = str(year)
 
-        date_str = GetRandomTime.gen_date_by_range(year + "-01-01", year + "-12-31", "%Y%m%d")
+        date_str = GetRandomTime.gen_date_by_range(year + "-01-01", year + "-12-31", "%Y-%m-%d")
 
         return date_str
 
@@ -250,7 +250,16 @@ class GetRandomTime(object):
             20100124
             ---
         """
+
+        d0 = datetime.strptime(begin_date, date_format)
+        d1 = datetime.strptime(end_date, date_format)
+        random_date = d0 + (d1-d0)*random.random()
+
+        return datetime.strftime(random_date, "%Y%m%d")
+
+
         # 设置开始日期
+
         begin_date_info = begin_date.split("-")
         begin_date_info = [int(x) for x in begin_date_info]
         begin_date_info.extend([0, 0, 0, 0, 0, 0])
