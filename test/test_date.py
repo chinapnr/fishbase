@@ -9,6 +9,7 @@ import datetime
 
 
 # 2018.6.11 v1.0.14 #37 create by Hu Jun
+# 2021.6.2, edit by David Yi
 class TestFishDate(object):
     # test get_years() tc
     def test_get_years_01(self):
@@ -54,17 +55,17 @@ class TestFishDate(object):
 
     # 测试 GetRandomTime()  tc
     def test_random_date_str_01(self):
-        date_str = GetRandomTime.gen_date_by_year(2018)
+        date_str = GetRandomTime.random_date_by_year(2018)
 
         assert date_str[:4] == '2018'
 
     # 测试 GetRandomTime()  tc
     def test_random_date_str_02(self):
         with pytest.raises(ValueError):
-            GetRandomTime.gen_date_by_year('201812')
+            GetRandomTime.random_date_by_year('201812')
 
         with pytest.raises(ValueError):
-            GetRandomTime.gen_date_by_year(18)
+            GetRandomTime.random_date_by_year(18)
 
     #  测试 get_time_interval()  tc
     def test_get_time_interval_01(self):

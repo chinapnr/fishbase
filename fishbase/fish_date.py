@@ -113,6 +113,7 @@ def get_years(months=0, refer=None):
 # v1.1.14 edit by Hu Jun #142
 # v1.1.15 edit by Jia Chunying #142 #164
 # v1.4 edit by David Yi, #287, 修改 函数 gen_date_by_range()
+# 2021.6.2, #287, 修改 gen_date_by_range() 为 random_date_by_range；gen_date_by_range() 为 random_date_by_range();
 class GetRandomTime(object):
     """
     获取随机时间
@@ -190,15 +191,15 @@ class GetRandomTime(object):
         return this_year_start + timedelta(seconds=random_seconds)
 
     @staticmethod
-    def gen_date_by_year(year):
+    def random_date_by_year(year):
         """
-        获取当前年的随机时间字符串
+        获取当前年的随机日期字符串
 
         :param:
-            * year: (string) 长度为 4 位的年份字符串
+            * year: (string) 长度为 4 位的年份字符串，eg. 2018
 
         :return:
-            * date_str: (string) 传入年份的随机合法的日期
+            * date_str: (string) 传入年份内的随机合法日期字符串，eg. 20180201
         
         举例如下::
         
@@ -221,12 +222,12 @@ class GetRandomTime(object):
         if isinstance(year, int):
             year = str(year)
 
-        date_str = GetRandomTime.gen_date_by_range(year + "-01-01", year + "-12-31", "%Y-%m-%d")
+        date_str = GetRandomTime.random_date_by_range(year + "-01-01", year + "-12-31", "%Y-%m-%d")
 
         return date_str
 
     @staticmethod
-    def gen_date_by_range(begin_date, end_date, date_format="%Y-%m-%d"):
+    def random_date_by_range(begin_date, end_date, date_format="%Y-%m-%d"):
         """
 
         生成指定日期范围内的一个随机日期
@@ -237,7 +238,7 @@ class GetRandomTime(object):
             * date_format: (string) 输入的日期格式，默认格式 "%Y-%m-%d"
 
         :return:
-            * date_str: (string) 日期范围内的一个指定格式的随机日期，eg. 20180530
+            * date_str: (string) 日期范围内的一个指定格式的随机日期，指定格式默认为 "%Y%m%d"，eg. 20180530
 
         举例如下::
 
