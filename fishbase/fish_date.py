@@ -113,7 +113,8 @@ def get_years(months=0, refer=None):
 # v1.1.14 edit by Hu Jun #142
 # v1.1.15 edit by Jia Chunying #142 #164
 # v1.4 edit by David Yi, #287, 修改 函数 gen_date_by_range()
-# 2021.6.2, #287, 修改 gen_date_by_range() 为 random_date_by_range；gen_date_by_range() 为 random_date_by_range();
+# 2021.6.2, #287, 修改 gen_date_by_range() 为 random_date_by_range；gen_date_by_range() 为 random_date_by_range()
+# 2021.6.4, #288, 修改 date_time_this_month() 为 random_datetime_this_month()
 class GetRandomTime(object):
     """
     获取随机时间
@@ -134,17 +135,17 @@ class GetRandomTime(object):
 
     """
     @staticmethod
-    def date_time_this_month():
+    def random_datetime_this_month():
         """
-        获取当前月的随机时间
+        生成一个属于当前月的随机日期时间
 
         :return:
-            * date_this_month: (datetime) 当前月份的随机时间
+            * random_date: (datetime) 个属于当前月的随机日期时间
 
         举例如下::
 
-            print('--- GetRandomTime.date_time_this_month demo ---')
-            print(GetRandomTime.date_time_this_month())
+            print('--- GetRandomTime.random_datetime_this_month demo ---')
+            print(GetRandomTime.random_datetime_this_month)
             print('---')
 
         执行结果::
@@ -155,12 +156,14 @@ class GetRandomTime(object):
 
        """
         now = datetime.now()
-        this_month_start = now.replace(
+        begin_this_month = now.replace(
             day=1, hour=0, minute=0, second=0, microsecond=0)
         this_month_days = calendar.monthrange(now.year, now.month)
         random_seconds = random.randint(0, this_month_days[1]*A_DAY_SECONDS)
 
-        return this_month_start + timedelta(seconds=random_seconds)
+        random_date = begin_this_month + timedelta(seconds=random_seconds)
+
+        return random_date
 
     @staticmethod
     def date_time_this_year():

@@ -38,7 +38,7 @@ class TestFishDate(object):
 
     # 测试 GetRandomTime()  tc
     def test_date_time_this_month_01(self):
-        this_month = GetRandomTime.date_time_this_month()
+        this_month = GetRandomTime.random_datetime_this_month()
         now = datetime.datetime.now()
         this_month_days = calendar.monthrange(now.year, now.month)
         assert now.year == this_month.year
