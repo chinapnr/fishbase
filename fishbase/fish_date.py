@@ -115,6 +115,7 @@ def get_years(months=0, refer=None):
 # v1.4 edit by David Yi, #287, 修改 函数 gen_date_by_range()
 # 2021.6.2, #287, 修改 gen_date_by_range() 为 random_date_by_range；gen_date_by_range() 为 random_date_by_range()
 # 2021.6.4, #288, 修改 date_time_this_month() 为 random_datetime_this_month()
+# 2021.6.7, #288, 修改 date_time_this_year() 为 random_datetime_this_year()
 class GetRandomTime(object):
     """
     获取随机时间
@@ -166,7 +167,7 @@ class GetRandomTime(object):
         return random_date
 
     @staticmethod
-    def date_time_this_year():
+    def random_datetime_this_year():
         """
         获取当前年的随机时间字符串
         
