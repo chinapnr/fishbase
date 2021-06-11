@@ -9,7 +9,7 @@ import datetime
 
 
 # 2018.6.11 v1.0.14 #37 create by Hu Jun
-# 2021.6.2, edit by David Yi
+# 2021.6.2 6.11, edit by David Yi
 class TestFishDate(object):
     # test get_years() tc
     def test_get_years_01(self):
@@ -37,7 +37,7 @@ class TestFishDate(object):
             get_date_range('asdafsd')
 
     # 测试 GetRandomTime()  tc
-    def test_date_time_this_month_01(self):
+    def test_random_datetime_this_month_01(self):
         this_month = GetRandomTime.random_datetime_this_month()
         now = datetime.datetime.now()
         this_month_days = calendar.monthrange(now.year, now.month)
@@ -46,7 +46,7 @@ class TestFishDate(object):
         assert now.day <= this_month_days[1]
 
     # 测试 GetRandomTime()  tc
-    def test_date_time_this_year_01(self):
+    def test_random_datetime_this_year_01(self):
         this_month = GetRandomTime.random_datetime_this_year()
         now = datetime.datetime.now()
         this_year_days = sum(calendar.mdays)
@@ -54,13 +54,13 @@ class TestFishDate(object):
         assert now.day <= this_year_days
 
     # 测试 GetRandomTime()  tc
-    def test_random_date_str_01(self):
+    def test_random_date_by_year_01(self):
         date_str = GetRandomTime.random_date_by_year(2018)
 
         assert date_str[:4] == '2018'
 
     # 测试 GetRandomTime()  tc
-    def test_random_date_str_02(self):
+    def test_random_date_by_year_02(self):
         with pytest.raises(ValueError):
             GetRandomTime.random_date_by_year('201812')
 
