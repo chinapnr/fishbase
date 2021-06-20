@@ -88,35 +88,35 @@ class TestFishRandom(object):
             gen_random_address('aa1234')
 
     # test gen_random_bank_card() tc
-    def test_gen_random_bank_card_01(self):
-        random_bank_card = gen_random_bank_card('中国银行', 'CC')
+    def test_gen_random_bankcard_01(self):
+        random_bank_card = gen_random_bankcard('中国银行', 'CC')
         assert CardBin.check_bankcard(random_bank_card)
 
     # test gen_random_bank_card() tc
-    def test_gen_random_bank_card_02(self):
+    def test_gen_random_bankcard_02(self):
         with pytest.raises(ValueError):
-            gen_random_bank_card('fishbase银行', 'CC')
+            gen_random_bankcard('fishbase银行', 'CC')
         with pytest.raises(ValueError):
-            gen_random_bank_card('中国银行', 'AA')
+            gen_random_bankcard('中国银行', 'AA')
 
     # test gen_random_bank_card() tc
-    def test_gen_random_bank_card_03(self):
-        random_bank_card = gen_random_bank_card()
+    def test_gen_random_bankcard_03(self):
+        random_bank_card = gen_random_bankcard()
         assert CardBin.check_bankcard(random_bank_card)
 
     # test gen_random_id_card() tc
-    def test_gen_random_id_card_01(self):
-        random_id_list = gen_random_id_card()
+    def test_gen_random_idcard_01(self):
+        random_id_list = gen_random_idcard()
         assert len(random_id_list[0]) == 18
         # 测试身份证是否合法
         assert IdCard.check_number(random_id_list[0])
 
-        random_id_list_1 = gen_random_id_card('310000')
+        random_id_list_1 = gen_random_idcard('310000')
         assert (random_id_list_1[0]).startswith('310')
         # 测试身份证是否合法
         assert IdCard.check_number(random_id_list_1[0])
 
-        random_id_list_2 = gen_random_id_card('310000', age=30)
+        random_id_list_2 = gen_random_idcard('310000', age=30)
         year_now = datetime.datetime.now().year
         id_card_year = int(year_now) - 30
         # 测试身份证是否合法
@@ -124,7 +124,7 @@ class TestFishRandom(object):
         assert (random_id_list_2[0]).startswith('310')
         assert int((random_id_list_2[0][6:10])) == id_card_year
 
-        random_id_list_3 = gen_random_id_card('110000', age=20, gender='01', result_type='LIST')
+        random_id_list_3 = gen_random_idcard('110000', age=20, gender='01', result_type='LIST')
         # 测试身份证是否合法
         check_valid_list = list(map(IdCard.check_number, random_id_list_3))
         assert all(check_valid_list)
@@ -144,9 +144,9 @@ class TestFishRandom(object):
         assert all(check_age_list)
 
     # test gen_random_id_card() tc
-    def test_gen_random_id_card_02(self):
+    def test_gen_random_idcard_02(self):
         with pytest.raises(ValueError):
-            gen_random_id_card('123456')
+            gen_random_idcard('123456')
 
     # test gen_random_company_name() tc
     def test_gen_random_company_name_01(self):

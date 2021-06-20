@@ -672,3 +672,76 @@ class CardBin(object):
                              'select bankname from cn_bank where bankcode=:bank_code ',
                              {"bank_code": bank_code})
         return value[0][0]
+
+
+# v1.4 edit by David Yi, 根据 @jacsonking #292 建议和代码，增加敏感数据掩码类
+class GetSensitiveMask(object):
+    """
+    获取敏感数据的掩码表示
+
+    举例如下::
+
+        print('--- GetSensitiveMask demo ---')
+        print(GetSensitiveMask.identity_number('429004199205270758'))
+        print(GetSensitiveMask.bankcard_number('9558800200136454752'))
+        print(GetSensitiveMask.mobile_number('13958462541'))
+        print(GetSensitiveMask.email('xiaolongli@163.com'))
+        print('---')
+
+    执行结果::
+
+        --- GetSensitiveMask demo ---
+        429************758
+        955880*********4752
+        139****2541
+        x********i@163.com
+        ---
+
+    """
+
+    @staticmethod
+    def identity_number(data):
+        """
+        身份证号掩码表示（前 3 位后 3 位显示，其他掩码）
+        :param:
+            * data(string): 身份证号明文
+        :return:
+            * mask_data(string): 身份证号掩码表示
+        """
+        return data[:3] + '*' * (len(data) - 6) + data[-3:]
+
+    @staticmethod
+    def bankcard_number(data):
+        """
+        银行卡号掩码表示（前 6 位后 4 位显示，其他掩码）
+        :param:
+            * data(string): 银行卡号明文
+        :return:
+            * mask_data(string): 银行卡号掩码表示
+        """
+        return data[:6] + '*' * (len(data) - 10) + data[-4:]
+
+    @staticmethod
+    def mobile_number(data):
+        """
+        手机号掩码表示（前 3 位后 4 位显示，其他掩码）
+        :param:
+            * data(string): 手机号明文
+        :return:
+            * mask_data(string): 手机号掩码表示
+        """
+        # 后4位掩码表示
+        return data[:3] + '*' * 4 + data[-4:]
+
+    @staticmethod
+    def email(data):
+        """
+        邮箱账号掩码表示（@之前首末位显示，其他掩码）
+        :param:
+            * data(string): 邮箱账号明文
+        :return:
+            * mask_data(string): 邮箱账号掩码表示
+        """
+        need_mask = data.split('@')[0][1:-1]
+        mask_data = data.replace(need_mask, '*' * len(need_mask))
+        return mask_data
