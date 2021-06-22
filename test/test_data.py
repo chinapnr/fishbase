@@ -1,4 +1,5 @@
 # coding=utf-8
+import pytest
 from fishbase.fish_data import *
 
 
@@ -184,10 +185,20 @@ class TestData(object):
         values = IdCard.get_number_detail('130522198407316')
         assert not values[0]
 
-    # 2021.6.22 edit by David Yi,
+    # 2021.6.22 edit by David Yi, #292, 敏感数据掩码unittest
     def test_get_idcard_number_01(self):
         values = SensitiveMask.get_idcard_number('620105199412201639')
         assert values == '620************639'
+
+    def test_get_idcard_number_02(self):
+        values = SensitiveMask.get_idcard_number('220681198701034560')
+        assert values != '2206***********560'
+
+    def test_get_idcard_number_01_raises(self):
+        with pytest.raises(TypeError) as e:
+            values = SensitiveMask.get_idcard_number(123)
+            # print(values)
+        assert True
 
     def test_get_bankcard_number_01(self):
         values = SensitiveMask.get_bankcard_number('4391880006990109')

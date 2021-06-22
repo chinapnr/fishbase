@@ -10,6 +10,7 @@ from fishbase.fish_project import init_project_by_yml
 # 2018.6.27 v1.0.14 #73 create by Jia ChunYing
 class TestProject(object):
 
+    # 2021.6.22, #294, 修复小错误
     def test_load_bad_01(self):
         """
         empty file

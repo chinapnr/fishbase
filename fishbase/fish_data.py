@@ -711,11 +711,12 @@ class SensitiveMask(object):
         :return:
             * mask_data(string): 身份证号掩码表示
         """
-        try:
-            mask_data = data[:3] + '*' * (len(data) - 6) + data[-3:]
-            return mask_data
-        except ValueError:
-            print("转换身份证掩码时发生错误")
+        # 如果不是字符串，报错误
+        if not isinstance(data, str):
+            raise TypeError
+
+        mask_data = data[:3] + '*' * (len(data) - 6) + data[-3:]
+        return mask_data
 
     @staticmethod
     def get_bankcard_number(data):
@@ -726,11 +727,12 @@ class SensitiveMask(object):
         :return:
             * mask_data(string): 银行卡号掩码表示
         """
-        try:
-            mask_data = data[:6] + '*' * (len(data) - 10) + data[-4:]
-            return mask_data
-        except ValueError:
-            print("转换银行卡掩码时发生错误")
+        # 如果不是字符串，报错误
+        if not isinstance(data, str):
+            raise TypeError
+
+        mask_data = data[:6] + '*' * (len(data) - 10) + data[-4:]
+        return mask_data
 
     @staticmethod
     def get_mobile_number(data):
@@ -741,11 +743,12 @@ class SensitiveMask(object):
         :return:
             * mask_data(string): 手机号掩码表示
         """
-        try:
-            mask_data = data[:3] + '*' * 4 + data[-4:]
-            return mask_data
-        except ValueError:
-            print("转换手机号码掩码时发生错误")
+        # 如果不是字符串，报错误
+        if not isinstance(data, str):
+            raise TypeError
+
+        mask_data = data[:3] + '*' * 4 + data[-4:]
+        return mask_data
 
     @staticmethod
     def get_email(data):
@@ -756,12 +759,13 @@ class SensitiveMask(object):
         :return:
             * mask_data(string): 邮箱账号掩码表示
         """
-        try:
-            need_mask = data.split('@')[0][1:-1]
-            mask_data = data.replace(need_mask, '*' * len(need_mask))
-            return mask_data
-        except ValueError:
-            print("转换电子邮件掩码时发生错误")
+        # 如果不是字符串，报错误
+        if not isinstance(data, str):
+            raise TypeError
+
+        need_mask = data.split('@')[0][1:-1]
+        mask_data = data.replace(need_mask, '*' * len(need_mask))
+        return mask_data
 
 
 

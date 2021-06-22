@@ -56,6 +56,7 @@ class TestFishLogging(object):
         with pytest.raises(ValueError):
             set_log_file(self.log_filename, file_name_format='%date-%project_name-%log1')
 
+    # 2021.6.22, #294, 修复小错误
     def test_without_dir(self):
         for h in log.handlers:
             h.close()
