@@ -685,10 +685,10 @@ class SensitiveMask(object):
     举例如下::
 
         print('--- GetSensitiveMask demo ---')
-        print(GetSensitiveMask.identity_number('429004199205270758'))
-        print(GetSensitiveMask.bankcard_number('9558800200136454752'))
-        print(GetSensitiveMask.mobile_number('13958462541'))
-        print(GetSensitiveMask.email('xiaolongli@163.com'))
+        print(SensitiveMask.identity_number('429004199205270758'))
+        print(SensitiveMask.bankcard_number('9558800200136454752'))
+        print(SensitiveMask.mobile_number('13958462541'))
+        print(SensitiveMask.email('xiaolongli@163.com'))
         print('---')
 
     执行结果::
@@ -703,52 +703,66 @@ class SensitiveMask(object):
     """
 
     @staticmethod
-    def idcard_number(data):
+    def get_idcard_number(data):
         """
-        身份证号掩码表示（前3位后3位显示，其他掩码）
+        身份证号掩码表示（前3位后3位显示，其他用掩码*表示）
         :param:
             * data(string): 身份证号明文
         :return:
             * mask_data(string): 身份证号掩码表示
         """
-
-        mask_data = data[:3] + '*' * (len(data) - 6) + data[-3:]
-
-        return mask_data
+        try:
+            mask_data = data[:3] + '*' * (len(data) - 6) + data[-3:]
+            return mask_data
+        except ValueError:
+            print("转换身份证掩码时发生错误")
 
     @staticmethod
-    def bankcard_number(data):
+    def get_bankcard_number(data):
         """
-        银行卡号掩码表示（前6位后4位显示，其他掩码）
+        银行卡号掩码表示（前6位后4位显示，其他用掩码*表示）
         :param:
             * data(string): 银行卡号明文
         :return:
             * mask_data(string): 银行卡号掩码表示
         """
-        return data[:6] + '*' * (len(data) - 10) + data[-4:]
+        try:
+            mask_data = data[:6] + '*' * (len(data) - 10) + data[-4:]
+            return mask_data
+        except ValueError:
+            print("转换银行卡掩码时发生错误")
 
     @staticmethod
-    def mobile_number(data):
+    def get_mobile_number(data):
         """
-        手机号掩码表示（前3位后4位显示，其他掩码）
+        手机号掩码表示（前3位后4位显示，其他用掩码*表示）
         :param:
             * data(string): 手机号明文
         :return:
             * mask_data(string): 手机号掩码表示
         """
-        # 后4位掩码表示
-        return data[:3] + '*' * 4 + data[-4:]
+        try:
+            mask_data = data[:3] + '*' * 4 + data[-4:]
+            return mask_data
+        except ValueError:
+            print("转换手机号码掩码时发生错误")
 
     @staticmethod
-    def email(data):
+    def get_email(data):
         """
-        邮箱账号掩码表示（@之前首末位显示，其他掩码）
+        邮箱账号掩码表示（@之前首末位显示，其他用掩码*表示）
         :param:
             * data(string): 邮箱账号明文
         :return:
             * mask_data(string): 邮箱账号掩码表示
         """
-        need_mask = data.split('@')[0][1:-1]
-        mask_data = data.replace(need_mask, '*' * len(need_mask))
-        return mask_data
+        try:
+            need_mask = data.split('@')[0][1:-1]
+            mask_data = data.replace(need_mask, '*' * len(need_mask))
+            return mask_data
+        except ValueError:
+            print("转换电子邮件掩码时发生错误")
+
+
+
 

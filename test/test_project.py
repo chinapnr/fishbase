@@ -22,8 +22,7 @@ class TestProject(object):
             init_project_by_yml(target_file, '.')
         exec_msg = e.value.args[0]
         assert exec_msg == 'project config format Error: fail to load'
-        os.remove(target_file)
-
+        # os.remove(target_file)
 
     def test_init_project_by_yml(self):
         # define yml string
