@@ -116,15 +116,16 @@ def get_years(months=0, refer=None):
 # 2021.6.2, #287, 修改 gen_date_by_range() 为 random_date_by_range；gen_date_by_range() 为 random_date_by_range()
 # 2021.6.4, #288, 修改 date_time_this_month() 为 random_datetime_this_month()
 # 2021.6.7, #288, 修改 date_time_this_year() 为 random_datetime_this_year()
-class GetRandomTime(object):
+# 2021.6.23, #288, 修改类名称和函数名，更加符合标准
+class RandomTime(object):
     """
     获取随机时间
 
     举例如下::
 
-        print('--- GetRandomTime demo ---')
-        print(GetRandomTime.date_time_this_month())
-        print(GetRandomTime.date_time_this_year())
+        print('--- RandomTime demo ---')
+        print(RandomTime.get_date_time_this_month())
+        print(RandomTime.get_date_time_this_year())
         print('---')
 
     执行结果::
@@ -136,7 +137,7 @@ class GetRandomTime(object):
 
     """
     @staticmethod
-    def random_datetime_this_month():
+    def get_random_datetime_this_month():
         """
         生成一个属于当前月的随机日期时间
 
@@ -145,13 +146,13 @@ class GetRandomTime(object):
 
         举例如下::
 
-            print('--- GetRandomTime.random_datetime_this_month demo ---')
-            print(GetRandomTime.random_datetime_this_month)
+            print('--- RandomTime.get_random_datetime_this_month demo ---')
+            print(RandomTime.get_random_datetime_this_month)
             print('---')
 
         执行结果::
     
-            --- GetRandomTime.date_time_this_month demo demo ---
+            --- RandomTime.get_date_time_this_month demo demo ---
             2018-07-01 12:47:20
             ---
 
@@ -167,7 +168,7 @@ class GetRandomTime(object):
         return random_date
 
     @staticmethod
-    def random_datetime_this_year():
+    def get_random_datetime_this_year():
         """
         获取当前年的随机时间字符串
         
@@ -176,13 +177,13 @@ class GetRandomTime(object):
 
         举例如下::
 
-            print('--- GetRandomTime.date_time_this_year demo ---')
-            print(GetRandomTime.date_time_this_year())
+            print('--- RandomTime.get_date_time_this_year demo ---')
+            print(RandomTime.get_date_time_this_year())
             print('---')
 
         执行结果::
     
-            --- GetRandomTime.date_time_this_year demo demo ---
+            --- RandomTime.get_date_time_this_year demo demo ---
             2018-02-08 17:16:09
             ---
        """
@@ -195,7 +196,7 @@ class GetRandomTime(object):
         return this_year_start + timedelta(seconds=random_seconds)
 
     @staticmethod
-    def random_date_by_year(year):
+    def get_random_date_by_year(year):
         """
         获取当前年的随机日期字符串
 
@@ -207,13 +208,13 @@ class GetRandomTime(object):
         
         举例如下::
         
-            print('--- GetRandomTime.gen_date_by_year demo ---')
-            print(GetRandomTime.gen_date_by_year("2010"))
+            print('--- RandomTime.get_random_date_by_year demo ---')
+            print(RandomTime.get_random_date_by_year("2010"))
             print('---')
         
         执行结果::
         
-            --- GetRandomTime.gen_date_by_year demo ---
+            --- RandomTime.gen_date_by_year demo ---
             20100505
             ---
         """
@@ -226,12 +227,12 @@ class GetRandomTime(object):
         if isinstance(year, int):
             year = str(year)
 
-        date_str = GetRandomTime.random_date_by_range(year + "-01-01", year + "-12-31", "%Y-%m-%d")
+        date_str = RandomTime.get_random_date_by_range(year + "-01-01", year + "-12-31", "%Y-%m-%d")
 
         return date_str
 
     @staticmethod
-    def random_date_by_range(begin_date, end_date, date_format="%Y-%m-%d"):
+    def get_random_date_by_range(begin_date, end_date, date_format="%Y-%m-%d"):
         """
 
         生成指定日期范围内的一个随机日期
@@ -246,13 +247,13 @@ class GetRandomTime(object):
 
         举例如下::
 
-            print('--- GetRandomTime.gen_date_by_range demo ---')
-            print(GetRandomTime.gen_date_by_range("2010-01-01","2010-12-31"))
+            print('--- RandomTime.get_random_date_by_range demo ---')
+            print(RandomTime.get_random_date_by_range("2010-01-01","2010-12-31"))
             print('---')
 
         执行结果::
 
-            --- GetRandomTime.gen_date_by_range demo ---
+            --- RandomTime.get_random_date_by_range demo ---
             20100124
             ---
         """

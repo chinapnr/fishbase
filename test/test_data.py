@@ -204,10 +204,40 @@ class TestData(object):
         values = SensitiveMask.get_bankcard_number('4391880006990109')
         assert values == '439188******0109'
 
+    def test_get_bankcard_number_02(self):
+        values = SensitiveMask.get_bankcard_number('4391880006990109')
+        assert values != '43918*******0109'
+
+    def test_get_bankcard_number_01_raises(self):
+        with pytest.raises(TypeError) as e:
+            values = SensitiveMask.get_bankcard_number(123)
+            # print(values)
+        assert True
+
     def test_get_mobile_number_01(self):
         values = SensitiveMask.get_mobile_number('13801108286')
         assert values == '138****8286'
 
+    def test_get_mobile_number_02(self):
+        values = SensitiveMask.get_mobile_number('13801108286')
+        assert values != '1380***8286'
+
+    def test_get_mobile_number_01_raises(self):
+        with pytest.raises(TypeError) as e:
+            values = SensitiveMask.get_mobile_number(123)
+            # print(values)
+        assert True
+
     def test_get_email_01(self):
         values = SensitiveMask.get_email('david@gmail.com')
         assert values == 'd***d@gmail.com'
+
+    def test_get_email_02(self):
+        values = SensitiveMask.get_email('david@gmail.com')
+        assert values == 'd***d@gmail.com'
+
+    def test_get_email_01_raises(self):
+        with pytest.raises(TypeError) as e:
+            values = SensitiveMask.get_email(123)
+            # print(values)
+        assert True

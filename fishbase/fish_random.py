@@ -12,7 +12,7 @@
 # 2018.12.26 v1.1.5 created
 import string
 import random
-from fishbase.fish_date import GetRandomTime, FishDateTimeFormat
+from fishbase.fish_date import RandomTime, FishDateTimeFormat
 from fishbase.fish_data import CardBin, IdCard
 
 
@@ -530,7 +530,7 @@ def gen_random_idcard(zone=None, gender=None, age=None, birth_year=None, result_
             age = int(year) - int(birth_year)
 
         start_date_str = '{year}-{month}-{day}'.format(year=int(year) - age, month=month, day=day)
-        birth = GetRandomTime.random_date_by_range(start_date_str, now_date_str, date_format="%Y-%m-%d")
+        birth = RandomTime.get_random_date_by_range(start_date_str, now_date_str, date_format="%Y-%m-%d")
         birth = str(int(year) - age) + birth[4:]
 
         while True:

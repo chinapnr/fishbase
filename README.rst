@@ -112,8 +112,15 @@ fishbase 有哪些功能？
    ['requirements.txt', 'README.md', 'setup.py']
 
 
-最近更新
+更新记录
 ==========
+
+2021.6.23 v1.4
+------------------
+- `#288 <https://github.com/chinapnr/fishbase/issues/288>`_ , fish_date 中的 GetRandomTime 修改为 RandomTime，其中函数名称也做修改 get_random_datetime_this_month() get_random_datetime_this_year() get_random_date_by_year() get_random_date_by_range();
+- `#292 <https://github.com/chinapnr/fishbase/issues/292>`_ , fish_data 增加敏感数据掩码显示类 SensitiveMask，增加函数 get_idcard_number() get_bankcard_number() get_mobile_number() get_email() ;
+
+
 
 2020.4.25 v1.3
 ------------------

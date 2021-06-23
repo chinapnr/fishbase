@@ -38,7 +38,7 @@ class TestFishDate(object):
 
     # 测试 GetRandomTime()  tc
     def test_random_datetime_this_month_01(self):
-        this_month = GetRandomTime.random_datetime_this_month()
+        this_month = RandomTime.get_random_datetime_this_month()
         now = datetime.datetime.now()
         this_month_days = calendar.monthrange(now.year, now.month)
         assert now.year == this_month.year
@@ -47,7 +47,7 @@ class TestFishDate(object):
 
     # 测试 GetRandomTime()  tc
     def test_random_datetime_this_year_01(self):
-        this_month = GetRandomTime.random_datetime_this_year()
+        this_month = RandomTime.get_random_datetime_this_year()
         now = datetime.datetime.now()
         this_year_days = sum(calendar.mdays)
         assert now.year == this_month.year
@@ -55,17 +55,17 @@ class TestFishDate(object):
 
     # 测试 GetRandomTime()  tc
     def test_random_date_by_year_01(self):
-        date_str = GetRandomTime.random_date_by_year(2018)
+        date_str = RandomTime.get_random_date_by_year(2018)
 
         assert date_str[:4] == '2018'
 
     # 测试 GetRandomTime()  tc
     def test_random_date_by_year_02(self):
         with pytest.raises(ValueError):
-            GetRandomTime.random_date_by_year('201812')
+            RandomTime.get_random_date_by_year('201812')
 
         with pytest.raises(ValueError):
-            GetRandomTime.random_date_by_year(18)
+            RandomTime.get_random_date_by_year(18)
 
     #  测试 get_time_interval()  tc
     def test_get_time_interval_01(self):
