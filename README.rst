@@ -12,11 +12,11 @@
 fishbase 简介
 =================
 
-fishbase 是由我们自主开发和整理的一套 Python 基础函数库，将我们平时在开发 Python 项目时候的各类工具函数汇聚到一起，方便集中管理和使用。
+fishbase 是由我们开发和整理的一套 Python基础函数库，将我们平时在开发 Python项目时候的各类工具函数汇聚到一起，方便集中管理和使用。希望对你也有所帮助，也适合初学 Python 的朋友通过代码来学习。
 
-fishbase 当前版本为 v1.2，支持 Python 3.5-3.8，绝大部分函数也能工作在 Python 2.7 下，但是我们不推荐使用 Python 2.7 .
+fishbase 最新版本为 v1.4，支持 Python 3.5-3.9，绝大部分函数也能工作在 Python 2.7下，但是我们不推荐使用 Python 2.7。
 
-自 2016/3 初次发布以来，我们坚持不断更新，先后发布了 20 余个版本。近一年来，我们逐步形成每月更新 1 到 2 个版本的频率，抽象出了很多通用的方法，主要分为以下模块：
+fishbase 主要有以下功能模块：
 
 +----------------------------------------------------------------------------------+----------------------------------------+
 |       模块                                                                       | 功能函数                               |
@@ -25,9 +25,9 @@ fishbase 当前版本为 v1.2，支持 Python 3.5-3.8，绝大部分函数也能
 +----------------------------------------------------------------------------------+----------------------------------------+
 | `fish_crypt <https://fishbase.readthedocs.io/en/latest/fish_crypt.html>`_        | 加密数据函数包                         |
 +----------------------------------------------------------------------------------+----------------------------------------+
-| `fish_csv <https://fishbase.readthedocs.io/en/latest/fish_csv.html>`_            | csv 处理增强函数包                     |
+| `fish_csv <https://fishbase.readthedocs.io/en/latest/fish_csv.html>`_            | csv处理增强函数包                     |
 +----------------------------------------------------------------------------------+----------------------------------------+
-| `fish_data <https://fishbase.readthedocs.io/en/latest/fish_data.html>`_          | 数据信息处理函数包，含银行卡、身份证等 |
+| `fish_data <https://fishbase.readthedocs.io/en/latest/fish_data.html>`_          | 数据处理函数包，包括银行卡、身份证等 |
 +----------------------------------------------------------------------------------+----------------------------------------+
 | `fish_date <https://fishbase.readthedocs.io/en/latest/fish_date.html>`_          | 日期处理增强函数包                     |
 +----------------------------------------------------------------------------------+----------------------------------------+
@@ -35,9 +35,9 @@ fishbase 当前版本为 v1.2，支持 Python 3.5-3.8，绝大部分函数也能
 +----------------------------------------------------------------------------------+----------------------------------------+
 | `fish_logger <https://fishbase.readthedocs.io/en/latest/fish_logger.html>`_      | 日志记录增强函数包                     |
 +----------------------------------------------------------------------------------+----------------------------------------+
-| `fish_project <https://fishbase.readthedocs.io/en/latest/fish_project.html>`_    | project 目录结构生成函数包             |
+| `fish_project <https://fishbase.readthedocs.io/en/latest/fish_project.html>`_    | 项目目录结构生成函数包             |
 +----------------------------------------------------------------------------------+----------------------------------------+
-| `fish_random <https://fishbase.readthedocs.io/en/latest/fish_random.html>`_      | 随机数据生成函数包                     |
+| `fish_random <https://fishbase.readthedocs.io/en/latest/fish_random.html>`_      | 随机数据生成增强函数包                     |
 +----------------------------------------------------------------------------------+----------------------------------------+
 | `fish_system <https://fishbase.readthedocs.io/en/latest/fish_system.html>`_      | 系统增强函数包                         |
 +----------------------------------------------------------------------------------+----------------------------------------+
@@ -52,17 +52,15 @@ fishbase 当前版本为 v1.2，支持 Python 3.5-3.8，绝大部分函数也能
    pip install -U fishbase
 
 
-fishbase 能干什么？
+fishbase 功能举例
 ===================
-
-举例：
 
 获取文件的绝对路径
 ------------------------------
 
 .. code:: python
 
-   >>> from fishbase.fish_common import find_files
+   >>> from fishbase.fish_files import get_abs_filename_with_sub_path
    >>> print(get_abs_filename_with_sub_path('/etc', 'hosts'))
    (True, '/etc/hosts')
 
@@ -77,7 +75,7 @@ fishbase 能干什么？
    {'days': 1, 'hours': 3, 'minutes': 28, 'seconds': 28}
 
 
-生成随机数据
+生成随机符合校验规则的身份证和银行卡数据
 ----------------------
 
 .. code:: python
@@ -112,14 +110,20 @@ fishbase 能干什么？
    ['requirements.txt', 'README.md', 'setup.py']
 
 
-最近更新
+更新记录
 ==========
+
+2021.6.23 v1.4
+------------------
+- `#288 <https://github.com/chinapnr/fishbase/issues/288>`_ , fish_date 中的 GetRandomTime 修改为 RandomTime，其中函数名称修改为 get_random_datetime_this_month() get_random_datetime_this_year() get_random_date_by_year() get_random_date_by_range();
+- `#292 <https://github.com/chinapnr/fishbase/issues/292>`_ , fish_data 增加敏感数据掩码显示类 SensitiveMask，增加函数 get_idcard_number() get_bankcard_number() get_mobile_number() get_email() ;
+- 修改小错误
+- 修改文档描述
 
 2020.4.25 v1.3
 ------------------
 - `#273 <https://github.com/chinapnr/fishbase/issues/273>`_ , 随机数包的文档举例中的函数名称错误修正;
 - `#275 <https://github.com/chinapnr/fishbase/issues/275>`_ , 随机数，gen_random_id_card() 函数优化;
-
 
 2020.3.28 v1.2
 ------------------
@@ -131,10 +135,9 @@ fishbase 能干什么？
 - `#263 <https://github.com/chinapnr/fishbase/issues/263>`_ , common 包，删除一些为了向前兼容的函数;
 - `#263 <https://github.com/chinapnr/fishbase/issues/263>`_ , 删除 flask swagger 支持;
 
-
 2019.12.5 v1.1.16
 ------------------
-- 为 flask 应用添加 swagger 模块 `#249 <https://github.com/chinapnr/fishbase/issues/249>`_
+- 为 flask应用添加 swagger模块 `#249 <https://github.com/chinapnr/fishbase/issues/249>`_
 
 2019.7.17 v1.1.15
 ------------------
@@ -153,7 +156,7 @@ fishbase 能干什么？
 - 数字金额和中文大写相互转换 `#235 <https://github.com/chinapnr/fishbase/issues/235>`_
 
 
-更多
+详细帮助
 ====
 
 更多详细文档，请参见：http://fishbase.readthedocs.io/
@@ -164,7 +167,9 @@ fishbase 能干什么？
 感谢
 ====
 
-非常感谢所有在 fishbase 函数包发展过程中做出共享的朋友们：
+自 2016年3月初次发布以来，先后发布了 20 余个版本，非常感谢所有在 fishbase函数包发展过程中做出贡献的朋友们：
+
+Yi Jun
 
 Leo
 
@@ -180,6 +185,7 @@ Miao Tianshi
 
 Jin Xiongwei
 
-Yi Jun
+Wang Xiaolong
+
 
 

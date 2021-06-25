@@ -157,12 +157,13 @@ def set_log_file(local_file=None, file_name_format='%project_name-%log-%date'):
     """
 
     default_log_file = 'default.log'
-
-    _formatter = logging.Formatter(
-        '%(asctime)s %(levelname)s %(filename)s[ln:%(lineno)d] %(message)s')
-
     if local_file is not None:
         default_log_file = local_file
+
+    # 创建日志目录
+    parent_dir = os.path.dirname(default_log_file)
+    if not os.path.exists(parent_dir):
+        os.makedirs(parent_dir)
 
     support_split = ['%project_name', '%log', '%date']
 
@@ -174,6 +175,9 @@ def set_log_file(local_file=None, file_name_format='%project_name-%log-%date'):
     # _tfh = TimedRotatingFileHandler(default_log_file, when="midnight")
     _tfh = SafeFileHandler(filename=default_log_file, file_name_format=file_name_format)
     _tfh.setLevel(logging.INFO)
+
+    _formatter = logging.Formatter(
+        '%(asctime)s %(levelname)s %(filename)s[ln:%(lineno)d] %(message)s')
     _tfh.setFormatter(_formatter)
 
     logger.setLevel(logging.INFO)

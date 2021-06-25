@@ -35,6 +35,8 @@ def sqlite_query(db, sql, params):
     return values
 
 
+# 身份证，身份证号等相关计算；
+# 2018，2019， create by David Yi
 class IdCard(object):
     """
     校验身份证号、获取身份证校验位，获取随机生成身份证号所需身份代码等函数；
@@ -136,10 +138,10 @@ class IdCard(object):
     
     # 检查身份证号码是否能通过校验规则
     # ---
+    # some original source: https://zhuanlan.zhihu.com/p/24449773
     # 2018.12.9 create by David Yi, add in v1.1.3, github issue #137
     # 2018.12.13 edit, v1.1.4 github issue #145
     # 2019.1.5 edit, v1.1.6 github issue #187, 修改函数名称
-    # some original source: https://zhuanlan.zhihu.com/p/24449773
     @classmethod
     def check_number(cls, id_number):
         """
@@ -352,12 +354,12 @@ class IdCard(object):
 
     # 2019.07.17 create by Hu Jun, add in v1.1.15, github issue #243
     @classmethod
-    def get_number_detail(cls, id_num):
+    def get_number_detail(cls, id_number):
         """
         根据身份证号获取性别、省份、出生年月日信息
 
         :param:
-            * id_num: (string) 要查询的身份证号
+            * id_number: (string) 要查询的身份证号
 
         :returns:
             * flag: (bool) 是否查询成功
@@ -368,7 +370,7 @@ class IdCard(object):
             from fishbase.fish_data import *
 
             print('--- fish_data get_number_detail demo ---')
-            print(IdCard.get_id_num_detail('130522198407316471'))
+            print(IdCard.get_id_number_detail('130522198407316471'))
             print('---')
 
         输出结果::
@@ -377,17 +379,18 @@ class IdCard(object):
         (True, {'province': '130000', 'gender': '男', 'birth_date': '19840731'})
         ---
         """
-        if len(str(id_num)) != 18:
+        if len(str(id_number)) != 18:
             return False, {}
-        province = id_num[:2] + '0' * 4
-        gender = '男' if int(id_num[-2]) % 2 == 1 else '女'
-        birth_date = id_num[6:14]
+        province = id_number[:2] + '0' * 4
+        gender = '男' if int(id_number[-2]) % 2 == 1 else '女'
+        birth_date = id_number[6:14]
     
         return True, {'province': province,
                       'gender': gender,
                       'birth_date': birth_date}
 
 
+# 银行卡，卡号卡bin等计算；
 # 2019.1.6 create by David Yi, #188 用 class CardBin 方法实现
 class CardBin(object):
     """
@@ -672,3 +675,98 @@ class CardBin(object):
                              'select bankname from cn_bank where bankcode=:bank_code ',
                              {"bank_code": bank_code})
         return value[0][0]
+
+
+# v1.4 edit by David Yi, 根据 @jacsonking #292 建议和代码，增加敏感数据掩码类
+class SensitiveMask(object):
+    """
+    获取敏感数据的掩码表示
+
+    举例如下::
+
+        print('--- GetSensitiveMask demo ---')
+        print(SensitiveMask.identity_number('429004199205270758'))
+        print(SensitiveMask.bankcard_number('9558800200136454752'))
+        print(SensitiveMask.mobile_number('13958462541'))
+        print(SensitiveMask.email('xiaolongli@163.com'))
+        print('---')
+
+    执行结果::
+
+        --- GetSensitiveMask demo ---
+        429************758
+        955880*********4752
+        139****2541
+        x********i@163.com
+        ---
+
+    """
+
+    @staticmethod
+    def get_idcard_number(data):
+        """
+        身份证号掩码表示（前3位后3位显示，其他用掩码*表示）
+        :param:
+            * data(string): 身份证号明文
+        :return:
+            * mask_data(string): 身份证号掩码表示
+        """
+        # 如果不是字符串，报错误
+        if not isinstance(data, str):
+            raise TypeError
+
+        mask_data = data[:3] + '*' * (len(data) - 6) + data[-3:]
+        return mask_data
+
+    @staticmethod
+    def get_bankcard_number(data):
+        """
+        银行卡号掩码表示（前6位后4位显示，其他用掩码*表示）
+        :param:
+            * data(string): 银行卡号明文
+        :return:
+            * mask_data(string): 银行卡号掩码表示
+        """
+        # 如果不是字符串，报错误
+        if not isinstance(data, str):
+            raise TypeError
+
+        mask_data = data[:6] + '*' * (len(data) - 10) + data[-4:]
+        return mask_data
+
+    @staticmethod
+    def get_mobile_number(data):
+        """
+        手机号掩码表示（前3位后4位显示，其他用掩码*表示）
+        :param:
+            * data(string): 手机号明文
+        :return:
+            * mask_data(string): 手机号掩码表示
+        """
+        # 如果不是字符串，报错误
+        if not isinstance(data, str):
+            raise TypeError
+
+        mask_data = data[:3] + '*' * 4 + data[-4:]
+        return mask_data
+
+    @staticmethod
+    def get_email(data):
+        """
+        邮箱账号掩码表示（@之前首末位显示，其他用掩码*表示）
+        :param:
+            * data(string): 邮箱账号明文
+        :return:
+            * mask_data(string): 邮箱账号掩码表示
+        """
+        # 如果不是字符串，报错误
+        if not isinstance(data, str):
+            raise TypeError
+
+        need_mask = data.split('@')[0][1:-1]
+        mask_data = data.replace(need_mask, '*' * len(need_mask))
+        return mask_data
+
+
+
+

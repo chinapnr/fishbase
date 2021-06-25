@@ -1,4 +1,5 @@
 # coding=utf-8
+import pytest
 from fishbase.fish_data import *
 
 
@@ -172,7 +173,7 @@ class TestData(object):
         assert result == '中国农业银行'
 
     # 2019.07.17 edit by Hu Jun
-    def test_get_number_detail(self):
+    def test_get_number_detail_01(self):
         values = IdCard.get_number_detail('130522198407316471')
         assert values[0]
         assert values[1].get('province') == '130000'
@@ -180,6 +181,63 @@ class TestData(object):
         assert values[1].get('birth_date') == '19840731'
 
     # 2019.07.17 edit by Hu Jun
-    def test_get_number_detail_01(self):
+    def test_get_number_detail_02(self):
         values = IdCard.get_number_detail('130522198407316')
         assert not values[0]
+
+    # 2021.6.22 edit by David Yi, #292, 敏感数据掩码unittest
+    def test_get_idcard_number_01(self):
+        values = SensitiveMask.get_idcard_number('620105199412201639')
+        assert values == '620************639'
+
+    def test_get_idcard_number_02(self):
+        values = SensitiveMask.get_idcard_number('220681198701034560')
+        assert values != '2206***********560'
+
+    def test_get_idcard_number_01_raises(self):
+        with pytest.raises(TypeError) as e:
+            values = SensitiveMask.get_idcard_number(123)
+            # print(values)
+        assert True
+
+    def test_get_bankcard_number_01(self):
+        values = SensitiveMask.get_bankcard_number('4391880006990109')
+        assert values == '439188******0109'
+
+    def test_get_bankcard_number_02(self):
+        values = SensitiveMask.get_bankcard_number('4391880006990109')
+        assert values != '43918*******0109'
+
+    def test_get_bankcard_number_01_raises(self):
+        with pytest.raises(TypeError) as e:
+            values = SensitiveMask.get_bankcard_number(123)
+            # print(values)
+        assert True
+
+    def test_get_mobile_number_01(self):
+        values = SensitiveMask.get_mobile_number('13801108286')
+        assert values == '138****8286'
+
+    def test_get_mobile_number_02(self):
+        values = SensitiveMask.get_mobile_number('13801108286')
+        assert values != '1380***8286'
+
+    def test_get_mobile_number_01_raises(self):
+        with pytest.raises(TypeError) as e:
+            values = SensitiveMask.get_mobile_number(123)
+            # print(values)
+        assert True
+
+    def test_get_email_01(self):
+        values = SensitiveMask.get_email('david@gmail.com')
+        assert values == 'd***d@gmail.com'
+
+    def test_get_email_02(self):
+        values = SensitiveMask.get_email('david@gmail.com')
+        assert values == 'd***d@gmail.com'
+
+    def test_get_email_01_raises(self):
+        with pytest.raises(TypeError) as e:
+            values = SensitiveMask.get_email(123)
+            # print(values)
+        assert True

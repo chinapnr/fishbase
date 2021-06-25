@@ -10,6 +10,10 @@ from __future__ import print_function
 import yaml
 import os
 
+try:
+    from yaml import CLoader as Loader, CDumper as Dumper
+except ImportError:
+    from yaml import Loader, Dumper
 
 package_yml = """
 project: hellopackage
@@ -102,7 +106,9 @@ def init_project_by_yml(project_config=None, dist=None):
     if os.path.isfile(project_config):
         project_config = open(project_config)
     try:
-        yml_data = yaml.load(project_config)
+        yml_data = yaml.load(project_config, Loader=Loader)
+        if not yml_data or type(yml_data) != dict:
+            raise RuntimeError('fail to load')
         project_name = yml_data['project']
         project_tree = yml_data['tree']
     except Exception as e:

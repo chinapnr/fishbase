@@ -12,7 +12,7 @@
 # 2018.12.26 v1.1.5 created
 import string
 import random
-from fishbase.fish_date import GetRandomTime, FishDateTimeFormat
+from fishbase.fish_date import RandomTime, FishDateTimeFormat
 from fishbase.fish_data import CardBin, IdCard
 
 
@@ -389,7 +389,8 @@ def gen_random_address(zone):
 # v1.1.5 edit by Hu Jun #172
 # v1.1.11 edit by Hu Jun #229
 # v1.3 edit by David Yi, #273
-def gen_random_bank_card(bank_name=None, card_type=None):
+# v1.4 edit by David Yi, #293
+def gen_random_bankcard(bank_name=None, card_type=None):
     """
     通过指定的银行名称，随机生成该银行的卡号
 
@@ -398,19 +399,19 @@ def gen_random_bank_card(bank_name=None, card_type=None):
         * card_type：(string) 卡种类，可选 CC(信用卡)、DC(借记卡)
 
     :returns:
-        * random_bank_card: (string) 随机生成的银行卡卡号
+        * bankcard_number: (string) 随机生成的银行卡卡号
 
     举例如下::
 
-        print('--- gen_random_bank_card demo ---')
-        print(gen_random_bank_card())
-        print(gen_random_bank_card('中国银行', 'CC'))
-        print(gen_random_bank_card('中国银行', 'DC'))
+        print('--- gen_random_bankcard demo ---')
+        print(gen_random_bankcard())
+        print(gen_random_bankcard('中国银行', 'CC'))
+        print(gen_random_bankcard('中国银行', 'DC'))
         print('---')
 
     输出结果::
 
-        --- gen_random_bank_card demo ---
+        --- gen_random_bankcard demo ---
         6282689914390956
         6259073791134721
         6212836989522229131
@@ -425,7 +426,7 @@ def gen_random_bank_card(bank_name=None, card_type=None):
 
     bank_info = CardBin.get_bank_info(bank_name)
     if not bank_info:
-        raise ValueError('bankname {} error, check and try again'.format(bank_name))
+        raise ValueError('bank name {} error, check and try again'.format(bank_name))
 
     # 获取银行代码
     bank = bank_info[0][0]
@@ -437,25 +438,27 @@ def gen_random_bank_card(bank_name=None, card_type=None):
 
     random_cardbin = random.choice(cardbin_info)
 
-    cardbin = random_cardbin[0]
+    # 银行卡前缀
+    bankcard_number = random_cardbin[0]
     card_len = random_cardbin[-1]
 
-    # 银行卡前缀
-    card_number_str = cardbin
-
     # 随机生成前N-1位
-    while len(card_number_str) < card_len - 1:
-        card_number_str += str(random.randint(0, 9))
+    while len(bankcard_number) < card_len - 1:
+        bankcard_number += str(random.randint(0, 9))
 
     # 获取校验位
-    check_code = CardBin.get_checkcode(card_number_str)
-    return card_number_str + check_code
+    check_code = CardBin.get_checkcode(bankcard_number)
+
+    bankcard_number = bankcard_number + check_code
+
+    return bankcard_number
 
 
 # v1.1.5 edit by Hu Jun #165
 # v1.1.12 edit by Hu Jun #232
 # v1.3 edit by David Yi, #273
-def gen_random_id_card(zone=None, gender=None, age=None, birth_year=None, result_type='SINGLE_STR'):
+# v1.4 edit by David Yi, #293
+def gen_random_idcard(zone=None, gender=None, age=None, birth_year=None, result_type='SINGLE_STR'):
     """
     根据指定的省份编号、性别或年龄，随机生成一个身份证号
 
@@ -463,14 +466,14 @@ def gen_random_id_card(zone=None, gender=None, age=None, birth_year=None, result
         * zone: (string) 省份编号 eg. 310000, 默认 None: 随机
         * gender：(string) 性别 "01" 男性， "00" 女性, 默认 None: 随机
         * age：(int) 年龄 默认 None：随机最大年龄100岁
-        * result_type: (string) 返回结果数量类型，默认值 'SINGLE_STR'，表示随机返回一个身份证号，可选 'LIST'，返回一个随机身份证列表
+        * result_type: (string) 返回结果数量类型，默认值 'SINGLE_STR'，表示随机返回一个身份证号，可选 'LIST'，返回一个随机身份证列表，包含 20 个随机身份证号
 
     :returns:
-        * id_num_list: (list) 随机生成的身份证号组成的列表
+        * idcard_list: (list) 随机生成的身份证号组成的列表
 
     举例如下::
 
-        print('--- gen_random_id_card demo ---')
+        print('--- gen_random_idcard demo ---')
         print(gen_random_id_card('310000'))
         print(gen_random_id_card('310000', age=100))
         print(gen_random_id_card('310000', age=100, birth_year=1990))
@@ -480,7 +483,7 @@ def gen_random_id_card(zone=None, gender=None, age=None, birth_year=None, result
 
     输出结果::
 
-        --- gen_random_id_card demo ---
+        --- gen_random_idcard demo ---
         ['310108194005039404']
         ['310225192009222639']
         ['310114199505252156']
@@ -495,6 +498,7 @@ def gen_random_id_card(zone=None, gender=None, age=None, birth_year=None, result
         province_list = IdCard.get_province_info()
         province = random.choice(province_list)[0]
         zone = province + '0000'
+
     areanote_list = IdCard.get_areanote_info(province)
 
     # 判断 zone 是否合法
@@ -508,7 +512,7 @@ def gen_random_id_card(zone=None, gender=None, age=None, birth_year=None, result
 
     total_num = 1 if result_type == 'SINGLE_STR' else 20
 
-    id_num_list = list()
+    idcard_list = list()
 
     for _ in range(total_num):
         # 顺序码的奇数分配给男性，偶数分配给女性
@@ -526,7 +530,7 @@ def gen_random_id_card(zone=None, gender=None, age=None, birth_year=None, result
             age = int(year) - int(birth_year)
 
         start_date_str = '{year}-{month}-{day}'.format(year=int(year) - age, month=month, day=day)
-        birth = GetRandomTime.gen_date_by_range(start_date_str, now_date_str, date_format="%Y%m%d")
+        birth = RandomTime.get_random_date_by_range(start_date_str, now_date_str, date_format="%Y-%m-%d")
         birth = str(int(year) - age) + birth[4:]
 
         while True:
@@ -544,8 +548,8 @@ def gen_random_id_card(zone=None, gender=None, age=None, birth_year=None, result
                             random_str=random_str,
                             gender=gender_str,
                             check_code=check_code))
-        id_num_list.append(random_id)
-    return id_num_list
+        idcard_list.append(random_id)
+    return idcard_list
 
 
 # v1.1.6 edit by Hu Jun #204
