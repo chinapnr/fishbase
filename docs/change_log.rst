@@ -1,6 +1,20 @@
 更新记录
 ===========================
 
+2021.6.23 v1.4
+------------------
+- `#288 <https://github.com/chinapnr/fishbase/issues/288>`_ , fish_date 中的 GetRandomTime 修改为 RandomTime，其中函数名称修改为 get_random_datetime_this_month() get_random_datetime_this_year() get_random_date_by_year() get_random_date_by_range();
+- `#292 <https://github.com/chinapnr/fishbase/issues/292>`_ , fish_data 增加敏感数据掩码显示类 SensitiveMask，增加函数 get_idcard_number() get_bankcard_number() get_mobile_number() get_email() ;
+- 修改小错误
+- 修改文档描述
+
+
+2020.4.25 v1.3
+------------------
+- `#273 <https://github.com/chinapnr/fishbase/issues/273>`_ , 随机数包的文档举例中的函数名称错误修正;
+- `#275 <https://github.com/chinapnr/fishbase/issues/275>`_ , 随机数，gen_random_id_card() 函数优化;
+
+
 2020.3.28 v1.2
 ---------------------------
 * #255 #266, 开始使用 github 的 Actions 进行 CI 集成;
@@ -16,19 +30,23 @@
 ---------------------------
 * `#249 <https://github.com/chinapnr/fishbase/issues/249>`_, add swagger module;
 
+
 2019.7.17 v1.1.15
 ---------------------------
 * `#240 <https://github.com/chinapnr/fishbase/issues/240>`_, logging, edit function :meth:`set_log_file`,  optimize;
 * `#243 <https://github.com/chinapnr/fishbase/issues/243>`_, data, add function :meth:`CardBin.get_card_detail`, :meth:`IdCard.get_number_detail` doc and unittest;
+
 
 2019.6.25 v1.1.14
 ---------------------------
 * `#238 <https://github.com/chinapnr/fishbase/issues/238>`_, common, edit function :meth:`RMBConversion.an2cn`, :meth:`RMBConversion.cn2an` optimize;
 * `#239 <https://github.com/chinapnr/fishbase/issues/239>`_, common, add function :meth:`fish_common.split_str_by_length` doc and unittest;
 
+
 2019.6.11 v1.1.13
 ---------------------------
 * `#235 <https://github.com/chinapnr/fishbase/issues/235>`_, common, add function :meth:`RMBConversion.an2cn`, :meth:`RMBConversion.cn2an` doc and unittest;
+
 
 2019.5.28 v1.1.12
 ---------------------------
@@ -86,10 +104,12 @@
 * `#164 <https://github.com/chinapnr/fishbase/issues/164>`_, common, add function :meth:`fish_date.GetRandomTime.gen_date_by_range`, doc and unittest;
 * `#142 <https://github.com/chinapnr/fishbase/issues/142>`_, common, edit function :meth:`fish_date.GetRandomTime.gen_date_by_year`, doc and unittest;
 
+
 2018.12.14 v1.1.4
 ---------------------------
 * `#142 <https://github.com/chinapnr/fishbase/issues/142>`_, common, add function :meth:`fish_date.GetRandomTime.random_date_str`, doc and unittest;
 * `#126 <https://github.com/chinapnr/fishbase/issues/126>`_, csv, add function :meth:`fish_csv.dict2csv`, :meth:`fish_csv.csv2dict`, :meth:`fish_csv.list2csv`,  doc and unittest;
+
 
 2018.12.10 v1.1.3
 ---------------------------
@@ -98,6 +118,7 @@
 * `#100 <https://github.com/chinapnr/fishbase/issues/100>`_, common, add class :meth:`fish_common.GetSha256`, doc and unittest;
 * `#116 <https://github.com/chinapnr/fishbase/issues/116>`_, date, add class :meth:`fish_date.FishDateTimeFormat`, doc and unittest;
 * `#80 <https://github.com/chinapnr/fishbase/issues/80>`_, common, add function :meth:`fish_common.find_same_between_dicts`, doc and unittest;
+
 
 2018.10.27 v1.1.2
 ---------------------------
@@ -139,6 +160,7 @@
 * `#79 <https://github.com/chinapnr/fishbase/issues/79>`_ common, add function :meth:`fish_common.get_query_param_from_url`, doc and unittest;
 * `#83 <https://github.com/chinapnr/fishbase/issues/83>`_ common, edit function :meth:`fish_common.conf_as_dict`, optimize;
 
+
 2018.6.27 v1.0.14
 ---------------------------
 
@@ -152,6 +174,7 @@
 * `#57 <https://github.com/chinapnr/fishbase/issues/57>`_, common, edit function :meth:`fish_common.GetMD5.string()`, optimize;
 * `#59 <https://github.com/chinapnr/fishbase/issues/59>`_, common, add function :meth:`fish_common.Base64`, doc and unittest;
 * `#51 <https://github.com/chinapnr/fishbase/issues/51>`_, common, add function :meth:`fish_common.get_random_str`, doc and unittest;
+
 
 2018.6.6 v1.0.13
 ---------------------------
@@ -170,6 +193,7 @@
 ---------------------------
 
 * 19035, rename package 'fish_base' to 'fishbase'
+
 
 2018.5.18 v1.0.11
 ---------------------------
