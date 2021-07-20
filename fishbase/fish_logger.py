@@ -24,10 +24,11 @@ logger = logging.getLogger()
 
 # 2018.5.27 v1.0.13 #13039, edit by David Yi
 # edit from https://www.jianshu.com/p/d615bf01e37b
+# 2021.7.20 edit by David, #300, 修改 log 的默认后缀
 class SafeFileHandler(FileHandler):
 
     def __init__(self, filename, mode='a', encoding=None, delay=0,
-                 file_name_format='%project_name-%log-%date'):
+                 file_name_format='%date-%project_name-%log'):
         """
         Use the specified filename for streamed logging
         """
@@ -115,8 +116,9 @@ class SafeFileHandler(FileHandler):
     def _get_format_filename(self):
         split_list = self.file_name_format.split('-')
         name_mapping = {'%log': self.log_suffix,
-                        '%project_name': self.project_name,
-                        '%date': self.suffix_time}
+                        '%date': self.suffix_time,
+                        '%project_name': self.project_name
+                        }
         new_file_name = '.'.join([name_mapping.get(i) for i in split_list])
         return os.path.join(self.file_path, new_file_name)
 
@@ -128,11 +130,11 @@ class SafeFileHandler(FileHandler):
 # 2018.2.13 edit, remove thread watch
 # 2018.4.23 edit，#19023 增加 docstring
 # 2019.7.16 v1.1.15 #240 edit by Hu Jun
-def set_log_file(local_file=None, file_name_format='%project_name-%log-%date'):
+def set_log_file(local_file=None, file_name_format='%date-%project_name-%log'):
 
     """
     设置日志记录，按照每天一个文件，记录包括 info 以及以上级别的内容；
-    日志格式采取日志文件名直接加上日期，比如 fish_test.log.2018-05-27
+    日志格式采取日志文件名直接加上日期，比如 2018-05-27.fish_test.log
 
     :param:
         * local_fie: (string) 日志文件名

@@ -1,6 +1,11 @@
 更新记录
 ===========================
 
+2021.7.20 v1.5
+------------------
+- `#300 <https://github.com/chinapnr/fishbase/issues/300>`_ , fish_logger 中的 log 文件默认后缀修改为 .log，日期移到文件名开头;
+- 修改文档描述
+
 2021.6.23 v1.4
 ------------------
 - `#288 <https://github.com/chinapnr/fishbase/issues/288>`_ , fish_date 中的 GetRandomTime 修改为 RandomTime，其中函数名称修改为 get_random_datetime_this_month() get_random_datetime_this_year() get_random_date_by_year() get_random_date_by_range();

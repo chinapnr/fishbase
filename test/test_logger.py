@@ -36,11 +36,12 @@ class TestFishLogging(object):
             shutil.rmtree(self.log_path)
         except Exception as _:
             pass
-        
+
+    # 2021.7.20 edit by David, #300, 修改 log 的默认后缀
     def test_format_01(self):
         set_log_file(self.log_filename)
         log.info('test_format1')
-        assert 'unittest.log.{}'.format(self.suffix_time) in os.listdir(self.log_path)
+        assert '{}.unittest.log'.format(self.suffix_time) in os.listdir(self.log_path)
 
     def test_format_02(self):
         set_log_file(self.log_filename, file_name_format='%project_name-%date-%log')
@@ -50,7 +51,7 @@ class TestFishLogging(object):
     def test_format_03(self):
         set_log_file(self.log_filename, file_name_format='%date-%project_name-%log')
         log.info('test_format3')
-        assert 'unittest.log.{}'.format(self.suffix_time) in os.listdir(self.log_path)
+        assert '{}.unittest.log'.format(self.suffix_time) in os.listdir(self.log_path)
 
     def test_format_04(self):
         with pytest.raises(ValueError):
