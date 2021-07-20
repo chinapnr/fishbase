@@ -14,7 +14,7 @@ fishbase 简介
 
 fishbase 是由我们开发和整理的一套 Python基础函数库，将我们平时在开发 Python项目时候的各类工具函数汇聚到一起，方便集中管理和使用。希望对你也有所帮助，也适合初学 Python 的朋友通过代码来学习。
 
-fishbase 最新版本为 v1.4，支持 Python 3.5-3.9，绝大部分函数也能工作在 Python 2.7下，但是我们不推荐使用 Python 2.7。
+fishbase 最新版本为 v1.5，支持 Python 3.5-3.9，绝大部分函数也能工作在 Python 2.7下，但是我们不推荐使用 Python 2.7。
 
 fishbase 主要有以下功能模块：
 
@@ -113,6 +113,11 @@ fishbase 功能举例
 更新记录
 ==========
 
+2021.7.20 v1.5
+------------------
+- `#300 <https://github.com/chinapnr/fishbase/issues/300>`_ , fish_logger 中的 log 文件默认后缀修改为 .log，日期移到文件名开头;
+- 修改文档描述
+
 2021.6.23 v1.4
 ------------------
 - `#288 <https://github.com/chinapnr/fishbase/issues/288>`_ , fish_date 中的 GetRandomTime 修改为 RandomTime，其中函数名称修改为 get_random_datetime_this_month() get_random_datetime_this_year() get_random_date_by_year() get_random_date_by_range();
@@ -167,7 +172,9 @@ fishbase 功能举例
 感谢
 ====
 
-自 2016年3月初次发布以来，先后发布了 20 余个版本，非常感谢所有在 fishbase函数包发展过程中做出贡献的朋友们：
+自2016年3月初次发布以来，先后发布了20余个版本，非常感谢所有在 fishbase函数包发展过程中做出贡献的朋友们！
+
+fishbase函数包的作者名单，按照时间先后列出如下：
 
 Yi Jun
 

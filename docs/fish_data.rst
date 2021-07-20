@@ -1,4 +1,4 @@
-``fish_data`` 数据信息处理函数包，含银行卡、身份证等
+``fish_data`` 数据处理函数包，包括银行卡、身份证等
 =====================================================
 
 .. autosummary::
@@ -14,6 +14,11 @@
     fish_data.IdCard.get_areanote_info
     fish_data.IdCard.get_province_info
     fish_data.IdCard.get_number_detail
+    fish_data.SensitiveMask.get_bankcard_number
+    fish_data.SensitiveMask.get_email
+    fish_data.SensitiveMask.get_idcard_number
+    fish_data.SensitiveMask.get_mobile_number
+
 
 .. automodule:: fish_data
    :members:
