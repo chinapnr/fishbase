@@ -3,6 +3,6 @@
 
 .. autosummary::
     fish_system.get_platform
-
+    fish_system.conf_as_dict
 .. automodule:: fish_system
    :members:
