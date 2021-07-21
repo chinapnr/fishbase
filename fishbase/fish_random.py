@@ -474,11 +474,11 @@ def gen_random_idcard(zone=None, gender=None, age=None, birth_year=None, result_
     举例如下::
 
         print('--- gen_random_idcard demo ---')
-        print(gen_random_id_card('310000'))
-        print(gen_random_id_card('310000', age=100))
-        print(gen_random_id_card('310000', age=100, birth_year=1990))
-        print(gen_random_id_card('310000', age=30, gender='00'))
-        print(gen_random_id_card(age=30, gender='01', result_type='LIST'))
+        print(gen_random_idcard('310000'))
+        print(gen_random_idcard('310000', age=100))
+        print(gen_random_idcard('310000', age=100, birth_year=1990))
+        print(gen_random_idcard('310000', age=30, gender='00'))
+        print(gen_random_idcard(age=30, gender='01', result_type='LIST'))
         print('---')
 
     输出结果::
