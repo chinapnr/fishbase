@@ -661,11 +661,11 @@ def yaml_conf_as_dict(file_path, encoding=None):
     try:
         if sys.version > '3':
             with open(file_path, 'r', encoding=encoding) as f:
-                d = OrderedDict(yaml.load(f.read()))
+                d = OrderedDict(yaml.safe_load(f.read()))
                 return True, d, 'Success'
         else:
             with open(file_path, 'r') as f:
-                d = OrderedDict(yaml.load(f.read()))
+                d = OrderedDict(yaml.safe_load(f.read()))
                 return True, d, 'Success'
     except Exception:
         return False, {}, 'Unknown error'
