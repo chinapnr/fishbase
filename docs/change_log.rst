@@ -1,6 +1,11 @@
 更新记录
 ===========================
 
+2022.9.13 v1.6
+------------------
+- `#303 <https://github.com/chinapnr/fishbase/issues/303>`_ , update setup.py, add install_requires `chardet`
+- `#302 <https://github.com/chinapnr/fishbase/pull/302>`_ , update fish_common.py, modify yaml load method.
+
 2021.7.20 v1.5
 ------------------
 - `#300 <https://github.com/chinapnr/fishbase/issues/300>`_ , fish_logger 中的 log 文件默认后缀修改为 .log，日期移到文件名开头;
