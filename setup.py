@@ -14,7 +14,8 @@ setup(
     name='fishbase',
     version=version,
     install_requires=['python-dateutil',
-                      'pyyaml'],
+                      'pyyaml',
+                      'chardet'],
 
     url='https://github.com/chinapnr/fishbase',
     license='MIT',
